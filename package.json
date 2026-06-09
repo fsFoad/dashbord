@@ -1,0 +1,36 @@
+{
+  "name": "dashboard",
+  "version": "0.1.0",
+  "description": "Modern multi-layout, multilingual (RTL/LTR) Angular 21 admin dashboard",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "@jsverse/transloco": "^7.6.0",
+    "@primeuix/themes": "^1.2.3",
+    "primeicons": "^7.0.0",
+    "primeng": "^21.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.0.0",
+    "@angular/cli": "^21.0.0",
+    "@angular/compiler-cli": "^21.0.0",
+    "@tailwindcss/postcss": "^4.0.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^4.0.0",
+    "tailwindcss-primeui": "^0.6.1",
+    "typescript": "~5.9.0"
+  }
+}
