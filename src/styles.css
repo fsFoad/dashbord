@@ -1,0 +1,83 @@
+/* ============================================================
+   Global styles — Tailwind v4 + PrimeNG v21 integration
+   Order matters: tailwind first, primeng layer last so PrimeNG
+   component styles can be overridden by Tailwind utilities.
+   ============================================================ */
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+@plugin "tailwindcss-primeui";
+
+/* Manual dark mode driven by the .app-dark class on <html>,
+   kept in sync with PrimeNG's darkModeSelector. */
+@custom-variant dark (&:where(.app-dark, .app-dark *));
+
+/* CSS layer order — PrimeNG registers its styles in the `primeng` layer
+   (see app.config.ts cssLayer option) so Tailwind utilities win cleanly. */
+@layer tailwind, primeng;
+
+/* ---- Design-level base ---- */
+:root {
+  /* Font is a config of its own, independent from the color theme.
+     FontService updates this variable at runtime. */
+  --app-font: "Vazirmatn", "Inter", system-ui, sans-serif;
+
+  /* Layout metrics (used by custom layout components) */
+  --sidebar-width: 17rem;
+  --sidebar-width-collapsed: 4.75rem;
+  --topbar-height: 4rem;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--app-font);
+  background: var(--p-content-background, var(--p-surface-50));
+  color: var(--p-text-color);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.app-dark body {
+  background: var(--p-surface-950);
+}
+
+/* Smooth, accessible View Transitions for route changes */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 220ms;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* Reusable helper: clamp long menu labels to a single truncated line.
+   Combined with a tooltip in the sidebar to reveal the full text. */
+.truncate-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Thin, theme-aware scrollbars for the sidebar/content panels */
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--p-surface-300) transparent;
+}
+.app-dark .thin-scroll {
+  scrollbar-color: var(--p-surface-700) transparent;
+}
+.thin-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: var(--p-surface-300);
+  border-radius: 9999px;
+}
+.app-dark .thin-scroll::-webkit-scrollbar-thumb { background: var(--p-surface-700); }

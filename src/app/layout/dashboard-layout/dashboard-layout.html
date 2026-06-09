@@ -1,0 +1,39 @@
+<div class="flex h-dvh overflow-hidden bg-surface-50 dark:bg-surface-950">
+  <!-- Docked sidebar (desktop / static & slim modes) -->
+  @if (!overlay()) {
+    <app-sidebar class="shrink-0" />
+  }
+
+  <!-- Overlay drawer (mobile / overlay mode) -->
+  @if (overlay()) {
+    <p-drawer
+      [visible]="layout.mobileDrawerOpen()"
+      (visibleChange)="onDrawerVisible($event)"
+      [position]="settings.isRtl() ? 'right' : 'left'"
+      [closable]="false"
+      [style]="{ width: 'var(--sidebar-width)', maxWidth: '85vw', padding: '0' }"
+      styleClass="[&_.p-drawer-content]:p-0! [&_.p-drawer-header]:hidden"
+    >
+      <app-sidebar />
+    </p-drawer>
+  }
+
+  <!-- Main column -->
+  <div class="flex min-w-0 flex-1 flex-col">
+    <app-topbar />
+
+    <main class="thin-scroll flex-1 overflow-y-auto">
+      <div class="mx-auto w-full max-w-[96rem] p-4 sm:p-6">
+        <router-outlet />
+      </div>
+    </main>
+
+    <app-footer />
+  </div>
+
+  <!-- Appearance settings panel -->
+  <app-settings-panel
+    [visible]="layout.settingsOpen()"
+    (visibleChange)="onSettingsVisible($event)"
+  />
+</div>

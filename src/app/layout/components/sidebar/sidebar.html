@@ -1,0 +1,28 @@
+<div
+  class="flex h-full flex-col border-e border-surface-200 bg-surface-0 transition-[width] duration-200 dark:border-surface-800 dark:bg-surface-900"
+  [style.width]="slim() ? 'var(--sidebar-width-collapsed)' : 'var(--sidebar-width)'"
+>
+  <!-- Branding -->
+  <a
+    routerLink="/dashboard"
+    class="flex h-[var(--topbar-height)] shrink-0 items-center gap-3 px-4 border-b border-surface-200 dark:border-surface-800"
+  >
+    <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-contrast font-bold">
+      {{ branding.appShortName }}
+    </span>
+    @if (!slim()) {
+      <span class="truncate-1 text-lg font-semibold text-surface-900 dark:text-surface-0">
+        {{ branding.appName }}
+      </span>
+    }
+  </a>
+
+  <!-- Menu (scrolls; long labels truncate to one line) -->
+  <nav class="thin-scroll flex-1 overflow-y-auto py-2">
+    <ul class="space-y-0.5 px-2">
+      @for (item of menu; track item.id) {
+        <app-menu-item [item]="item" [level]="0" />
+      }
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,172 @@
+<p-drawer
+  [(visible)]="visible"
+  [position]="settings.isRtl() ? 'left' : 'right'"
+  [style]="{ width: '22rem', maxWidth: '92vw' }"
+  styleClass="thin-scroll"
+>
+  <ng-template #header>
+    <div class="flex items-center gap-2">
+      <i class="pi pi-sliders-h text-primary"></i>
+      <span class="text-lg font-semibold">{{ 'settings.title' | transloco }}</span>
+    </div>
+  </ng-template>
+
+  <div class="flex flex-col gap-7 pb-6">
+    <!-- Dark / light -->
+    <section class="flex items-center justify-between">
+      <div>
+        <h3 class="text-sm font-semibold">{{ 'settings.darkMode' | transloco }}</h3>
+        <p class="text-xs text-muted-color">{{ 'settings.darkMode.hint' | transloco }}</p>
+      </div>
+      <p-toggleswitch
+        [ngModel]="settings.darkMode()"
+        (ngModelChange)="settings.setDarkMode($event)"
+      />
+    </section>
+
+    <!-- Color theme presets -->
+    <section>
+      <h3 class="mb-3 text-sm font-semibold">{{ 'settings.colorTheme' | transloco }}</h3>
+      <div class="grid grid-cols-6 gap-2.5">
+        @for (p of presets; track p.key) {
+          <button
+            type="button"
+            (click)="pickPreset(p.key)"
+            [title]="p.key"
+            class="relative grid aspect-square place-items-center rounded-lg ring-2 ring-transparent transition"
+            [style.background]="p.swatch"
+            [class.ring-surface-900]="settings.themePreset() === p.key && !settings.customPrimaryColor()"
+            [class.dark:ring-surface-0]="settings.themePreset() === p.key && !settings.customPrimaryColor()"
+          >
+            @if (settings.themePreset() === p.key && !settings.customPrimaryColor()) {
+              <i class="pi pi-check text-xs text-white"></i>
+            }
+          </button>
+        }
+      </div>
+    </section>
+
+    <!-- Custom brand color (independent of presets) -->
+    <section>
+      <h3 class="mb-1 text-sm font-semibold">{{ 'settings.customColor' | transloco }}</h3>
+      <p class="mb-3 text-xs text-muted-color">{{ 'settings.customColor.hint' | transloco }}</p>
+      <div class="flex items-center gap-3">
+        <p-colorpicker
+          [ngModel]="customColor()"
+          (ngModelChange)="applyCustomColor($event)"
+          appendTo="body"
+        />
+        <code class="rounded bg-surface-100 px-2 py-1 text-xs dark:bg-surface-800">{{ customColor() }}</code>
+        @if (settings.customPrimaryColor()) {
+          <button
+            type="button"
+            (click)="clearCustomColor()"
+            class="ms-auto text-xs text-primary hover:underline"
+          >
+            {{ 'settings.customColor.clear' | transloco }}
+          </button>
+        }
+      </div>
+    </section>
+
+    <!-- Surface palette -->
+    <section>
+      <h3 class="mb-3 text-sm font-semibold">{{ 'settings.surface' | transloco }}</h3>
+      <div class="flex flex-wrap gap-2.5">
+        @for (s of surfaces; track s.key) {
+          <button
+            type="button"
+            (click)="pickSurface(s.key)"
+            [title]="s.key"
+            class="size-8 rounded-lg ring-2 ring-transparent transition"
+            [style.background]="s.swatch"
+            [class.ring-primary]="settings.surface() === s.key"
+          ></button>
+        }
+      </div>
+    </section>
+
+    <!-- Font (a config of its own) -->
+    <section>
+      <h3 class="mb-3 text-sm font-semibold">{{ 'settings.font' | transloco }}</h3>
+      <div class="flex flex-col gap-1.5">
+        @for (f of fonts; track f.value) {
+          <button
+            type="button"
+            (click)="pickFont(f.value)"
+            [disabled]="!f.ready"
+            class="flex items-center justify-between rounded-lg border px-3 py-2 text-start text-sm transition disabled:opacity-40"
+            [style.font-family]="f.value"
+            [class.border-primary]="settings.fontFamily() === f.value"
+            [class.border-surface-200]="settings.fontFamily() !== f.value"
+            [class.dark:border-surface-700]="settings.fontFamily() !== f.value"
+          >
+            <span>{{ f.label }}</span>
+            @if (settings.fontFamily() === f.value) { <i class="pi pi-check text-xs text-primary"></i> }
+            @else if (!f.ready) { <span class="text-[10px] text-muted-color">{{ 'settings.font.needsFile' | transloco }}</span> }
+          </button>
+        }
+      </div>
+    </section>
+
+    <!-- Language / direction -->
+    <section>
+      <h3 class="mb-3 text-sm font-semibold">{{ 'settings.language' | transloco }}</h3>
+      <p-selectbutton
+        [options]="langOptions"
+        optionLabel="label"
+        optionValue="value"
+        [allowEmpty]="false"
+        [ngModel]="settings.language()"
+        (ngModelChange)="language.set($event)"
+      />
+    </section>
+
+    <!-- Layout / menu mode -->
+    <section>
+      <h3 class="mb-3 text-sm font-semibold">{{ 'settings.menuMode' | transloco }}</h3>
+      <p-selectbutton
+        [options]="menuModeOptions"
+        optionValue="value"
+        [allowEmpty]="false"
+        [ngModel]="settings.menuMode()"
+        (ngModelChange)="settings.setMenuMode($event)"
+      >
+        <ng-template #item let-opt>{{ opt.label | transloco }}</ng-template>
+      </p-selectbutton>
+    </section>
+
+    <!-- Density -->
+    <section>
+      <h3 class="mb-3 text-sm font-semibold">{{ 'settings.density' | transloco }}</h3>
+      <p-selectbutton
+        [options]="densityOptions"
+        optionValue="value"
+        [allowEmpty]="false"
+        [ngModel]="settings.density()"
+        (ngModelChange)="settings.setDensity($event)"
+      >
+        <ng-template #item let-opt>{{ opt.label | transloco }}</ng-template>
+      </p-selectbutton>
+    </section>
+
+    <!-- Export / reset -->
+    <section class="flex gap-2 border-t border-surface-200 pt-5 dark:border-surface-800">
+      <p-button
+        [label]="'settings.export' | transloco"
+        icon="pi pi-download"
+        severity="secondary"
+        size="small"
+        (onClick)="exportSettings()"
+      />
+      <p-button
+        [label]="'settings.reset' | transloco"
+        icon="pi pi-refresh"
+        severity="secondary"
+        [text]="true"
+        size="small"
+        (onClick)="reset()"
+      />
+    </section>
+  </div>
+</p-drawer>
