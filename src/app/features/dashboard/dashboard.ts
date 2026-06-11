@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { RecentActivity } from './recent-activity';
+import { SkeletonCard } from '../../shared/components/skeleton/skeleton-card';
+import { HasRoleDirective } from '../../core/directives/has-role.directive';
 
 interface Kpi {
   titleKey: string;
@@ -18,7 +21,7 @@ interface Kpi {
  */
 @Component({
   selector: 'app-dashboard-page',
-  imports: [TranslocoModule, ButtonModule, TagModule],
+  imports: [TranslocoModule, ButtonModule, TagModule, RecentActivity, SkeletonCard, HasRoleDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
@@ -28,7 +31,16 @@ interface Kpi {
         </h1>
         <p class="mt-1 text-sm text-muted-color">{{ 'dashboard.subtitle' | transloco }}</p>
       </div>
-      <p-button [label]="'dashboard.newProject' | transloco" icon="pi pi-plus" />
+      <div class="flex items-center gap-2">
+        <p-button
+          *appHasRole="'admin'"
+          [label]="'dashboard.adminOnly' | transloco"
+          icon="pi pi-shield"
+          severity="secondary"
+          [outlined]="true"
+        />
+        <p-button [label]="'dashboard.newProject' | transloco" icon="pi pi-plus" />
+      </div>
     </div>
 
     <!-- KPI cards: pure Tailwind, themed via primeui tokens -->
@@ -53,11 +65,24 @@ interface Kpi {
       }
     </div>
 
-    <!-- Placeholder for Phase 5 charts -->
-    <div
-      class="mt-6 grid min-h-64 place-items-center rounded-2xl border border-dashed border-surface-300 text-sm text-muted-color dark:border-surface-700"
-    >
-      {{ 'dashboard.chartsComingSoon' | transloco }}
+    <div class="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <!-- Deferred section: loads lazily, skeleton until ready -->
+      <div class="xl:col-span-1">
+        @defer (on viewport; prefetch on idle) {
+          <app-recent-activity />
+        } @placeholder {
+          <app-skeleton-card [rows]="5" />
+        } @loading (minimum 300ms) {
+          <app-skeleton-card [rows]="5" />
+        }
+      </div>
+
+      <!-- Placeholder for Phase 5 charts -->
+      <div
+        class="grid min-h-64 place-items-center rounded-2xl border border-dashed border-surface-300 text-sm text-muted-color dark:border-surface-700 xl:col-span-2"
+      >
+        {{ 'dashboard.chartsComingSoon' | transloco }}
+      </div>
     </div>
   `,
 })

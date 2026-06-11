@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard, guestGuard, roleGuard } from './core/guards/auth.guard';
 
 /**
  * Each layout is a separate shell. Feature pages are lazy-loaded as standalone
@@ -10,6 +11,7 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./layout/dashboard-layout/dashboard-layout').then((m) => m.DashboardLayout),
+    canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       {
@@ -20,8 +22,31 @@ export const routes: Routes = [
       {
         path: 'projects',
         loadComponent: () =>
-          import('./features/projects-demo/projects-demo').then((m) => m.ProjectsDemo),
+          import('./features/projects/projects-table').then((m) => m.ProjectsTable),
         data: { titleKey: 'menu.projects.all' },
+      },
+      {
+        path: 'projects/new',
+        loadComponent: () =>
+          import('./features/projects/project-wizard').then((m) => m.ProjectWizard),
+        data: { titleKey: 'wizard.title' },
+      },
+      {
+        path: 'profile',
+        loadComponent: () => import('./features/profile/profile').then((m) => m.Profile),
+        data: { titleKey: 'menu.profile' },
+      },
+      {
+        path: 'people/roles',
+        loadComponent: () => import('./features/admin/roles-demo').then((m) => m.RolesDemo),
+        canActivate: [roleGuard(['admin'])],
+        data: { titleKey: 'menu.people.roles' },
+      },
+      {
+        path: 'playground',
+        loadComponent: () =>
+          import('./features/playground/playground').then((m) => m.Playground),
+        data: { titleKey: 'menu.playground' },
       },
       {
         // Demonstrates the deep nested menu route + breadcrumb.
@@ -30,6 +55,19 @@ export const routes: Routes = [
           import('./features/projects-demo/projects-demo').then((m) => m.ProjectsDemo),
         data: { titleKey: 'menu.projects.reports.long' },
       },
+    ],
+  },
+
+  // Auth layout: login / register / forgot — only for guests.
+  {
+    path: 'auth',
+    loadComponent: () => import('./layout/auth-layout/auth-layout').then((m) => m.AuthLayout),
+    canActivate: [guestGuard],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'login' },
+      { path: 'login', loadComponent: () => import('./features/auth/login').then((m) => m.Login) },
+      { path: 'register', loadComponent: () => import('./features/auth/register').then((m) => m.Register) },
+      { path: 'forgot', loadComponent: () => import('./features/auth/forgot').then((m) => m.Forgot) },
     ],
   },
 
@@ -53,6 +91,14 @@ export const routes: Routes = [
       {
         path: '404',
         loadComponent: () => import('./features/error/not-found').then((m) => m.NotFound),
+      },
+      {
+        path: '500',
+        loadComponent: () => import('./features/error/server-error').then((m) => m.ServerError),
+      },
+      {
+        path: '403',
+        loadComponent: () => import('./features/error/forbidden').then((m) => m.Forbidden),
       },
     ],
   },

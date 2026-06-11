@@ -44,6 +44,7 @@ export const APP_MENU: MenuItem[] = [
   { id: 'calendar', labelKey: 'menu.calendar', icon: 'pi pi-calendar', route: '/calendar' },
 
   { id: 'sec-system', labelKey: 'menu.section.system', separator: true },
+  { id: 'playground', labelKey: 'menu.playground', icon: 'pi pi-bolt', route: '/playground' },
   { id: 'settings', labelKey: 'menu.settings', icon: 'pi pi-cog', route: '/settings' },
   { id: 'docs', labelKey: 'menu.docs', icon: 'pi pi-book', href: 'https://primeng.org' },
 ];

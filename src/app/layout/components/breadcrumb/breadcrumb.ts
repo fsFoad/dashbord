@@ -23,9 +23,9 @@ interface Crumb {
       @for (c of crumbs(); track $index) {
         <i class="pi pi-angle-left text-[10px] opacity-60 ltr:rotate-180"></i>
         <span
-            class="truncate-1 max-w-[40vw]"
-            [class.text-surface-900]="$last"
-            [class.dark:text-surface-0]="$last"
+          class="truncate-1 max-w-[40vw]"
+          [class.text-surface-900]="$last"
+          [class.dark:text-surface-0]="$last"
         >
           {{ c.labelKey | transloco }}
         </span>
@@ -40,11 +40,11 @@ export class Breadcrumb {
 
   constructor() {
     this.router.events
-        .pipe(
-            filter((e) => e instanceof NavigationEnd),
-            takeUntilDestroyed(),
-        )
-        .subscribe(() => this.crumbs.set(this.build()));
+      .pipe(
+        filter((e) => e instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.crumbs.set(this.build()));
 
     // Initial value (safe even mid-first-navigation thanks to the snapshot tree).
     this.crumbs.set(this.build());

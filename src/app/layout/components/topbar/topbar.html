@@ -69,9 +69,18 @@
     </button>
 
     <!-- Profile -->
-    <button type="button" (click)="openProfile($event)" class="ms-1" aria-label="Profile">
-      <p-avatar label="A" shape="circle" styleClass="bg-primary! text-primary-contrast!" />
+    <button
+      type="button"
+      (click)="openProfile($event)"
+      class="ms-1 flex items-center gap-2 rounded-lg p-1 pe-2 hover:bg-surface-100 dark:hover:bg-surface-800"
+      aria-label="Profile"
+    >
+      <p-avatar [label]="initials()" shape="circle" styleClass="bg-primary! text-primary-contrast!" />
+      <span class="hidden max-w-32 truncate-1 text-sm font-medium md:block">
+        {{ session.user()?.name }}
+      </span>
+      <i class="pi pi-angle-down hidden text-xs text-muted-color md:block"></i>
     </button>
-    <p-menu #profileMenu [model]="profileItems" [popup]="true" appendTo="body" />
+    <p-menu #profileMenu [model]="profileItems()" [popup]="true" appendTo="body" />
   </div>
 </header>

@@ -1,20 +1,27 @@
 import {
   ApplicationConfig,
+  ErrorHandler,
   inject,
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { provideTransloco } from '@jsverse/transloco';
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './core/i18n/transloco-loader';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { mockBackendInterceptor } from './core/interceptors/mock-backend.interceptor';
+import { GlobalErrorHandler } from './core/handlers/global-error-handler';
 import { ThemeService } from './core/services/theme.service';
 import { FontService } from './core/services/font.service';
 import { LanguageService } from './core/services/language.service';
@@ -42,8 +49,18 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions(),
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
     ),
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(),
+      // Order matters: loading wraps everything; errors are mapped before the
+      // mock backend is swapped for a real API (just remove the last one then).
+      withInterceptors([authInterceptor, loadingInterceptor, errorInterceptor, mockBackendInterceptor]),
+    ),
     provideAnimationsAsync(),
+
+    // Global UX services (toast / confirm) + runtime error handler.
+    MessageService,
+    ConfirmationService,
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
 
     providePrimeNG({
       ripple: true,

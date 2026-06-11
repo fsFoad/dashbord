@@ -6,6 +6,7 @@ import { Topbar } from '../components/topbar/topbar';
 import { Footer } from '../components/footer/footer';
 import { SettingsPanel } from '../components/settings-panel/settings-panel';
 import { LayoutService } from '../../core/services/layout.service';
+import { LoadingService } from '../../core/services/loading.service';
 import { SettingsStore } from '../../core/services/settings.store';
 
 @Component({
@@ -16,6 +17,7 @@ import { SettingsStore } from '../../core/services/settings.store';
 })
 export class DashboardLayout {
   protected readonly layout = inject(LayoutService);
+  protected readonly loading = inject(LoadingService);
   protected readonly settings = inject(SettingsStore);
 
   protected readonly overlay = computed(() => this.layout.isOverlayMode());

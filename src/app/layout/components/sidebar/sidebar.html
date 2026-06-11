@@ -5,9 +5,9 @@
   <!-- Branding -->
   <a
     routerLink="/dashboard"
-    class="flex h-[var(--topbar-height)] shrink-0 items-center gap-3 px-4 border-b border-surface-200 dark:border-surface-800"
+    class="flex h-[var(--topbar-height)] shrink-0 items-center gap-3 border-b border-surface-200 px-4 dark:border-surface-800"
   >
-    <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-contrast font-bold">
+    <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-primary font-bold text-primary-contrast">
       {{ branding.appShortName }}
     </span>
     @if (!slim()) {
@@ -17,12 +17,30 @@
     }
   </a>
 
-  <!-- Menu (scrolls; long labels truncate to one line) -->
+  <!-- Menu (per-user: role-filtered + pinned + hidden) -->
   <nav class="thin-scroll flex-1 overflow-y-auto py-2">
     <ul class="space-y-0.5 px-2">
-      @for (item of menu; track item.id) {
+      @for (item of menuService.menu(); track item.id) {
         <app-menu-item [item]="item" [level]="0" />
       }
     </ul>
   </nav>
+
+  <!-- Footer: customize menu -->
+  <div class="shrink-0 border-t border-surface-200 p-2 dark:border-surface-800">
+    <button
+      type="button"
+      (click)="customizerOpen.set(true)"
+      [pTooltip]="slim() ? ('menu.customize' | transloco) : ''"
+      tooltipPosition="top"
+      class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
+    >
+      <i class="pi pi-sliders-v shrink-0 text-base"></i>
+      @if (!slim()) {
+        <span class="truncate-1">{{ 'menu.customize' | transloco }}</span>
+      }
+    </button>
+  </div>
 </div>
+
+<app-menu-customizer [(visible)]="customizerOpen" />

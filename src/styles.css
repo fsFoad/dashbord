@@ -81,3 +81,13 @@ body {
   border-radius: 9999px;
 }
 .app-dark .thin-scroll::-webkit-scrollbar-thumb { background: var(--p-surface-700); }
+
+/* Indeterminate top progress bar (global API loading indicator) */
+@keyframes app-progress {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(420%); }
+}
+.app-progress-bar {
+  animation: app-progress 1.1s linear infinite;
+  border-radius: 9999px;
+}
