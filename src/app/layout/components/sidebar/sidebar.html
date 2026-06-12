@@ -40,6 +40,23 @@
         <span class="truncate-1">{{ 'menu.customize' | transloco }}</span>
       }
     </button>
+
+    <!-- App version + release date -->
+    <button
+      type="button"
+      (click)="whatsNew.show()"
+      [pTooltip]="slim() ? 'v' + version : ('whatsnew.title' | transloco)"
+      tooltipPosition="top"
+      class="mt-0.5 flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] text-muted-color transition-colors hover:text-primary"
+    >
+      @if (slim()) {
+        <i class="pi pi-tag text-[10px]"></i>
+      } @else {
+        <span dir="ltr" class="font-semibold">v{{ version }}</span>
+        <span class="opacity-60">·</span>
+        <span>{{ releaseDate | appDate }}</span>
+      }
+    </button>
   </div>
 </div>
 

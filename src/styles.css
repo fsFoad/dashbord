@@ -1,8 +1,13 @@
 /* ============================================================
    Global styles — Tailwind v4 + PrimeNG v21 integration
-   Order matters: tailwind first, primeng layer last so PrimeNG
-   component styles can be overridden by Tailwind utilities.
+
+   The FIRST @layer statement fixes the cascade order for the whole app:
+   Tailwind preflight (base) must NOT strip PrimeNG component padding,
+   and Tailwind utilities must still be able to override PrimeNG.
+   So: theme < base < primeng < components < utilities.
    ============================================================ */
+@layer theme, base, primeng, components, utilities;
+
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
 @plugin "tailwindcss-primeui";
@@ -10,10 +15,6 @@
 /* Manual dark mode driven by the .app-dark class on <html>,
    kept in sync with PrimeNG's darkModeSelector. */
 @custom-variant dark (&:where(.app-dark, .app-dark *));
-
-/* CSS layer order — PrimeNG registers its styles in the `primeng` layer
-   (see app.config.ts cssLayer option) so Tailwind utilities win cleanly. */
-@layer tailwind, primeng;
 
 /* ---- Design-level base ---- */
 :root {
@@ -105,4 +106,42 @@ body {
 .app-dark .kbd {
   border-color: var(--p-surface-600);
   background: var(--p-surface-800);
+}
+
+/* ============================================================
+   Comfortable spacing for overlay containers.
+   Lives in the `components` layer: above primeng (so it applies even if a
+   preset is stingy) but below utilities (so per-case p-0! etc. still win).
+   ============================================================ */
+@layer components {
+  .p-dialog .p-dialog-header {
+    padding: 1.25rem 1.5rem 0.75rem;
+  }
+  .p-dialog .p-dialog-content {
+    padding: 1rem 1.5rem 1.25rem;
+  }
+  .p-dialog .p-dialog-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem 1.25rem;
+  }
+  .p-confirmdialog .p-dialog-content {
+    padding-block: 1.25rem;
+  }
+  .p-drawer .p-drawer-header {
+    padding: 1.25rem 1.5rem 0.75rem;
+  }
+  .p-drawer .p-drawer-content {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+  .p-popover .p-popover-content {
+    padding: 1rem 1.25rem 1.25rem;
+  }
+  .p-menu {
+    padding: 0.5rem;
+  }
+  .p-toast .p-toast-message-content {
+    padding: 1rem 1.25rem;
+  }
 }

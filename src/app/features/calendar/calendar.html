@@ -66,7 +66,7 @@
   [style]="{ width: '24rem', maxWidth: '94vw' }"
   [header]="(editingId ? 'cal.editEvent' : 'cal.newEvent') | transloco"
 >
-  <div class="flex flex-col gap-4 pt-1">
+  <div class="flex flex-col gap-4 pt-2">
     <div class="flex flex-col gap-1.5">
       <label class="text-sm font-medium">{{ 'cal.eventTitle' | transloco }}</label>
       <input pInputText [(ngModel)]="draft.title" />

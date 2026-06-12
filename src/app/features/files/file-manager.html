@@ -112,7 +112,7 @@
 <!-- New folder dialog -->
 <p-dialog [visible]="folderOpen()" (visibleChange)="folderOpen.set($event)" [modal]="true" [draggable]="false"
   [style]="{ width: '22rem', maxWidth: '94vw' }" [header]="'files.newFolder' | transloco">
-  <div class="flex flex-col gap-1.5 pt-1">
+  <div class="flex flex-col gap-1.5 pt-2">
     <label class="text-sm font-medium">{{ 'files.name' | transloco }}</label>
     <input pInputText [(ngModel)]="folderName" (keydown.enter)="createFolder()" />
   </div>
@@ -125,7 +125,7 @@
 <!-- Rename dialog -->
 <p-dialog [visible]="renameOpen()" (visibleChange)="renameOpen.set($event)" [modal]="true" [draggable]="false"
   [style]="{ width: '22rem', maxWidth: '94vw' }" [header]="'files.rename' | transloco">
-  <div class="flex flex-col gap-1.5 pt-1">
+  <div class="flex flex-col gap-1.5 pt-2">
     <input pInputText [(ngModel)]="renameValue" (keydown.enter)="rename()" />
   </div>
   <ng-template #footer>

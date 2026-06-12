@@ -50,10 +50,18 @@ export class Gantt {
   protected readonly loading = computed(() => this.rowsRaw() === null);
 
   private readonly rowsRaw = toSignal<Project[] | null>(
-      this.api.list({ size: 50, sortField: 'dueDate', sortOrder: 1 }).pipe(
-          map((r) => r.items)
-      ),
-      { initialValue: null },
+      this.api
+          .list({
+            size: 50,
+            sortField: 'dueDate',
+            sortOrder: 1,
+          })
+          .pipe(
+              map((r) => r.items as Project[]),
+          ),
+      {
+        initialValue: null,
+      },
   );
   protected readonly months = computed(() => {
     const lang = this.settings.language();

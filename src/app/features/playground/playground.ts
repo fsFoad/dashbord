@@ -8,13 +8,10 @@ import { ToastService } from '../../core/services/toast.service';
 import { ConfirmService } from '../../core/services/confirm.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { TIMEOUT_MS } from '../../core/interceptors/http-context';
-import {CommonModule, JsonPipe} from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  DatePickerComponent,
-  DateRange,
-  TimeRange
-} from '../../shared/components/date-picker/date-picker';
+import { DatePickerComponent }
+  from '../../shared/components/date-picker/date-picker';
 import { SkeletonTable } from '../../shared/components/skeleton/skeleton-table';
 
 /**
@@ -24,14 +21,7 @@ import { SkeletonTable } from '../../shared/components/skeleton/skeleton-table';
  */
 @Component({
   selector: 'app-playground',
-  imports: [
-    CommonModule,
-    TranslocoModule,
-    ButtonModule,
-    SkeletonTable,
-    DatePickerComponent,
-    FormsModule
-  ],
+  imports: [JsonPipe, FormsModule, TranslocoModule, ButtonModule, SkeletonTable, DatePickerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
@@ -206,11 +196,13 @@ export class Playground {
   protected readonly busy = signal(false);
   protected readonly projects = signal<Project[]>([]);
 
-  // date-picker showcase models
-  protected pDate: Date | null = null;
-  protected pRange: DateRange | null = null;
+  protected pDate: string | null = null;
+
+  protected pRange: [string, string] | null = null;
+
   protected pTime: string | null = null;
-  protected pTimeRange: TimeRange | null = null;
+
+  protected pTimeRange: [string, string] | null = null;
 
   protected loadProjects(): void {
     this.busy.set(true);

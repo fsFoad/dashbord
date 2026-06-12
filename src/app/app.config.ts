@@ -70,7 +70,7 @@ export const appConfig: ApplicationConfig = {
           // Manual dark mode toggled via the .app-dark class (see ThemeService).
           darkModeSelector: '.app-dark',
           // Put PrimeNG styles in their own layer so Tailwind utilities win.
-          cssLayer: { name: 'primeng', order: 'tailwind, primeng' },
+          cssLayer: { name: 'primeng', order: 'theme, base, primeng, components, utilities' },
         },
       },
     }),

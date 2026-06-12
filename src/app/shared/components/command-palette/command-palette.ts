@@ -12,6 +12,7 @@ import { LanguageService } from '../../../core/services/language.service';
 import { LayoutService } from '../../../core/services/layout.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { TourService } from '../../../core/services/tour.service';
+import { WhatsNewService } from '../../../core/services/whats-new.service';
 
 interface Command {
   id: string;
@@ -43,6 +44,7 @@ export class CommandPalette {
   private readonly layout = inject(LayoutService);
   private readonly auth = inject(AuthService);
   private readonly tour = inject(TourService);
+  private readonly whatsNew = inject(WhatsNewService);
 
   protected readonly query = signal('');
   protected readonly selected = signal(0);
@@ -80,6 +82,11 @@ export class CommandPalette {
         id: 'act:tour', icon: 'pi pi-compass', groupKey: 'palette.group.actions',
         labelKey: 'palette.startTour',
         run: () => this.tour.start(),
+      },
+      {
+        id: 'act:whatsnew', icon: 'pi pi-megaphone', groupKey: 'palette.group.actions',
+        labelKey: 'whatsnew.title',
+        run: () => this.whatsNew.show(),
       },
       {
         id: 'act:help', icon: 'pi pi-question-circle', groupKey: 'palette.group.actions',

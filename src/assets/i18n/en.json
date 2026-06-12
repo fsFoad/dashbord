@@ -385,5 +385,11 @@
   "tour.bell.title": "Notifications",
   "tour.bell.body": "Live notifications arrive here — the unread count shows on the bell.",
   "tour.settings.title": "Appearance settings",
-  "tour.settings.body": "Color theme, custom brand color, font, dark mode and language — all live, from this panel."
+  "tour.settings.body": "Color theme, custom brand color, font, dark mode and language — all live, from this panel.",
+  "whatsnew.title": "What's new",
+  "whatsnew.latest": "Latest",
+  "whatsnew.gotIt": "Got it",
+  "whatsnew.type.feature": "Feature",
+  "whatsnew.type.improvement": "Improved",
+  "whatsnew.type.fix": "Fixed"
 }

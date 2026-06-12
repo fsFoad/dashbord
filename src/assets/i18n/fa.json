@@ -385,5 +385,11 @@
   "tour.bell.title": "اعلان‌ها",
   "tour.bell.body": "اعلان‌های زنده اینجا می‌آیند — تعداد نخوانده‌ها روی زنگوله نمایش داده می‌شود.",
   "tour.settings.title": "تنظیمات ظاهری",
-  "tour.settings.body": "تم رنگی، رنگ سفارشی برند، فونت، حالت تیره و زبان — همه از این پنل و به‌صورت زنده."
+  "tour.settings.body": "تم رنگی، رنگ سفارشی برند، فونت، حالت تیره و زبان — همه از این پنل و به‌صورت زنده.",
+  "whatsnew.title": "تازه‌های نسخه",
+  "whatsnew.latest": "جدیدترین",
+  "whatsnew.gotIt": "متوجه شدم",
+  "whatsnew.type.feature": "ویژگی",
+  "whatsnew.type.improvement": "بهبود",
+  "whatsnew.type.fix": "رفع اشکال"
 }
