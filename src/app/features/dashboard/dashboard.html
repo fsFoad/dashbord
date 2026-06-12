@@ -1,0 +1,130 @@
+<!-- Header -->
+<div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+  <div>
+    <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
+      {{ 'dashboard.title' | transloco }}
+    </h1>
+    <p class="mt-1 text-sm text-muted-color">{{ 'dashboard.subtitle' | transloco }}</p>
+  </div>
+  <div class="flex items-center gap-2">
+    <p-button
+      *appHasRole="'admin'"
+      [label]="'dashboard.adminOnly' | transloco"
+      icon="pi pi-shield"
+      severity="secondary"
+      [outlined]="true"
+      size="small"
+    />
+    <a routerLink="/dashboard/analytics">
+      <p-button [label]="'analytics.title' | transloco" icon="pi pi-chart-line" severity="secondary" size="small" />
+    </a>
+    @if (widgets.editMode()) {
+      <p-button
+        [label]="'dashboard.resetLayout' | transloco"
+        icon="pi pi-refresh"
+        severity="secondary"
+        [text]="true"
+        size="small"
+        (onClick)="widgets.reset()"
+      />
+      <p-button
+        [label]="'dashboard.doneLayout' | transloco"
+        icon="pi pi-check"
+        size="small"
+        (onClick)="widgets.editMode.set(false)"
+      />
+    } @else {
+      <p-button
+        [label]="'dashboard.editLayout' | transloco"
+        icon="pi pi-th-large"
+        severity="secondary"
+        size="small"
+        (onClick)="widgets.editMode.set(true)"
+      />
+    }
+  </div>
+</div>
+
+<!-- Hidden widgets (restore chips, edit mode only) -->
+@if (widgets.editMode() && widgets.hidden().length) {
+  <div class="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-dashed border-surface-300 p-3 dark:border-surface-700">
+    <span class="text-xs text-muted-color">{{ 'dashboard.hiddenWidgets' | transloco }}:</span>
+    @for (id of widgets.hidden(); track id) {
+      <button
+        type="button"
+        (click)="widgets.show(id)"
+        class="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary hover:bg-primary/20"
+      >
+        <i class="pi pi-plus text-[10px]"></i>
+        {{ 'widgets.' + id | transloco }}
+      </button>
+    }
+  </div>
+}
+
+<!-- Widget grid -->
+<div class="grid grid-cols-12 gap-4">
+  @for (id of widgets.visible(); track id; let i = $index) {
+    <div
+      [class]="widgets.spanFor(id)"
+      class="relative transition-opacity"
+      [class.opacity-60]="overIndex() === i"
+      [attr.draggable]="widgets.editMode() ? 'true' : null"
+      [class.cursor-move]="widgets.editMode()"
+      (dragstart)="onDragStart(i)"
+      (dragover)="onDragOver($event, i)"
+      (drop)="onDrop(i)"
+      (dragend)="onDragEnd()"
+    >
+      <!-- Edit-mode overlay controls -->
+      @if (widgets.editMode()) {
+        <div class="absolute end-3 top-3 z-10 flex items-center gap-1 rounded-lg bg-surface-0/90 p-1 shadow-sm backdrop-blur dark:bg-surface-900/90">
+          <span class="grid size-7 place-items-center text-muted-color" [pTooltip]="'dashboard.dragHint' | transloco" tooltipPosition="top">
+            <i class="pi pi-arrows-alt text-sm"></i>
+          </span>
+          <button
+            type="button"
+            (click)="hide(id)"
+            class="grid size-7 place-items-center rounded text-muted-color hover:bg-surface-100 hover:text-red-500 dark:hover:bg-surface-800"
+          >
+            <i class="pi pi-eye-slash text-sm"></i>
+          </button>
+        </div>
+      }
+
+      @switch (id) {
+        @case ('kpis') {
+          <app-kpi-widget [stats]="stats()" />
+        }
+        @case ('revenue') {
+          @defer (on viewport; prefetch on idle) {
+            <app-revenue-chart [stats]="stats()" />
+          } @placeholder {
+            <app-skeleton-card [rows]="6" [header]="true" />
+          }
+        }
+        @case ('status') {
+          @defer (on viewport; prefetch on idle) {
+            <app-status-chart [stats]="stats()" />
+          } @placeholder {
+            <app-skeleton-card [rows]="6" [header]="true" />
+          }
+        }
+        @case ('tasks') {
+          @defer (on viewport; prefetch on idle) {
+            <app-tasks-chart [stats]="stats()" />
+          } @placeholder {
+            <app-skeleton-card [rows]="6" [header]="true" />
+          }
+        }
+        @case ('activity') {
+          @defer (on viewport; prefetch on idle) {
+            <app-recent-activity />
+          } @placeholder {
+            <app-skeleton-card [rows]="5" />
+          }
+        }
+      }
+    </div>
+  }
+</div>

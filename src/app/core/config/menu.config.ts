@@ -8,14 +8,24 @@ import { MenuItem } from '../models/menu-item.model';
  */
 export const APP_MENU: MenuItem[] = [
   { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
-  { id: 'dashboard', labelKey: 'menu.dashboard', icon: 'pi pi-home', route: '/dashboard' },
+  {
+    id: 'dashboard',
+    labelKey: 'menu.dashboard',
+    icon: 'pi pi-home',
+    children: [
+      { id: 'dashboard-overview', labelKey: 'menu.dashboard.overview', icon: 'pi pi-th-large', route: '/dashboard' },
+      { id: 'dashboard-analytics', labelKey: 'menu.dashboard.analytics', icon: 'pi pi-chart-line', route: '/dashboard/analytics' },
+    ],
+  },
   {
     id: 'projects',
     labelKey: 'menu.projects',
     icon: 'pi pi-folder',
     children: [
       { id: 'projects-all', labelKey: 'menu.projects.all', icon: 'pi pi-list', route: '/projects' },
+      { id: 'projects-new', labelKey: 'menu.projects.new', icon: 'pi pi-plus', route: '/projects/new' },
       { id: 'projects-board', labelKey: 'menu.projects.board', icon: 'pi pi-th-large', route: '/projects/board' },
+      { id: 'projects-gantt', labelKey: 'menu.projects.gantt', icon: 'pi pi-chart-bar', route: '/projects/gantt' },
       {
         id: 'projects-reports',
         labelKey: 'menu.projects.reports',
@@ -42,6 +52,10 @@ export const APP_MENU: MenuItem[] = [
     ],
   },
   { id: 'calendar', labelKey: 'menu.calendar', icon: 'pi pi-calendar', route: '/calendar' },
+  { id: 'files', labelKey: 'menu.files', icon: 'pi pi-folder-open', route: '/files' },
+
+  { id: 'sec-components', labelKey: 'menu.section.components', separator: true },
+  { id: 'date-picker', labelKey: 'menu.datePicker', icon: 'pi pi-calendar-plus', route: '/components/date-picker' },
 
   { id: 'sec-system', labelKey: 'menu.section.system', separator: true },
   { id: 'playground', labelKey: 'menu.playground', icon: 'pi pi-bolt', route: '/playground' },

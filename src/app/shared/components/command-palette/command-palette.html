@@ -1,0 +1,83 @@
+<!-- Palette overlay -->
+@if (palette.open()) {
+  <div class="fixed inset-0 z-[1300]" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]" (click)="palette.hide()"></div>
+
+    <div class="absolute inset-x-3 top-[14vh] mx-auto max-w-xl overflow-hidden rounded-2xl border border-surface-200 bg-surface-0 shadow-2xl dark:border-surface-700 dark:bg-surface-900">
+      <!-- search -->
+      <div class="flex items-center gap-3 border-b border-surface-200 px-4 dark:border-surface-800">
+        <i class="pi pi-search text-muted-color"></i>
+        <input
+          #searchInput
+          type="text"
+          [value]="query()"
+          (input)="onQuery(searchInput.value)"
+          (keydown)="onKeydown($event)"
+          [placeholder]="'palette.placeholder' | transloco"
+          class="h-13 w-full bg-transparent py-4 text-sm outline-none placeholder:text-muted-color"
+        />
+        <kbd class="rounded border border-surface-300 px-1.5 py-0.5 text-[10px] text-muted-color dark:border-surface-600">Esc</kbd>
+      </div>
+
+      <!-- results -->
+      <ul class="thin-scroll max-h-[46vh] overflow-y-auto p-2">
+        @for (cmd of filtered(); track cmd.id; let i = $index) {
+          @if (isNewGroup(i)) {
+            <li class="px-3 pb-1 pt-3 text-[10px] font-semibold uppercase tracking-wider text-muted-color/70">
+              {{ cmd.groupKey | transloco }}
+            </li>
+          }
+          <li>
+            <button
+              type="button"
+              (click)="execute(cmd)"
+              (mouseenter)="selected.set(i)"
+              class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-start text-sm"
+              [class.bg-primary]="selected() === i"
+              [class.text-primary-contrast]="selected() === i"
+              [class.hover:bg-surface-100]="selected() !== i"
+              [class.dark:hover:bg-surface-800]="selected() !== i"
+            >
+              <i [class]="cmd.icon" class="shrink-0 text-base opacity-80"></i>
+              <span class="truncate-1 flex-1">{{ cmd.labelKey | transloco }}</span>
+              @if (selected() === i) { <i class="pi pi-arrow-left text-xs ltr:rotate-180"></i> }
+            </button>
+          </li>
+        } @empty {
+          <li class="py-10 text-center text-sm text-muted-color">{{ 'palette.noResults' | transloco }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+}
+
+<!-- Shortcuts help -->
+<p-dialog
+  [visible]="shortcuts.helpOpen()"
+  (visibleChange)="shortcuts.helpOpen.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '22rem', maxWidth: '94vw' }"
+  [header]="'shortcuts.title' | transloco"
+>
+  <ul class="flex flex-col gap-3 pt-1 text-sm">
+    <li class="flex items-center justify-between">
+      <span>{{ 'shortcuts.palette' | transloco }}</span>
+      <span class="flex gap-1" dir="ltr">
+        <kbd class="kbd">Ctrl</kbd><kbd class="kbd">K</kbd>
+      </span>
+    </li>
+    <li class="flex items-center justify-between">
+      <span>{{ 'shortcuts.sidebar' | transloco }}</span>
+      <span class="flex gap-1" dir="ltr">
+        <kbd class="kbd">Ctrl</kbd><kbd class="kbd">B</kbd>
+      </span>
+    </li>
+    <li class="flex items-center justify-between">
+      <span>{{ 'shortcuts.help' | transloco }}</span>
+      <span class="flex gap-1" dir="ltr">
+        <kbd class="kbd">Shift</kbd><kbd class="kbd">?</kbd>
+      </span>
+    </li>
+  </ul>
+</p-dialog>

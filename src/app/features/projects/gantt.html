@@ -1,0 +1,85 @@
+<div class="mb-5">
+  <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
+    {{ 'gantt.title' | transloco }}
+  </h1>
+  <p class="mt-1 text-sm text-muted-color">{{ 'gantt.subtitle' | transloco }}</p>
+</div>
+
+@if (loading()) {
+  <app-skeleton-table [rows]="8" [cols]="3" />
+} @else {
+  <div class="overflow-x-auto rounded-2xl border border-surface-200 bg-surface-0 dark:border-surface-800 dark:bg-surface-900">
+    <div class="min-w-[42rem]">
+
+      <!-- Month header -->
+      <div class="flex border-b border-surface-200 dark:border-surface-800">
+        <div class="w-48 shrink-0 border-e border-surface-200 px-4 py-2.5 text-xs font-semibold text-muted-color dark:border-surface-800">
+          {{ 'table.name' | transloco }}
+        </div>
+        <div class="flex flex-1">
+          @for (m of months(); track $index) {
+            <div
+              class="border-e border-surface-100 py-2.5 text-center text-xs font-semibold text-muted-color last:border-0 dark:border-surface-800/60"
+              [style.width.%]="m.width"
+            >
+              {{ m.label }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Rows -->
+      <div class="relative">
+        <!-- today marker -->
+        <div
+          class="pointer-events-none absolute bottom-0 top-0 z-10 w-px bg-red-400"
+          style="inset-inline-start: calc(12rem + (100% - 12rem) * var(--today-pos, 0))"
+          [style.--today-pos]="todayPos() / 100"
+        ></div>
+
+        @for (r of rows(); track r.project.id) {
+          <div class="flex border-b border-surface-100 last:border-0 dark:border-surface-800/60">
+            <!-- label -->
+            <a
+              [routerLink]="['/projects', r.project.id]"
+              class="w-48 shrink-0 border-e border-surface-200 px-4 py-3 dark:border-surface-800"
+            >
+              <span class="truncate-1 block text-sm font-medium hover:text-primary">{{ r.project.name }}</span>
+              <span class="truncate-1 block text-xs text-muted-color">{{ r.project.owner }}</span>
+            </a>
+
+            <!-- track -->
+            <div class="relative flex-1 py-3">
+              <a
+                [routerLink]="['/projects', r.project.id]"
+                class="absolute top-1/2 block h-5 -translate-y-1/2 rounded-full shadow-sm transition-transform hover:scale-y-110"
+                [class]="barClass(r.project)"
+                [class.rounded-s-none!]="r.clippedStart"
+                [class.rounded-e-none!]="r.clippedEnd"
+                [style.inset-inline-start.%]="r.start"
+                [style.width.%]="r.width"
+                [pTooltip]="
+                  r.project.name + ' — ' +
+                  (r.project.startDate | appDate) + ' ← ' + (r.project.dueDate | appDate)
+                "
+                tooltipPosition="top"
+              >
+                <span class="absolute inset-y-0 start-2 hidden items-center text-[10px] font-semibold text-white sm:flex">
+                  {{ r.project.progress }}%
+                </span>
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="mt-3 flex flex-wrap items-center gap-4 text-xs text-muted-color">
+    <span class="flex items-center gap-1.5"><span class="size-2.5 rounded-full bg-primary"></span>{{ 'status.active' | transloco }}</span>
+    <span class="flex items-center gap-1.5"><span class="size-2.5 rounded-full bg-amber-400"></span>{{ 'status.paused' | transloco }}</span>
+    <span class="flex items-center gap-1.5"><span class="size-2.5 rounded-full bg-surface-400"></span>{{ 'status.done' | transloco }}</span>
+    <span class="flex items-center gap-1.5"><span class="h-3 w-px bg-red-400"></span>{{ 'gantt.today' | transloco }}</span>
+  </div>
+}

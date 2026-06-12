@@ -20,6 +20,11 @@ export const routes: Routes = [
         data: { titleKey: 'menu.dashboard' },
       },
       {
+        path: 'dashboard/analytics',
+        loadComponent: () => import('./features/dashboard/analytics').then((m) => m.Analytics),
+        data: { titleKey: 'analytics.title' },
+      },
+      {
         path: 'projects',
         loadComponent: () =>
           import('./features/projects/projects-table').then((m) => m.ProjectsTable),
@@ -32,9 +37,46 @@ export const routes: Routes = [
         data: { titleKey: 'wizard.title' },
       },
       {
+        path: 'projects/board',
+        loadComponent: () => import('./features/projects/kanban').then((m) => m.Kanban),
+        data: { titleKey: 'menu.projects.board' },
+      },
+      {
+        path: 'projects/gantt',
+        loadComponent: () => import('./features/projects/gantt').then((m) => m.Gantt),
+        data: { titleKey: 'gantt.title' },
+      },
+      {
+        path: 'projects/:id',
+        loadComponent: () =>
+          import('./features/projects/project-detail').then((m) => m.ProjectDetail),
+        data: { titleKey: 'projects.detail' },
+      },
+      {
+        path: 'components/date-picker',
+        loadComponent: () =>
+          import('./features/components-demo/date-picker-demo').then((m) => m.DatePickerDemo),
+        data: { titleKey: 'menu.datePicker' },
+      },
+      {
         path: 'profile',
         loadComponent: () => import('./features/profile/profile').then((m) => m.Profile),
         data: { titleKey: 'menu.profile' },
+      },
+      {
+        path: 'people/team',
+        loadComponent: () => import('./features/team/team').then((m) => m.Team),
+        data: { titleKey: 'menu.people.team' },
+      },
+      {
+        path: 'calendar',
+        loadComponent: () => import('./features/calendar/calendar').then((m) => m.CalendarPage),
+        data: { titleKey: 'menu.calendar' },
+      },
+      {
+        path: 'files',
+        loadComponent: () => import('./features/files/file-manager').then((m) => m.FileManager),
+        data: { titleKey: 'menu.files' },
       },
       {
         path: 'people/roles',

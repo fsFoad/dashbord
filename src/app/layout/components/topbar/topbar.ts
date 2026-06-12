@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { Tooltip } from 'primeng/tooltip';
 import { Menu } from 'primeng/menu';
 import { Avatar } from 'primeng/avatar';
+import { Popover } from 'primeng/popover';
 import type { MenuItem as PrimeMenuItem } from 'primeng/api';
 import { Breadcrumb } from '../breadcrumb/breadcrumb';
 import { LayoutService } from '../../../core/services/layout.service';
@@ -13,10 +14,13 @@ import { LanguageService } from '../../../core/services/language.service';
 import { SettingsStore } from '../../../core/services/settings.store';
 import { SessionStore } from '../../../core/services/session.store';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { CommandPaletteService } from '../../../core/services/command-palette.service';
+import { LocalizedDatePipe } from '../../../shared/pipes/localized-date.pipe';
 
 @Component({
   selector: 'app-topbar',
-  imports: [TranslocoModule, ButtonModule, Tooltip, Menu, Avatar, Breadcrumb],
+  imports: [TranslocoModule, ButtonModule, Tooltip, Menu, Avatar, Popover, Breadcrumb, LocalizedDatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topbar.html',
 })
@@ -26,6 +30,8 @@ export class Topbar {
   protected readonly settings = inject(SettingsStore);
   protected readonly session = inject(SessionStore);
   private readonly auth = inject(AuthService);
+  protected readonly notifications = inject(NotificationService);
+  private readonly palette = inject(CommandPaletteService);
   private readonly router = inject(Router);
   private readonly transloco = inject(TranslocoService);
 
@@ -64,4 +70,5 @@ export class Topbar {
   protected toggleLang(): void { this.language.toggle(); }
   protected openSettings(): void { this.layout.openSettings(); }
   protected openProfile(e: Event): void { this.profileMenu().toggle(e); }
+  protected openPalette(): void { this.palette.show(); }
 }

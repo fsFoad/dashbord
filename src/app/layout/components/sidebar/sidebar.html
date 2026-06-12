@@ -18,7 +18,7 @@
   </a>
 
   <!-- Menu (per-user: role-filtered + pinned + hidden) -->
-  <nav class="thin-scroll flex-1 overflow-y-auto py-2">
+  <nav data-tour="menu" class="thin-scroll flex-1 overflow-y-auto py-2">
     <ul class="space-y-0.5 px-2">
       @for (item of menuService.menu(); track item.id) {
         <app-menu-item [item]="item" [level]="0" />

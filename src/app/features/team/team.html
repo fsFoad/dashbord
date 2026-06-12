@@ -1,0 +1,97 @@
+<div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+  <div>
+    <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">{{ 'team.title' | transloco }}</h1>
+    <p class="mt-1 text-sm text-muted-color">{{ 'team.subtitle' | transloco }}</p>
+  </div>
+  <div class="flex items-center gap-2">
+    <span class="relative">
+      <i class="pi pi-search absolute start-3 top-1/2 -translate-y-1/2 text-sm text-muted-color"></i>
+      <input pInputText [(ngModel)]="q" (ngModelChange)="query.set($event)" [placeholder]="'table.search' | transloco" class="w-52 ps-9!" />
+    </span>
+    <p-button *appHasRole="'admin'" [label]="'team.invite' | transloco" icon="pi pi-user-plus" (onClick)="inviteOpen.set(true)" />
+  </div>
+</div>
+
+@if (members() === null) {
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <app-skeleton-card [rows]="3" /><app-skeleton-card [rows]="3" /><app-skeleton-card [rows]="3" />
+  </div>
+} @else {
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+    @for (m of filtered(); track m.id) {
+      <div class="rounded-2xl border border-surface-200 bg-surface-0 p-5 dark:border-surface-800 dark:bg-surface-900" [class.opacity-60]="!m.active">
+        <div class="flex items-start gap-3">
+          <span class="grid size-12 shrink-0 place-items-center rounded-2xl bg-primary/15 text-base font-bold text-primary">
+            {{ initials(m.name) }}
+          </span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="truncate-1 font-semibold">{{ m.name }}</span>
+              <p-tag [value]="'role.' + m.role | transloco" [severity]="roleSeverity(m.role)" />
+            </div>
+            <div class="truncate-1 text-sm text-muted-color" dir="ltr">{{ m.email }}</div>
+            <div class="mt-1 text-xs text-muted-color">{{ 'team.joined' | transloco }}: {{ m.joinedAt | appDate }}</div>
+          </div>
+        </div>
+
+        <!-- admin controls -->
+        <div *appHasRole="'admin'" class="mt-4 flex items-center justify-between gap-3 border-t border-surface-100 pt-4 dark:border-surface-800">
+          <p-select
+            [options]="roleOptions"
+            optionValue="value"
+            [ngModel]="m.role"
+            (ngModelChange)="setRole(m, $event)"
+            styleClass="w-36"
+            size="small"
+          >
+            <ng-template #item let-o>{{ 'role.' + o.value | transloco }}</ng-template>
+            <ng-template #selectedItem let-o>{{ 'role.' + o.value | transloco }}</ng-template>
+          </p-select>
+          <label class="flex items-center gap-2 text-xs text-muted-color">
+            {{ 'team.active' | transloco }}
+            <p-toggleswitch [ngModel]="m.active" (ngModelChange)="setActive(m, $event)" />
+          </label>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-span-full rounded-2xl border border-dashed border-surface-300 py-12 text-center text-sm text-muted-color dark:border-surface-700">
+        {{ 'table.empty' | transloco }}
+      </div>
+    }
+  </div>
+}
+
+<!-- Invite dialog -->
+<p-dialog
+  [visible]="inviteOpen()"
+  (visibleChange)="inviteOpen.set($event)"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '24rem', maxWidth: '94vw' }"
+  [header]="'team.invite' | transloco"
+>
+  <div class="flex flex-col gap-4 pt-1">
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-medium">{{ 'auth.name' | transloco }}</label>
+      <input pInputText [(ngModel)]="invite.name" />
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-medium">{{ 'auth.email' | transloco }}</label>
+      <input pInputText type="email" [(ngModel)]="invite.email" dir="ltr" />
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-medium">{{ 'team.role' | transloco }}</label>
+      <p-select [options]="roleOptions" optionValue="value" [(ngModel)]="invite.role" styleClass="w-full">
+        <ng-template #item let-o>{{ 'role.' + o.value | transloco }}</ng-template>
+        <ng-template #selectedItem let-o>{{ 'role.' + o.value | transloco }}</ng-template>
+      </p-select>
+    </div>
+    @if (inviteError()) {
+      <small class="text-red-500">{{ inviteError()! | transloco }}</small>
+    }
+  </div>
+  <ng-template #footer>
+    <p-button [label]="'confirm.reject' | transloco" severity="secondary" [text]="true" size="small" (onClick)="inviteOpen.set(false)" />
+    <p-button [label]="'team.sendInvite' | transloco" icon="pi pi-send" size="small" [loading]="inviting()" (onClick)="sendInvite()" />
+  </ng-template>
+</p-dialog>
