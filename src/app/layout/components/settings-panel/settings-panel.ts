@@ -11,7 +11,9 @@ import { LayoutService } from '../../../core/services/layout.service';
 import { SettingsStore } from '../../../core/services/settings.store';
 import { LanguageService } from '../../../core/services/language.service';
 import { THEME_PRESETS, SURFACE_PALETTES } from '../../../core/config/theme-presets';
-import { FONT_OPTIONS } from '../../../core/config/fonts.config';
+import { FONT_OPTIONS, FontOption, isFontUsable } from '../../../core/config/fonts.config';
+import { FontLoaderService, FontStatus } from '../../../core/services/font-loader.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-settings-panel',
@@ -31,6 +33,8 @@ export class SettingsPanel {
   protected readonly layout = inject(LayoutService);
   protected readonly settings = inject(SettingsStore);
   protected readonly language = inject(LanguageService);
+  private readonly toast = inject(ToastService);
+  private readonly fontLoader = inject(FontLoaderService);
 
   protected readonly presets = THEME_PRESETS;
   protected readonly surfaces = SURFACE_PALETTES;
@@ -64,7 +68,23 @@ export class SettingsPanel {
 
   protected pickPreset(key: string): void { this.settings.setThemePreset(key); }
   protected pickSurface(key: string): void { this.settings.setSurface(key); }
-  protected pickFont(value: string): void { this.settings.setFontFamily(value); }
+  protected usable(f: FontOption): boolean {
+    return isFontUsable(f);
+  }
+
+  protected fontStatus(f: FontOption): FontStatus {
+    return this.fontLoader.statusOf(f.value)();
+  }
+
+  protected async pickFont(f: FontOption): Promise<void> {
+    if (!this.usable(f)) return;
+    const ok = await this.fontLoader.ensure(f);
+    if (ok) {
+      this.settings.setFontFamily(f.value);
+    } else {
+      this.toast.error('settings.font.failed');
+    }
+  }
 
   protected applyCustomColor(hex: string): void {
     // ColorPicker emits without a leading '#'; normalize it.
@@ -72,6 +92,17 @@ export class SettingsPanel {
     this.settings.setCustomPrimaryColor(value);
   }
   protected clearCustomColor(): void { this.settings.setCustomPrimaryColor(null); }
+
+  protected onImport(e: Event): void {
+    const input = e.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) return;
+    file.text().then((json) => {
+      if (this.settings.import(json)) this.toast.success('settings.importOk');
+      else this.toast.error('settings.importBad');
+    });
+  }
 
   protected exportSettings(): void {
     const blob = new Blob([this.settings.export()], { type: 'application/json' });

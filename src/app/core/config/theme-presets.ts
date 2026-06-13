@@ -58,7 +58,15 @@ export interface SurfacePalette {
   palette: Palette;
 }
 
+/** Hand-tuned navy ramp: dark mode becomes deep blue instead of near-black. */
+const NAVY: Palette = {
+  50: '#f4f7fb', 100: '#e6ecf5', 200: '#cdd9ec', 300: '#a9bdd9', 400: '#7f97bd',
+  500: '#5e75a0', 600: '#485d85', 700: '#3a4a6b', 800: '#232f4e', 900: '#16203c',
+  950: '#0d1530',
+};
+
 export const SURFACE_PALETTES: SurfacePalette[] = [
+  { key: 'navy', swatch: '#16203c', palette: NAVY },
   { key: 'slate', swatch: '#64748b', palette: ramp('slate') },
   { key: 'gray', swatch: '#6b7280', palette: ramp('gray') },
   { key: 'zinc', swatch: '#71717a', palette: ramp('zinc') },

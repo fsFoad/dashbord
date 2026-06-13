@@ -16,6 +16,8 @@ export type Density = 'compact' | 'normal';
  * anti-FOUC script in index.html reads. Keep it JSON-safe.
  */
 export interface AppSettings {
+  /** Settings schema version (for silent migrations). */
+  _v?: number;
   language: AppLanguage;
   darkMode: boolean;
   /** Key into THEME_PRESETS. */

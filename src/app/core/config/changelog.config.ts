@@ -27,6 +27,17 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '1.1.0',
+    date: '2026-06-13',
+    entries: [
+      { type: 'fix', fa: 'حفظ کامل وضعیت هر صفحه هنگام جابه‌جایی بین تب‌ها (فیلترها، اسکرول و نمودارها دیگر از بین نمی‌روند)', en: 'Each tab now fully preserves its state when switching (filters, scroll and charts no longer reset)' },
+      { type: 'feature', fa: 'دانلود خودکار فونت‌های فارسی هنگام انتخاب، بدون نیاز به نصب چیزی روی دستگاه', en: 'On-demand download of Persian fonts when selected — nothing to install on the device' },
+      { type: 'feature', fa: 'امکان ورود (Import) فایل تنظیمات کنار خروجی گرفتن', en: 'Import a settings file alongside export' },
+      { type: 'improvement', fa: 'حالت تیره‌ی سرمه‌ای به‌جای مشکی، به‌صورت پیش‌فرض', en: 'Navy dark mode by default instead of near-black' },
+      { type: 'improvement', fa: 'اعمال واقعی حالت فشرده (Compact) روی جدول‌ها و منوها', en: 'Compact density now genuinely applies to tables and menus' },
+    ],
+  },
+  {
     version: '1.0.0',
     date: '2026-06-12',
     entries: [

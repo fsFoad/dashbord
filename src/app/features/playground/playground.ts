@@ -10,8 +10,7 @@ import { NotificationService } from '../../core/services/notification.service';
 import { TIMEOUT_MS } from '../../core/interceptors/http-context';
 import { JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DatePickerComponent }
-  from '../../shared/components/date-picker/date-picker';
+import { DatePicker, PickerValue } from '../../shared/components/date-picker/date-picker';
 import { SkeletonTable } from '../../shared/components/skeleton/skeleton-table';
 
 /**
@@ -21,7 +20,7 @@ import { SkeletonTable } from '../../shared/components/skeleton/skeleton-table';
  */
 @Component({
   selector: 'app-playground',
-  imports: [JsonPipe, FormsModule, TranslocoModule, ButtonModule, SkeletonTable, DatePickerComponent],
+  imports: [JsonPipe, FormsModule, TranslocoModule, ButtonModule, SkeletonTable, DatePicker],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
@@ -196,13 +195,11 @@ export class Playground {
   protected readonly busy = signal(false);
   protected readonly projects = signal<Project[]>([]);
 
-  protected pDate: string | null = null;
-
-  protected pRange: [string, string] | null = null;
-
-  protected pTime: string | null = null;
-
-  protected pTimeRange: [string, string] | null = null;
+  // date-picker showcase models
+  protected pDate: PickerValue = null;
+  protected pRange: PickerValue = null;
+  protected pTime: PickerValue = null;
+  protected pTimeRange: PickerValue = null;
 
   protected loadProjects(): void {
     this.busy.set(true);

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -46,6 +46,13 @@ export class Kanban {
   protected readonly selectedProjectId = signal<number | null>(
     Number(this.route.snapshot.queryParamMap.get('project')) || null,
   );
+
+  private readonly syncQueryParam = this.route.queryParamMap
+    .pipe(takeUntilDestroyed())
+    .subscribe((pm) => {
+      const id = Number(pm.get('project'));
+      if (id) this.selectedProjectId.set(id);
+    });
 
   // ---- board state ----
   protected readonly tasks = signal<Task[]>([]);

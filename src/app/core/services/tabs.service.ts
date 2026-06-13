@@ -2,6 +2,7 @@ import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { RouteCacheService } from './route-cache.service';
 import { SessionStore } from './session.store';
 import { StorageService } from './storage.service';
 
@@ -29,6 +30,7 @@ export class TabsService {
   private readonly router = inject(Router);
   private readonly session = inject(SessionStore);
   private readonly storage = inject(StorageService);
+  private readonly cache = inject(RouteCacheService);
 
   private readonly _tabs = signal<AppTab[]>([HOME]);
   readonly tabs = this._tabs.asReadonly();
@@ -37,9 +39,10 @@ export class TabsService {
   readonly count = computed(() => this._tabs().length);
 
   constructor() {
-    // restore per user
+    // restore per user (and drop every cached page from the previous user)
     effect(() => {
       const u = this.session.user();
+      this.cache.clearAll();
       const saved = u ? this.storage.read<AppTab[]>(keyFor(u.id), [HOME]) : [HOME];
       const tabs = saved.length ? saved : [HOME];
       if (!tabs.some((t) => t.key === HOME.key)) tabs.unshift(HOME);
@@ -69,6 +72,7 @@ export class TabsService {
 
     const next = tabs.filter((t) => t.key !== key);
     this._tabs.set(next);
+    this.cache.clear(key); // free the detached component
 
     if (this.activeKey() === key) {
       const fallback = next[Math.min(idx, next.length - 1)] ?? HOME;
@@ -77,6 +81,9 @@ export class TabsService {
   }
 
   closeOthers(key: string): void {
+    for (const t of this._tabs()) {
+      if (t.closable && t.key !== key) this.cache.clear(t.key);
+    }
     this._tabs.update((tabs) => tabs.filter((t) => !t.closable || t.key === key));
     const keep = this._tabs().find((t) => t.key === key);
     if (keep) this.router.navigateByUrl(keep.url);
@@ -99,6 +106,7 @@ export class TabsService {
       while (next.length > MAX_TABS) {
         const victim = next.find((t) => t.closable && t.key !== key);
         if (!victim) break;
+        this.cache.clear(victim.key);
         next.splice(next.indexOf(victim), 1);
       }
       return next;

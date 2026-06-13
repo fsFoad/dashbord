@@ -23,7 +23,7 @@ export const BRANDING: BrandingConfig = {
     language: 'fa',
     darkMode: false,
     themePreset: 'indigo',
-    surface: 'slate',
+    surface: 'navy',
     customPrimaryColor: null,
     fontFamily: '"Vazirmatn", system-ui, sans-serif',
     layout: 'dashboard',

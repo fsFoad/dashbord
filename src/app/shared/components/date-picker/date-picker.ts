@@ -28,6 +28,9 @@ export type CalendarSystem = 'jalali' | 'gregorian';
 export interface DateRange { start: Date | null; end: Date | null }
 export interface TimeRange { start: string | null; end: string | null }
 
+/** Any value the picker can emit, across all five modes. */
+export type PickerValue = Date | DateRange | TimeRange | string | null;
+
 interface Cell {
   day: number;
   date: Date;
@@ -545,3 +548,6 @@ export class DatePickerComponent implements ControlValueAccessor {
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
   setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 }
+
+/** Back-compat alias: the component is also exported as `DatePicker`. */
+export { DatePickerComponent as DatePicker };

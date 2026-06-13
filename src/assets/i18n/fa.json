@@ -391,5 +391,10 @@
   "whatsnew.gotIt": "متوجه شدم",
   "whatsnew.type.feature": "ویژگی",
   "whatsnew.type.improvement": "بهبود",
-  "whatsnew.type.fix": "رفع اشکال"
+  "whatsnew.type.fix": "رفع اشکال",
+  "settings.import": "ورود تنظیمات",
+  "settings.importOk": "تنظیمات با موفقیت وارد شد",
+  "settings.importBad": "فایل تنظیمات نامعتبر است",
+  "settings.font.download": "دانلود",
+  "settings.font.failed": "خطا در دریافت فونت"
 }

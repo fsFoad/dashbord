@@ -45,6 +45,11 @@ export class ThemeService {
       );
     });
 
+    // Density (compact/normal) → consumed by CSS rules in styles.css.
+    effect(() => {
+      this.doc.documentElement.setAttribute('data-density', this.settings.density());
+    });
+
     // Dark mode — kept in sync with PrimeNG's darkModeSelector ('.app-dark').
     effect(() => {
       this.doc.documentElement.classList.toggle('app-dark', this.settings.darkMode());

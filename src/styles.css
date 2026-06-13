@@ -145,3 +145,11 @@ body {
     padding: 1rem 1.25rem;
   }
 }
+
+/* Density: compact tightens data-heavy surfaces (toggle in settings panel). */
+@layer components {
+  [data-density='compact'] .p-datatable .p-datatable-tbody > tr > td { padding-block: 0.45rem; }
+  [data-density='compact'] .p-datatable .p-datatable-thead > tr > th { padding-block: 0.55rem; }
+  [data-density='compact'] .p-dialog .p-dialog-content { padding-block: 0.75rem 1rem; }
+  [data-density='compact'] .p-menu .p-menu-item-link { padding-block: 0.4rem; }
+}

@@ -10,6 +10,18 @@ import {
 } from '../models/settings.model';
 
 const STORAGE_KEY = 'app.settings';
+const SETTINGS_VERSION = 2;
+
+/** Silent, additive migrations for previously persisted settings. */
+function migrate(s: AppSettings): AppSettings {
+  const out = { ...s };
+  if ((out._v ?? 1) < 2) {
+    // v2: navy became the default surface; move users still on the old default.
+    if (out.surface === 'slate') out.surface = 'navy';
+  }
+  out._v = SETTINGS_VERSION;
+  return out;
+}
 
 /**
  * Central application settings, held entirely in Signals (no NgRx).
@@ -22,7 +34,7 @@ export class SettingsStore {
   private readonly storage = inject(StorageService);
 
   private readonly state = signal<AppSettings>(
-    this.storage.read<AppSettings>(STORAGE_KEY, BRANDING.defaults),
+    migrate(this.storage.read<AppSettings>(STORAGE_KEY, BRANDING.defaults)),
   );
 
   // ---- Read-only selectors ----

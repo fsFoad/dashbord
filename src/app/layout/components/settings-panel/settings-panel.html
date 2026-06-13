@@ -93,17 +93,28 @@
         @for (f of fonts; track f.value) {
           <button
             type="button"
-            (click)="pickFont(f.value)"
-            [disabled]="!f.ready"
-            class="flex items-center justify-between rounded-lg border px-3 py-2 text-start text-sm transition disabled:opacity-40"
+            (click)="pickFont(f)"
+            [disabled]="!usable(f)"
+            class="flex items-center justify-between gap-2 rounded-lg border px-3 py-2 text-start text-sm transition disabled:opacity-40"
             [style.font-family]="f.value"
             [class.border-primary]="settings.fontFamily() === f.value"
             [class.border-surface-200]="settings.fontFamily() !== f.value"
             [class.dark:border-surface-700]="settings.fontFamily() !== f.value"
           >
-            <span>{{ f.label }}</span>
-            @if (settings.fontFamily() === f.value) { <i class="pi pi-check text-xs text-primary"></i> }
-            @else if (!f.ready) { <span class="text-[10px] text-muted-color">{{ 'settings.font.needsFile' | transloco }}</span> }
+            <span class="truncate-1">{{ f.label }}</span>
+            @if (fontStatus(f) === 'loading') {
+              <i class="pi pi-spinner pi-spin text-xs text-muted-color"></i>
+            } @else if (settings.fontFamily() === f.value) {
+              <i class="pi pi-check text-xs text-primary"></i>
+            } @else if (fontStatus(f) === 'failed') {
+              <span class="text-[10px] text-red-500">{{ 'settings.font.failed' | transloco }}</span>
+            } @else if (!f.ready && f.cssUrl) {
+              <span class="flex items-center gap-1 text-[10px] text-muted-color">
+                <i class="pi pi-download"></i>{{ 'settings.font.download' | transloco }}
+              </span>
+            } @else if (!f.ready) {
+              <span class="text-[10px] text-muted-color">{{ 'settings.font.needsFile' | transloco }}</span>
+            }
           </button>
         }
       </div>
@@ -158,6 +169,14 @@
         severity="secondary"
         size="small"
         (onClick)="exportSettings()"
+      />
+      <input #importInput type="file" accept=".json,application/json" class="hidden" (change)="onImport($event)" />
+      <p-button
+        [label]="'settings.import' | transloco"
+        icon="pi pi-upload"
+        severity="secondary"
+        size="small"
+        (onClick)="importInput.click()"
       />
       <p-button
         [label]="'settings.reset' | transloco"

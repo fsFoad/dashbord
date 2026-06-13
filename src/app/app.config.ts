@@ -6,7 +6,12 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
+import {
+  RouteReuseStrategy,
+  provideRouter,
+  withInMemoryScrolling,
+  withViewTransitions,
+} from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -22,6 +27,7 @@ import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { mockBackendInterceptor } from './core/interceptors/mock-backend.interceptor';
 import { GlobalErrorHandler } from './core/handlers/global-error-handler';
+import { TabReuseStrategy } from './core/routing/tab-reuse.strategy';
 import { ThemeService } from './core/services/theme.service';
 import { FontService } from './core/services/font.service';
 import { LanguageService } from './core/services/language.service';
@@ -61,6 +67,8 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     ConfirmationService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    // Keep each open tab's component alive (Signals state survives tab switches).
+    { provide: RouteReuseStrategy, useClass: TabReuseStrategy },
 
     providePrimeNG({
       ripple: true,
