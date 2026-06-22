@@ -10,6 +10,15 @@ export type MenuMode = 'static' | 'overlay' | 'slim' | 'horizontal';
 /** Spacing density for tables/cards/layout. */
 export type Density = 'compact' | 'normal';
 
+export type ThemePack =
+    | 'default'
+    | 'aurora'
+    | 'glass'
+    | 'ocean'
+    | 'banking'
+    | 'premium-dark'
+    | 'sunset'
+    | 'cyber';
 /**
  * The complete, serializable settings object.
  * This is exactly what gets persisted to localStorage and what the
@@ -22,6 +31,8 @@ export interface AppSettings {
   darkMode: boolean;
   /** Key into THEME_PRESETS. */
   themePreset: string;
+  /** Key into THEME_PACKAGE. */
+  themePack: ThemePack;
   /** Key into SURFACE_PALETTES. */
   surface: string;
   /** A custom brand color (hex). When set it overrides themePreset's primary. */
@@ -32,4 +43,5 @@ export interface AppSettings {
   menuMode: MenuMode;
   sidebarCollapsed: boolean;
   density: Density;
+
 }

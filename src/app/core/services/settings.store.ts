@@ -6,7 +6,7 @@ import {
   AppSettings,
   Density,
   LayoutType,
-  MenuMode,
+  MenuMode, ThemePack,
 } from '../models/settings.model';
 
 const STORAGE_KEY = 'app.settings';
@@ -33,8 +33,10 @@ function migrate(s: AppSettings): AppSettings {
 export class SettingsStore {
   private readonly storage = inject(StorageService);
 
+  /** Store از اینجا مقدار می‌خونه */
   private readonly state = signal<AppSettings>(
     migrate(this.storage.read<AppSettings>(STORAGE_KEY, BRANDING.defaults)),
+
   );
 
   // ---- Read-only selectors ----
@@ -49,11 +51,14 @@ export class SettingsStore {
   readonly menuMode = computed(() => this.state().menuMode);
   readonly sidebarCollapsed = computed(() => this.state().sidebarCollapsed);
   readonly density = computed(() => this.state().density);
+  readonly themePack = computed(() => this.state().themePack);
   readonly isRtl = computed(() => this.state().language === 'fa');
 
   constructor() {
     // Persist on any change.
+
     effect(() => this.storage.write(STORAGE_KEY, this.state()));
+
   }
 
   // ---- Mutations ----
@@ -73,6 +78,9 @@ export class SettingsStore {
   setSidebarCollapsed(sidebarCollapsed: boolean): void { this.patch({ sidebarCollapsed }); }
   toggleSidebar(): void { this.patch({ sidebarCollapsed: !this.state().sidebarCollapsed }); }
   setDensity(density: Density): void { this.patch({ density }); }
+  setThemePack(themePack: ThemePack): void {
+    this.patch({ themePack });
+  }
 
   /** Reset everything back to the project branding defaults. */
   reset(): void { this.state.set({ ...BRANDING.defaults }); }

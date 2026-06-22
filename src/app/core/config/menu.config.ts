@@ -7,8 +7,8 @@ import { MenuItem } from '../models/menu-item.model';
  * by role and pinned items.
  */
 export const APP_MENU: MenuItem[] = [
-  { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
-  {
+
+ /* {
     id: 'dashboard',
     labelKey: 'menu.dashboard',
     icon: 'pi pi-home',
@@ -53,11 +53,20 @@ export const APP_MENU: MenuItem[] = [
   },
   { id: 'calendar', labelKey: 'menu.calendar', icon: 'pi pi-calendar', route: '/calendar' },
   { id: 'files', labelKey: 'menu.files', icon: 'pi pi-folder-open', route: '/files' },
-
-  { id: 'sec-components', labelKey: 'menu.section.components', separator: true },
+*/
+/*  { id: 'sec-components', labelKey: 'menu.section.components', separator: true },*/
+  { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
   { id: 'date-picker', labelKey: 'menu.datePicker', icon: 'pi pi-calendar-plus', route: '/components/date-picker' },
-
-  { id: 'sec-system', labelKey: 'menu.section.system', separator: true },
+  {
+    id: 'dashboard',
+    labelKey: 'menu.dashboard',
+    icon: 'pi pi-home',
+    children: [
+      { id: 'dashboard-overview', labelKey: 'menu.dashboard.overview', icon: 'pi pi-th-large', route: '/dashboard' },
+      { id: 'dashboard-analytics', labelKey: 'menu.dashboard.analytics', icon: 'pi pi-chart-line', route: '/dashboard/analytics' },
+    ],
+  },
+  /*{ id: 'sec-system', labelKey: 'menu.section.system', separator: true },*/
   { id: 'playground', labelKey: 'menu.playground', icon: 'pi pi-bolt', route: '/playground' },
   { id: 'settings', labelKey: 'menu.settings', icon: 'pi pi-cog', route: '/settings' },
   { id: 'docs', labelKey: 'menu.docs', icon: 'pi pi-book', href: 'https://primeng.org' },

@@ -27,6 +27,7 @@ export class ThemeService {
     // takes precedence over the chosen preset.
     effect(() => {
       const custom = this.settings.customPrimaryColor();
+      const html = this.doc.documentElement;
       if (custom) {
         updatePrimaryPalette(
           palette(custom) as Parameters<typeof updatePrimaryPalette>[0],
@@ -36,6 +37,23 @@ export class ThemeService {
           findPreset(this.settings.themePreset()).palette as Parameters<typeof updatePrimaryPalette>[0],
         );
       }
+
+      html.classList.remove(
+          'theme-default',
+          'theme-aurora',
+          'theme-glass',
+          'theme-ocean',
+          'theme-sunset',
+          'theme-cyber',
+          'theme-banking',
+          'theme-premium-dark'
+      );
+
+      html.classList.add(
+          `theme-${this.settings.themePack()}`
+      );
+      console.log('themePack');
+      console.log(this.settings.themePack());
     });
 
     // Surface (neutral) palette.

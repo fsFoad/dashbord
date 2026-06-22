@@ -26,7 +26,7 @@ export class NotificationService {
 
   constructor() {
     // start/stop with the session
-    effect(() => {
+ /*   effect(() => {
       if (this.session.isAuthenticated()) {
         this.seed();
         this.socket.connect();
@@ -35,7 +35,7 @@ export class NotificationService {
         this._items.set([]);
         this.seeded = false;
       }
-    });
+    });*/
 
     this.socket.messages$.pipe(takeUntilDestroyed()).subscribe((n) => {
       this._items.update((list) => [n, ...list].slice(0, 30));

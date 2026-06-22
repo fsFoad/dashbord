@@ -23,7 +23,31 @@
         (ngModelChange)="settings.setDarkMode($event)"
       />
     </section>
+      <!-- Theme Pack -->
+      <section>
+          <h3 class="mb-3 text-sm font-semibold">
+              Theme Pack
+          </h3>
 
+          <div class="grid grid-cols-2 gap-2">
+
+              @for (theme of themePacks; track theme.value) {
+
+                  <button
+                          type="button"
+                          (click)="settings.setThemePack(theme.value)"
+                          class="rounded-lg border px-3 py-3 text-sm transition text-center"
+                          [class.border-primary]="settings.themePack() === theme.value"
+                          [class.border-surface-200]="settings.themePack() !== theme.value"
+                          [class.dark:border-surface-700]="settings.themePack() !== theme.value"
+                  >
+                      {{ theme.label }}
+                  </button>
+
+              }
+
+          </div>
+      </section>
     <!-- Color theme presets -->
     <section>
       <h3 class="mb-3 text-sm font-semibold">{{ 'settings.colorTheme' | transloco }}</h3>

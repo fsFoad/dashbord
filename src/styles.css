@@ -153,3 +153,228 @@ body {
   [data-density='compact'] .p-dialog .p-dialog-content { padding-block: 0.75rem 1rem; }
   [data-density='compact'] .p-menu .p-menu-item-link { padding-block: 0.4rem; }
 }
+/* ===========================
+   THEME PACKS
+   =========================== */
+
+/*Theme Pack 1 : Aurora Pro*/
+
+
+.theme-aurora .p-card,
+.theme-aurora .p-panel {
+  border-radius: 24px;
+  backdrop-filter: blur(12px);
+}
+
+
+html.theme-aurora app-sidebar .app-sidebar {
+    background:
+            linear-gradient(
+                    180deg,
+                    rgba(124,58,237,.15),
+                    rgba(6,182,212,.08)
+            ),
+            var(--p-surface-0);
+
+    backdrop-filter: blur(12px);
+}
+/*Theme Pack 2 : Glass*/
+.theme-glass .p-card,
+.theme-glass .p-panel,
+.theme-glass .p-datatable {
+
+    background: rgba(255,255,255,.07);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,.1);
+}
+html.theme-glass .p-inputtext,
+html.theme-glass .p-select,
+html.theme-glass .p-datepicker-input {
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(12px);
+}
+html.theme-glass .app-layout-root {
+    background:
+            radial-gradient(circle at top left,
+            rgba(99,102,241,.2),
+            transparent 40%),
+            radial-gradient(circle at bottom right,
+            rgba(168,85,247,.2),
+            transparent 40%),
+            #0f172a;
+}
+
+html.theme-glass app-sidebar .app-sidebar {
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(24px);
+    border-inline-end: 1px solid rgba(255,255,255,.08);
+}
+
+/*Theme Pack 3 : Cyber*/
+.theme-cyber .app-layout-root {
+    background:
+            #020617;
+}
+
+.theme-cyber .p-card {
+  border:
+          1px solid rgba(34,211,238,.3);
+
+  box-shadow:
+          0 0 20px rgba(34,211,238,.15);
+}
+
+
+
+html.theme-cyber app-sidebar .app-sidebar {
+    background:
+            linear-gradient(
+                    180deg,
+                    #020617,
+                    #0f172a
+            ) !important;
+
+    border-inline-end:
+            1px solid rgba(34,211,238,.25);
+
+    box-shadow:
+            inset -1px 0 0 rgba(34,211,238,.15);
+}
+html.theme-cyber .app-topbar {
+    background: rgba(2,6,23,.85) !important;
+
+    backdrop-filter: blur(16px);
+
+    border-bottom:
+            1px solid rgba(34,211,238,.15);
+}
+/*Theme Pack 4 : Neo Banking*/
+html.theme-banking .app-layout-root {
+    background:
+            linear-gradient(
+                    180deg,
+                    #f8fafc,
+                    #eef2ff
+            );
+}
+
+html.theme-banking app-sidebar .app-sidebar {
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #ffffff,
+                    #f8fafc
+            ) !important;
+
+    border-inline-end:
+            1px solid #e2e8f0;
+
+    box-shadow:
+            0 4px 30px rgba(15,23,42,.06);
+}
+
+html.theme-banking .app-content {
+    background:
+            linear-gradient(
+                    180deg,
+                    #eef2ff,
+                    #ffffff
+            );
+}
+
+html.theme-banking .p-card,
+html.theme-banking .p-panel {
+
+    border-radius: 20px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+            0 10px 30px rgba(15,23,42,.06);
+}
+html.theme-banking .app-topbar {
+    background: rgba(255,255,255,.85) !important;
+    backdrop-filter: blur(12px);
+
+    border-bottom:
+            1px solid rgba(226,232,240,.8);
+}
+/*Theme Pack 5 : Premium Dark*/
+html.theme-premium-dark .app-layout-root {
+
+    background:
+            radial-gradient(
+                    circle at top right,
+                    rgba(99,102,241,.15),
+                    transparent 35%
+            ),
+            #020617;
+}
+html.theme-premium-dark .app-topbar {
+    background: rgba(2,6,23,.75) !important;
+
+    backdrop-filter: blur(16px);
+
+    border-bottom:
+            1px solid rgba(255,255,255,.06);
+}
+html.theme-premium-dark app-sidebar .app-sidebar {
+
+    background:
+            linear-gradient(
+                    180deg,
+                    #0f172a,
+                    #111827
+            ) !important;
+
+    border-inline-end:
+            1px solid rgba(255,255,255,.06);
+}
+
+html.theme-premium-dark .app-content {
+    background: transparent;
+}
+
+html.theme-premium-dark .p-card,
+html.theme-premium-dark .p-panel {
+
+    background:
+            rgba(15,23,42,.85);
+
+    color:
+            #f8fafc;
+
+    border:
+            1px solid rgba(255,255,255,.06);
+
+    backdrop-filter:
+            blur(18px);
+}
+/*Ocean*/
+html.theme-ocean app-sidebar .app-sidebar {
+    background:
+            linear-gradient(
+                    180deg,
+                    #082f49 0%,
+                    #0c4a6e 50%,
+                    #164e63 100%
+            ) !important;
+
+    border-inline-end: 1px solid rgba(255,255,255,.08);
+}
+
+.app-content {
+    transition: all .25s ease;
+}
+
+.app-sidebar {
+    transition: all .25s ease;
+}
+
+.p-card,
+.p-panel,
+.p-dialog,
+.p-datatable {
+    transition: all .25s ease;
+}

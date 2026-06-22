@@ -14,6 +14,8 @@ import { THEME_PRESETS, SURFACE_PALETTES } from '../../../core/config/theme-pres
 import { FONT_OPTIONS, FontOption, isFontUsable } from '../../../core/config/fonts.config';
 import { FontLoaderService, FontStatus } from '../../../core/services/font-loader.service';
 import { ToastService } from '../../../core/services/toast.service';
+import {ThemePack} from "@core/models/settings.model";
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-settings-panel',
@@ -25,7 +27,9 @@ import { ToastService } from '../../../core/services/toast.service';
     ToggleSwitch,
     ColorPicker,
     ButtonModule,
+    TranslocoPipe
   ],
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './settings-panel.html',
 })
@@ -114,5 +118,18 @@ export class SettingsPanel {
     URL.revokeObjectURL(url);
   }
 
+  protected readonly themePacks: {
+    label: string;
+    value: ThemePack;
+  }[] = [
+    { label: 'Default', value: 'default' },
+    { label: 'Aurora', value: 'aurora' },
+    { label: 'Glass', value: 'glass' },
+    { label: 'Ocean', value: 'ocean' },
+    { label: 'Sunset', value: 'sunset' },
+    { label: 'Banking', value: 'banking' },
+    { label: 'Premium Dark', value: 'premium-dark' },
+    { label: 'Cyber', value: 'cyber' }
+  ];
   protected reset(): void { this.settings.reset(); }
 }
