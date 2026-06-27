@@ -153,3 +153,243 @@ body {
   [data-density='compact'] .p-dialog .p-dialog-content { padding-block: 0.75rem 1rem; }
   [data-density='compact'] .p-menu .p-menu-item-link { padding-block: 0.4rem; }
 }
+
+/* a11y: skip-to-content link — hidden until keyboard-focused */
+.skip-link {
+  position: fixed;
+  inset-block-start: -3rem;
+  inset-inline-start: 1rem;
+  z-index: 2000;
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: inset-block-start 0.2s ease;
+}
+.skip-link:focus {
+  inset-block-start: 1rem;
+  outline: 2px solid var(--p-primary-contrast-color);
+}
+
+/* a11y: visible focus ring for keyboard users across interactive elements */
+:where(button, a, [role='button'], input, select, textarea):focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+/* ============================================================
+   SURFACE STYLES — four user-selectable visual modes.
+   Applied via <html data-surface-style="…">. All rules live in the
+   `components` layer so Tailwind utilities can still override per-case.
+   A shared --card-surface token lets components opt in by using
+   `.surface-card` instead of hard-coded bg/border.
+   ============================================================ */
+@layer components {
+
+  /* The reusable surface primitive every card/panel can use. */
+  .surface-card {
+    background: var(--surface-card-bg, var(--p-surface-0));
+    border: 1px solid var(--surface-card-border, var(--p-surface-200));
+    border-radius: var(--surface-card-radius, 1rem);
+    box-shadow: var(--surface-card-shadow, 0 1px 2px rgb(0 0 0 / 0.04));
+    transition: transform 0.2s ease;
+  }
+  .app-dark .surface-card {
+    background: var(--surface-card-bg-dark, var(--p-surface-900));
+    border-color: var(--surface-card-border-dark, var(--p-surface-800));
+  }
+
+  /* ---------- SOLID (default-clean) ---------- */
+  [data-surface-style='solid'] {
+    --surface-card-radius: 1rem;
+    --surface-card-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  /* ---------- GLASS (translucent + blur) ----------
+     IMPORTANT: backdrop-filter is intentionally NOT applied to .surface-card.
+     A content page can hold dozens of cards (tables, dashboards); a blur on
+     each forces the browser to composite dozens of full backdrop blurs, which
+     freezes the tab. Cards stay translucent (cheap); real backdrop-blur is
+     reserved for the few overlay surfaces below (dialog/drawer/topbar/menu). */
+  [data-surface-style='glass'] {
+    --surface-card-bg: color-mix(in srgb, var(--p-surface-0) 85%, transparent);
+    --surface-card-bg-dark: color-mix(in srgb, var(--p-surface-900) 80%, transparent);
+    --surface-card-border: color-mix(in srgb, var(--p-surface-0) 60%, transparent);
+    --surface-card-border-dark: color-mix(in srgb, var(--p-surface-0) 12%, transparent);
+    --surface-card-blur: none;
+    --surface-card-radius: 1.15rem;
+    --surface-card-shadow: 0 8px 32px rgb(0 0 0 / 0.10), inset 0 1px 0 rgb(255 255 255 / 0.18);
+  }
+  /* glassy sidebar / topbar / dialogs — translucent only.
+     backdrop-filter:blur on an OPEN drawer/dialog forces the browser to blur the
+     whole page behind it in real time; doing that WHILE the theme palette
+     variables update (when you pick a pack) locks the tab. So we use plain
+     translucency (cheap) and skip the live blur entirely. */
+  [data-surface-style='glass'] .p-dialog,
+  [data-surface-style='glass'] .p-drawer,
+  [data-surface-style='glass'] .p-popover,
+  [data-surface-style='glass'] .p-menu {
+    background: color-mix(in srgb, var(--p-surface-0) 92%, transparent) !important;
+  }
+  .app-dark[data-surface-style='glass'] .p-dialog,
+  .app-dark[data-surface-style='glass'] .p-drawer,
+  .app-dark[data-surface-style='glass'] .p-popover,
+  .app-dark[data-surface-style='glass'] .p-menu {
+    background: color-mix(in srgb, var(--p-surface-900) 92%, transparent) !important;
+  }
+
+  /* ---------- SOFT (pastel, gentle) ---------- */
+  [data-surface-style='soft'] {
+    --surface-card-radius: 1.5rem;
+    --surface-card-border: transparent;
+    --surface-card-border-dark: transparent;
+    --surface-card-shadow:
+      0 10px 25px -8px color-mix(in srgb, var(--p-primary-500) 22%, transparent),
+      0 4px 10px rgb(0 0 0 / 0.04);
+    --surface-card-bg: var(--p-surface-0);
+  }
+  [data-surface-style='soft'] .surface-card:hover {
+    box-shadow:
+      0 16px 32px -10px color-mix(in srgb, var(--p-primary-500) 30%, transparent),
+      0 6px 14px rgb(0 0 0 / 0.06);
+  }
+
+  /* ---------- NEON (high-contrast glow on dark) ---------- */
+  [data-surface-style='neon'] {
+    --surface-card-radius: 1.15rem;
+    --surface-card-bg: var(--p-surface-0);
+    --surface-card-bg-dark: color-mix(in srgb, var(--p-surface-900) 88%, #4338ca);
+    --surface-card-border: var(--p-surface-200);
+    --surface-card-border-dark: color-mix(in srgb, var(--p-primary-500) 35%, transparent);
+    --surface-card-shadow: 0 0 0 1px color-mix(in srgb, var(--p-primary-500) 14%, transparent);
+  }
+  .app-dark[data-surface-style='neon'] {
+    /* page backdrop: deep navy with primary aurora glows */
+    background-image:
+      radial-gradient(60rem 40rem at 110% -10%, color-mix(in srgb, var(--p-primary-500) 22%, transparent), transparent 60%),
+      radial-gradient(50rem 40rem at -10% 110%, color-mix(in srgb, var(--p-primary-700) 22%, transparent), transparent 60%);
+  }
+  .app-dark[data-surface-style='neon'] .surface-card {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--p-primary-500) 30%, transparent),
+      0 0 22px -6px color-mix(in srgb, var(--p-primary-500) 45%, transparent);
+  }
+  .app-dark[data-surface-style='neon'] .surface-card:hover {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--p-primary-400) 55%, transparent),
+      0 0 30px -4px color-mix(in srgb, var(--p-primary-500) 65%, transparent);
+  }
+
+  /* ---------- shared niceties ---------- */
+  /* gentle lift on interactive cards (all styles, key surfaces only) */
+  .surface-card.lift:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Respect reduced-motion everywhere (a11y). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Reusable motion utilities (balanced — used on key surfaces).
+   ============================================================ */
+@layer utilities {
+  @keyframes app-fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes app-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes app-aurora {
+    0%   { transform: translate3d(0,0,0) rotate(0deg); }
+    50%  { transform: translate3d(2%, -2%, 0) rotate(8deg); }
+    100% { transform: translate3d(0,0,0) rotate(0deg); }
+  }
+  .animate-fade-up { animation: app-fade-up 0.4s ease both; }
+  .animate-fade-in { animation: app-fade-in 0.5s ease both; }
+}
+
+
+/* ============================================================
+   THEME PACKS (light, color-only) — coordinated appearance bundles.
+   ThemeService sets --pack-* vars on <html>. The page background and the
+   sidebar/cards adopt the pack's background & surface colors, so the WHOLE
+   shell (including the sidebar) is tinted consistently. No gradients/images
+   yet — that comes later once this is confirmed smooth.
+   ============================================================ */
+@layer base {
+  /* Page background is intentionally NOT tinted by the pack — the content area
+     and footer keep their neutral surface color (bg-surface-50/950). Only the
+     chrome (sidebar / topbar / tabs) takes the pack color, below. */
+
+  /* Sidebar takes the STRONG jewel color of the pack (deep, saturated). Its
+     text/icons flip to light for contrast against the dark sidebar. We only
+     recolor text/border/hover via direct selectors — never touch palette
+     tokens, so PrimeNG components inside stay correct. */
+  [data-theme-pack] .pack-sidebar {
+    background-color: var(--pack-sidebar-color) !important;
+  }
+  [data-theme-pack] .pack-sidebar,
+  [data-theme-pack] .pack-sidebar :is(span, a, button, i, .text-surface-900, .text-surface-600, .text-surface-500, .text-muted-color),
+  [data-theme-pack] .pack-sidebar :is(.dark\:text-surface-0, .dark\:text-surface-300, .dark\:text-surface-400) {
+    color: rgb(241 245 249 / 0.92) !important;
+  }
+  [data-theme-pack] .pack-sidebar :is(.border-surface-200, .dark\:border-surface-800, .border-surface-100) {
+    border-color: rgb(255 255 255 / 0.12) !important;
+  }
+  [data-theme-pack] .pack-sidebar :is(a, button):hover {
+    background-color: rgb(255 255 255 / 0.10) !important;
+  }
+  /* keep the active menu item readable: brand pill stays, text light */
+  [data-theme-pack] .pack-sidebar .bg-primary {
+    background-color: rgb(255 255 255 / 0.16) !important;
+  }
+
+  /* Topbar + tabs take the LIGHT tint of the pack (soft, in the same hue). */
+  [data-theme-pack] .pack-surface {
+    background-color: var(--pack-surface-color) !important;
+  }
+}
+
+@layer components {
+  /* Cards pick up the pack radius/border/shadow (cheap, no transition storm). */
+  /* Cards keep their neutral background (content area is untouched by the pack).
+     They still inherit the pack's radius/border/shadow for a coordinated feel. */
+  [data-theme-pack] .surface-card {
+    --surface-card-radius: var(--pack-radius, 1rem);
+    --surface-card-shadow: var(--pack-shadow, 0 1px 2px rgb(0 0 0 / 0.05));
+    --surface-card-border: var(--pack-border, var(--p-surface-200));
+    --surface-card-border-dark: var(--pack-border, var(--p-surface-800));
+  }
+}
+
+/* Safety: a PrimeNG drawer mask should never linger and block the page after
+   the drawer has been told to close. If one is left without an open drawer
+   inside it, disable pointer events so it can't trap clicks. */
+.p-drawer-mask:not(:has(.p-drawer)) {
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+/* Site nav bars: a soft tint of the active theme's primary color instead of
+   plain white, so the chrome stays coordinated with whatever theme is active. */
+.site-bar-tint {
+  background-color: color-mix(in srgb, var(--p-primary-color) 14%, var(--p-surface-0)) !important;
+  border-color: color-mix(in srgb, var(--p-primary-color) 24%, var(--p-surface-200)) !important;
+}
+.app-dark .site-bar-tint {
+  background-color: color-mix(in srgb, var(--p-primary-color) 20%, var(--p-surface-900)) !important;
+  border-color: color-mix(in srgb, var(--p-primary-color) 30%, var(--p-surface-800)) !important;
+}

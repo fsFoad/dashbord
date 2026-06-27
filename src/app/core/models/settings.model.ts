@@ -1,5 +1,5 @@
 /** Supported UI languages. Extend this union to add more. */
-export type AppLanguage = 'fa' | 'en';
+export type AppLanguage = 'fa' | 'en' | 'ar';
 
 /** High-level layout types (each is a distinct, separate config). */
 export type LayoutType = 'dashboard' | 'site';
@@ -9,6 +9,14 @@ export type MenuMode = 'static' | 'overlay' | 'slim' | 'horizontal';
 
 /** Spacing density for tables/cards/layout. */
 export type Density = 'compact' | 'normal';
+
+/**
+ * Visual surface style — an independent appearance layer (like theme/font).
+ * Controls how cards, sidebar, topbar and dialogs are rendered:
+ *   solid = clean & opaque · glass = blurred translucency ·
+ *   soft = pastel soft-shadows · neon = high-contrast glow on dark.
+ */
+export type SurfaceStyle = 'solid' | 'glass' | 'soft' | 'neon';
 
 /**
  * The complete, serializable settings object.
@@ -32,4 +40,8 @@ export interface AppSettings {
   menuMode: MenuMode;
   sidebarCollapsed: boolean;
   density: Density;
+  /** Visual surface style (solid | glass | soft | neon). */
+  surfaceStyle: SurfaceStyle;
+  /** Selected theme pack key (coordinated look). */
+  themePack: string;
 }

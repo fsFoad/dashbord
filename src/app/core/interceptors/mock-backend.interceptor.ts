@@ -3,6 +3,7 @@ import {
   HttpInterceptorFn,
   HttpResponse,
 } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { delay, of, switchMap, throwError, timer } from 'rxjs';
 import {
   ACTIVITY, COMMENTS, EVENTS, FILES, MEMBERS, NOTIFICATIONS, PROJECTS, TASKS, TEAM, USERS,
@@ -10,6 +11,9 @@ import {
 } from '../mock/mock-db';
 import { AuthResponse } from '../models/user.model';
 import { CalEvent, CommentItem, FileNode, Paged, Project, Task, TeamMember } from '../models/api.model';
+
+/** In-memory 2FA challenges: challengeId → userId (mock only). */
+const PENDING_2FA = new Map<string, number>();
 
 const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max - min));
 
@@ -26,7 +30,8 @@ const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max
  *   GET /api/demo/network             simulates a network failure (status 0)
  */
 export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!req.url.startsWith('/api/')) return next(req);
+  // Disabled entirely when the app targets a real backend.
+  if (!environment.useMock || !req.url.startsWith('/api/')) return next(req);
 
   const ok = <T>(body: T, ms = rand(250, 650)) =>
     of(new HttpResponse({ status: 200, body })).pipe(delay(ms));
@@ -43,6 +48,13 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
   const url = new URL(req.url, 'http://mock.local');
   const path = url.pathname;
 
+  // Resolve the signed-in user from the Authorization header (mock tokens).
+  const authUser = () => {
+    const header = req.headers.get('Authorization') ?? '';
+    const id = Number(header.replace('Bearer mock-', ''));
+    return USERS.find((u) => u.id === id) ?? null;
+  };
+
   // --- demo endpoints ---
   if (path === '/api/demo/network') return fail(0);
   const errMatch = path.match(/^\/api\/demo\/error\/(\d+)$/);
@@ -56,9 +68,43 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
   if (path === '/api/auth/login' && req.method === 'POST') {
     const { email, password } = (req.body ?? {}) as { email?: string; password?: string };
     const found = USERS.find((u) => u.email === email && u.password === password);
+    if (found && found.twoFactor) {
+      // Issue a 2FA challenge instead of a session. (Demo OTP is always 123456.)
+      const challengeId = `chal-${found.id}-${Date.now()}`;
+      PENDING_2FA.set(challengeId, found.id);
+      const masked = '***' + (found.email.split('@')[0].slice(-2));
+      return ok({ twoFactorRequired: true, challengeId, hint: masked }, 500);
+    }
     if (!found) return fail(401, 600);
     const body: AuthResponse = { token: `mock-${found.id}`, user: toPublicUser(found) };
     return ok(body, 600);
+  }
+
+  if (path === '/api/auth/verify-2fa' && req.method === 'POST') {
+    const { challengeId, code } = (req.body ?? {}) as { challengeId?: string; code?: string };
+    const uid = challengeId ? PENDING_2FA.get(challengeId) : undefined;
+    if (!uid) return fail(401);
+    if (code !== '123456') return fail(422); // wrong OTP
+    PENDING_2FA.delete(challengeId!);
+    const user = USERS.find((u) => u.id === uid)!;
+    const body: AuthResponse = { token: `mock-${user.id}`, user: toPublicUser(user) };
+    return ok(body, 400);
+  }
+
+  if (path === '/api/me/2fa' && req.method === 'GET') {
+    const me = authUser();
+    if (!me) return fail(401);
+    const u = USERS.find((x) => x.id === me.id);
+    return ok({ enabled: !!u?.twoFactor });
+  }
+
+  if (path === '/api/me/2fa' && req.method === 'POST') {
+    const me = authUser();
+    if (!me) return fail(401);
+    const { enabled } = (req.body ?? {}) as { enabled?: boolean };
+    const u = USERS.find((x) => x.id === me.id);
+    if (u) u.twoFactor = !!enabled;
+    return ok({ enabled: !!enabled }, 400);
   }
 
   if (path === '/api/auth/register' && req.method === 'POST') {
@@ -76,13 +122,6 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
   if (path === '/api/auth/forgot' && req.method === 'POST') {
     return ok({ sent: true }, 700);
   }
-
-  // --- current user (requires Authorization header) ---
-  const authUser = () => {
-    const header = req.headers.get('Authorization') ?? '';
-    const id = Number(header.replace('Bearer mock-', ''));
-    return USERS.find((u) => u.id === id) ?? null;
-  };
 
   if (path === '/api/me' && req.method === 'PUT') {
     const me = authUser();
@@ -393,6 +432,61 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
       if (toDelete.has(FILES[i].id)) FILES.splice(i, 1);
     }
     return ok({ deleted: toDelete.size });
+  }
+
+  // --- AI assistant (mock): builds a written insight from current data ---
+  if (path === '/api/ai/summary' && req.method === 'POST') {
+    const active = PROJECTS.filter((p) => p.status === 'active').length;
+    const done = PROJECTS.filter((p) => p.status === 'done').length;
+    const paused = PROJECTS.filter((p) => p.status === 'paused').length;
+    const overdue = PROJECTS.filter(
+      (p) => p.status !== 'done' && new Date(p.dueDate).getTime() < Date.now(),
+    ).length;
+    const avgProgress = Math.round(
+      PROJECTS.reduce((s, p) => s + p.progress, 0) / Math.max(1, PROJECTS.length),
+    );
+    const openTasks = TASKS.filter((t) => t.status !== 'done').length;
+
+    const body = {
+      generatedAt: new Date().toISOString(),
+      // bilingual bullet insights (UI picks by language)
+      insights: {
+        fa: [
+          `در حال حاضر ${active} پروژه فعال، ${paused} متوقف‌شده و ${done} پروژه تکمیل‌شده دارید.`,
+          `میانگین پیشرفت پروژه‌ها ${avgProgress}٪ است.`,
+          overdue > 0
+            ? `⚠️ ${overdue} پروژه از موعد مقرر عقب افتاده‌اند؛ پیشنهاد می‌شود اولویت‌بندی شوند.`
+            : `هیچ پروژه‌ای از موعد عقب نیست — وضعیت زمان‌بندی مطلوب است.`,
+          `${openTasks} وظیفه‌ی باز در جریان است.`,
+          avgProgress < 50
+            ? 'توصیه: روی پروژه‌های با پیشرفت پایین تمرکز کنید تا میانگین بهبود یابد.'
+            : 'روند کلی مثبت است؛ تمرکز را روی تکمیل پروژه‌های نزدیک به پایان نگه دارید.',
+        ],
+        en: [
+          `You currently have ${active} active, ${paused} paused and ${done} completed projects.`,
+          `Average project progress is ${avgProgress}%.`,
+          overdue > 0
+            ? `⚠️ ${overdue} project(s) are overdue — consider re-prioritizing them.`
+            : `No projects are overdue — scheduling looks healthy.`,
+          `${openTasks} open tasks are in progress.`,
+          avgProgress < 50
+            ? 'Tip: focus on low-progress projects to lift the average.'
+            : 'Overall trend is positive; keep pushing near-complete projects to the finish.',
+        ],
+        ar: [
+          `لديك حاليًا ${active} مشاريع نشطة و${paused} متوقفة و${done} مكتملة.`,
+          `متوسط تقدّم المشاريع هو ${avgProgress}٪.`,
+          overdue > 0
+            ? `⚠️ ${overdue} مشروع متأخر عن موعده — يُنصح بإعادة ترتيب الأولويات.`
+            : `لا توجد مشاريع متأخرة — الجدول الزمني جيد.`,
+          `${openTasks} مهمة مفتوحة قيد التنفيذ.`,
+          avgProgress < 50
+            ? 'نصيحة: ركّز على المشاريع منخفضة التقدّم لرفع المتوسط.'
+            : 'الاتجاه العام إيجابي؛ واصل دفع المشاريع القريبة من الاكتمال.',
+        ],
+      },
+    };
+    return ok(body, rand(900, 1600)); // feels like the model is "thinking"
   }
 
   // --- dashboard stats (seeded by from/to so the analytics filter visibly changes data) ---

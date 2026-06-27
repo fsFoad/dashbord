@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { SessionStore } from './session.store';
-import { AuthResponse, User } from '../models/user.model';
+import { AuthResponse, LoginResult, User, isTwoFactor } from '../models/user.model';
 import { SILENT_ERRORS } from '../interceptors/http-context';
 
 /** Auth API client. Errors are SILENT here — pages render them inline. */
@@ -17,10 +17,29 @@ export class AuthService {
     return { context: new HttpContext().set(SILENT_ERRORS, true) };
   }
 
-  login(email: string, password: string): Observable<AuthResponse> {
+  /**
+   * Login may resolve to a full session OR a 2FA challenge. The session is
+   * only set when a real AuthResponse comes back; callers inspect the result
+   * with isTwoFactor() to decide whether to show the OTP step.
+   */
+  login(email: string, password: string): Observable<LoginResult> {
     return this.http
-      .post<AuthResponse>('/api/auth/login', { email, password }, this.silent())
+      .post<LoginResult>('/api/auth/login', { email, password }, this.silent())
+      .pipe(tap((res) => { if (!isTwoFactor(res)) this.session.set(res); }));
+  }
+
+  verifyTwoFactor(challengeId: string, code: string): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>('/api/auth/verify-2fa', { challengeId, code }, this.silent())
       .pipe(tap((res) => this.session.set(res)));
+  }
+
+  getTwoFactor(): Observable<{ enabled: boolean }> {
+    return this.http.get<{ enabled: boolean }>('/api/me/2fa', this.silent());
+  }
+
+  setTwoFactor(enabled: boolean): Observable<{ enabled: boolean }> {
+    return this.http.post<{ enabled: boolean }>('/api/me/2fa', { enabled }, this.silent());
   }
 
   register(name: string, email: string, password: string): Observable<AuthResponse> {

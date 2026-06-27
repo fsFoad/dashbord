@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, effect, inject, signal, viewChild, ElementRef,
+} from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { DashboardStats } from '../../core/models/api.model';
 import { StatsApiService } from '../../core/services/stats-api.service';
+import { PdfExportService } from '../../core/services/pdf-export.service';
 import {
   DatePickerComponent, DateRange,
 } from '../../shared/components/date-picker/date-picker';
@@ -39,10 +42,18 @@ import { TasksChart } from './widgets/tasks-chart';
           (ngModelChange)="onRange($event)"
         />
         <p-button icon="pi pi-refresh" severity="secondary" size="small" (onClick)="reload()" />
+        <p-button
+          [label]="'pdf.export' | transloco"
+          icon="pi pi-file-pdf"
+          severity="secondary"
+          size="small"
+          [loading]="exporting()"
+          (onClick)="exportPdf()"
+        />
       </div>
     </div>
 
-    <div class="grid grid-cols-12 gap-4">
+    <div #capture class="grid grid-cols-12 gap-4 bg-surface-0 p-1 dark:bg-surface-950">
       <div class="col-span-12">
         <app-kpi-widget [stats]="stats()" />
       </div>
@@ -60,6 +71,9 @@ import { TasksChart } from './widgets/tasks-chart';
 })
 export class Analytics {
   private readonly api = inject(StatsApiService);
+  private readonly pdf = inject(PdfExportService);
+  private readonly capture = viewChild.required<ElementRef<HTMLElement>>('capture');
+  protected readonly exporting = signal(false);
 
   protected readonly stats = signal<DashboardStats | null>(null);
   protected readonly range = signal<DateRange | null>({
@@ -78,6 +92,12 @@ export class Analytics {
 
   protected onRange(r: DateRange | null): void {
     this.range.set(r);
+  }
+
+  protected async exportPdf(): Promise<void> {
+    this.exporting.set(true);
+    await this.pdf.exportElement(this.capture().nativeElement, 'analytics.pdf');
+    this.exporting.set(false);
   }
 
   protected reload(): void {

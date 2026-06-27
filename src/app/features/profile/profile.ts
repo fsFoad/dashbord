@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 import {
   AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators,
 } from '@angular/forms';
@@ -20,7 +22,7 @@ function matchValidator(group: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, TranslocoModule, ButtonModule, InputTextModule, Password, TagModule],
+  imports: [ReactiveFormsModule, TranslocoModule, ButtonModule, InputTextModule, Password, TagModule, FormsModule, ToggleSwitch],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
@@ -97,6 +99,21 @@ function matchValidator(group: AbstractControl): ValidationErrors | null {
           </div>
         </form>
       </div>
+
+      <!-- Two-factor authentication -->
+      <div class="rounded-2xl border border-surface-200 bg-surface-0 p-6 dark:border-surface-800 dark:bg-surface-900">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="font-semibold">{{ 'profile.2fa.title' | transloco }}</h2>
+            <p class="mt-1 text-sm text-muted-color">{{ 'profile.2fa.desc' | transloco }}</p>
+          </div>
+          <p-toggleswitch [ngModel]="twoFactor()" (ngModelChange)="toggleTwoFactor($event)" [disabled]="savingTwoFactor()" />
+        </div>
+        <div class="mt-3 flex items-center gap-2 text-sm" [class.text-green-600]="twoFactor()" [class.text-muted-color]="!twoFactor()">
+          <i [class]="twoFactor() ? 'pi pi-shield' : 'pi pi-lock-open'"></i>
+          {{ (twoFactor() ? 'profile.2fa.on' : 'profile.2fa.off') | transloco }}
+        </div>
+      </div>
     </div>
   `,
 })
@@ -105,6 +122,13 @@ export class Profile {
   private readonly auth = inject(AuthService);
   private readonly toast = inject(ToastService);
   private readonly session = inject(SessionStore);
+
+  protected readonly twoFactor = signal(false);
+  protected readonly savingTwoFactor = signal(false);
+
+  constructor() {
+    this.auth.getTwoFactor().subscribe({ next: (r) => this.twoFactor.set(r.enabled) });
+  }
 
   protected readonly user = this.session.user;
   protected readonly savingName = signal(false);
@@ -145,6 +169,18 @@ export class Profile {
         this.toast.success('profile.saved');
       },
       error: () => this.savingName.set(false),
+    });
+  }
+
+  protected toggleTwoFactor(enabled: boolean): void {
+    this.savingTwoFactor.set(true);
+    this.auth.setTwoFactor(enabled).subscribe({
+      next: (res) => {
+        this.twoFactor.set(res.enabled);
+        this.savingTwoFactor.set(false);
+        this.toast.success(res.enabled ? 'profile.2fa.enabled' : 'profile.2fa.disabled');
+      },
+      error: () => this.savingTwoFactor.set(false),
     });
   }
 

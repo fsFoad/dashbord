@@ -78,7 +78,7 @@
     >
       <!-- Edit-mode overlay controls -->
       @if (widgets.editMode()) {
-        <div class="absolute end-3 top-3 z-10 flex items-center gap-1 rounded-lg bg-surface-0/90 p-1 shadow-sm backdrop-blur dark:bg-surface-900/90">
+        <div class="absolute end-3 top-3 z-10 flex items-center gap-1 rounded-lg bg-surface-0 p-1 shadow-sm dark:bg-surface-900">
           <span class="grid size-7 place-items-center text-muted-color" [pTooltip]="'dashboard.dragHint' | transloco" tooltipPosition="top">
             <i class="pi pi-arrows-alt text-sm"></i>
           </span>
@@ -95,6 +95,13 @@
       @switch (id) {
         @case ('kpis') {
           <app-kpi-widget [stats]="stats()" />
+        }
+        @case ('ai') {
+          @defer (on viewport) {
+            <app-ai-insight />
+          } @placeholder {
+            <app-skeleton-card [rows]="3" [header]="true" />
+          }
         }
         @case ('revenue') {
           @defer (on viewport; prefetch on idle) {

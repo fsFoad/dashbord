@@ -9,10 +9,10 @@ export const EN_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'
 export const FA_WEEKDAYS = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
 export const EN_WEEKDAYS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
-export function monthLabels(lang: 'fa' | 'en'): string[] {
+export function monthLabels(lang: 'fa' | 'en' | 'ar'): string[] {
   return lang === 'fa' ? JALALI_MONTHS : EN_MONTHS;
 }
-export function weekdayLabels(lang: 'fa' | 'en'): string[] {
+export function weekdayLabels(lang: 'fa' | 'en' | 'ar'): string[] {
   return lang === 'fa' ? FA_WEEKDAYS : EN_WEEKDAYS;
 }
 

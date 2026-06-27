@@ -32,11 +32,12 @@ export const PROJECTS: Project[] = NAMES.map((name, i) => {
 
 export interface MockUser extends User {
   password: string;
+  twoFactor?: boolean;
 }
 
 /** Demo accounts (shown on the login page): both use password 123456. */
 export const USERS: MockUser[] = [
-  { id: 1, name: 'مدیر سیستم', email: 'admin@demo.com', password: '123456', roles: ['admin', 'user'] },
+  { id: 1, name: 'مدیر سیستم', email: 'admin@demo.com', password: '123456', roles: ['admin', 'user'], twoFactor: true },
   { id: 2, name: 'کاربر آزمایشی', email: 'user@demo.com', password: '123456', roles: ['user'] },
 ];
 

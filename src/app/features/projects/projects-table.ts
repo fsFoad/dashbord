@@ -16,8 +16,19 @@ import { ToastService } from '../../core/services/toast.service';
 import { ConfirmService } from '../../core/services/confirm.service';
 import { LocalizedDatePipe } from '../../shared/pipes/localized-date.pipe';
 import { DatePickerComponent } from '../../shared/components/date-picker/date-picker';
+import { SavedViews } from '../../shared/components/saved-views/saved-views';
 
 interface ColumnDef { field: string; labelKey: string }
+
+/** Serializable snapshot of the table UI for Saved Views. */
+export interface TableViewState {
+  q: string;
+  statusFilter: ProjectStatus[];
+  columns: string[];
+  sortField: string | null;
+  sortOrder: number;
+  rows: number;
+}
 
 /**
  * Advanced DataTable: server-side (mock) pagination + sorting, global search,
@@ -30,6 +41,7 @@ interface ColumnDef { field: string; labelKey: string }
     RouterLink,
     FormsModule, TranslocoModule, TableModule, ButtonModule, InputTextModule,
     MultiSelect, Select, Dialog, TagModule, Tooltip, LocalizedDatePipe, DatePickerComponent,
+    SavedViews,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './projects-table.html',
@@ -54,6 +66,39 @@ export class ProjectsTable {
   protected q = '';
   private qTimer: ReturnType<typeof setTimeout> | null = null;
   protected statusFilter: ProjectStatus[] = [];
+
+  /** Snapshot persisted by Saved Views. */
+  protected snapshot(): TableViewState {
+    return {
+      q: this.q,
+      statusFilter: [...this.statusFilter],
+      columns: this.visibleColumns.map((c) => c.field),
+      sortField: (Array.isArray(this.lastEvent.sortField) ? this.lastEvent.sortField[0] : this.lastEvent.sortField) ?? null,
+      sortOrder: this.lastEvent.sortOrder ?? 1,
+      rows: this.lastEvent.rows ?? this.pageSize,
+    };
+  }
+
+  protected applyView(s: TableViewState): void {
+    this.q = s.q;
+    this.statusFilter = [...s.statusFilter];
+    this.visibleColumns = this.allColumns.filter((c) => s.columns.includes(c.field));
+    this.lastEvent = {
+      ...this.lastEvent,
+      first: 0,
+      rows: s.rows,
+      sortField: s.sortField ?? undefined,
+      sortOrder: s.sortOrder,
+    };
+    this.load(this.lastEvent);
+  }
+
+  protected clearView(): void {
+    this.q = '';
+    this.statusFilter = [];
+    this.visibleColumns = this.allColumns.filter((c) => c.field !== 'updatedAt');
+    this.reload();
+  }
 
   // ---- columns ----
   protected readonly allColumns: ColumnDef[] = [
