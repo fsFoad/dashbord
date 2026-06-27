@@ -39,8 +39,6 @@ export interface TableColumn<T = any> {
   showOnMobile?: boolean;
   mobileTitle?: boolean;
   frozen?: boolean;
-  /** قابل تغییر اندازه با drag (نیاز به config.resizableColumns). */
-  resizable?: boolean;
   /** در حالت column-toggle، آیا به‌صورت پیش‌فرض نمایش داده شود. */
   defaultVisible?: boolean;
   /** آیا این ستون اصلاً قابل مخفی‌شدن هست (در منوی toggle). پیش‌فرض true. */
@@ -91,8 +89,6 @@ export interface TableConfig {
   gridlines?: boolean;
   size?: 'small' | 'normal' | 'large';
   // columns
-  resizableColumns?: boolean;           // تغییر اندازه ستون (نیاز به import دایرکتیو pResizableColumn — فعلاً غیرفعال)
-  reorderableColumns?: boolean;         // جابه‌جایی ستون (نیاز به import دایرکتیو pReorderableColumn — فعلاً غیرفعال)
   columnToggle?: boolean;               // منوی نمایش/مخفی ستون‌ها
   // rows
   rowExpansion?: boolean;               // باز شدن ردیف (جزئیات)
@@ -127,8 +123,6 @@ export const DEFAULT_TABLE_CONFIG: Required<TableConfig> = {
   striped: true,
   gridlines: false,
   size: 'normal',
-  resizableColumns: false,
-  reorderableColumns: false,
   columnToggle: false,
   rowExpansion: false,
   reorderableRows: false,

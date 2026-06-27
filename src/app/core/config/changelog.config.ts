@@ -27,6 +27,13 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.5.5',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای NG2011: کلاس‌های ReorderableColumn/ResizableColumn در PrimeNG 21 standalone نیستند و قابل import مستقیم نبودند. تصمیم تمیز: قابلیت resize/reorder ستون به‌کلی از config حذف شد تا API صادق بماند (هر گزینه‌ای که در config هست واقعاً کار کند). سایر ۱۵+ قابلیت رپر کامل و فعال‌اند', en: 'Fixed NG2011: ReorderableColumn/ResizableColumn are not standalone in PrimeNG 21 and could not be imported directly. Clean decision: removed column resize/reorder from the config entirely so the API stays honest (every config option actually works). The other 15+ wrapper features remain complete and active' },
+    ],
+  },
+  {
     version: '2.5.4',
     date: '2026-06-27',
     entries: [

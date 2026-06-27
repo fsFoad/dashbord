@@ -56,8 +56,6 @@
       [tableStyle]="{ 'min-width': minWidth() }"
       [showCurrentPageReport]="cfg().showCurrentPageReport"
       currentPageReportTemplate="{first} تا {last} از {totalRecords}"
-      [resizableColumns]="cfg().resizableColumns"
-      [reorderableColumns]="cfg().reorderableColumns"
       [scrollable]="cfg().virtualScroll || !!cfg().scrollHeight"
       [scrollHeight]="cfg().scrollHeight || undefined"
       [virtualScroll]="cfg().virtualScroll"
@@ -78,8 +76,6 @@
           @for (col of visibleColumns(); track col.field) {
             <th [style.width]="col.width"
                 [pSortableColumn]="col.sortable ? col.field : undefined"
-                [pReorderableColumn]="cfg().reorderableColumns"
-                [pResizableColumn]="cfg().resizableColumns && col.resizable !== false"
                 [class.text-center]="col.align === 'center'"
                 [class.text-end]="col.align === 'end'"
                 [class.dt-frozen]="col.frozen">
