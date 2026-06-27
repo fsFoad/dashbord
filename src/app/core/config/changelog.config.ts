@@ -27,6 +27,14 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.7.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای TS2339 (cm): منوی راست‌کلیک همیشه رندر می‌شود تا ارجاع template در دسترس باشد', en: 'Fixed TS2339 (cm): the context menu is always rendered so its template reference is available' },
+      { type: 'feature', fa: 'افزودن گروه‌بندی ردیف با هدر گروه (rowGroupMode: subheader) که قبل از هر گروه یک ردیف عنوان با تعداد اعضا نشان می‌دهد، در کنار حالت rowspan؛ و تلاش مجدد برای فعال‌سازی resize/reorder ستون از طریق فلگ‌های p-table و دایرکتیوهای سرستون', en: 'Added row grouping with a group header (rowGroupMode: subheader) showing a title row with member count before each group, alongside rowspan mode; and re-attempted column resize/reorder via p-table flags and header directives' },
+    ],
+  },
+  {
     version: '2.7.0',
     date: '2026-06-27',
     entries: [

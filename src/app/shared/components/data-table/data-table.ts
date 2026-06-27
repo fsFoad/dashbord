@@ -344,6 +344,14 @@ export class DataTable<T extends Record<string, any> = any> {
   }
   protected readonly groupColumn = computed(() =>
     this.cfg().rowGroupField ? this.columns().find((c) => c.field === this.cfg().rowGroupField) : undefined);
+  /** برچسب هدر گروه (مقدار فیلد گروه‌بندی برای ردیف). */
+  protected groupHeaderLabel(row: T): string {
+    const field = this.cfg().rowGroupField;
+    if (!field) return '';
+    const col = this.groupColumn();
+    const val = this.get(row, field);
+    return col ? String(col.value ? col.value(row) : val) : String(val);
+  }
 
   // ---- state persistence (localStorage) ----
   /** کلید state داخلی p-table؛ وقتی stateKey خالی است undefined تا p-table ذخیره نکند. */

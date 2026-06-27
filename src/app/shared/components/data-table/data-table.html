@@ -85,8 +85,10 @@
       [virtualScroll]="cfg().virtualScroll"
       [virtualScrollItemSize]="cfg().virtualScrollItemSize"
       [expandedRowKeys]="expandedRows"
-      [contextMenu]="hasRowMenu ? cm : undefined"
+      [contextMenu]="cm"
       [(contextMenuSelection)]="contextRow"
+      [resizableColumns]="cfg().resizableColumns"
+      [reorderableColumns]="cfg().reorderableColumns"
       [styleClass]="tableClass()">
 
       <ng-template #header>
@@ -102,6 +104,8 @@
           @for (col of visibleColumns(); track col.field) {
             <th [style.width]="col.width"
                 [pSortableColumn]="col.sortable ? col.field : undefined"
+                [pReorderableColumn]="cfg().reorderableColumns"
+                [pResizableColumn]="cfg().resizableColumns"
                 [class.text-center]="col.align === 'center'"
                 [class.text-end]="col.align === 'end'"
                 [class.dt-frozen]="col.frozen">
@@ -127,6 +131,17 @@
       </ng-template>
 
       <ng-template #body let-row let-expanded="expanded" let-rowIndex="rowIndex">
+        @if (cfg().rowGroupField && cfg().rowGroupMode === 'subheader' && isGroupStart(row, rowIndex)) {
+          <tr class="dt-group-header">
+            <td [attr.colspan]="colspan()" class="bg-surface-100 font-semibold text-surface-800 dark:bg-surface-800 dark:text-surface-100">
+              <span class="flex items-center gap-2">
+                <i class="pi pi-folder text-primary"></i>
+                {{ groupHeaderLabel(row) }}
+                <span class="text-xs font-normal text-muted-color">({{ rowGroupSpan(row, rowIndex) }} مورد)</span>
+              </span>
+            </td>
+          </tr>
+        }
         <tr [pReorderableRow]="rowIndex" [pContextMenuRow]="row">
           @if (cfg().reorderableRows) {
             <td><span class="pi pi-bars cursor-move text-muted-color" pReorderableRowHandle></span></td>
@@ -146,7 +161,7 @@
             <td><p-tableRadioButton [value]="row" /></td>
           }
           @for (col of visibleColumns(); track col.field) {
-            @if (col.field === cfg().rowGroupField) {
+            @if (col.field === cfg().rowGroupField && cfg().rowGroupMode === 'rowspan') {
               @if (isGroupStart(row, rowIndex)) {
                 <td [attr.rowspan]="rowGroupSpan(row, rowIndex)"
                     class="bg-surface-50 align-middle font-medium dark:bg-surface-800/40"
@@ -281,6 +296,4 @@
 </ng-template>
 
 <!-- ============ ROW CONTEXT MENU (right-click) ============ -->
-@if (hasRowMenu) {
-  <p-contextmenu #cm [model]="menuModel()" />
-}
+<p-contextmenu #cm [model]="menuModel()" />

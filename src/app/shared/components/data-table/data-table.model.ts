@@ -106,6 +106,12 @@ export interface TableConfig {
   rowExpansion?: boolean;               // باز شدن ردیف (جزئیات)
   /** فیلدی که ردیف‌های هم‌مقدارِ آن با rowspan ادغام شوند (گروه‌بندی بصری). */
   rowGroupField?: string;
+  /** حالت گروه‌بندی: 'rowspan' = ادغام سلول، 'subheader' = ردیف هدر گروه. */
+  rowGroupMode?: 'rowspan' | 'subheader';
+  /** تغییر اندازه ستون با کشیدن لبه. */
+  resizableColumns?: boolean;
+  /** جابه‌جایی ستون با کشیدن سرستون. */
+  reorderableColumns?: boolean;
   reorderableRows?: boolean;            // جابه‌جایی ردیف با drag
   editable?: boolean;                   // ویرایش درون‌خطی
   // scrolling
@@ -142,6 +148,9 @@ export const DEFAULT_TABLE_CONFIG: Required<TableConfig> = {
   columnToggle: false,
   rowExpansion: false,
   rowGroupField: '',
+  rowGroupMode: 'rowspan',
+  resizableColumns: false,
+  reorderableColumns: false,
   reorderableRows: false,
   editable: false,
   virtualScroll: false,
