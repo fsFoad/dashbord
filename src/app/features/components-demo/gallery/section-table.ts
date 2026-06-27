@@ -29,6 +29,7 @@ interface Transaction {
         [columns]="columns"
         [config]="{ selectable: true, rows: 8, rowsPerPageOptions: [8, 15, 30], columnToggle: true, exportable: true, caption: 'فهرست تراکنش‌ها' }"
         dataKey="id"
+        stateKey="gallery-transactions"
         searchPlaceholder="جستجوی تراکنش..."
         (selectionChange)="selected.set($event)">
 

@@ -27,6 +27,13 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.6.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'ذخیره‌ی وضعیت جدول (state save) به رپر اضافه شد: با دادن input [stateKey]، وضعیت جدول در localStorage ذخیره و پس از بارگذاری مجدد بازیابی می‌شود — شامل جستجوی سراسری و ستون‌های مخفی (مدیریت‌شده توسط رپر) و نیز sort/filter/page (از طریق stateStorage داخلی p-table). متد clearState برای پاک‌کردن و بازنشانی هم اضافه شد', en: 'Added table state persistence to the wrapper: provide [stateKey] and the table state is saved to localStorage and restored after reload — covering global search and hidden columns (managed by the wrapper) plus sort/filter/page (via p-table built-in stateStorage). A clearState method to reset is also included' },
+    ],
+  },
+  {
     version: '2.5.5',
     date: '2026-06-27',
     entries: [

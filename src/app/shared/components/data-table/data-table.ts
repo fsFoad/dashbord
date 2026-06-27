@@ -54,6 +54,12 @@ export class DataTable<T extends Record<string, any> = any> {
   readonly loading = input<boolean>(false);
   readonly totalCount = input<number>(0);
   readonly searchPlaceholder = input<string>('جستجو...');
+  /**
+   * کلید ذخیره‌ی وضعیت در localStorage. اگر مقدار بدهید، وضعیت جدول
+   * (جستجوی سراسری، ستون‌های مخفی، ردیف‌های بازشده) ذخیره و پس از
+   * بارگذاری مجدد بازیابی می‌شود. خالی = بدون ذخیره‌سازی.
+   */
+  readonly stateKey = input<string>('');
 
   // ---- outputs ----
   readonly selectionChange = output<T[]>();
@@ -76,6 +82,7 @@ export class DataTable<T extends Record<string, any> = any> {
   protected readonly isMobile = signal(false);
   private readonly mobileCount = signal(0);
   protected expandedRows: Record<string, boolean> = {};
+  private stateRestored = false;
 
   // ---- column visibility (toggle) ----
   protected readonly hiddenFields = signal<Set<string>>(new Set());
@@ -95,6 +102,19 @@ export class DataTable<T extends Record<string, any> = any> {
       const init = new Set<string>();
       for (const c of this.columns()) if (c.defaultVisible === false) init.add(c.field);
       this.hiddenFields.set(init);
+    });
+    // restore persisted state (once columns are known), then auto-save on change
+    effect(() => {
+      this.columns();                    // depend on columns so restore runs after they're set
+      if (this.stateKey() && !this.stateRestored) {
+        this.restoreState();
+        this.stateRestored = true;
+      }
+    });
+    // auto-save whenever search or hidden columns change
+    effect(() => {
+      const snapshot = { search: this.search(), hidden: [...this.hiddenFields()] };
+      if (this.stateKey() && this.stateRestored) this.saveState(snapshot);
     });
     effect(() => { this.data(); this.search(); this.mobileCount.set(this.cfg().mobilePageSize); });
     effect(() => { if (this.isMobile()) queueMicrotask(() => this.observeSentinel()); });
@@ -252,6 +272,34 @@ export class DataTable<T extends Record<string, any> = any> {
   }
 
   protected trackRow(i: number, row: T): unknown { return this.get(row, this.dataKey()) ?? i; }
+
+  // ---- state persistence (localStorage) ----
+  private get storageKey(): string { return `dt-state:${this.stateKey()}`; }
+
+  private saveState(state: { search: string; hidden: string[] }): void {
+    try {
+      localStorage.setItem(this.storageKey, JSON.stringify(state));
+    } catch { /* سهمیه‌ی localStorage پر است یا در دسترس نیست */ }
+  }
+
+  private restoreState(): void {
+    try {
+      const raw = localStorage.getItem(this.storageKey);
+      if (!raw) return;
+      const state = JSON.parse(raw) as { search?: string; hidden?: string[] };
+      if (state.search) this.search.set(state.search);
+      if (Array.isArray(state.hidden)) this.hiddenFields.set(new Set(state.hidden));
+    } catch { /* state خراب است — نادیده بگیر */ }
+  }
+
+  /** پاک‌کردن وضعیت ذخیره‌شده و بازنشانی به حالت اولیه. */
+  clearState(): void {
+    try { localStorage.removeItem(this.storageKey); } catch { /* noop */ }
+    this.search.set('');
+    const init = new Set<string>();
+    for (const c of this.columns()) if (c.defaultVisible === false) init.add(c.field);
+    this.hiddenFields.set(init);
+  }
 
   // ---- infinite scroll ----
   private readonly sentinel = viewChild<ElementRef<HTMLElement>>('sentinel');

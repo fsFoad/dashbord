@@ -56,6 +56,8 @@
       [tableStyle]="{ 'min-width': minWidth() }"
       [showCurrentPageReport]="cfg().showCurrentPageReport"
       currentPageReportTemplate="{first} تا {last} از {totalRecords}"
+      [stateStorage]="stateKey() ? 'local' : undefined"
+      [stateKey]="stateKey() ? 'dt-ptable:' + stateKey() : undefined"
       [scrollable]="cfg().virtualScroll || !!cfg().scrollHeight"
       [scrollHeight]="cfg().scrollHeight || undefined"
       [virtualScroll]="cfg().virtualScroll"
