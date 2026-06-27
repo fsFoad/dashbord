@@ -27,6 +27,13 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.6.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای TS2322: ورودی stateStorage جدول PrimeNG مقدار undefined نمی‌پذیرد (فقط local یا session). حالا همیشه local است و فعال/غیرفعال بودن ذخیره‌سازی از طریق ptableStateKey کنترل می‌شود (کلید معتبر وقتی stateKey داده شده، رشته‌ی خالی در غیر این صورت)', en: 'Fixed TS2322: the PrimeNG table stateStorage input does not accept undefined (only local or session). It is now always local, and whether persistence is active is controlled via ptableStateKey (a valid key when stateKey is provided, empty string otherwise)' },
+    ],
+  },
+  {
     version: '2.6.1',
     date: '2026-06-27',
     entries: [

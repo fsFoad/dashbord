@@ -306,6 +306,10 @@ export class DataTable<T extends Record<string, any> = any> {
   protected trackRow(i: number, row: T): unknown { return this.get(row, this.dataKey()) ?? i; }
 
   // ---- state persistence (localStorage) ----
+  /** کلید state داخلی p-table؛ وقتی stateKey خالی است undefined تا p-table ذخیره نکند. */
+  protected readonly ptableStateKey = computed(() =>
+    this.stateKey() ? `dt-ptable:${this.stateKey()}` : '');
+
   private get storageKey(): string { return `dt-state:${this.stateKey()}`; }
 
   private saveState(state: { search: string; hidden: string[] }): void {
