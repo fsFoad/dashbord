@@ -23,10 +23,10 @@ export class MockSocketService {
     this.destroyRef.onDestroy(() => this.disconnect());
   }
 
-  connect(): void {
+/*  connect(): void {
     if (this.timer) return;
     this.schedule();
-  }
+  }*/
 
   disconnect(): void {
     if (this.timer) clearTimeout(this.timer);
@@ -38,13 +38,13 @@ export class MockSocketService {
     this.subject.next(this.random());
   }
 
-  private schedule(): void {
+/*  private schedule(): void {
     const delay = 20_000 + Math.random() * 25_000;
     this.timer = setTimeout(() => {
       this.subject.next(this.random());
       this.schedule();
     }, delay);
-  }
+  }*/
 
   private random(): NotificationItem {
     const t = LIVE_NOTIF_TEMPLATES[Math.floor(Math.random() * LIVE_NOTIF_TEMPLATES.length)];

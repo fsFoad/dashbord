@@ -17,7 +17,7 @@ import { LocalizedDatePipe } from '../../../shared/pipes/localized-date.pipe';
   imports: [TranslocoModule, Tooltip, WhatsNew, LocalizedDatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <footer
+ <!--   <footer
       class="flex flex-col items-center justify-between gap-2 border-t border-surface-200 px-4 py-3 text-xs text-muted-color dark:border-surface-800 sm:flex-row"
     >
       <span>© {{ year }} {{ branding.appName }}</span>
@@ -34,9 +34,8 @@ import { LocalizedDatePipe } from '../../../shared/pipes/localized-date.pipe';
         <span class="opacity-60">·</span>
         <span>{{ releaseDate | appDate }}</span>
       </button>
-
       <span>{{ 'common.builtWith' | transloco }}</span>
-    </footer>
+    </footer>-->
 
     <app-whats-new />
   `,
