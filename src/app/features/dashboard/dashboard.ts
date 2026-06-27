@@ -16,7 +16,6 @@ import { TasksChart } from './widgets/tasks-chart';
 import { RecentActivity } from './recent-activity';
 import { AiInsight } from './widgets/ai-insight';
 import { SkeletonCard } from '../../shared/components/skeleton/skeleton-card';
-import {SettingsStore} from "@core/services/settings.store";
 
 /**
  * Overview dashboard: a 12-column widget grid the user can rearrange with
@@ -39,10 +38,7 @@ export class Dashboard {
 
   private readonly dragIndex = signal<number | null>(null);
   protected readonly overIndex = signal<number | null>(null);
-  private readonly settings = inject(SettingsStore);
-  constructor() {
-    this.settings.setThemePack('aurora');
-  }
+
   protected onDragStart(i: number): void {
     this.dragIndex.set(i);
   }
