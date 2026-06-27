@@ -9,7 +9,7 @@ import { TabsService } from '../../../core/services/tabs.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (tabs.count() > 1) {
-      <div class="thin-scroll flex items-end gap-1 overflow-x-auto border-b border-surface-200 bg-surface-0/60 px-2 pt-1.5 backdrop-blur dark:border-surface-800 dark:bg-surface-900/60">
+      <div class="thin-scroll flex items-end gap-1 overflow-x-auto border-b border-surface-200 bg-surface-0/95 px-2 pt-1.5 dark:border-surface-800 dark:bg-surface-900/95">
         @for (t of tabs.tabs(); track t.key) {
           <div
             class="group flex max-w-44 shrink-0 cursor-pointer items-center gap-1.5 rounded-t-lg border border-b-0 px-3 py-1.5 text-xs font-medium transition-colors"

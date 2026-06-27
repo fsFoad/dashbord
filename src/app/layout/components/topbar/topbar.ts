@@ -43,7 +43,16 @@ export class Topbar {
   });
 
   protected readonly isDark = computed(() => this.settings.darkMode());
-  protected readonly langLabel = computed(() => (this.settings.language() === 'fa' ? 'EN' : 'فا'));
+  protected readonly langLabel = computed(() =>
+    this.language.languages.find((l) => l.code === this.settings.language())?.label ?? '',
+  );
+  /** Flag emoji of the currently active language (compact language indicator). */
+  protected readonly currentFlag = computed(() =>
+    this.language.languages.find((l) => l.code === this.settings.language())?.flag ?? '🌐',
+  );
+  protected readonly currentFlagSrc = computed(() =>
+    this.language.languages.find((l) => l.code === this.settings.language())?.flagSrc ?? '',
+  );
 
   protected readonly initials = computed(() => {
     const name = this.session.user()?.name ?? '?';
@@ -68,6 +77,7 @@ export class Topbar {
   protected toggleSidebar(): void { this.layout.toggleSidebar(); }
   protected toggleDark(): void { this.settings.toggleDarkMode(); }
   protected toggleLang(): void { this.language.toggle(); }
+  protected pickLang(code: 'fa' | 'en' | 'ar'): void { this.language.set(code); }
   protected openSettings(): void { this.layout.openSettings(); }
   protected openProfile(e: Event): void { this.profileMenu().toggle(e); }
   protected openPalette(): void { this.palette.show(); }

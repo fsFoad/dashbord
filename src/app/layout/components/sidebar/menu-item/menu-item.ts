@@ -70,6 +70,27 @@ import { SettingsStore } from '../../../../core/services/settings.store';
           </ul>
         }
       </li>
+    } @else if (it.action) {
+      <!-- Action leaf (e.g. open the settings drawer) -->
+      <li>
+        <button
+          type="button"
+          (click)="runAction(it.action)"
+          [pTooltip]="(slim() || isLong()) ? (it.labelKey | transloco) : ''"
+          [tooltipPosition]="tooltipPos()"
+          class="group flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium
+                 text-surface-700 transition-colors hover:bg-surface-100
+                 dark:text-surface-200 dark:hover:bg-surface-800"
+          [style.padding-inline-start.rem]="indent()"
+        >
+          @if (it.icon) {
+            <i [class]="it.icon" class="shrink-0 text-base transition-transform duration-200 group-hover:scale-110"></i>
+          }
+          @if (!slim()) {
+            <span class="truncate-1 flex-1 text-start">{{ it.labelKey | transloco }}</span>
+          }
+        </button>
+      </li>
     } @else if (it.href) {
       <!-- External link leaf -->
       <li>
@@ -102,17 +123,27 @@ import { SettingsStore } from '../../../../core/services/settings.store';
           #rla="routerLinkActive"
           [pTooltip]="(slim() || isLong()) ? (it.labelKey | transloco) : ''"
           [tooltipPosition]="tooltipPos()"
-          class="group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
-          [class.bg-primary]="rla.isActive"
+          class="group relative flex items-center gap-3 overflow-hidden rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200"
           [class.text-primary-contrast]="rla.isActive"
+          [class.bg-primary]="rla.isActive"
+          [class.shadow-md]="rla.isActive"
+          [class.shadow-primary/30]="rla.isActive"
           [class.text-surface-700]="!rla.isActive"
           [class.hover:bg-surface-100]="!rla.isActive"
           [class.dark:text-surface-200]="!rla.isActive"
           [class.dark:hover:bg-surface-800]="!rla.isActive"
           [style.padding-inline-start.rem]="indent()"
         >
+          <!-- sliding active indicator on the inline-start edge -->
+          <span
+            class="absolute inset-y-1.5 start-0 w-1 rounded-full bg-primary-contrast/90 transition-all duration-300"
+            [class.opacity-100]="rla.isActive"
+            [class.opacity-0]="!rla.isActive"
+            [class.scale-y-100]="rla.isActive"
+            [class.scale-y-0]="!rla.isActive"
+          ></span>
           @if (it.icon) {
-            <i [class]="it.icon" class="shrink-0 text-base"></i>
+            <i [class]="it.icon" class="shrink-0 text-base transition-transform duration-200 group-hover:scale-110"></i>
           }
           @if (!slim()) {
             <span class="truncate-1 flex-1 text-start">{{ it.labelKey | transloco }}</span>
@@ -153,5 +184,10 @@ export class MenuItemComponent {
 
   protected toggle(): void {
     this.expanded.update((v) => !v);
+  }
+
+  /** Run a built-in menu action (currently just opening the settings drawer). */
+  protected runAction(action: MenuItem['action']): void {
+    if (action === 'openSettings') this.layout.openSettings();
   }
 }

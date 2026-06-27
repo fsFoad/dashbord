@@ -4,6 +4,7 @@ import {
 import { Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { Dialog } from 'primeng/dialog';
+import { FocusTrapDirective } from '../../directives/focus-trap.directive';
 import { CommandPaletteService } from '../../../core/services/command-palette.service';
 import { ShortcutService } from '../../../core/services/shortcut.service';
 import { MenuService } from '../../../core/services/menu.service';
@@ -29,7 +30,7 @@ interface Command {
  */
 @Component({
   selector: 'app-command-palette',
-  imports: [TranslocoModule, Dialog],
+  imports: [TranslocoModule, Dialog, FocusTrapDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './command-palette.html',
 })

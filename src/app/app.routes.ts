@@ -53,6 +53,18 @@ export const routes: Routes = [
         data: { titleKey: 'projects.detail' },
       },
       {
+        path: 'components/form-builder',
+        loadComponent: () =>
+          import('./features/components-demo/form-builder/form-builder-demo').then((m) => m.FormBuilderDemo),
+        data: { titleKey: 'menu.formBuilder' },
+      },
+      {
+        path: 'components/gallery',
+        loadComponent: () =>
+          import('./features/components-demo/gallery/components-gallery').then((m) => m.ComponentsGallery),
+        data: { titleKey: 'menu.gallery' },
+      },
+      {
         path: 'components/date-picker',
         loadComponent: () =>
           import('./features/components-demo/date-picker-demo').then((m) => m.DatePickerDemo),

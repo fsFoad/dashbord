@@ -3,6 +3,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { TagModule } from 'primeng/tag';
 import { Skeleton } from 'primeng/skeleton';
 import { DashboardStats } from '../../../core/models/api.model';
+import { CountUpDirective } from '../../../shared/directives/count-up.directive';
 
 /**
  * Four KPI cards. Uses CSS *container queries* (@container) so the cards
@@ -11,16 +12,16 @@ import { DashboardStats } from '../../../core/models/api.model';
  */
 @Component({
   selector: 'app-kpi-widget',
-  imports: [TranslocoModule, TagModule, Skeleton],
+  imports: [TranslocoModule, TagModule, Skeleton, CountUpDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="@container">
       <div class="grid grid-cols-1 gap-4 @md:grid-cols-2 @3xl:grid-cols-4">
         @for (k of cards(); track k.titleKey) {
-          <div class="rounded-2xl border border-surface-200 bg-surface-0 p-5 dark:border-surface-800 dark:bg-surface-900">
+          <div class="surface-card lift animate-fade-up p-5">
             @if (stats(); as s) {
               <div class="flex items-start justify-between">
-                <span class="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary">
+                <span class="grid size-11 place-items-center rounded-xl bg-gradient-to-br from-primary to-primary/70 text-primary-contrast shadow-lg shadow-primary/30">
                   <i [class]="k.icon" class="text-lg"></i>
                 </span>
                 <p-tag
@@ -29,7 +30,9 @@ import { DashboardStats } from '../../../core/models/api.model';
                   [icon]="k.delta >= 0 ? 'pi pi-arrow-up' : 'pi pi-arrow-down'"
                 />
               </div>
-              <div class="mt-4 text-3xl font-bold text-surface-900 dark:text-surface-0">{{ k.value }}</div>
+              <div class="mt-4 text-3xl font-bold text-surface-900 dark:text-surface-0">
+                <span [appCountUp]="k.value">{{ k.value }}</span>
+              </div>
               <div class="truncate-1 mt-1 text-sm text-muted-color">{{ k.titleKey | transloco }}</div>
             } @else {
               <p-skeleton width="2.75rem" height="2.75rem" borderRadius="0.75rem" />

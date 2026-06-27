@@ -3,8 +3,10 @@ import { SettingsStore } from '../../../core/services/settings.store';
 
 /**
  * Base for chart widgets: re-renders the chart whenever the theme, custom
- * brand color, surface, dark mode or language changes. The tiny timeout lets
- * ThemeService write the new CSS variables before we read them.
+ * brand color, surface, dark mode or language changes. A short coalescing
+ * timer ensures that changing several settings at once (e.g. applying a theme
+ * pack, which updates dark mode + preset + surface together) results in a
+ * SINGLE rebuild instead of several stacked Chart.js destroy/recreate cycles.
  */
 @Directive()
 export abstract class ChartBase {
@@ -12,6 +14,8 @@ export abstract class ChartBase {
 
   protected readonly chartData = signal<Record<string, unknown> | null>(null);
   protected readonly chartOptions = signal<Record<string, unknown>>({});
+
+  private rebuildTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
     effect(() => {
@@ -22,7 +26,14 @@ export abstract class ChartBase {
       this.settings.surface();
       this.settings.language();
       this.trigger();
-      setTimeout(() => this.rebuild(), 40);
+
+      // Coalesce: cancel any pending rebuild and schedule a single one. This
+      // collapses a burst of setting changes into one chart rebuild.
+      if (this.rebuildTimer !== null) clearTimeout(this.rebuildTimer);
+      this.rebuildTimer = setTimeout(() => {
+        this.rebuildTimer = null;
+        this.rebuild();
+      }, 60);
     });
   }
 

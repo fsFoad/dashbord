@@ -25,9 +25,12 @@
         var html = document.documentElement;
         var lang = s.language || 'fa';
         html.setAttribute('lang', lang);
-        html.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
+        html.setAttribute('dir', (lang === 'fa' || lang === 'ar') ? 'rtl' : 'ltr');
         if (s.darkMode) html.classList.add('app-dark');
         if (s.fontFamily) html.style.setProperty('--app-font', s.fontFamily);
+        html.setAttribute('data-surface-style', s.surfaceStyle || 'glass');
+        html.setAttribute('data-theme-pack', s.themePack || 'meridian');
+        html.setAttribute('data-density', s.density || 'normal');
       } catch (e) {}
     })();
   </script>
