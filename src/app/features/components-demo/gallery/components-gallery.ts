@@ -9,8 +9,9 @@ import { GalleryInput } from './section-input';
 import { GalleryNav } from './section-nav';
 import { GalleryMisc } from './section-misc';
 import { GalleryExtra } from './section-extra';
+import { GalleryTable } from './section-table';
 
-type SectionId = 'form' | 'input' | 'button' | 'panel' | 'data' | 'nav' | 'overlay' | 'misc' | 'extra';
+type SectionId = 'form' | 'input' | 'button' | 'panel' | 'table' | 'data' | 'nav' | 'overlay' | 'misc' | 'extra';
 
 /**
  * Live gallery of PrimeNG components — a developer reference and a quick way
@@ -19,7 +20,7 @@ type SectionId = 'form' | 'input' | 'button' | 'panel' | 'data' | 'nav' | 'overl
  */
 @Component({
   selector: 'app-components-gallery',
-  imports: [TranslocoModule, GalleryForm, GalleryInput, GalleryButton, GalleryPanel, GalleryData, GalleryNav, GalleryOverlay, GalleryMisc, GalleryExtra],
+  imports: [TranslocoModule, GalleryForm, GalleryInput, GalleryButton, GalleryPanel, GalleryData, GalleryNav, GalleryOverlay, GalleryMisc, GalleryExtra, GalleryTable],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="mb-5">
@@ -53,6 +54,7 @@ type SectionId = 'form' | 'input' | 'button' | 'panel' | 'data' | 'nav' | 'overl
       @case ('button') { <app-gallery-button /> }
       @case ('panel') { <app-gallery-panel /> }
       @case ('input') { <app-gallery-input /> }
+      @case ('table') { <app-gallery-table /> }
       @case ('data') { <app-gallery-data /> }
       @case ('nav') { <app-gallery-nav /> }
       @case ('overlay') { <app-gallery-overlay /> }
@@ -68,7 +70,8 @@ export class ComponentsGallery {
     { id: 'button', labelKey: 'gallery.button', icon: 'pi pi-stop' },
     { id: 'panel', labelKey: 'gallery.panel', icon: 'pi pi-th-large' },
     { id: 'input', labelKey: 'gallery.input', icon: 'pi pi-pencil' },
-    { id: 'data', labelKey: 'gallery.data', icon: 'pi pi-table' },
+    { id: 'table', labelKey: 'gallery.table', icon: 'pi pi-table' },
+    { id: 'data', labelKey: 'gallery.data', icon: 'pi pi-database' },
     { id: 'nav', labelKey: 'gallery.nav', icon: 'pi pi-sitemap' },
     { id: 'overlay', labelKey: 'gallery.overlay', icon: 'pi pi-clone' },
     { id: 'misc', labelKey: 'gallery.misc', icon: 'pi pi-ellipsis-h' },

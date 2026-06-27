@@ -1,0 +1,439 @@
+/* ============================================================================
+ * PrimeNG Component Override — REFERENCE & LEARNING FILE
+ * ============================================================================
+ *
+ * هدف (PURPOSE):
+ *   این فایل یک مرجع آموزشی است که نشان می‌دهد چطور ظاهرِ هر بخش از
+ *   کامپوننت‌های PrimeNG را override کنید. هر بلوک یک کامپوننت را پوشش می‌دهد،
+ *   با کامنت روی هر «part» (بخش داخلی) که می‌توانید استایلش را تغییر دهید.
+ *
+ *   This is a LEARNING reference showing how to override every visual part of
+ *   each PrimeNG component. Copy the selector you need into your own component's
+ *   styles (or into styles.css) and adjust.
+ *
+ * ----------------------------------------------------------------------------
+ * دو روش override در PrimeNG 21 (TWO WAYS TO OVERRIDE):
+ *
+ *   ۱) CSS Variables (توکن‌ها) — برای تغییرات سراسری و هماهنگ با تم:
+ *        :root { --p-button-primary-background: #0077B3; }
+ *      مزیت: با دارک‌مود و تم هماهنگ می‌ماند. روش پیشنهادی برای رنگ‌ها.
+ *
+ *   ۲) CSS Class Selectors (.p-*) — برای تغییر دقیقِ یک بخش خاص:
+ *        .p-button { border-radius: 999px; }
+ *      مزیت: کنترل کامل روی هر جزء. برای layout/spacing/shape بهتر است.
+ *
+ * ----------------------------------------------------------------------------
+ * نکته‌ی مهم درباره‌ی @layer (IMPORTANT — CASCADE LAYERS):
+ *
+ *   استایل‌های PrimeNG داخل @layer primeng هستند. برای اینکه override شما
+ *   برنده شود، آن را داخل @layer components (که بعد از primeng می‌آید) بگذارید:
+ *
+ *       @layer components {
+ *         .p-button { ... }   ← این برنده می‌شود، بدون نیاز به !important
+ *       }
+ *
+ *   ترتیب لایه‌ها در این پروژه (در بالای styles.css):
+ *       @layer theme, base, primeng, components, utilities;
+ *
+ *   اگر override شما اعمال نشد، یا آن را داخل @layer components بگذارید،
+ *   یا (به‌عنوان آخرین راه) از !important استفاده کنید.
+ *
+ * ----------------------------------------------------------------------------
+ * نحوه‌ی پیدا کردن نام partها (HOW TO FIND PART NAMES):
+ *
+ *   در مرورگر، روی کامپوننت راست‌کلیک → Inspect. کلاس‌هایی که با `p-` شروع
+ *   می‌شوند نام partها هستند. مثلاً p-button، p-button-label، p-button-icon.
+ *   هر کدام را می‌توانید جداگانه استایل دهید.
+ *
+ *   To find part names: right-click the component in your browser → Inspect.
+ *   Classes starting with `p-` are the parts you can target.
+ *
+ * ============================================================================
+ * چطور از این فایل استفاده کنیم (HOW TO USE):
+ *   - این فایل به‌صورت پیش‌فرض import نشده (فقط مرجع است).
+ *   - بلوک کامپوننت موردنظر را پیدا کنید، selector را کپی کنید.
+ *   - در styles.css (داخل @layer components) یا در فایل .css کامپوننت
+ *     خودتان قرارش دهید و مقادیر را تغییر دهید.
+ *   - مقادیر اینجا فقط «مثال» هستند تا ساختار را نشان دهند.
+ * ============================================================================ */
+
+@layer components {
+
+  /* ========================================================================
+   * BUTTON — دکمه
+   * parts: p-button (ریشه)، p-button-label (متن)، p-button-icon (آیکون)
+   * ====================================================================== */
+  .p-button {
+    /* شکل و فاصله‌ی کلی دکمه */
+    border-radius: 0.5rem;
+    font-weight: 600;
+    padding-block: 0.625rem;
+    padding-inline: 1.25rem;
+    transition: all 0.2s ease;
+  }
+  .p-button:hover {
+    transform: translateY(-1px);            /* بالا آمدن ظریف هنگام hover */
+  }
+  .p-button .p-button-label {
+    letter-spacing: 0;                       /* فاصله‌ی حروفِ متنِ دکمه */
+  }
+  .p-button .p-button-icon {
+    font-size: 0.95rem;                      /* اندازه‌ی آیکونِ دکمه */
+  }
+  /* انواع severity: primary / secondary / success / danger / warn / info */
+  .p-button.p-button-secondary { /* استایل اختصاصی دکمه‌ی ثانویه */ }
+  .p-button.p-button-rounded   { border-radius: 999px; }
+  .p-button.p-button-text:hover { background: var(--p-surface-100); }
+  /* روش توکنی معادل (هماهنگ با تم): */
+  /* :root { --p-button-border-radius: 0.5rem; } */
+
+  /* ========================================================================
+   * INPUT TEXT — ورودی متن (دایرکتیو pInputText)
+   * parts: p-inputtext (خودِ input)
+   * ====================================================================== */
+  .p-inputtext {
+    border-radius: 0.5rem;
+    padding-block: 0.55rem;
+    padding-inline: 0.75rem;
+    border-color: var(--p-surface-300);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .p-inputtext:enabled:focus {
+    border-color: var(--p-primary-color);    /* رنگ حاشیه هنگام focus */
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--p-primary-color) 20%, transparent);
+  }
+  .p-inputtext::placeholder {
+    color: var(--p-surface-400);             /* رنگ placeholder */
+  }
+  .p-inputtext.ng-invalid.ng-dirty {
+    border-color: var(--p-red-400);          /* حالت خطا */
+  }
+
+  /* ========================================================================
+   * SELECT / DROPDOWN — منوی کشویی
+   * parts: p-select، p-select-label، p-select-dropdown (فلش)،
+   *        p-select-overlay (پنل باز)، p-select-option (هر گزینه)
+   * ====================================================================== */
+  .p-select {
+    border-radius: 0.5rem;
+    border-color: var(--p-surface-300);
+  }
+  .p-select .p-select-label {
+    padding-block: 0.55rem;                  /* فاصله‌ی متنِ انتخاب‌شده */
+  }
+  .p-select .p-select-dropdown {
+    color: var(--p-surface-500);             /* رنگ فلشِ کشویی */
+  }
+  .p-select-overlay {
+    border-radius: 0.75rem;                  /* گوشه‌ی پنلِ بازشده */
+    box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.25);
+  }
+  .p-select-option {
+    padding-block: 0.5rem;
+  }
+  .p-select-option.p-select-option-selected {
+    background: color-mix(in srgb, var(--p-primary-color) 12%, transparent);
+    color: var(--p-primary-color);           /* گزینه‌ی انتخاب‌شده */
+  }
+
+  /* ========================================================================
+   * CHECKBOX / RADIO / TOGGLESWITCH — انتخابی‌ها
+   * checkbox parts: p-checkbox، p-checkbox-box، p-checkbox-icon
+   * ====================================================================== */
+  .p-checkbox .p-checkbox-box {
+    border-radius: 0.35rem;                  /* گوشه‌ی مربعِ چک‌باکس */
+    border-color: var(--p-surface-400);
+  }
+  .p-checkbox.p-checkbox-checked .p-checkbox-box {
+    background: var(--p-primary-color);
+    border-color: var(--p-primary-color);
+  }
+  .p-radiobutton .p-radiobutton-box {
+    border-color: var(--p-surface-400);
+  }
+  .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+    background: var(--p-primary-color);      /* رنگ سوییچِ روشن */
+  }
+
+  /* ========================================================================
+   * DIALOG — پنجره‌ی محاوره‌ای
+   * parts: p-dialog، p-dialog-header، p-dialog-title، p-dialog-content،
+   *        p-dialog-footer، p-dialog-header-actions (دکمه‌ی بستن)
+   * ====================================================================== */
+  .p-dialog {
+    border-radius: 1rem;                      /* گوشه‌ی کلِ دیالوگ */
+    overflow: hidden;
+    box-shadow: 0 20px 60px -15px rgb(0 0 0 / 0.35);
+  }
+  .p-dialog .p-dialog-header {
+    padding: 1.25rem 1.5rem;                  /* فاصله‌ی هدر */
+    border-bottom: 1px solid var(--p-surface-200);
+  }
+  .p-dialog .p-dialog-title {
+    font-weight: 700;                         /* وزنِ عنوان */
+  }
+  .p-dialog .p-dialog-content {
+    padding: 1.5rem;                          /* فاصله‌ی محتوا */
+  }
+  .p-dialog .p-dialog-footer {
+    padding: 1rem 1.5rem;                     /* فاصله‌ی فوتر (دکمه‌ها) */
+    border-top: 1px solid var(--p-surface-200);
+  }
+
+  /* ========================================================================
+   * DATATABLE — جدول داده
+   * parts: p-datatable، p-datatable-header، p-datatable-thead،
+   *        p-datatable-tbody، p-datatable-tfoot، p-paginator
+   * ====================================================================== */
+  .p-datatable .p-datatable-thead > tr > th {
+    background: var(--p-surface-50);          /* رنگ پس‌زمینه‌ی سرستون */
+    font-weight: 600;
+    padding-block: 0.75rem;
+    border-color: var(--p-surface-200);
+  }
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding-block: 0.65rem;                   /* فاصله‌ی سلول‌ها */
+    border-color: var(--p-surface-100);
+  }
+  .p-datatable .p-datatable-tbody > tr:hover {
+    background: var(--p-surface-50);          /* رنگ ردیف هنگام hover */
+  }
+  .p-datatable .p-datatable-tbody > tr.p-row-selected {
+    background: color-mix(in srgb, var(--p-primary-color) 10%, transparent);
+  }
+
+  /* ========================================================================
+   * PAGINATOR — صفحه‌بندی
+   * parts: p-paginator، p-paginator-page (هر شماره)،
+   *        p-paginator-first/prev/next/last (دکمه‌های ناوبری)
+   * ====================================================================== */
+  .p-paginator {
+    background: transparent;
+    gap: 0.25rem;
+  }
+  .p-paginator .p-paginator-page.p-paginator-page-selected {
+    background: var(--p-primary-color);       /* صفحه‌ی فعال */
+    color: var(--p-primary-contrast-color);
+    border-radius: 0.5rem;
+  }
+
+  /* ========================================================================
+   * MENU / MENUBAR / TIEREDMENU / PANELMENU — منوها
+   * parts: p-menu، p-menu-item، p-menu-item-link، p-menu-item-icon،
+   *        p-menu-separator، p-submenu-header
+   * ====================================================================== */
+  .p-menu, .p-menubar, .p-tieredmenu {
+    border-radius: 0.75rem;
+    border-color: var(--p-surface-200);
+  }
+  .p-menu .p-menu-item-link,
+  .p-menubar .p-menubar-item-link {
+    padding: 0.55rem 0.85rem;                 /* فاصله‌ی هر آیتم */
+    border-radius: 0.5rem;
+  }
+  .p-menu .p-menu-item-link:hover {
+    background: var(--p-surface-100);
+  }
+  .p-menu .p-menu-item-icon {
+    color: var(--p-surface-500);              /* رنگ آیکونِ آیتم */
+  }
+
+  /* ========================================================================
+   * TABS — تب‌ها
+   * parts: p-tabs، p-tablist، p-tab (هر تب)، p-tabpanels، p-tab-active-bar
+   * ====================================================================== */
+  .p-tablist .p-tab {
+    padding: 0.75rem 1.25rem;                 /* فاصله‌ی هر تب */
+    font-weight: 500;
+  }
+  .p-tablist .p-tab.p-tab-active {
+    color: var(--p-primary-color);            /* رنگ تبِ فعال */
+  }
+  .p-tablist .p-tab-active-bar {
+    background: var(--p-primary-color);       /* نوارِ زیرِ تبِ فعال */
+    height: 2px;
+  }
+
+  /* ========================================================================
+   * ACCORDION — آکاردئون
+   * parts: p-accordion، p-accordion-panel، p-accordion-header،
+   *        p-accordion-content، p-accordion-toggle-icon
+   * ====================================================================== */
+  .p-accordion .p-accordion-header {
+    padding: 0.9rem 1.1rem;
+    font-weight: 600;
+  }
+  .p-accordion .p-accordion-panel {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+  .p-accordion .p-accordion-content {
+    padding: 1rem 1.1rem;
+  }
+
+  /* ========================================================================
+   * CARD / PANEL / FIELDSET — کانتینرها
+   * card parts: p-card، p-card-header، p-card-body، p-card-title،
+   *             p-card-subtitle، p-card-content، p-card-footer
+   * ====================================================================== */
+  .p-card {
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+    border: 1px solid var(--p-surface-200);
+  }
+  .p-card .p-card-body { padding: 1.25rem; }
+  .p-card .p-card-title { font-weight: 700; }
+  .p-panel .p-panel-header {
+    border-radius: 0.75rem 0.75rem 0 0;
+    background: var(--p-surface-50);
+  }
+  .p-fieldset .p-fieldset-legend {
+    border-radius: 0.5rem;
+    font-weight: 600;
+  }
+
+  /* ========================================================================
+   * MESSAGE / TOAST — پیام‌ها و اعلان‌ها
+   * toast parts: p-toast، p-toast-message، p-toast-message-icon،
+   *              p-toast-message-text، p-toast-summary، p-toast-detail
+   * ====================================================================== */
+  .p-toast .p-toast-message {
+    border-radius: 0.75rem;                   /* گوشه‌ی اعلان */
+    backdrop-filter: none;
+  }
+  .p-toast .p-toast-summary { font-weight: 700; }   /* عنوانِ اعلان */
+  .p-message {
+    border-radius: 0.75rem;
+  }
+
+  /* ========================================================================
+   * TAG / CHIP / BADGE — برچسب‌ها
+   * ====================================================================== */
+  .p-tag {
+    border-radius: 0.4rem;                    /* گوشه‌ی برچسب */
+    font-weight: 600;
+    padding-inline: 0.55rem;
+  }
+  .p-chip {
+    border-radius: 999px;                     /* چیپ کاملاً گرد */
+  }
+  .p-badge {
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  /* ========================================================================
+   * PROGRESSBAR / SLIDER / KNOB / RATING — نمایش مقدار
+   * ====================================================================== */
+  .p-progressbar {
+    border-radius: 999px;
+    height: 0.6rem;
+    background: var(--p-surface-200);
+  }
+  .p-progressbar .p-progressbar-value {
+    background: var(--p-primary-color);       /* رنگ نوارِ پیشرفت */
+  }
+  .p-slider .p-slider-handle {
+    border-color: var(--p-primary-color);     /* دستگیره‌ی اسلایدر */
+  }
+  .p-slider .p-slider-range {
+    background: var(--p-primary-color);
+  }
+
+  /* ========================================================================
+   * DRAWER / POPOVER — لایه‌های روی صفحه
+   * drawer parts: p-drawer، p-drawer-header، p-drawer-content، p-drawer-mask
+   * ====================================================================== */
+  .p-drawer {
+    border-radius: 0;                         /* drawer معمولاً گوشه ندارد */
+  }
+  .p-drawer .p-drawer-header { padding: 1.25rem 1.5rem; }
+  .p-drawer .p-drawer-content { padding: 1.5rem; }
+  .p-popover {
+    border-radius: 0.75rem;
+  }
+  .p-popover .p-popover-content { padding: 0.75rem; }
+
+  /* ========================================================================
+   * STEPPER — مراحل
+   * parts: p-stepper، p-step، p-step-number، p-step-title، p-steppanels
+   * ====================================================================== */
+  .p-stepper .p-step-number {
+    border-radius: 999px;                     /* دایره‌ی شماره‌ی مرحله */
+    font-weight: 700;
+  }
+  .p-stepper .p-step.p-step-active .p-step-number {
+    background: var(--p-primary-color);
+    color: var(--p-primary-contrast-color);
+  }
+
+  /* ========================================================================
+   * BREADCRUMB — مسیر راهنما
+   * parts: p-breadcrumb، p-breadcrumb-item، p-breadcrumb-separator
+   * ====================================================================== */
+  .p-breadcrumb {
+    background: transparent;
+    padding: 0.5rem 0;
+  }
+  .p-breadcrumb .p-breadcrumb-separator {
+    color: var(--p-surface-400);              /* رنگ جداکننده (/) */
+  }
+
+  /* ========================================================================
+   * TREE / TREETABLE — درختی
+   * parts: p-tree، p-tree-node، p-tree-node-content، p-tree-toggler
+   * ====================================================================== */
+  .p-tree {
+    border: none;
+    background: transparent;
+  }
+  .p-tree .p-tree-node-content {
+    border-radius: 0.5rem;
+    padding: 0.35rem 0.5rem;
+  }
+  .p-tree .p-tree-node-content.p-tree-node-selected {
+    background: color-mix(in srgb, var(--p-primary-color) 12%, transparent);
+    color: var(--p-primary-color);
+  }
+
+  /* ========================================================================
+   * AVATAR / SKELETON — متفرقه
+   * ====================================================================== */
+  .p-avatar {
+    border-radius: 0.6rem;                    /* آواتارِ مربعِ گردگوشه */
+  }
+  .p-avatar.p-avatar-circle { border-radius: 999px; }
+  .p-skeleton {
+    border-radius: 0.5rem;
+  }
+
+}
+
+/* ============================================================================
+ * بخش دوم: روش توکنی (CSS VARIABLES) — تغییر سراسری و هماهنگ با تم
+ * ============================================================================
+ *
+ * این توکن‌ها را در :root بگذارید تا روی کلِ اپ اعمال شوند و با دارک‌مود
+ * هماهنگ بمانند. این روش برای رنگ‌ها و شکلِ کلی بهتر از کلاس‌هاست.
+ *
+ * Put these in :root for app-wide, theme-aware changes. Better than classes
+ * for colors and overall shape. (فقط نمونه — کامنت شده‌اند.)
+ * --------------------------------------------------------------------------- */
+
+/*
+:root {
+  --p-primary-color: #0077B3;                 /* رنگ برندِ اصلی */
+  --p-primary-contrast-color: #ffffff;        /* رنگ متن روی برند */
+
+  --p-border-radius: 0.5rem;                  /* شعاعِ گوشه‌ی کلی */
+  --p-focus-ring-color: #0077B3;              /* رنگ حلقه‌ی focus */
+
+  --p-button-border-radius: 0.5rem;
+  --p-inputtext-border-radius: 0.5rem;
+  --p-content-border-radius: 0.75rem;
+
+  --p-form-field-padding-y: 0.55rem;          /* فاصله‌ی عمودیِ فیلدها */
+  --p-form-field-padding-x: 0.75rem;
+}
+*/

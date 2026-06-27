@@ -27,6 +27,14 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.3.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'جدول کامل و حرفه‌ای در گالری (تب «جدول»): جستجوی سراسری، مرتب‌سازی ستون‌ها، انتخاب چندتایی، برچسب وضعیت رنگی، صفحه‌بندی و ۲۰ تراکنش بانکی واقعی با اسکرول افقی در موبایل', en: 'Full-featured data table in the gallery (Table tab): global search, column sorting, multi-select, colored status tags, pagination, and 20 realistic banking transactions with horizontal scroll on mobile' },
+      { type: 'fix', fa: 'بهبود حالت موبایل گالری: کارت‌ها padding کمتری در موبایل می‌گیرند، کامپوننت‌های عریض (select، datepicker، منوها، جدول‌ها) دیگر از صفحه بیرون نمی‌زنند و عرض کامل/wrap می‌شوند', en: 'Improved gallery mobile mode: cards use less padding on mobile, and wide components (selects, datepicker, menus, tables) no longer overflow — they take full width or wrap' },
+    ],
+  },
+  {
     version: '2.2.0',
     date: '2026-06-27',
     entries: [

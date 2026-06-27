@@ -393,3 +393,38 @@ body {
   background-color: color-mix(in srgb, var(--p-primary-color) 20%, var(--p-surface-900)) !important;
   border-color: color-mix(in srgb, var(--p-primary-color) 30%, var(--p-surface-800)) !important;
 }
+
+/* ============================================================
+ * Gallery mobile safety: keep wide PrimeNG components contained
+ * on small screens so cards never overflow the viewport.
+ * ============================================================ */
+@media (max-width: 640px) {
+  /* form controls take full width inside gallery cards */
+  app-gallery-input .p-select,
+  app-gallery-input .p-multiselect,
+  app-gallery-input .p-treeselect,
+  app-gallery-input .p-cascadeselect,
+  app-gallery-input .p-inputtext,
+  app-gallery-input .p-password,
+  app-gallery-form .p-select,
+  app-gallery-form .p-multiselect,
+  app-gallery-form .p-inputnumber,
+  app-gallery-form .p-inputmask,
+  app-gallery-extra .p-datepicker {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  /* menubar / megamenu / toolbar wrap instead of overflowing */
+  app-gallery-nav .p-menubar,
+  app-gallery-extra .p-megamenu {
+    flex-wrap: wrap;
+  }
+  /* any table inside the gallery scrolls horizontally rather than stretching the card */
+  app-gallery-table .p-datatable,
+  app-gallery-misc .p-treetable,
+  app-gallery-panel .p-table {
+    font-size: 0.8rem;
+  }
+  /* tighter paginator on mobile */
+  .p-paginator { flex-wrap: wrap; row-gap: 0.25rem; }
+}
