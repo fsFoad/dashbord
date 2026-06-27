@@ -27,6 +27,14 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.7.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'حذف قطعی resize/reorder ستون: دایرکتیوهای pReorderableColumn و pResizableColumn در PrimeNG 21 با این روش شناسایی نمی‌شوند (سه بار خطای NG8002). برای حفظ API صادق، این دو قابلیت و config مربوطه حذف شدند. سایر قابلیت‌های جدول کامل و فعال‌اند', en: 'Definitively removed column resize/reorder: pReorderableColumn and pResizableColumn are not recognized this way in PrimeNG 21 (NG8002 three times). To keep the API honest, these two features and their config were removed. All other table features remain complete and active' },
+      { type: 'fix', fa: 'رفع هشدار NG8113: حذف import بلااستفاده‌ی RouterLinkActive از site-layout (پس از تبدیل منوی موبایل به آکاردئون دیگر استفاده نمی‌شد)', en: 'Fixed NG8113 warning: removed the unused RouterLinkActive import from site-layout (no longer used after the mobile menu became an accordion)' },
+    ],
+  },
+  {
     version: '2.7.1',
     date: '2026-06-27',
     entries: [

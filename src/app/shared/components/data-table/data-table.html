@@ -87,8 +87,6 @@
       [expandedRowKeys]="expandedRows"
       [contextMenu]="cm"
       [(contextMenuSelection)]="contextRow"
-      [resizableColumns]="cfg().resizableColumns"
-      [reorderableColumns]="cfg().reorderableColumns"
       [styleClass]="tableClass()">
 
       <ng-template #header>
@@ -104,8 +102,6 @@
           @for (col of visibleColumns(); track col.field) {
             <th [style.width]="col.width"
                 [pSortableColumn]="col.sortable ? col.field : undefined"
-                [pReorderableColumn]="cfg().reorderableColumns"
-                [pResizableColumn]="cfg().resizableColumns"
                 [class.text-center]="col.align === 'center'"
                 [class.text-end]="col.align === 'end'"
                 [class.dt-frozen]="col.frozen">
