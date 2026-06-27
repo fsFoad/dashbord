@@ -58,6 +58,13 @@
     <ng-template #item let-col>{{ col.labelKey | transloco }}</ng-template>
   </p-multiselect>
 
+  <app-saved-views
+    tableKey="projects"
+    [currentState]="snapshot()"
+    (apply)="applyView($event)"
+    (cleared)="clearView()"
+  />
+
   <span class="flex-1"></span>
 
   @if (selectedCount() > 0) {

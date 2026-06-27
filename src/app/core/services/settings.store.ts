@@ -6,7 +6,8 @@ import {
   AppSettings,
   Density,
   LayoutType,
-  MenuMode, ThemePack,
+  MenuMode,
+  SurfaceStyle,
 } from '../models/settings.model';
 
 const STORAGE_KEY = 'app.settings';
@@ -19,6 +20,8 @@ function migrate(s: AppSettings): AppSettings {
     // v2: navy became the default surface; move users still on the old default.
     if (out.surface === 'slate') out.surface = 'navy';
   }
+  if (out.surfaceStyle === undefined) out.surfaceStyle = 'glass';
+  if (out.themePack === undefined) out.themePack = 'meridian';
   out._v = SETTINGS_VERSION;
   return out;
 }
@@ -33,10 +36,8 @@ function migrate(s: AppSettings): AppSettings {
 export class SettingsStore {
   private readonly storage = inject(StorageService);
 
-  /** Store از اینجا مقدار می‌خونه */
   private readonly state = signal<AppSettings>(
     migrate(this.storage.read<AppSettings>(STORAGE_KEY, BRANDING.defaults)),
-
   );
 
   // ---- Read-only selectors ----
@@ -51,14 +52,13 @@ export class SettingsStore {
   readonly menuMode = computed(() => this.state().menuMode);
   readonly sidebarCollapsed = computed(() => this.state().sidebarCollapsed);
   readonly density = computed(() => this.state().density);
+  readonly surfaceStyle = computed(() => this.state().surfaceStyle);
   readonly themePack = computed(() => this.state().themePack);
-  readonly isRtl = computed(() => this.state().language === 'fa');
+  readonly isRtl = computed(() => this.state().language === 'fa' || this.state().language === 'ar');
 
   constructor() {
     // Persist on any change.
-
     effect(() => this.storage.write(STORAGE_KEY, this.state()));
-
   }
 
   // ---- Mutations ----
@@ -78,9 +78,23 @@ export class SettingsStore {
   setSidebarCollapsed(sidebarCollapsed: boolean): void { this.patch({ sidebarCollapsed }); }
   toggleSidebar(): void { this.patch({ sidebarCollapsed: !this.state().sidebarCollapsed }); }
   setDensity(density: Density): void { this.patch({ density }); }
-  setThemePack(themePack: ThemePack): void {
-    this.patch({ themePack });
+  setSurfaceStyle(surfaceStyle: SurfaceStyle): void { this.patch({ surfaceStyle }); }
+
+  /**
+   * Apply a theme pack in ONE patch so the palette recalculates exactly once
+   * (multiple patches would trigger several expensive palette rebuilds).
+   */
+  applyThemePack(pack: { key: string; themePreset: string; customColor?: string; surface: string; surfaceStyle: SurfaceStyle; dark: boolean }): void {
+    this.patch({
+      themePack: pack.key,
+      themePreset: pack.themePreset,
+      customPrimaryColor: pack.customColor ?? null,
+      surface: pack.surface,
+      surfaceStyle: pack.surfaceStyle,
+      darkMode: pack.dark,
+    });
   }
+
 
   /** Reset everything back to the project branding defaults. */
   reset(): void { this.state.set({ ...BRANDING.defaults }); }

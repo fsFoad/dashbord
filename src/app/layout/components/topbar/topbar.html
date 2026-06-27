@@ -1,5 +1,5 @@
 <header
-  class="flex h-[var(--topbar-height)] items-center gap-2 border-b border-surface-200 bg-surface-0/80 px-3 backdrop-blur dark:border-surface-800 dark:bg-surface-900/80 sm:px-4 app-topbar"
+  class="flex h-[var(--topbar-height)] items-center gap-2 border-b border-surface-200 bg-surface-0/95 px-3 dark:border-surface-800 dark:bg-surface-900/95 sm:px-4"
 >
   <!-- Sidebar toggle -->
   <button
@@ -39,13 +39,30 @@
     <!-- Language -->
     <button
       type="button"
-      (click)="toggleLang()"
-      [pTooltip]="'common.language' | transloco"
+      (click)="langMenu.toggle($event)"
+      [pTooltip]="langLabel()"
       tooltipPosition="bottom"
-      class="h-10 min-w-10 rounded-lg px-2 text-sm font-semibold text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
+      class="grid size-10 place-items-center rounded-lg text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
     >
-      {{ langLabel() }}
+      <img [src]="currentFlagSrc()" [alt]="langLabel()" class="size-6 rounded" />
     </button>
+    <p-popover #langMenu>
+      <div class="flex w-40 flex-col">
+        @for (l of language.languages; track l.code) {
+          <button
+            type="button"
+            (click)="pickLang(l.code); langMenu.hide()"
+            class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-start text-sm hover:bg-surface-100 dark:hover:bg-surface-800"
+            [class.text-primary]="settings.language() === l.code"
+            [class.font-semibold]="settings.language() === l.code"
+          >
+            <img [src]="l.flagSrc" [alt]="l.label" class="size-5 rounded" />
+            <span class="flex-1">{{ l.label }}</span>
+            @if (settings.language() === l.code) { <i class="pi pi-check text-xs"></i> }
+          </button>
+        }
+      </div>
+    </p-popover>
 
     <!-- Dark / light -->
     <button

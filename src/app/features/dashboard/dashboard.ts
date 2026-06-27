@@ -14,6 +14,7 @@ import { RevenueChart } from './widgets/revenue-chart';
 import { StatusChart } from './widgets/status-chart';
 import { TasksChart } from './widgets/tasks-chart';
 import { RecentActivity } from './recent-activity';
+import { AiInsight } from './widgets/ai-insight';
 import { SkeletonCard } from '../../shared/components/skeleton/skeleton-card';
 import {SettingsStore} from "@core/services/settings.store";
 
@@ -26,8 +27,7 @@ import {SettingsStore} from "@core/services/settings.store";
   selector: 'app-dashboard-page',
   imports: [
     RouterLink, TranslocoModule, ButtonModule, Tooltip, HasRoleDirective,
-    KpiWidget, RevenueChart, StatusChart, TasksChart, RecentActivity, SkeletonCard,
-  ],
+    KpiWidget, RevenueChart, StatusChart, TasksChart, RecentActivity, SkeletonCard, AiInsight],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard.html',
 })

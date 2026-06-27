@@ -26,6 +26,7 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { mockBackendInterceptor } from './core/interceptors/mock-backend.interceptor';
+import { baseUrlInterceptor } from './core/interceptors/base-url.interceptor';
 import { GlobalErrorHandler } from './core/handlers/global-error-handler';
 import { TabReuseStrategy } from './core/routing/tab-reuse.strategy';
 import { ThemeService } from './core/services/theme.service';
@@ -59,7 +60,13 @@ export const appConfig: ApplicationConfig = {
       withFetch(),
       // Order matters: loading wraps everything; errors are mapped before the
       // mock backend is swapped for a real API (just remove the last one then).
-      withInterceptors([authInterceptor, loadingInterceptor, errorInterceptor, mockBackendInterceptor]),
+      withInterceptors([
+        baseUrlInterceptor,
+        authInterceptor,
+        loadingInterceptor,
+        errorInterceptor,
+        mockBackendInterceptor,
+      ]),
     ),
     provideAnimationsAsync(),
 
@@ -85,7 +92,7 @@ export const appConfig: ApplicationConfig = {
 
     provideTransloco({
       config: {
-        availableLangs: ['fa', 'en'],
+        availableLangs: ['fa', 'en', 'ar'],
         defaultLang: 'fa',
         fallbackLang: 'en',
         reRenderOnLangChange: true,

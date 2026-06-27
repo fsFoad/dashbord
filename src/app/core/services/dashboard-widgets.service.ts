@@ -2,14 +2,14 @@ import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { SessionStore } from './session.store';
 import { StorageService } from './storage.service';
 
-export type WidgetId = 'kpis' | 'revenue' | 'status' | 'tasks' | 'activity';
+export type WidgetId = 'kpis' | 'ai' | 'revenue' | 'status' | 'tasks' | 'activity';
 
 interface WidgetPrefs {
   order: WidgetId[];
   hidden: WidgetId[];
 }
 
-export const ALL_WIDGETS: WidgetId[] = ['kpis', 'revenue', 'status', 'tasks', 'activity'];
+export const ALL_WIDGETS: WidgetId[] = ['kpis', 'ai', 'revenue', 'status', 'tasks', 'activity'];
 
 const DEFAULTS: WidgetPrefs = { order: [...ALL_WIDGETS], hidden: [] };
 const keyFor = (uid: number) => `app.dashboard.${uid}`;
@@ -17,6 +17,7 @@ const keyFor = (uid: number) => `app.dashboard.${uid}`;
 /** Grid column span per widget (12-col grid, all full-width on mobile). */
 const SPANS: Record<WidgetId, string> = {
   kpis: 'col-span-12',
+  ai: 'col-span-12',
   revenue: 'col-span-12 lg:col-span-8',
   status: 'col-span-12 lg:col-span-4',
   tasks: 'col-span-12 lg:col-span-6',

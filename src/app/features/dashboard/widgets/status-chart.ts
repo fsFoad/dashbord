@@ -11,7 +11,7 @@ import { ChartBase } from './chart-base';
   imports: [TranslocoModule, ChartModule, Skeleton],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="h-full rounded-2xl border border-surface-200 bg-surface-0 p-5 dark:border-surface-800 dark:bg-surface-900">
+    <div class="surface-card h-full p-5">
       <h2 class="mb-4 flex items-center gap-2 text-base font-semibold text-surface-900 dark:text-surface-0">
         <i class="pi pi-chart-pie text-primary"></i>
         {{ 'charts.byStatus' | transloco }}

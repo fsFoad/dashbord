@@ -30,6 +30,7 @@ export const BRANDING: BrandingConfig = {
     menuMode: 'static',
     sidebarCollapsed: false,
     density: 'normal',
-    themePack: 'default',
+    surfaceStyle: 'glass',
+    themePack: 'meridian',
   },
 };

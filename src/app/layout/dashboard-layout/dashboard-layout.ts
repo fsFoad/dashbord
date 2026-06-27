@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { Drawer } from 'primeng/drawer';
 import { Sidebar } from '../components/sidebar/sidebar';
 import { Topbar } from '../components/topbar/topbar';
@@ -16,7 +17,7 @@ import { SettingsStore } from '../../core/services/settings.store';
 
 @Component({
   selector: 'app-dashboard-layout',
-  imports: [RouterOutlet, Drawer, Sidebar, Topbar, Footer, SettingsPanel, TabBar, Tour, CommandPalette],
+  imports: [RouterOutlet, TranslocoModule, Drawer, Sidebar, Topbar, Footer, SettingsPanel, TabBar, Tour, CommandPalette],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard-layout.html',
 })
