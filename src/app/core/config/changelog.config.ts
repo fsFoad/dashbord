@@ -27,6 +27,86 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.3.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع مشکل انتخاب‌نشدن تب‌های گالری در موبایل: به‌جای select بومی (که در حالت zoneless درست کار نمی‌کرد) از یک گرید دو‌ستونه‌ی دکمه استفاده شد که قطعاً قابل لمس و انتخاب است', en: 'Fixed gallery tabs not being selectable on mobile: replaced the native select (which misbehaved under zoneless) with a reliable two-column grid of buttons' },
+    ],
+  },
+  {
+    version: '2.3.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع مشکل انتخاب تب‌های گالری در موبایل: در موبایل به‌جای نوار اسکرول افقی (که انتخاب را سخت می‌کرد) یک منوی کشویی نمایش داده می‌شود؛ در دسکتاپ تب‌ها در چند ردیف wrap می‌شوند تا همه در دسترس باشند', en: 'Fixed gallery tab selection on mobile: a dropdown is shown on mobile instead of a horizontally-scrolling bar (which made tabs hard to reach); on desktop the tabs wrap to multiple rows so all are reachable' },
+    ],
+  },
+  {
+    version: '2.3.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'جدول کامل و حرفه‌ای در گالری (تب «جدول»): جستجوی سراسری، مرتب‌سازی ستون‌ها، انتخاب چندتایی، برچسب وضعیت رنگی، صفحه‌بندی و ۲۰ تراکنش بانکی واقعی با اسکرول افقی در موبایل', en: 'Full-featured data table in the gallery (Table tab): global search, column sorting, multi-select, colored status tags, pagination, and 20 realistic banking transactions with horizontal scroll on mobile' },
+      { type: 'fix', fa: 'بهبود حالت موبایل گالری: کارت‌ها padding کمتری در موبایل می‌گیرند، کامپوننت‌های عریض (select، datepicker، منوها، جدول‌ها) دیگر از صفحه بیرون نمی‌زنند و عرض کامل/wrap می‌شوند', en: 'Improved gallery mobile mode: cards use less padding on mobile, and wide components (selects, datepicker, menus, tables) no longer overflow — they take full width or wrap' },
+    ],
+  },
+  {
+    version: '2.2.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'تکمیل گالری کامپوننت‌ها: بخش «بیشتر» با DatePicker، ConfirmDialog، MegaMenu، Galleria، ContextMenu و OrganizationChart اضافه شد. حالا تقریباً تمام کامپوننت‌های PrimeNG پوشش داده شده‌اند (به‌جز Editor که به پکیج quill نیاز دارد)', en: 'Completed the components gallery: a "More" section with DatePicker, ConfirmDialog, MegaMenu, Galleria, ContextMenu and OrganizationChart. Almost the entire PrimeNG component set is now covered (except Editor, which needs the quill package)' },
+    ],
+  },
+  {
+    version: '2.1.4',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'افزودن @angular/cdk به وابستگی‌ها — چند کامپوننت PrimeNG (Listbox، PickList، OrderList) به آن نیاز دارند. PickList و OrderList دوباره به گالری برگشتند. پس از npm i باید بدون خطا اجرا شود', en: 'Added @angular/cdk to dependencies — several PrimeNG components (Listbox, PickList, OrderList) require it. PickList and OrderList are back in the gallery. Should run without errors after npm i' },
+    ],
+  },
+  {
+    version: '2.1.3',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'حذف PickList و OrderList از گالری (نیازمند وابستگی نصب‌نشده‌ی @angular/cdk/drag-drop بودند). افزودن .npmrc با legacy-peer-deps برای رفع تعارض peer dependency بین @angular/build و vitest (حالا npm i بدون فلگ کار می‌کند)', en: 'Removed PickList and OrderList from the gallery (they needed the uninstalled @angular/cdk/drag-drop). Added .npmrc with legacy-peer-deps to resolve the peer dependency conflict between @angular/build and vitest (npm i now works without a flag)' },
+    ],
+  },
+  {
+    version: '2.1.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع قطعی خطای CascadeSelect (تایپ options به any[] تغییر کرد تا تداخل type-checker تمپلیت برطرف شود) و اصلاح عنوان کارت‌های گالری که اشتباهاً به پسوند Module تغییر کرده بودند', en: 'Definitively fixed the CascadeSelect error (options typed as any[] to resolve the template type-checker clash) and corrected gallery card titles that had wrongly gained a Module suffix' },
+    ],
+  },
+  {
+    version: '2.1.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای TypeScript در CascadeSelect گالری (تداخل تایپ options و optionGroupChildren با جداسازی فیلدها و تایپ صریح مدل‌ها)', en: 'Fixed a TypeScript error in the gallery CascadeSelect (options vs optionGroupChildren type clash) by separating fields and typing the models explicitly' },
+    ],
+  },
+  {
+    version: '2.1.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'گالری کامپوننت‌ها کامل‌تر شد: ۴ بخش جدید (ورودی‌ها، داده‌ها، ناوبری، متفرقه) با ۳۹ کامپوننت تازه‌ی PrimeNG شامل InputText، Textarea، FloatLabel، InputOTP، Listbox، TreeSelect، CascadeSelect، Tree، TreeTable، Paginator، MeterGroup، OrderList، PickList، DataView، Breadcrumb، Stepper، PanelMenu، TieredMenu، Splitter، SpeedDial، Dock، Toolbar، Carousel، FileUpload و بیشتر', en: 'Components gallery expanded: 4 new sections (Inputs, Data, Navigation, Misc) covering 39 more PrimeNG components including InputText, Textarea, FloatLabel, InputOTP, Listbox, TreeSelect, CascadeSelect, Tree, TreeTable, Paginator, MeterGroup, OrderList, PickList, DataView, Breadcrumb, Stepper, PanelMenu, TieredMenu, Splitter, SpeedDial, Dock, Toolbar, Carousel, FileUpload and more' },
+      { type: 'improvement', fa: 'هر چهار عکس واقعی در صفحه‌ی فرود استفاده شد: بخش جدید «تیم ما» با عکس تیم و دو عکس فرعی (فضای کار و پرداخت موبایلی)', en: 'All four real photos now used on the landing: a new "Our team" section with the team photo and two secondary photos (workspace and mobile payment)' },
+    ],
+  },
+  {
+    version: '2.0.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'improvement', fa: 'منوی واقعی برنامه (APP_MENU) دوباره فعال شد و منوی نمونه‌ی بانکی به‌صورت کامنت (APP_MENU_DEMO) نگه داشته شد تا در صورت نیاز برای تست Mega Menu در دسترس باشد', en: 'Restored the real application menu (APP_MENU); the banking demo menu is kept commented (APP_MENU_DEMO) so it remains available for mega-menu testing if needed' },
+    ],
+  },
+  {
+    version: '2.0.0',
+    date: '2026-06-26',
+    entries: [
+      { type: 'feature', fa: 'صفحه‌ی فرود (Landing) واقعی برای حالت سایت اضافه شد: بخش‌های Hero با ماک‌آپ زنده‌ی داشبورد، آمار، امکانات (۶ کارت)، بخش دسترسی‌پذیری با عکس واقعی، سه گام شروع، تعرفه‌ها (۳ پلن) و CTA نهایی. کاملاً RTL و سه‌زبانه، رنگ‌ها از تم فعال', en: 'Real landing page for the site shell: Hero with a live dashboard mock-up, stats, features (6 cards), an accessibility section with a real photo, 3-step onboarding, pricing (3 plans) and a final CTA. Fully RTL and trilingual, colors from the active theme' },
+      { type: 'improvement', fa: 'عکس‌های واقعی بهینه‌شده (webp) برای لندینگ اضافه شد؛ مسیر /site حالا به‌جای داشبورد، صفحه‌ی فرود را نشان می‌دهد', en: 'Optimized real photos (webp) added for the landing; /site now shows the landing page instead of the dashboard' },
+    ],
+  },
+  {
     version: '1.9.6',
     date: '2026-06-26',
     entries: [

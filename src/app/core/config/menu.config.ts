@@ -6,8 +6,8 @@ import { MenuItem } from '../models/menu-item.model';
  * sidebar. In later phases the per-user menu service filters/reorders this
  * by role and pinned items.
  */
-/* ===== REAL MENU (commented for testing — restore when done) =====
-const APP_MENU_REAL: MenuItem[] = [
+// ===== REAL MENU (active) =====
+export const APP_MENU: MenuItem[] = [
   { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
   {
     id: 'dashboard',
@@ -65,10 +65,9 @@ const APP_MENU_REAL: MenuItem[] = [
   { id: 'settings', labelKey: 'menu.settings', icon: 'pi pi-cog', action: 'openSettings' },
   { id: 'docs', labelKey: 'menu.docs', icon: 'pi pi-book', href: 'https://primeng.org' },
 ];
-===== end real menu ===== */
 
-// ===== DEMO MENU (banking sample, for testing the mega-menu) =====
-export const APP_MENU: MenuItem[] = [
+/* ===== DEMO MENU (banking sample — commented, restore if needed for mega-menu testing) =====
+const APP_MENU_DEMO: MenuItem[] = [
   { id: 'demo1', labelKey: 'مدیریت ذینفعان', icon: 'pi pi-users', children: [
       { id: 'demo2', labelKey: 'اصلاح ذینفع شخصی', route: '/personal-entity-edit' },
       { id: 'demo3', labelKey: 'ذینفع سازمانی', route: '/organizational-entity-edit' },
@@ -253,6 +252,7 @@ export const APP_MENU: MenuItem[] = [
         ] },
     ] },
 ];
+===== end demo menu ===== */
 
 /**
  * ============================ SITE (PUBLIC) MENU ============================

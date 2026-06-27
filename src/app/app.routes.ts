@@ -132,7 +132,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),
+        loadComponent: () => import('./features/landing/landing').then((m) => m.Landing),
       },
     ],
   },
