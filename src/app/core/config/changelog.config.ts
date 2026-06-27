@@ -27,6 +27,13 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.7.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'دو قابلیت نهایی به رپر جدول اضافه شد: (۱) منوی راست‌کلیک روی ردیف (context menu) از طریق input [rowMenu] با آیتم‌های دارای آیکون و حالت danger؛ (۲) ادغام سلول‌ها با rowspan از طریق config.rowGroupField که ردیف‌های متوالی با مقدار یکسانِ آن فیلد را به‌صورت یک سلولِ ادغام‌شده نمایش می‌دهد. نمونه‌ها در گالری اضافه شدند. حالا data-table کامل است', en: 'Two final features added to the table wrapper: (1) row right-click context menu via [rowMenu] input with icon and danger-styled items; (2) cell merging with rowspan via config.rowGroupField, which renders consecutive rows sharing that field value as one merged cell. Examples added to the gallery. The data-table is now complete' },
+    ],
+  },
+  {
     version: '2.6.2',
     date: '2026-06-27',
     entries: [

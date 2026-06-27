@@ -52,6 +52,14 @@ export interface TableColumn<T = any> {
 }
 
 /** رویداد lazy load که به والد ارسال می‌شود تا داده از سرور بگیرد. */
+/** آیتم منوی راست‌کلیک ردیف. */
+export interface RowMenuItem<T = any> {
+  label: string;
+  icon?: string;
+  danger?: boolean;
+  action: (row: T) => void;
+}
+
 export interface LazyLoadEvent {
   first: number;
   rows: number;
@@ -96,6 +104,8 @@ export interface TableConfig {
   columnToggle?: boolean;               // منوی نمایش/مخفی ستون‌ها
   // rows
   rowExpansion?: boolean;               // باز شدن ردیف (جزئیات)
+  /** فیلدی که ردیف‌های هم‌مقدارِ آن با rowspan ادغام شوند (گروه‌بندی بصری). */
+  rowGroupField?: string;
   reorderableRows?: boolean;            // جابه‌جایی ردیف با drag
   editable?: boolean;                   // ویرایش درون‌خطی
   // scrolling
@@ -131,6 +141,7 @@ export const DEFAULT_TABLE_CONFIG: Required<TableConfig> = {
   size: 'normal',
   columnToggle: false,
   rowExpansion: false,
+  rowGroupField: '',
   reorderableRows: false,
   editable: false,
   virtualScroll: false,

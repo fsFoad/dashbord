@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DataTable, TableColumn, TagMap } from '../../../shared/components/data-table';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { DataTable, TableColumn, TagMap, RowMenuItem } from '../../../shared/components/data-table';
 import { ButtonModule } from 'primeng/button';
 import { GalleryCard } from './gallery-section';
 
@@ -30,6 +30,7 @@ interface Transaction {
         [config]="{ selectable: true, rows: 8, rowsPerPageOptions: [8, 15, 30], columnToggle: true, exportable: true, caption: 'فهرست تراکنش‌ها' }"
         dataKey="id"
         stateKey="gallery-transactions"
+        [rowMenu]="rowMenu"
         searchPlaceholder="جستجوی تراکنش...">
 
         <!-- ستون سفارشی: عملیات (با ng-template #cell) -->
@@ -44,10 +45,17 @@ interface Transaction {
           }
         </ng-template>
       </app-data-table>
+      <p class="mt-2 text-xs text-muted-color">💡 روی هر ردیف راست‌کلیک کنید تا منوی عملیات باز شود.</p>
+      @if (lastAction()) {
+        <div class="mt-2 inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm text-primary">
+          <i class="pi pi-info-circle"></i> آخرین عملیات: {{ lastAction() }}
+        </div>
+      }
     </app-gallery-card>
   `,
 })
 export class GalleryTable {
+  protected readonly lastAction = signal('');
 
   private readonly typeMap: TagMap = {
     satna: { label: 'ساتنا', severity: 'info' },
@@ -70,6 +78,12 @@ export class GalleryTable {
     { field: 'date', header: 'تاریخ', type: 'date', sortable: true },
     { field: 'status', header: 'وضعیت', type: 'tag', tagMap: this.statusMap, align: 'center' },
     { field: 'actions', header: 'عملیات', type: 'custom', filterable: false, width: '6rem', showOnMobile: true },
+  ];
+
+  protected readonly rowMenu: RowMenuItem<Transaction>[] = [
+    { label: 'مشاهده', icon: 'pi pi-eye', action: (r) => this.lastAction.set('مشاهده ' + r.id) },
+    { label: 'ویرایش', icon: 'pi pi-pencil', action: (r) => this.lastAction.set('ویرایش ' + r.id) },
+    { label: 'حذف', icon: 'pi pi-trash', danger: true, action: (r) => this.lastAction.set('حذف ' + r.id) },
   ];
 
   protected readonly transactions: Transaction[] = [

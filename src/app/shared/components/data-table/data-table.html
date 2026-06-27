@@ -85,6 +85,8 @@
       [virtualScroll]="cfg().virtualScroll"
       [virtualScrollItemSize]="cfg().virtualScrollItemSize"
       [expandedRowKeys]="expandedRows"
+      [contextMenu]="hasRowMenu ? cm : undefined"
+      [(contextMenuSelection)]="contextRow"
       [styleClass]="tableClass()">
 
       <ng-template #header>
@@ -125,7 +127,7 @@
       </ng-template>
 
       <ng-template #body let-row let-expanded="expanded" let-rowIndex="rowIndex">
-        <tr [pReorderableRow]="rowIndex">
+        <tr [pReorderableRow]="rowIndex" [pContextMenuRow]="row">
           @if (cfg().reorderableRows) {
             <td><span class="pi pi-bars cursor-move text-muted-color" pReorderableRowHandle></span></td>
           }
@@ -144,32 +146,45 @@
             <td><p-tableRadioButton [value]="row" /></td>
           }
           @for (col of visibleColumns(); track col.field) {
-            <td [class.text-center]="col.align === 'center'"
-                [class.text-end]="col.align === 'end'"
-                [class.dt-frozen]="col.frozen">
-              @if (cfg().editable && col.editable) {
-                <p-cellEditor>
-                  <ng-template #input>
-                    @if (col.editorType === 'number') {
-                      <p-inputnumber [ngModel]="cellValue(row, col)"
-                                     (ngModelChange)="setEdit(row, col, $event)" styleClass="w-full" />
-                    } @else {
-                      <input pInputText [ngModel]="cellValue(row, col)"
-                             (ngModelChange)="setEdit(row, col, $event)" class="w-full" />
-                    }
-                  </ng-template>
-                  <ng-template #output>
-                    <ng-container
-                      [ngTemplateOutlet]="cellTemplateFor(col) || defaultCell"
-                      [ngTemplateOutletContext]="{ $implicit: row, col: col, value: cellValue(row, col) }" />
-                  </ng-template>
-                </p-cellEditor>
-              } @else {
-                <ng-container
-                  [ngTemplateOutlet]="cellTemplateFor(col) || defaultCell"
-                  [ngTemplateOutletContext]="{ $implicit: row, col: col, value: cellValue(row, col) }" />
+            @if (col.field === cfg().rowGroupField) {
+              @if (isGroupStart(row, rowIndex)) {
+                <td [attr.rowspan]="rowGroupSpan(row, rowIndex)"
+                    class="bg-surface-50 align-middle font-medium dark:bg-surface-800/40"
+                    [class.text-center]="col.align === 'center'"
+                    [class.text-end]="col.align === 'end'">
+                  <ng-container
+                    [ngTemplateOutlet]="cellTemplateFor(col) || defaultCell"
+                    [ngTemplateOutletContext]="{ $implicit: row, col: col, value: cellValue(row, col) }" />
+                </td>
               }
-            </td>
+            } @else {
+              <td [class.text-center]="col.align === 'center'"
+                  [class.text-end]="col.align === 'end'"
+                  [class.dt-frozen]="col.frozen">
+                @if (cfg().editable && col.editable) {
+                  <p-cellEditor>
+                    <ng-template #input>
+                      @if (col.editorType === 'number') {
+                        <p-inputnumber [ngModel]="cellValue(row, col)"
+                                       (ngModelChange)="setEdit(row, col, $event)" styleClass="w-full" />
+                      } @else {
+                        <input pInputText [ngModel]="cellValue(row, col)"
+                               (ngModelChange)="setEdit(row, col, $event)" class="w-full" />
+                      }
+                    </ng-template>
+                    <ng-template #output>
+                      <ng-container
+                        [ngTemplateOutlet]="cellTemplateFor(col) || defaultCell"
+                        [ngTemplateOutletContext]="{ $implicit: row, col: col, value: cellValue(row, col) }" />
+                    </ng-template>
+                  </p-cellEditor>
+                } @else {
+                  <ng-container
+                    [ngTemplateOutlet]="cellTemplateFor(col) || defaultCell"
+                    [ngTemplateOutletContext]="{ $implicit: row, col: col, value: cellValue(row, col) }" />
+                }
+              </td>
+            }
           }
         </tr>
       </ng-template>
@@ -264,3 +279,8 @@
 <ng-template #defaultExpansion let-row>
   <p class="text-sm text-muted-color">جزئیات بیشتری تعریف نشده است.</p>
 </ng-template>
+
+<!-- ============ ROW CONTEXT MENU (right-click) ============ -->
+@if (hasRowMenu) {
+  <p-contextmenu #cm [model]="menuModel()" />
+}

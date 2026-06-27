@@ -14,10 +14,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectModule } from 'primeng/select';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { MenuItem } from 'primeng/api';
 import { PopoverModule } from 'primeng/popover';
 import { TooltipModule } from 'primeng/tooltip';
 
-import { TableColumn, TableConfig, LazyLoadEvent, CellEditEvent, FilterOption } from './data-table.model';
+import { TableColumn, TableConfig, LazyLoadEvent, CellEditEvent, FilterOption, RowMenuItem } from './data-table.model';
 import { TABLE_DEFAULTS } from './data-table.config';
 import { FaNumberPipe, FaCurrencyPipe, FaDatePipe } from './pipes/table-cell.pipe';
 
@@ -37,7 +39,7 @@ import { FaNumberPipe, FaCurrencyPipe, FaDatePipe } from './pipes/table-cell.pip
   imports: [
     NgTemplateOutlet, FormsModule, TableModule, TagModule, ButtonModule, IconFieldModule,
     InputIconModule, InputTextModule, InputNumberModule, ProgressSpinnerModule,
-    MultiSelectModule, SelectModule, PopoverModule, TooltipModule,
+    MultiSelectModule, SelectModule, PopoverModule, TooltipModule, ContextMenuModule,
     FaNumberPipe, FaCurrencyPipe, FaDatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,6 +62,8 @@ export class DataTable<T extends Record<string, any> = any> {
    * بارگذاری مجدد بازیابی می‌شود. خالی = بدون ذخیره‌سازی.
    */
   readonly stateKey = input<string>('');
+  /** آیتم‌های منوی راست‌کلیک روی ردیف. خالی = بدون منو. */
+  readonly rowMenu = input<RowMenuItem<T>[]>([]);
 
   // ---- outputs ----
   readonly selectionChange = output<T[]>();
@@ -304,6 +308,42 @@ export class DataTable<T extends Record<string, any> = any> {
   }
 
   protected trackRow(i: number, row: T): unknown { return this.get(row, this.dataKey()) ?? i; }
+
+  // ---- context menu (right-click) ----
+  protected contextRow: T | null = null;
+  protected readonly menuModel = computed<MenuItem[]>(() =>
+    this.rowMenu().map((item) => ({
+      label: item.label,
+      icon: item.icon,
+      styleClass: item.danger ? 'dt-menu-danger' : undefined,
+      command: () => { if (this.contextRow) item.action(this.contextRow); },
+    })));
+  protected get hasRowMenu(): boolean { return this.rowMenu().length > 0; }
+
+  // ---- row grouping (rowspan) ----
+  /** تعداد ردیف‌های متوالی با همان مقدارِ rowGroupField (برای rowspan). */
+  protected rowGroupSpan(row: T, index: number): number {
+    const field = this.cfg().rowGroupField;
+    if (!field) return 1;
+    const rows = this.lazy() ? this.data() : this.filtered();
+    const val = this.get(row, field);
+    let span = 0;
+    for (let i = index; i < rows.length; i++) {
+      if (this.get(rows[i], field) === val) span++;
+      else break;
+    }
+    return span;
+  }
+  /** آیا این ردیف اولینِ گروهِ خودش است (باید سلولِ ادغام‌شده را نشان دهد). */
+  protected isGroupStart(row: T, index: number): boolean {
+    const field = this.cfg().rowGroupField;
+    if (!field) return true;
+    const rows = this.lazy() ? this.data() : this.filtered();
+    if (index === 0) return true;
+    return this.get(rows[index - 1], field) !== this.get(row, field);
+  }
+  protected readonly groupColumn = computed(() =>
+    this.cfg().rowGroupField ? this.columns().find((c) => c.field === this.cfg().rowGroupField) : undefined);
 
   // ---- state persistence (localStorage) ----
   /** کلید state داخلی p-table؛ وقتی stateKey خالی است undefined تا p-table ذخیره نکند. */
