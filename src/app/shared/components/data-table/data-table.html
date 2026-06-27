@@ -35,6 +35,28 @@
   </div>
 }
 
+<!-- ============ SELECTION TOOLBAR ============ -->
+@if (cfg().selectable && cfg().selectionToolbar && selectedCount() > 0) {
+  <div class="mb-3 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-primary/10 px-3 py-2 text-sm">
+    <span class="flex items-center gap-2 font-medium text-primary">
+      <i class="pi pi-check-circle"></i>
+      {{ selectedCount() }} مورد انتخاب شد
+    </span>
+    <div class="flex items-center gap-2">
+      @if (cfg().selectAllAcrossPages && cfg().selectionMode === 'multiple' && !allRecordsSelected()) {
+        <button type="button" (click)="selectAllRecords()"
+                class="rounded-lg px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary/10">
+          انتخاب همه‌ی {{ lazy() ? totalCount() : filtered().length }} مورد
+        </button>
+      }
+      <button type="button" (click)="clearSelection()"
+              class="rounded-lg px-2.5 py-1 text-xs font-medium text-surface-600 hover:bg-surface-200 dark:text-surface-300 dark:hover:bg-surface-700">
+        پاک‌کردن انتخاب
+      </button>
+    </div>
+  </div>
+}
+
 <!-- ============ DESKTOP TABLE ============ -->
 @if (!isMobile()) {
   <div class="w-full overflow-x-auto">

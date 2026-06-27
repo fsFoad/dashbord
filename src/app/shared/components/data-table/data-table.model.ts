@@ -82,6 +82,10 @@ export interface TableConfig {
   // selection
   selectable?: boolean;                 // انتخاب چندتایی (checkbox)
   selectionMode?: 'multiple' | 'single';
+  /** نمایش نوار انتخاب (شمارنده + پاک‌کردن + انتخاب کل) وقتی چیزی انتخاب شده. */
+  selectionToolbar?: boolean;
+  /** اجازه‌ی «انتخاب همه‌ی رکوردها» (نه فقط صفحه‌ی فعلی) در نوار انتخاب. */
+  selectAllAcrossPages?: boolean;
   // sorting
   sortMode?: 'single' | 'multiple';     // مرتب‌سازی تک یا چندستونه
   // appearance
@@ -119,6 +123,8 @@ export const DEFAULT_TABLE_CONFIG: Required<TableConfig> = {
   columnFilters: false,
   selectable: false,
   selectionMode: 'multiple',
+  selectionToolbar: true,
+  selectAllAcrossPages: true,
   sortMode: 'single',
   striped: true,
   gridlines: false,

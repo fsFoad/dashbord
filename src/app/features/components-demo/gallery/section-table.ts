@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DataTable, TableColumn, TagMap } from '../../../shared/components/data-table';
 import { ButtonModule } from 'primeng/button';
 import { GalleryCard } from './gallery-section';
@@ -30,8 +30,7 @@ interface Transaction {
         [config]="{ selectable: true, rows: 8, rowsPerPageOptions: [8, 15, 30], columnToggle: true, exportable: true, caption: 'فهرست تراکنش‌ها' }"
         dataKey="id"
         stateKey="gallery-transactions"
-        searchPlaceholder="جستجوی تراکنش..."
-        (selectionChange)="selected.set($event)">
+        searchPlaceholder="جستجوی تراکنش...">
 
         <!-- ستون سفارشی: عملیات (با ng-template #cell) -->
         <ng-template #cell let-row let-col="col" let-value="value">
@@ -45,18 +44,10 @@ interface Transaction {
           }
         </ng-template>
       </app-data-table>
-
-      @if (selected().length) {
-        <div class="mt-3 flex w-full items-center gap-2 rounded-lg bg-primary/10 px-3 py-2 text-sm text-primary">
-          <i class="pi pi-check-circle"></i>
-          {{ selected().length }} مورد انتخاب شد
-        </div>
-      }
     </app-gallery-card>
   `,
 })
 export class GalleryTable {
-  protected readonly selected = signal<Transaction[]>([]);
 
   private readonly typeMap: TagMap = {
     satna: { label: 'ساتنا', severity: 'info' },

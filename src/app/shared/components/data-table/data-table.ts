@@ -197,9 +197,40 @@ export class DataTable<T extends Record<string, any> = any> {
   // ---- selection ----
   protected onSelectionChange(sel: T[] | T | null): void {
     this.selectionModel = sel;
+    this.selectionSignal.set(sel);
     const arr = Array.isArray(sel) ? sel : sel ? [sel] : [];
     this.selectionChange.emit(arr);
   }
+
+  /** تعداد ردیف‌های انتخاب‌شده. */
+  protected readonly selectedCount = computed(() => {
+    const s = this.selectionSignal();
+    return Array.isArray(s) ? s.length : s ? 1 : 0;
+  });
+
+  /** سیگنالی که با هر تغییر انتخاب به‌روز می‌شود (برای شمارنده‌ی واکنش‌گرا). */
+  protected readonly selectionSignal = signal<T[] | T | null>(null);
+
+  /** انتخاب همه‌ی رکوردها (کل داده، نه فقط صفحه‌ی فعلی). */
+  protected selectAllRecords(): void {
+    const all = this.lazy() ? this.data() : this.filtered();
+    this.selectionModel = [...all];
+    this.selectionSignal.set(this.selectionModel);
+    this.selectionChange.emit(all);
+  }
+
+  /** پاک‌کردن کل انتخاب. */
+  protected clearSelection(): void {
+    this.selectionModel = this.cfg().selectionMode === 'single' ? null : [];
+    this.selectionSignal.set(this.selectionModel);
+    this.selectionChange.emit([]);
+  }
+
+  /** آیا همه‌ی رکوردها (کل داده) انتخاب شده‌اند. */
+  protected readonly allRecordsSelected = computed(() => {
+    const total = this.lazy() ? this.totalCount() : this.filtered().length;
+    return total > 0 && this.selectedCount() === total;
+  });
 
   // ---- column toggle ----
   protected onColumnToggle(visible: TableColumn<T>[]): void {
@@ -268,6 +299,7 @@ export class DataTable<T extends Record<string, any> = any> {
   protected toggleSelect(row: T): void {
     const arr = Array.isArray(this.selectionModel) ? this.selectionModel : [];
     this.selectionModel = this.isSelected(row) ? arr.filter((r) => r !== row) : [...arr, row];
+    this.selectionSignal.set(this.selectionModel);
     this.selectionChange.emit(this.selectionModel as T[]);
   }
 

@@ -27,6 +27,13 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.6.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'نوار انتخاب پیشرفته در رپر جدول: وقتی ردیفی انتخاب می‌شود نواری با شمارنده، دکمه‌ی «انتخاب همه‌ی رکوردها» (کل داده، نه فقط صفحه‌ی فعلی) و دکمه‌ی «پاک‌کردن انتخاب» نمایش داده می‌شود. با گزینه‌های config: selectionToolbar و selectAllAcrossPages. باکس دستی انتخاب در گالری حذف و با این نوار جایگزین شد', en: 'Advanced selection toolbar in the table wrapper: when rows are selected, a bar appears with a counter, a “select all records” button (entire dataset, not just the current page) and a “clear selection” button. Controlled via config: selectionToolbar and selectAllAcrossPages. The manual selection box in the gallery was removed in favor of this toolbar' },
+    ],
+  },
+  {
     version: '2.6.0',
     date: '2026-06-27',
     entries: [
