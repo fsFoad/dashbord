@@ -27,6 +27,13 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.5.3',
+    date: '2026-06-27',
+    entries: [
+      { type: 'improvement', fa: 'پاک‌سازی معماری (clean architecture): رپر گلوبال data-table از shared/data-table به shared/components/data-table منتقل شد تا با سایر رپرهای گلوبال یکدست باشد؛ مسیرهای import به‌روز شدند؛ یک barrel (index.ts) برای shared/components اضافه شد تا importها تمیزتر شوند. کد بدون console.log و TODO باقی‌مانده است', en: 'Clean-architecture pass: moved the global data-table wrapper from shared/data-table to shared/components/data-table for consistency with the other global wrappers; updated import paths; added a barrel (index.ts) for shared/components for cleaner imports. Codebase has no leftover console.log or TODO' },
+    ],
+  },
+  {
     version: '2.5.2',
     date: '2026-06-27',
     entries: [

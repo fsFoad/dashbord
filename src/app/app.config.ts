@@ -32,7 +32,7 @@ import { TabReuseStrategy } from './core/routing/tab-reuse.strategy';
 import { ThemeService } from './core/services/theme.service';
 import { FontService } from './core/services/font.service';
 import { LanguageService } from './core/services/language.service';
-import { provideTableDefaults } from './shared/data-table';
+import { provideTableDefaults } from './shared/components/data-table';
 
 /**
  * Base preset built on Aura. The actual primary/surface palettes are swapped

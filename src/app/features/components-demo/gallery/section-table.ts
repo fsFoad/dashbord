@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { DataTable, TableColumn, TagMap } from '../../../shared/data-table';
+import { DataTable, TableColumn, TagMap } from '../../../shared/components/data-table';
 import { ButtonModule } from 'primeng/button';
 import { GalleryCard } from './gallery-section';
 
