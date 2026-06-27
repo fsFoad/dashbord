@@ -1,0 +1,218 @@
+import { SurfaceStyle } from '../models/settings.model';
+
+/**
+ * THEME PACKS — a high-level appearance preset that coordinates the whole app
+ * look in one click: brand color, surface style, border radius/color, shadow,
+ * AND a page background color/tint that also covers the sidebar and chrome.
+ *
+ * This is the LIGHT, safe version: backgrounds are plain colors/tints only (no
+ * full-viewport gradients, no images, no animation). Applying a pack performs a
+ * SINGLE settings patch, so the palette recalculates exactly once.
+ *
+ * Tokens land on <html data-theme-pack=…> as CSS variables, consumed in
+ * styles.css. Gradients/textures can be layered on later once this is stable.
+ */
+
+export type PackCategory = 'enterprise' | 'startup';
+
+export interface ThemePack {
+  key: string;
+  labelKey: string;
+  category: PackCategory;
+  /** picker swatch */
+  swatch: string;
+  swatch2: string;
+  /** suggested brand color (THEME_PRESETS key) */
+  themePreset: string;
+  /** optional EXACT brand hex; overrides themePreset when set */
+  customColor?: string;
+  /** suggested neutral surface ramp (SURFACE_PALETTES key) */
+  surface: string;
+  surfaceStyle: SurfaceStyle;
+  dark: boolean;
+  /** page background tint (light mode) — a CSS color */
+  bgLight: string;
+  /** page background tint (dark mode) — a CSS color */
+  bgDark: string;
+  /** sidebar / card surface tint (light) */
+  surfaceLight: string;
+  /** sidebar / card surface tint (dark) */
+  surfaceDark: string;
+  /** sidebar STRONG/jewel color (light) — deeper than topbar/tabs */
+  sidebarLight: string;
+  /** sidebar STRONG/jewel color (dark) */
+  sidebarDark: string;
+  radius: string;
+  border: string;
+  borderDark: string;
+  shadow: string;
+  shadowDark: string;
+}
+
+export const THEME_PACKS: ThemePack[] = [
+  /* ===================== ENTERPRISE / BANKING ===================== */
+  {
+    key: 'meridian', labelKey: 'themePack.meridian', category: 'enterprise',
+    swatch: '#1e3a8a', swatch2: '#1e40af', themePreset: 'blue', surface: 'navy',
+    surfaceStyle: 'solid', dark: false,
+    bgLight: '#f3f6fc', bgDark: '#0b1220',
+    surfaceLight: '#d8e3f5', surfaceDark: '#111a2e',
+    sidebarLight: '#1e40af', sidebarDark: '#0c1a3a',
+    radius: '0.625rem',
+    border: 'var(--p-surface-200)', borderDark: 'var(--p-surface-800)',
+    shadow: '0 1px 3px rgb(15 23 42 / 0.08)', shadowDark: '0 1px 3px rgb(0 0 0 / 0.4)',
+  },
+  {
+    // Azure — clean ocean blue built around the exact brand color #0077B3
+    key: 'azure', labelKey: 'themePack.azure', category: 'enterprise',
+    swatch: '#0077B3', swatch2: '#0096d6', themePreset: 'sky', customColor: '#0077B3',
+    surface: 'slate',
+    surfaceStyle: 'solid', dark: false,
+    bgLight: '#eef6fb', bgDark: '#08161f',
+    surfaceLight: '#d4e9f4', surfaceDark: '#0f1f2a',
+    sidebarLight: '#0077B3', sidebarDark: '#06283a',
+    radius: '0.75rem',
+    border: 'var(--p-surface-200)', borderDark: 'var(--p-surface-800)',
+    shadow: '0 1px 3px rgb(0 119 179 / 0.10)', shadowDark: '0 1px 3px rgb(0 0 0 / 0.4)',
+  },
+  {
+    key: 'graphite', labelKey: 'themePack.graphite', category: 'enterprise',
+    swatch: '#475569', swatch2: '#334155', themePreset: 'sky', surface: 'slate',
+    surfaceStyle: 'solid', dark: false,
+    bgLight: '#f4f5f7', bgDark: '#0d1117',
+    surfaceLight: '#dde1e8', surfaceDark: '#161b22',
+    sidebarLight: '#475569', sidebarDark: '#1a1f29',
+    radius: '0.5rem',
+    border: 'var(--p-surface-200)', borderDark: 'var(--p-surface-800)',
+    shadow: '0 1px 2px rgb(0 0 0 / 0.06)', shadowDark: '0 1px 2px rgb(0 0 0 / 0.35)',
+  },
+  {
+    key: 'evergreen', labelKey: 'themePack.evergreen', category: 'enterprise',
+    swatch: '#047857', swatch2: '#065f46', themePreset: 'emerald', surface: 'slate',
+    surfaceStyle: 'solid', dark: false,
+    bgLight: '#f1f7f4', bgDark: '#0a1410',
+    surfaceLight: '#d2e9df', surfaceDark: '#10201a',
+    sidebarLight: '#0f766e', sidebarDark: '#0a2420',
+    radius: '0.75rem',
+    border: 'var(--p-surface-200)', borderDark: 'var(--p-surface-800)',
+    shadow: '0 1px 3px rgb(6 95 70 / 0.08)', shadowDark: '0 1px 3px rgb(0 0 0 / 0.4)',
+  },
+  {
+    key: 'obsidian', labelKey: 'themePack.obsidian', category: 'enterprise',
+    swatch: '#0f172a', swatch2: '#1e293b', themePreset: 'indigo', surface: 'navy',
+    surfaceStyle: 'solid', dark: true,
+    bgLight: '#eef1f6', bgDark: '#080c16',
+    surfaceLight: '#d6deec', surfaceDark: '#0f1525',
+    sidebarLight: '#1e293b', sidebarDark: '#0a1020',
+    radius: '0.75rem',
+    border: 'var(--p-surface-200)', borderDark: 'color-mix(in srgb, #6366f1 18%, var(--p-surface-800))',
+    shadow: '0 1px 3px rgb(0 0 0 / 0.08)', shadowDark: '0 4px 16px rgb(0 0 0 / 0.5)',
+  },
+  {
+    key: 'royal', labelKey: 'themePack.royal', category: 'enterprise',
+    swatch: '#5b21b6', swatch2: '#6d28d9', themePreset: 'violet', surface: 'navy',
+    surfaceStyle: 'soft', dark: false,
+    bgLight: '#f6f3fc', bgDark: '#120a20',
+    surfaceLight: '#e5daf8', surfaceDark: '#1a1030',
+    sidebarLight: '#6d28d9', sidebarDark: '#1e0f3d',
+    radius: '1rem',
+    border: 'transparent', borderDark: 'transparent',
+    shadow: '0 6px 20px -6px rgb(91 33 182 / 0.18)', shadowDark: '0 6px 20px -6px rgb(91 33 182 / 0.3)',
+  },
+  {
+    // Warm brown — earthy, premium (notaries, law, heritage banks)
+    key: 'sienna', labelKey: 'themePack.sienna', category: 'enterprise',
+    swatch: '#92400e', swatch2: '#b45309', themePreset: 'amber', surface: 'stone',
+    surfaceStyle: 'solid', dark: false,
+    bgLight: '#f7f3ee', bgDark: '#1a130d',
+    surfaceLight: '#e8d8c0', surfaceDark: '#241a12',
+    sidebarLight: '#92400e', sidebarDark: '#2a1a0e',
+    radius: '0.75rem',
+    border: 'var(--p-surface-200)', borderDark: 'var(--p-surface-800)',
+    shadow: '0 1px 3px rgb(120 53 15 / 0.10)', shadowDark: '0 1px 3px rgb(0 0 0 / 0.4)',
+  },
+  {
+    // Neutral steel-grey — sober, professional, distraction-free
+    key: 'slate', labelKey: 'themePack.slate', category: 'enterprise',
+    swatch: '#334155', swatch2: '#475569', themePreset: 'slate', surface: 'zinc',
+    surfaceStyle: 'solid', dark: false,
+    bgLight: '#f4f4f5', bgDark: '#101012',
+    surfaceLight: '#d9dde4', surfaceDark: '#1a1a1d',
+    sidebarLight: '#334155', sidebarDark: '#16181d',
+    radius: '0.625rem',
+    border: 'var(--p-surface-200)', borderDark: 'var(--p-surface-800)',
+    shadow: '0 1px 2px rgb(0 0 0 / 0.06)', shadowDark: '0 1px 2px rgb(0 0 0 / 0.35)',
+  },
+
+  /* ===================== STARTUP / MODERN ===================== */
+  {
+    key: 'aurora', labelKey: 'themePack.aurora', category: 'startup',
+    swatch: '#8b5cf6', swatch2: '#3b82f6', themePreset: 'violet', surface: 'navy',
+    surfaceStyle: 'soft', dark: false,
+    bgLight: '#f5f4fd', bgDark: '#0e0b1c',
+    surfaceLight: '#ddd8f7', surfaceDark: '#171430',
+    sidebarLight: '#7c3aed', sidebarDark: '#1a1142',
+    radius: '1.15rem',
+    border: 'transparent', borderDark: 'transparent',
+    shadow: '0 8px 24px -8px rgb(99 102 241 / 0.18)', shadowDark: '0 8px 24px -8px rgb(99 102 241 / 0.3)',
+  },
+  {
+    key: 'spectrum', labelKey: 'themePack.spectrum', category: 'startup',
+    swatch: '#ec4899', swatch2: '#8b5cf6', themePreset: 'rose', surface: 'navy',
+    surfaceStyle: 'soft', dark: false,
+    bgLight: '#fdf3f8', bgDark: '#1c0b16',
+    surfaceLight: '#f7d8ea', surfaceDark: '#2a1020',
+    sidebarLight: '#be185d', sidebarDark: '#330f24',
+    radius: '1.25rem',
+    border: 'transparent', borderDark: 'transparent',
+    shadow: '0 10px 26px -8px rgb(236 72 153 / 0.2)', shadowDark: '0 10px 26px -8px rgb(236 72 153 / 0.28)',
+  },
+  {
+    key: 'mint', labelKey: 'themePack.mint', category: 'startup',
+    swatch: '#10b981', swatch2: '#06b6d4', themePreset: 'emerald', surface: 'slate',
+    surfaceStyle: 'soft', dark: false,
+    bgLight: '#f0f9f6', bgDark: '#06140f',
+    surfaceLight: '#cdeede', surfaceDark: '#0c1f19',
+    sidebarLight: '#0d9488', sidebarDark: '#06231d',
+    radius: '1.15rem',
+    border: 'transparent', borderDark: 'transparent',
+    shadow: '0 8px 24px -8px rgb(16 185 129 / 0.2)', shadowDark: '0 8px 24px -8px rgb(16 185 129 / 0.26)',
+  },
+  {
+    key: 'ember', labelKey: 'themePack.ember', category: 'startup',
+    swatch: '#f97316', swatch2: '#ec4899', themePreset: 'orange', surface: 'slate',
+    surfaceStyle: 'soft', dark: false,
+    bgLight: '#fdf5ef', bgDark: '#1a0f08',
+    surfaceLight: '#f7ddc8', surfaceDark: '#281610',
+    sidebarLight: '#c2410c', sidebarDark: '#2a1408',
+    radius: '1.5rem',
+    border: 'transparent', borderDark: 'transparent',
+    shadow: '0 12px 28px -10px rgb(249 115 22 / 0.26)', shadowDark: '0 12px 28px -10px rgb(249 115 22 / 0.24)',
+  },
+  {
+    key: 'nebula', labelKey: 'themePack.nebula', category: 'startup',
+    swatch: '#6366f1', swatch2: '#a855f7', themePreset: 'indigo', surface: 'navy',
+    surfaceStyle: 'neon', dark: true,
+    bgLight: '#f0f1fe', bgDark: '#0a0a1a',
+    surfaceLight: '#d7daf9', surfaceDark: '#12122a',
+    sidebarLight: '#4f46e5', sidebarDark: '#11103a',
+    radius: '1.15rem',
+    border: 'var(--p-surface-200)', borderDark: 'color-mix(in srgb, #6366f1 30%, transparent)',
+    shadow: '0 0 0 1px rgb(99 102 241 / 0.12)', shadowDark: '0 0 18px -6px color-mix(in srgb, #6366f1 45%, transparent)',
+  },
+  {
+    key: 'circuit', labelKey: 'themePack.circuit', category: 'startup',
+    swatch: '#06b6d4', swatch2: '#3b82f6', themePreset: 'cyan', surface: 'navy',
+    surfaceStyle: 'solid', dark: true,
+    bgLight: '#eef9fb', bgDark: '#06141a',
+    surfaceLight: '#cdeaf1', surfaceDark: '#0c2029',
+    sidebarLight: '#0e7490', sidebarDark: '#06222b',
+    radius: '0.85rem',
+    border: 'color-mix(in srgb, #06b6d4 18%, transparent)', borderDark: 'color-mix(in srgb, #06b6d4 26%, transparent)',
+    shadow: '0 6px 20px -8px rgb(6 182 212 / 0.18)', shadowDark: '0 6px 20px -8px rgb(6 182 212 / 0.24)',
+  },
+];
+
+export function findPack(key: string): ThemePack {
+  return THEME_PACKS.find((p) => p.key === key) ?? THEME_PACKS[0];
+}
