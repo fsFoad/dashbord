@@ -1,0 +1,81 @@
+<form [formGroup]="form()" (ngSubmit)="submit()" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+  @for (field of schema().fields; track field.key) {
+    <div class="flex flex-col gap-1.5" [class]="colClass(field)">
+      @if (field.type !== 'checkbox' && field.type !== 'switch') {
+        <label [for]="field.key" class="text-sm font-medium">
+          {{ field.label }}
+          @if (field.validators?.required) { <span class="text-red-500">*</span> }
+        </label>
+      }
+
+      @switch (field.type) {
+        @case ('text') {
+          <input pInputText [id]="field.key" [formControlName]="field.key" [placeholder]="field.placeholder ?? ''" />
+        }
+        @case ('email') {
+          <input pInputText type="email" dir="ltr" [id]="field.key" [formControlName]="field.key" [placeholder]="field.placeholder ?? ''" />
+        }
+        @case ('password') {
+          <p-password [inputId]="field.key" [formControlName]="field.key" [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full" />
+        }
+        @case ('textarea') {
+          <textarea pTextarea [id]="field.key" [formControlName]="field.key" rows="3" [placeholder]="field.placeholder ?? ''"></textarea>
+        }
+        @case ('number') {
+          <p-inputnumber [inputId]="field.key" [formControlName]="field.key" styleClass="w-full" />
+        }
+        @case ('select') {
+          <p-select [options]="field.options ?? []" optionLabel="label" optionValue="value" [formControlName]="field.key" [placeholder]="field.placeholder ?? ''" styleClass="w-full" />
+        }
+        @case ('multiselect') {
+          <p-multiselect [options]="field.options ?? []" optionLabel="label" optionValue="value" [formControlName]="field.key" [placeholder]="field.placeholder ?? ''" styleClass="w-full" />
+        }
+        @case ('radio') {
+          <div class="flex flex-col gap-2 pt-1">
+            @for (opt of field.options ?? []; track opt.value) {
+              <label class="flex items-center gap-2 text-sm">
+                <p-radiobutton [formControlName]="field.key" [value]="opt.value" [inputId]="field.key + '-' + opt.value" />
+                {{ opt.label }}
+              </label>
+            }
+          </div>
+        }
+        @case ('checkbox') {
+          <label class="flex items-center gap-2 pt-1 text-sm font-medium">
+            <p-checkbox [formControlName]="field.key" [binary]="true" [inputId]="field.key" />
+            {{ field.label }}
+          </label>
+        }
+        @case ('switch') {
+          <label class="flex items-center gap-2 pt-1 text-sm font-medium">
+            <p-toggleswitch [formControlName]="field.key" [inputId]="field.key" />
+            {{ field.label }}
+          </label>
+        }
+        @case ('date') {
+          <app-date-picker mode="date" [formControlName]="field.key" />
+        }
+        @case ('slider') {
+          <div class="pt-1.5">
+            <p-slider [formControlName]="field.key" />
+            <div class="mt-1 text-xs text-muted-color">{{ control(field.key).value }}</div>
+          </div>
+        }
+        @case ('rating') {
+          <p-rating [formControlName]="field.key" />
+        }
+      }
+
+      @if (field.hint && !invalid(field.key)) {
+        <small class="text-muted-color">{{ field.hint }}</small>
+      }
+      @if (invalid(field.key) && firstError(field.key); as err) {
+        <small class="text-red-500">{{ err.code | transloco: err.params }}</small>
+      }
+    </div>
+  }
+
+  <div class="md:col-span-2">
+    <p-button type="submit" [label]="schema().submitLabel ?? ('common.submit' | transloco)" icon="pi pi-check" />
+  </div>
+</form>
