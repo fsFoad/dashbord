@@ -18,7 +18,6 @@ import { THEME_PACKS } from '../../../core/config/theme-packs.config';
 import { FONT_OPTIONS, FontOption, isFontUsable } from '../../../core/config/fonts.config';
 import { FontLoaderService, FontStatus } from '../../../core/services/font-loader.service';
 import { ToastService } from '../../../core/services/toast.service';
-import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-settings-panel',
@@ -30,9 +29,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     ToggleSwitch,
     ColorPicker,
     ButtonModule,
-    TranslocoPipe
   ],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './settings-panel.html',
 })

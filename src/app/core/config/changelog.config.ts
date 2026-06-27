@@ -27,6 +27,55 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.5.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع سه خطای رپر جدول: (۱) expandedRowKeys از two-way به one-way تغییر کرد؛ (۲و۳) دایرکتیوهای سطح ستونِ pReorderableColumn و pResizableColumn که در TableModule نیستند و خطا می‌دادند حذف شدند (resize/reorder ستون موقتاً غیرفعال تا import دایرکتیو جداگانه اضافه شود). سایر امکانات (row expansion، row reorder، sort، filter، toggle، export، edit) فعال‌اند', en: 'Fixed three table-wrapper errors: (1) expandedRowKeys changed from two-way to one-way; (2,3) removed the column-level pReorderableColumn and pResizableColumn directives that are not in TableModule and were erroring (column resize/reorder temporarily disabled until the separate directive import is added). Other features (row expansion, row reorder, sort, filter, toggle, export, edit) remain enabled' },
+    ],
+  },
+  {
+    version: '2.5.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع هشدار NG8113: حذف import بلااستفاده‌ی FaBooleanPipe از رپر جدول (نوع boolean با آیکون رندر می‌شود نه پایپ). خود پایپ برای استفاده‌ی آینده باقی است', en: 'Fixed NG8113 warning: removed the unused FaBooleanPipe import from the table wrapper (boolean type renders via icon, not the pipe). The pipe itself remains exported for future use' },
+    ],
+  },
+  {
+    version: '2.5.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'رپر جدول به نسخه‌ی کامل ارتقا یافت و تقریباً همه‌ی امکانات جدول PrimeNG را پوشش می‌دهد: مرتب‌سازی تک/چندستونه، فیلتر ستونی (text/numeric/date/boolean/select)، انتخاب تکی (radio) و چندتایی، نمایش/مخفی ستون‌ها (column toggle)، تغییر اندازه و جابه‌جایی ستون (resize/reorder)، باز شدن ردیف (row expansion)، جابه‌جایی ردیف (row reorder)، ویرایش درون‌خطی (cell edit)، اسکرول مجازی (virtual scroll)، خروجی CSV با پشتیبانی فارسی، caption، و حالت موبایل کارت + infinite scroll. همه از طریق config سراسری یا موضعی قابل کنترل‌اند. تمپلیت به فایل HTML جدا منتقل شد', en: 'Upgraded the table wrapper to a complete version covering almost all PrimeNG table features: single/multi-column sort, column filters (text/numeric/date/boolean/select), single (radio) and multiple selection, column toggle, column resize/reorder, row expansion, row reorder, inline cell edit, virtual scroll, CSV export with Persian support, caption, and mobile card mode + infinite scroll. All controllable via global or local config. Template moved to a separate HTML file' },
+    ],
+  },
+  {
+    version: '2.4.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'قابلیت ستون ثابت (frozen) رپر جدول راه‌اندازی شد — با CSS sticky خالص (بدون وابستگی به دایرکتیو PrimeNG): ستون‌هایی که frozen: true دارند هنگام اسکرول افقی در لبه می‌چسبند، با پس‌زمینه و سایه‌ی جداکننده و پشتیبانی کامل RTL/دارک. ستون شناسه در جدول نمونه frozen شد', en: 'Enabled the table wrapper frozen-column feature using pure CSS sticky (no PrimeNG directive dependency): columns with frozen: true stick to the edge during horizontal scroll, with a background and divider shadow and full RTL/dark support. The ID column in the sample table is now frozen' },
+    ],
+  },
+  {
+    version: '2.4.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای NG8002 رپر جدول: دایرکتیو pFrozenColumn حذف شد (در TableModule نیست و نیاز به import جدا دارد). فیلد frozen در مدل برای استفاده‌ی آینده رزرو ماند', en: 'Fixed the table wrapper NG8002 error: removed pFrozenColumn (not part of TableModule, needs a separate import). The frozen field remains reserved in the model for future use' },
+    ],
+  },
+  {
+    version: '2.4.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'کامپوننت رپر قابل‌استفاده‌ی مجدد <app-data-table> برای جدول‌های PrimeNG اضافه شد: پیکربندی سراسری از طریق سرویس (provideTableDefaults) و موضعی از طریق input [config]؛ ستون‌ها با typeهای آماده (currency/tag/date/number/boolean/badge) و پایپ‌های فارسی، یا ng-template سفارشی #cell؛ دو حالت داده (آرایه‌ی محلی یا lazy سرور با رویداد onLazyLoad)؛ جستجوی سراسری، مرتب‌سازی، انتخاب، صفحه‌بندی؛ و در موبایل به‌جای جدول، هر ردیف یک کارت با infinite scroll. جدول گالری با همین رپر بازنویسی شد', en: 'Added a reusable <app-data-table> wrapper for PrimeNG tables: global config via a service (provideTableDefaults) and local via [config] input; columns with built-in types (currency/tag/date/number/boolean/badge) and Persian pipes, or a custom #cell ng-template; two data modes (local array or server lazy via onLazyLoad); global search, sorting, selection, pagination; and on mobile each row becomes a card with infinite scroll. The gallery table was rewritten to use this wrapper' },
+    ],
+  },
+  {
+    version: '2.3.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'منوی موبایل سایت به آکاردئون چندسطحی تبدیل شد: حالا تمام عمق منو (دسته‌ها و زیرمنوها) با باز/بسته شدن گروه‌ها و تورفتگی بر اساس سطح در دسترس است. کامپوننت بازگشتی SiteMobileAccordion ساخته شد', en: 'The site mobile menu is now a multi-level accordion: the full menu depth (categories and submenus) is reachable via collapsible groups with depth-based indentation. Added a recursive SiteMobileAccordion component' },
+    ],
+  },
+  {
     version: '2.3.1',
     date: '2026-06-27',
     entries: [
