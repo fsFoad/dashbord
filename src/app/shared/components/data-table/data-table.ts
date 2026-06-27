@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TableModule, TableLazyLoadEvent } from 'primeng/table';
+import { TableModule, TableLazyLoadEvent, ReorderableColumn, ResizableColumn } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -35,7 +35,7 @@ import { FaNumberPipe, FaCurrencyPipe, FaDatePipe } from './pipes/table-cell.pip
 @Component({
   selector: 'app-data-table',
   imports: [
-    NgTemplateOutlet, FormsModule, TableModule, TagModule, ButtonModule, IconFieldModule,
+    NgTemplateOutlet, FormsModule, TableModule, ReorderableColumn, ResizableColumn, TagModule, ButtonModule, IconFieldModule,
     InputIconModule, InputTextModule, InputNumberModule, ProgressSpinnerModule,
     MultiSelectModule, SelectModule, PopoverModule, TooltipModule,
     FaNumberPipe, FaCurrencyPipe, FaDatePipe,

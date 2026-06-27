@@ -27,6 +27,13 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.5.4',
+    date: '2026-06-27',
+    entries: [
+      { type: 'improvement', fa: 'تلاش برای فعال‌سازی resize/reorder ستون در رپر جدول: کلاس‌های ReorderableColumn و ResizableColumn از primeng/table import و دایرکتیوهای متناظر به سرستون‌ها بازگردانده شدند. اگر نام کلاس‌ها در این نسخه‌ی PrimeNG متفاوت باشد و خطای build بدهد، باید حذف شوند', en: 'Attempt to enable column resize/reorder in the table wrapper: imported ReorderableColumn and ResizableColumn from primeng/table and restored the directives on headers. If the class names differ in this PrimeNG version and cause a build error, they should be removed' },
+    ],
+  },
+  {
     version: '2.5.3',
     date: '2026-06-27',
     entries: [
