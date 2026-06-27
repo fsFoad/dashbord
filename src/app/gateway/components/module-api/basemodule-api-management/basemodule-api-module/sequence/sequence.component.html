@@ -1,0 +1,568 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()" *ngIf="!addFlag"></app-breadcrumbs>
+<div class="fle flex-col w-full px-5 gap-4 my-10 " *ngIf="!addFlag">
+    <div
+        class="col-span-12  flex flex-wrap gap-[1px] border-b border-black  text-[16px] items-center justify-start mb-3"
+        *ngIf="sequenceFlag">
+        <div disabled>
+            <span [ngStyle]="{ 'color': '#37A1FF'}">{{ 'sequence.span.partyOrgApi'|transloco }}</span>
+            <span [ngStyle]="{ 'color': '#7229a9'}"
+            >{{ "(" + partyTitleOrg + ")" }}
+                    </span>
+        </div>
+        <div disabled>
+            &#8592;
+            <span [ngStyle]="{ 'color': '#37A1FF'}">{{ 'sequence.span.moduleOrgApi'|transloco }}</span>
+            <span [ngStyle]="{ 'color': '#7229a9'}"
+            >{{ "(" + moduleTitleOrg + ")" }}
+                    </span>
+        </div>
+        <div disabled>
+            &#8592;
+            <span [ngStyle]="{ 'color': '#37A1FF'}">{{ 'sequence.span.orgApi'|transloco }}</span>
+            <span [ngStyle]="{ 'color': '#7229a9'}"
+                  [pTooltip]="apiTitleOrg"
+                  [tooltipDisabled]="apiTitleOrg?apiTitleOrg.length < 19:false">
+                    {{ "(" + apiTitleOrg + ")"|threeDotBreadcrumbPipe }}
+                    </span>
+        </div>
+    </div>
+    <div *ngIf="!sequenceFlag">
+        <p-message severity="error">{{ 'sequence.text.thereIsNotActiveSequence'|transloco }}</p-message>
+    </div>
+
+    <div class="grid grid-cols-12" *ngIf="sequenceFlag">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>عنوان :</span></label>
+            <input pInputText [(ngModel)]="title" class="normal-input" disabled>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>اولویت اجرا :</span></label>
+            <p-dropdown
+                class="normal-dropdown"
+                [options]="actionTypeOptions"
+                [(ngModel)]="actionTypeFirst"
+                optionValue="code"
+                optionLabel="name"
+                [disabled]=true
+            >
+            </p-dropdown>
+        </div>
+        <div class="col-span-4">
+            <br>
+            <div class="flex flex-wrap gap-2 ">
+                <button type="button" pButton (click)="setRecord(1);menu.toggle($event)"
+                        class="normal-button w-15" [disabled]=true
+                        pRipple icon="pi pi-chevron-down"></button>
+                <button pButton label="200" [icon]="icon200_val " severity="success"
+                        class="normal-button"
+                        (click)="message200Flag = true; messageSelector200Action$.next({ type: 'open' })"
+                ></button>
+                <button pButton label="400" severity="warn" [icon]="icon400_val "
+                        class="normal-button w-15"
+                        (click)="message400Flag = true; messageSelector400Action$.next({ type: 'open'})"></button>
+
+                <button pButton label="500" severity="danger" [icon]="icon500_val "
+                        class="normal-button w-15"
+                        (click)="message500Flag = true; messageSelector500Action$.next({ type: 'open'})"></button>
+
+
+            </div>
+            <p-tieredMenu appendTo="body" #menu [popup]="true" [model]="itemsFirst">
+            </p-tieredMenu>
+        </div>
+        <br>
+        <div class="col-span-12 mt-3">
+            <p-fieldset class="w-full" [legend]="titleApiSecound">
+                <div class=" grid grid-cols-12">
+                    <div class="col-span-4">
+                        <label class="normal-label">
+                            <span class="red-color-text">* </span>
+                            <span>نام سازمان :</span></label>
+                        <p-dropdown
+                            class="normal-dropdown"
+                            [options]="partyListOptionsFirst"
+                            [(ngModel)]="partyIdFirst"
+                            optionValue="partyId"
+                            [filter]="true"
+                            filterBy="title"
+                            optionLabel="title"
+                            [disabled]="true">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-4">
+                        <label class="normal-label">
+                            <span class="red-color-text">* </span>
+                            <span>ماژول :</span></label>
+                        <p-dropdown
+                            class="normal-dropdown"
+                            [options]="moduleListOptionsFirst"
+                            [(ngModel)]="moduleIdFirst"
+                            optionValue="moduleId"
+                            [filter]="true"
+                            filterBy="moduleTitle"
+                            optionLabel="moduleTitle"
+                            [disabled]="true">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-4">
+                        <label class="normal-label">
+                            <span class="red-color-text">* </span>
+                            <span>نام سرویس :</span></label>
+                        <p-dropdown
+                            class="normal-dropdown"
+                            [options]="apiListOptionsFirst"
+                            [(ngModel)]="apiIdFirst"
+                            optionValue="apiId"
+                            [filter]="true"
+                            filterBy="title"
+                            optionLabel="title"
+                            [disabled]="true"
+                        >
+                        </p-dropdown>
+                    </div>
+
+                    <div class="col-span-4 md:col-span-6 lg:col-span-4">
+                        <div class="mt-3 space-y-3">
+
+                            <div class="inline-flex items-center gap-2 flex-nowrap ">
+                                <p-checkbox
+                                    styleClass="!m-0"
+                                    [disabled]="true"
+                                    [(ngModel)]="apiHasIgnoreSignatureElement"
+                                    [binary]="true"
+                                    inputId="apiHasIgnoreSignatureElement"
+                                ></p-checkbox>
+                                <label class="normal-label inline-block !m-0 !w-auto"
+                                       for="apiHasIgnoreSignatureElement">
+                                    {{ 'برای این سرویس، در المان های سرویس (انصراف از امضا دیجیتال) ثبت شده است' | transloco }}
+                                </label>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-span-4 md:col-span-6 lg:col-span-4">
+                        <div class="mt-3 space-y-3">
+
+                            <div class="inline-flex items-center gap-2 flex-nowrap ">
+                                <p-checkbox
+                                    styleClass="!m-0"
+                                    [disabled]="true"
+                                    [(ngModel)]="apiUseApiCacheFeature"
+                                    [binary]="true"
+                                    inputId="apiUseApiCacheFeature"
+                                ></p-checkbox>
+                                <label class="normal-label inline-block !m-0 !w-auto" for="apiUseApiCacheFeature">
+                                    {{ 'این سرویس از کش ریسپانس استفاده می کند' | transloco }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </p-fieldset>
+            <div class="col-span-12 mt-3">
+                <p-fieldset class="w-full " legend="اتصال به کلاینت">
+                    <div class=" grid grid-cols-12">
+                        <div class="col-span-4 md:col-span-6 lg:col-span-4">
+                            <div class="mt-3 space-y-3">
+
+                                <div class="inline-flex items-center gap-2 flex-nowrap ">
+                                    <p-checkbox
+                                        styleClass="!m-0"
+                                        (onChange)="onChangeHasClient($event)"
+                                        [(ngModel)]="hasClient"
+                                        [binary]="true"
+                                        [disabled]="true"
+                                        inputId="apiHasIgnoreSignatureElement"
+                                    ></p-checkbox>
+                                    <label class="normal-label inline-block !m-0 !w-auto"
+                                           for="apiHasIgnoreSignatureElement">
+                                        {{ 'این جریان پردازشی به کلاینت مورد نظر متصل می گردد:' | transloco }}
+                                    </label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-span-4 md:col-span-6 lg:col-span-4">
+                            <label class="normal-label">
+                                <span>نام کلاینت :</span></label>
+                            <p-dropdown
+                                [disabled]="true"
+                                class="normal-dropdown"
+                                [options]="clientOptions"
+                                [(ngModel)]="clientId"
+                                optionValue="clientId"
+                                optionLabel="name"
+                                (onChange)="onChangeHasClient($event)"
+                            >
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </p-fieldset>
+            </div>
+            <div class="w-full mt-1" *ngIf="actionTypeFirst==2">
+                <p-fieldset class="w-full " legend="تنظیمات Call Back">
+                    <div class=" grid grid-cols-12">
+                        <div class="col-span-4">
+                            <div class="col-span-12 mt-3 md:col-span-6 lg:col-span-4">
+                                <div class="flex items-center gap-2">
+                                    <p-checkbox [disabled]="true" [(ngModel)]="runAsyncFirst"
+                                                [binary]="true"
+                                                inputId="runAsyncFirst"
+                                    ></p-checkbox>
+                                    <label class="normal-label"
+                                           for="runAsyncFirst">{{ 'سرویس دارای اجرای (Async) می باشد'|transloco }}</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </p-fieldset>
+            </div>
+            <div class="w-full mt-6">
+                  <p-table
+styleClass="normal-table"
+ [value]="matchListFirst" selectionMode="single">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="row">ردیف</th>
+                            <th>نود مورد نیاز</th>
+                            <th>گروه بندی نود مورد نیاز</th>
+                            <th>مسیر نود مورد نیاز</th>
+                            <th>نود تولید شده</th>
+                            <th>گروه بندی نود تولید شده</th>
+                            <th>مسیر نود تولید شده</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-api>
+                        <tr [pSelectableRow]="api">
+                            <td class="row">{{ i + 1 }}</td>
+                            <td
+                                [pTooltip]="api.requiredNodeName"
+                                [tooltipDisabled]="api.requiredNodeName?
+                                    api.requiredNodeName.length < 20:false"
+                            >
+                                {{ api.requiredNodeName|moreChar19 }}
+                            </td>
+                            <td>
+                                {{ api.requiredNodePlace|detailType }}
+                            </td>
+                            <td dir="ltr" [pTooltip]="api.requiredNodePath"
+                                [tooltipDisabled]="api.requiredNodePath?
+                                    api.requiredNodePath.length < 56:false">
+                                {{ api.requiredNodePath|morChar55 }}
+                            </td>
+                            <td
+                                [pTooltip]="api.producedNodeName"
+                                [tooltipDisabled]="api.producedNodeName?
+                                    api.producedNodeName.length < 20:false"
+                            >
+                                {{ api.producedNodeName|moreChar19 }}
+                            </td>
+                            <td>
+                                {{ api.producedNodePlace|detailType }}
+                            </td>
+                            <td dir="ltr" [pTooltip]="api.producedNodePath"
+                                [tooltipDisabled]="api.producedNodePath?
+                                    api.producedNodePath.length < 56:false">
+                                {{ api.producedNodePath|morChar55 }}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="grid grid-cols-12">
+        <div class="col-span-12">
+
+            <div class="col-span-12 my-4" *ngIf="!addFlag&&!sequenceFlag">
+                <button pButton label="{{'sequence.button.createSequence' | transloco}}" class="normal-button"
+                        icon="pi pi-plus" (click)="showAdd()"></button>
+            </div>
+
+        </div>
+        <div class="col-span-12" dir="ltr">
+            <button pButton label="{{'button.cancel' | transloco}}"
+                    severity="danger" icon="pi pi-times" class="normal-button"
+                    [outlined]="true" (click)="onCancel()"></button>
+            <button style=" margin: 5px" *ngIf="sequenceFlag" pButton class="normal-button"
+                    label="{{'غیرفعالسازی جریان پردازشی' | transloco}}"
+                    severity="danger" icon="pi pi-times"
+                    (click)="confirm()"></button>
+
+        </div>
+    </div>
+
+</div>
+<div class="col-span-12" *ngIf="addFlag">
+    <app-sequence-register [inputSequenceRegister]="sequenceDto" (close)="onClose($event)"></app-sequence-register>
+</div>
+
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div
+                class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+            >
+                <i class="pi pi-question !text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <button pButton label="{{'module.dialog.button.yes'|transloco}}" (click)="onAccept()"
+                        class="w-32 bg-green-500 text-white border-none hover:bg-green-600 normal-button"></button>
+                <button pButton label="{{'module.dialog.button.no'|transloco}}" [outlined]="true" (click)="onReject()"
+                        class="w-32 bg-red-500 text-white border-none hover:bg-red-600 normal-button"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmdialog>
+<p-dialog [style]="{'width':'60%'}" [(visible)]="dialogFirstMatchFlag"
+          [modal]="true" [draggable]="false" appendTo="body"
+          [resizable]="true">
+    <p-panel header="{{'اتصال نود های تولید شده و نود های مورد نیاز' | transloco}}">
+        <div class="content-page">
+            <div class="grid grid-cols-12 " style="margin-top: 5px">
+                <div class="col-span-6 my-2 mx-1">
+                    <div class="grid grid-cols-12">
+                        <div class="col-span-7">
+                            <label class="normal-label">
+                            <span dir="rtl">
+                                نود های تولید شده سرویس
+                                <span [pTooltip]="apiTitleProduced"
+                                      [tooltipDisabled]="apiTitleProduced?
+                                    apiTitleProduced.length < 14:false">
+                                    {{ apiTitleProduced|morChar13 }}
+                                </span>
+                            </span>
+                                :
+                            </label>
+                        </div>
+                        <div class="col-span-3" dir="ltr">
+                            <label class="normal-label">
+                            <span dir="rtl">
+                                <span style="font-size: 10px;">قابل انتخاب</span>
+                                <span style="font-size: 10px;color:#37a1ff">
+                                    <span style="font-size: 10px;color:#37a1ff">(</span>
+                                    <span style="font-size: 10px;color:#37a1ff">{{ countProduced }}</span>
+                                    <span style="font-size: 10px;color:#37a1ff">)</span>
+                                </span>
+                            </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <p-listbox [options]="producedListFirst" [(ngModel)]="producedNode" optionLabel="nodeName">
+                        <ng-template let-produced pTemplate="item">
+                            <div [pTooltip]="produced.nodePath" tooltipPosition="top">
+                                {{ produced.nodeName }}
+                            </div>
+                        </ng-template>
+                    </p-listbox>
+                </div>
+
+                <div class="col-span-6 my-2 mx-1">
+                    <div class="grid grid-cols-12">
+                        <div class="col-span-7">
+                            <label class="normal-label">
+                            <span dir="rtl">
+                                نود های مورد نیاز سرویس
+                                <span [pTooltip]="apiTitleRequired"
+                                      [tooltipDisabled]="apiTitleRequired?
+                                    apiTitleRequired.length < 14:false">
+                                    {{ apiTitleRequired|morChar13 }}
+                                </span>
+                            </span>
+                                :
+                            </label>
+                        </div>
+                        <div class="col-span-3" dir="ltr">
+                            <label class="normal-label">
+                          <span dir="rtl">
+                                 <span style="font-size: 10px;">قابل انتخاب</span>
+                                <span style="font-size: 10px;color:#37a1ff">
+                                    <span style="font-size: 10px;color:#37a1ff">(</span>
+                                    <span style="font-size: 10px;color:#37a1ff">{{ countRequired }}</span>
+                                    <span style="font-size: 10px;color:#37a1ff">)</span>
+                                </span>
+                            </span>
+                            </label>
+                        </div>
+                    </div>
+                    <p-listbox [options]="requiredListFirst" [(ngModel)]="requiredNode" optionLabel="nodeName">
+                        <ng-template let-required pTemplate="item">
+                            <div [pTooltip]="required.nodePath" tooltipPosition="top">
+                                {{ required.nodeName }}
+                            </div>
+                        </ng-template>
+                    </p-listbox>
+                </div>
+                <div class="col-span-4"></div>
+                <div class="col-span-4 my-2">
+                    <button pButton label="{{'sequence.dialog.button.attachmentNodes'|transloco}}"
+                            style="width: 100%;height: 30px;"
+                            icon="pi pi-link" [disabled]="true"></button>
+                </div>
+
+                <div class="col-span-4"></div>
+                <div class="col-span-12 mt-3">
+                      <p-table
+styleClass="normal-table"
+ [value]="matchListFirst" selectionMode="single"
+                             [paginator]="false" [rows]="rows" [showCurrentPageReport]="true"
+                             [(first)]="first"
+                             [currentPageReportTemplate]=paginationLabel
+                             [rowsPerPageOptions]="[5,10,25,50,100]">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="row">table.header.row</th>
+                                <th>نود مورد نیاز</th>
+                                <th>گروه بندی نود مورد نیاز</th>
+                                <th>مسیر نود مورد نیاز</th>
+                                <th>نود تولید شده</th>
+                                <th>گروه بندی نود تولید شده</th>
+                                <th>مسیر نود تولید شده</th>
+                                <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                                    عملیات
+                                </th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template let-i="rowIndex" pTemplate="body" let-api>
+                            <tr [pSelectableRow]="api">
+                                <td class="row">{{ i + 1 }}</td>
+                                <td
+                                    [pTooltip]="api.requiredNodeName"
+                                    [tooltipDisabled]="api.requiredNodeName?
+                                    api.requiredNodeName.length < 20:false"
+                                >
+                                    {{ api.requiredNodeName|moreChar19 }}
+                                </td>
+                                <td>
+                                    {{ api.requiredNodePlace|detailType }}
+                                </td>
+                                <td [pTooltip]="api.requiredNodePath"
+                                    [tooltipDisabled]="api.requiredNodePath?
+                                    api.requiredNodePath.length < 33:false">
+                                    {{ api.requiredNodePath|morChar32 }}
+                                </td>
+                                <td
+                                    [pTooltip]="api.producedNodeName"
+                                    [tooltipDisabled]="api.producedNodeName?
+                                    api.producedNodeName.length < 20:false"
+                                >
+                                    {{ api.producedNodeName|moreChar19 }}
+                                </td>
+                                <td>
+                                    {{ api.producedNodePlace|detailType }}
+                                </td>
+                                <td [pTooltip]="api.producedNodePath"
+                                    [tooltipDisabled]="api.producedNodePath?
+                                    api.producedNodePath.length < 33:false">
+                                    {{ api.producedNodePath|morChar32 }}
+                                </td>
+                                <td class="text-right border-r  ">
+                                    <button type="button" [disabled]="true"
+                                            class="p-button-rounded  " pButton
+                                            pRipple icon="pi pi-chevron-down"></button>&nbsp;
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+                    <button pButton label="{{'sequence.dialog.button.close' | transloco}}"
+                            severity="danger" icon="pi pi-times"
+                            (click)="closeMatchNodesFirst()"></button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>
+
+<ng-container *ngIf="message400Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message400Flag"
+              [modal]="true" [draggable]="false" appendTo="body"
+              [resizable]="true">
+        <div class="w-full mx-4 mt-4">
+            <app-message-selector
+                [viewMode]="true"
+                [titleHeader]="'انتخاب پیام 400' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions400"
+                [categoryOptions]="categoryMessages400"
+                [action$]="messageSelector400Action$"
+                [preselectedMessageId]="messageId4XX"
+                [clearTrigger]="clearTriggerForMessageSelector400"
+                (selectionCleared)="onChildSelectionCleared400($event)"
+                (select)="onMessageSelected400($event)"
+                [presetValue]="{code: '400'}"
+                [disabledControls]="{ code: true,title:true, text: true,textEN: true,  tableid: true, type : true}
+">
+            </app-message-selector>
+        </div>
+
+    </p-dialog>
+</ng-container>
+<ng-container *ngIf="message500Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message500Flag"
+              [modal]="true" [draggable]="false" appendTo="body"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <app-message-selector
+                [viewMode]="true"
+                [titleHeader]="'انتخاب پیام 500' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions500"
+                [categoryOptions]="categoryMessages500"
+                [action$]="messageSelector500Action$"
+                [preselectedMessageId]="messageId5XX"
+                [clearTrigger]="clearTriggerForMessageSelector500"
+                (selectionCleared)="onChildSelectionCleared500($event)"
+                (select)="onMessageSelected500($event)"
+                [presetValue]="{code: '500'}"
+                [disabledControls]="{ code: true,title:true, text: true,textEN: true,  tableid: true, type : true}
+">
+            </app-message-selector>
+
+        </div>
+
+    </p-dialog>
+</ng-container>
+<ng-container *ngIf="message200Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message200Flag"
+              [modal]="true" [draggable]="false" appendTo="body"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+
+            <app-message-selector
+                [viewMode]="true"
+                [titleHeader]="'انتخاب پیام 200' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions200"
+                [categoryOptions]="categoryMessages200"
+                [action$]="messageSelector200Action$"
+                [preselectedMessageId]="messageId2XX"
+                [clearTrigger]="clearTriggerForMessageSelector200"
+                (selectionCleared)="onChildSelectionCleared200($event)"
+                (select)="onMessageSelected200($event)"
+                [presetValue]="{code: '200'}"
+                [disabledControls]="{ code: true,title:true, text: true,textEN: true,  tableid: true, type : true}
+">
+            </app-message-selector>
+        </div>
+
+    </p-dialog>
+</ng-container>

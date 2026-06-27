@@ -1,0 +1,131 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()" *ngIf="!HubAttachmentFlag&&!updateFlag"></app-breadcrumbs>
+<div class="content-page" *ngIf="!HubAttachmentFlag&&!updateFlag">
+    <div class="grid grid-cols-12">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span dir="rtl">{{'apiHub.label.apiTitle'|transloco}}  : </span></label>
+            <div [style.width.%]="widthName"
+                 [pTooltip]="name"
+                 [tooltipDisabled]="name?name.length < 20:false">
+                <label class="text-gray-700 ">{{ name|moreChar19 }}</label>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span dir="rtl">{{'apiHub.label.apiName'|transloco}} :</span>  </label>
+            <div [style.width.%]="widthTitle"
+                 [pTooltip]="title"
+                 [tooltipDisabled]="title?title.length < 20:false">
+                <label class="text-gray-700 ">{{ title|moreChar19 }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-span-12" *ngIf="!addFlag&&!updateFlag">
+        <button pButton label="{{'اتصال سرویس به هاب' | transloco}}"
+                (click)="showHubs()" [disabled]="attachFlag" class="normal-button"
+                [pTooltip]="tooltipAttachHub" [tooltipDisabled]="!attachFlag"
+                icon="pi pi-link"></button>
+    </div>
+    <div class="col-span-12">
+          <p-table
+styleClass="normal-table"
+ [value]="hubList" *ngIf="!addFlag&&!updateFlag"
+                 selectionMode="single"
+                 [paginator]="true" [rows]="rows2" [showCurrentPageReport]="true" [(first)]="first2"
+                 [currentPageReportTemplate]=paginationLabel
+                 [rowsPerPageOptions]="[5,10,25,50,100]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="row" class="row">
+                        row
+                        <p-sortIcon field="row"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="HUBTITLE" class="HUBTITLE">
+                        {{'apiHub.table.th.hubTitle'|transloco}}
+                        <p-sortIcon field="HUBTITLE"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="dbEngineId" class="dbEngineId">
+                        {{'apiHub.table.th.dbEngine'|transloco}}
+                        <p-sortIcon field="dbEngineId"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="dbName" class="dbName">
+                        {{ 'apiHub.table.th.dbName'|transloco }}
+                        <p-sortIcon field="dbName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="ip" class="ip">
+                        {{ 'apiHub.table.th.ip'|transloco }}
+                        <p-sortIcon field="ip"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="status" class="status">
+                        {{ 'apiHub.table.th.status'|transloco }}
+                        <p-sortIcon field="status"></p-sortIcon>
+                    </th>
+                    <th class="text-right border-r  ">
+                        {{ 'apiHub.table.th.operation'|transloco }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-hub>
+                <tr [pSelectableRow]="hub">
+                    <td class="row">{{ hub.row }}</td>
+                    <td>
+                        {{ hub.HUBTITLE }}
+                    </td>
+                    <td>
+                        {{ hub.DBENGINEID|dbEngine }}
+                    </td>
+                    <td>
+                        {{ hub.DBNAME }}
+                    </td>
+                    <td>
+                        {{ hub.IP }}
+                    </td>
+
+                    <td
+                        class="status"
+                        [ngStyle]="{'text-align': 'center !important'}"
+                    >
+                        <div  [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': hub.APIHUBID_STATUS,
+                                   ' text-red-800 bg-red-300 ': !hub.APIHUBID_STATUS
+                                   }"
+                              class="w-[65px] float-right text-center rounded-md"
+                        >
+                            {{ hub.APIHUBID_STATUS|enStatus }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r  ">
+                        <button type="button" class="p-button-rounded  "
+                                pButton
+                                pRipple icon="pi pi-chevron-down" (click)="setRecord(hub);menu.toggle($event)"></button>&nbsp;
+                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<div class="w-full" *ngIf="HubAttachmentFlag">
+    <app-api-hub-attachment [inputAttachApiHub]="apiDto" (close)="onClose($event)"></app-api-hub-attachment>
+</div>
+
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div
+                class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+            >
+                <i class="pi pi-question !text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <button pButton label="{{'module.dialog.button.yes'|transloco}}" (click)="onAccept()" class="w-32 bg-green-500 text-white border-none hover:bg-green-600 normal-button"></button>
+                <button pButton label="{{'module.dialog.button.no'|transloco}}" [outlined]="true" (click)="onReject()" class="w-32 bg-red-500 text-white border-none hover:bg-red-600 normal-button" ></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmdialog>

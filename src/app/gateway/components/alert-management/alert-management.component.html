@@ -1,0 +1,190 @@
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false" *ngIf="!addFlag"></app-breadcrumbs>
+<div class="content-page" *ngIf="!addFlag">
+    <div class="grid grid-cols-1 xl:grid-cols-12 2xl:grid-cols-12 md:grid-cols-12  ">
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span>عنوان آلارم:</span></label>
+          <!--  <input class="normal-input" [(ngModel)]="destination_address" pKeyFilter="num" maxlength="11" pInputText
+                   (keydown.enter)="onKeydown($event)">-->
+
+            <p-dropdown class="normal-dropdown"
+                        [autoDisplayFirst]="true"
+                        [options]="alarmOption"
+                        optionLabel="title"
+                        [(ngModel)]="sectionid"
+                        optionValue="id"
+                        (onChange)="onChangealarm($event)"
+            ></p-dropdown>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span>{{ 'alerts.input.fromDate'|transloco }} :</span>
+            </label>
+            <p-persian-calendar
+                class="app-persian-calendar-style"
+                [yearRange]="'1399:1410'"
+                [useSlashFormat]="true"
+                [(ngModel)]="fromdate">
+            </p-persian-calendar>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span>{{ 'alerts.input.toDate'|transloco }} :</span>
+            </label>
+            <p-persian-calendar
+                class="app-persian-calendar-style"
+                [yearRange]="'1399:1410'"
+                [useSlashFormat]="true"
+                [(ngModel)]="todate">
+            </p-persian-calendar>
+        </div>
+        <div class="col-span-3 flex text-left h-12 gap-2 mt-5-5  sm:hidden ">
+            <button name="btn-search-button" pButton label="{{ 'button.search' | transloco }}"
+                    style="width: 110px;margin: 3px;margin-top: 20px"
+                    class="normal-button" icon="pi pi-search"
+                    (click)="searchClick(true)"></button>&nbsp;&nbsp;
+            <button name="btn-clear-button" pButton label="{{'button.clear'|transloco}}"
+                    icon="pi pi-filter-slash"
+                    class="w-[110px] my-1 px-4 py-2 normal-button"
+                    [outlined]="true" (click)="clear()"></button>
+        </div>
+        <div class="hidden col-span-3 btns-search-clear sm:flex">
+            <button pButton
+                    label="{{'button.clear' | transloco}}"
+                    icon="pi pi-filter-slash"
+                    (click)="clear()"
+                    [outlined]="true"
+                    class="my-1 px-4 py-2 border normal-button"
+            ></button>
+            <button pButton
+                    label="{{'button.search' | transloco}}"
+                    icon="pi pi-search"
+                    class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+                    (click)="searchClick(true)"></button>
+        </div>
+        <div class="col-span-12 mt-5 ">
+              <p-table
+styleClass="normal-table"
+ [value]="alertSignal()" *ngIf="!addFlag  "
+                     [showCurrentPageReport]="true" [(first)]="first"
+                     [currentPageReportTemplate]=paginationLabel
+                     [rowsPerPageOptions]="[5,10,25,50,100]"
+                     selectionMode="single" [rows]="rows" [totalRecords]="totalRecords">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'alerts.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'عنوان آلارم'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="destionationAddress" class="destionationAddress">
+                            {{ 'alerts.table.header.destionationAddress'|transloco }}
+                            <p-sortIcon field="destionationAddress"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="destionationPlatformId" class="destionationPlatformId">
+                            {{ 'alerts.table.header.destionationPlatformId'|transloco }}
+                            <p-sortIcon field="destionationPlatformId"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="rdateShamsi" class="rdateShamsi">
+                            {{ 'alerts.table.header.rdateShamsi'|transloco }}
+                            <p-sortIcon field="rdateShamsi"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="consumeDateShamsi" class="consumeDateShamsi">
+                            {{ 'alerts.table.header.consumeTimeShamsi'|transloco }}
+                            <p-sortIcon field="consumeDateShamsi"></p-sortIcon>
+                        </th>
+
+
+                        <th pSortableColumn="isConsumed" class="isConsumed">
+                            {{ 'alerts.table.header.isConsumed'|transloco }}
+                            <p-sortIcon field="isConsumed"></p-sortIcon>
+                        </th>
+                        <th class="operation">
+                            {{ 'recipientsAlerts.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-alert>
+                    <tr [pSelectableRow]="alert">
+                        <td class="row">{{ alert.row }}</td>
+                        <td>
+                            {{ alert.setionTitle }}
+                        </td>
+                        <td>
+                            {{ alert.destionationAddress }}
+                        </td>
+                        <td>
+                            {{ alert.destionationPlatformId |destionationPlatformId }}
+                        </td>
+                        <td dir="ltr" class=" text-right">
+                            {{ alert.rdateShamsi }}
+                        </td>
+
+                        <td dir="ltr" class=" text-right">
+                            {{ alert.consumeDateShamsi }}
+                        </td>
+
+                        <td>
+                            <div
+                                [ngClass]="{
+                            ' text-green-800 bg-green-300 ': alert.isConsumed,
+                              ' text-red-800 bg-red-300 ': !alert.isConsumed
+                            }"
+                                class="w-[85px] float-right text-center rounded-md">
+                                {{ alert.isConsumed|consumed }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+
+                            <button class="rounded-3xl " pButton icon="pi pi-eye"
+                                    pTooltip="{{'logReports.dialog.header'|transloco}}"
+                                    (click)="show(alert)"></button>&nbsp;
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center" *ngIf="!addFlag">
+        <div class="col-span-4"></div>
+        <div class="flex items-center justify-center gap-2 col-span-4">
+            <button
+                pButton
+                pRipple class="normal-button"
+                [disabled]="(this.pageno) == 0"
+                (click)="previousPageStatement()"
+                pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+            >
+                <i class="pi pi-arrow-right"></i>
+            </button>
+            <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+            <button
+                pButton
+                pRipple
+                name="btn-previous-page"
+                class="normal-button"
+                [disabled]="this.alertSignal().length < pagesize"
+                (click)="nextPageStatement()"
+                pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+            >
+                <i class="pi pi-arrow-left"></i>
+            </button>
+            <p-dropdown class="normal-dropdown-pagination"
+                        [options]="pagesizeOptions"
+                        optionValue="code"
+                        [autoDisplayFirst]="true"
+                        optionLabel="name"
+                        [(ngModel)]="pagesize"
+                        (onChange)="OnchangePageno($event)"
+                        [disabled]="nextBtnFlag">
+            </p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+    </div>
+</div>

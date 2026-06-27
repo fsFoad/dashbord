@@ -1,0 +1,75 @@
+<p-toast />
+<app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false" ></app-breadcrumbs>
+<div >
+
+        <div class="grid grid-cols-12 gap-4 my-10 mx-5 " [formGroup]="UpdateForm">
+            <div class="col-span-12">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'editMessage.input.faMessage'|transloco }} :</span></label>
+                <input class="xx-ggg-12-input" formControlName="text" (keydown.enter)="onKeydown($event)"
+                       [pKeyFilter]="cust_alphanumFa" pInputText>
+            </div>
+            <div class="col-span-12">
+                <label class="normal-label">
+                    <span>{{ 'editMessage.input.enMessage'|transloco }} :</span></label>
+                <input class="xx-ggg-12-input" formControlName="textEN" dir="ltr" [pKeyFilter]="cust_alphanumEn"
+                       (keydown.enter)="onKeydown($event)" pKeyFilter="alphanum" pInputText>
+            </div>
+            <div class="col-span-4 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'editMessage.input.codeMessage'|transloco }} :</span></label>
+                <input class="normal-input" formControlName="code" pKeyFilter="int"
+                       pInputText (keydown.enter)="onKeydown($event)">
+            </div>
+            <div class="col-span-4 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'editMessage.input.messageTitle'|transloco }} :</span></label>
+                <input class="normal-input" formControlName="title" (keydown.enter)="onKeydown($event)"
+                       pInputText>
+            </div>
+            <div class="2xl:col-span-4"></div>
+            <div class="col-span-4  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'editMessage.dropdown.tableId'|transloco }} :</span></label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    [options]="categoryMessages"
+                    optionValue="code"
+                    optionLabel="name"
+                    formControlName="tableId"
+                    (keydown.enter)="onKeydown($event)">
+                </p-dropdown>
+            </div>
+            <div class="col-span-4  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'editMessage.dropdown.messageType'|transloco }} :</span></label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    [options]="typeMessages"
+                    optionValue="code"
+                    optionLabel="name"
+                    formControlName="type"
+                    (keydown.enter)="onKeydown($event)">
+                </p-dropdown>
+            </div>
+            <div class="col-span-4" hidden>
+                <label class="normal-label"><span>ایدی :</span></label>
+                <input class="w-full" disabled formControlName="messageId" pInputText>
+            </div>
+        </div>
+        <div class="w-full mt-4 text-left p-4">
+            <button pButton class="normal-button" label="{{'button.save' | transloco}}"
+                    icon="pi pi-save"
+                    severity="success"
+                    (click)="onUpdate()"></button>&nbsp;
+            <button pButton label="{{'button.cancel' | transloco}}"
+                    severity="danger" [outlined]="true"
+                    icon="pi pi-times" class="normal-button"
+                    (click)="onClose()"></button>&nbsp;
+        </div>
+</div>

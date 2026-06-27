@@ -1,0 +1,65 @@
+:host {
+    width: 100%;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.flex-item {
+    flex: 1 1 30%;
+    min-width: 250px;
+}
+
+.full-width {
+    flex: 1 1 100%;
+}
+
+.input-with-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.input-with-buttons2 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.input-without-buttons {
+  margin-top: 0.5rem;
+    width: 71.5%;
+}
+
+.full-width-input {
+    width: 100%;
+}
+
+/*button.p-button {
+    width: 38px !important;
+    height: 38px !important;
+}*/
+.p-button.p-button-icon-only{
+    width: 39px ;
+    height: 37px ;
+}
+:host::ng-deep .p-fileupload-choose-button	 {
+    width: 34px !important;
+    height: 37px !important;
+    padding: 0 !important;
+    margin-left: 2px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 1rem;
+    padding-block:0;
+    padding-inline:0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    gap: 0;
+}
+
+:host::ng-deep .custom-file-upload .p-button.p-fileupload-choose .p-button-icon {
+    margin: 0 !important;
+}

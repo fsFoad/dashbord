@@ -1,0 +1,28 @@
+::ng-deep {
+    .p-tooltip {
+        width: 150px;
+        min-width: 150px;
+        font-size: 14px;
+        max-width: 250px;
+
+    }
+}
+
+.row {
+    width: 5%;
+}
+.REQUESTDATE {
+    width: 10%;
+}
+.API_NAME {
+    width: 8%;
+}
+.API_TITLE {
+    width: 8%;
+}
+.CLIENT_NAME {
+    width: 8%;
+}
+.STATUS {
+    width: 7%;
+}

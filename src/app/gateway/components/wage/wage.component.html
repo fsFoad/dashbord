@@ -1,0 +1,215 @@
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false" *ngIf="!addFlag && !updateFlag"></app-breadcrumbs>
+
+<div class="content-page p-5" *ngIf="!addFlag && !updateFlag">
+        <div class="grid grid-cols-12 gap-4">
+            <!-- تاریخ شروع -->
+            <div class="col-span-12 md:col-span-3">
+                <label class="text-gray-700 block font-medium text-sm mb-1">
+                    *<span >{{ 'wageService.lbl.startDate' | transloco }} :</span>
+                </label>
+                <p-persian-calendar [(ngModel)]="fromdate" class="app-persian-calendar-style" [yearRange]="'1399:1410'"></p-persian-calendar>
+            </div>
+
+            <!-- تاریخ پایان -->
+            <div class="col-span-12 md:col-span-3">
+                <label class="text-gray-700 block font-medium text-sm mb-1">
+                    *<span >{{ 'wageService.lbl.endDate' | transloco }} :</span>
+                </label>
+                <p-persian-calendar [(ngModel)]="todate" class="app-persian-calendar-style" [yearRange]="'1399:1410'"></p-persian-calendar>
+            </div>
+
+            <!-- فضای خالی برای چینش بهتر -->
+            <div class="col-span-12 md:col-span-3"></div>
+
+            <!-- دکمه‌ها -->
+            <div class="col-span-12 md:col-span-3 flex items-end justify-end gap-2">
+                <button pButton
+                        label="{{'button.search' | transloco}}"
+                        icon="pi pi-search"
+                        class="normal-button"
+                        (click)="search()">
+                </button>
+                <button pButton
+                        label="{{'button.clear'|transloco}}"
+                        icon="pi pi-filter-slash"
+                        class="normal-button"
+                        [outlined]="true"
+                        (click)="clear()">
+                </button>
+            </div>
+
+            <!-- نام سازمان -->
+            <div class="col-span-12 md:col-span-3">
+                <label class="text-gray-700 block font-medium text-sm mb-1">
+                    *<span >{{ 'wageService.lbl.partyName' | transloco }} :</span>
+                </label>
+                <p-dropdown
+
+                    [options]="partyListOptions"
+                    [(ngModel)]="partyId"
+                    optionValue="partyId"
+                    optionLabel="title"
+                    [filter]="true"
+                    filterBy="title"
+                    (onChange)="OnchangeParty($event)"
+                    class="normal-dropdown">
+                </p-dropdown>
+            </div>
+
+            <!-- نام سرویس -->
+            <div class="col-span-12 md:col-span-3">
+                <label class="text-gray-700 block font-medium text-sm mb-1">
+                    <span >{{ 'wageService.lbl.apiName' | transloco }} :</span>
+                </label>
+                <p-dropdown
+
+                    [options]="apiListOptions"
+                    [(ngModel)]="apiId"
+                    optionValue="apiId"
+                    optionLabel="title"
+                    [filter]="true"
+                    filterBy="title"
+                    (onChange)="OnchangeApi($event)"
+                    class="normal-dropdown">
+                </p-dropdown>
+            </div>
+
+            <!-- نام کلاینت -->
+            <div class="col-span-12 md:col-span-3">
+                <label class="text-gray-700 block font-medium text-sm mb-1">
+                    <span >{{ 'wageService.lbl.clientName' | transloco }} :</span>
+                </label>
+                <p-dropdown
+
+                    [options]="clientListOptions"
+                    [(ngModel)]="clientId"
+                    optionValue="clientId"
+                    optionLabel="name"
+                    [filter]="true"
+                    filterBy="name"
+                    (onChange)="OnchangeClient($event)"
+                    class="normal-dropdown">
+                </p-dropdown>
+            </div>
+
+            <!-- دکمه صدور کارمزد -->
+            <div class="col-span-12 flex justify-start mt-4">
+                <button pButton
+                        label="{{'صدور کارمزد' | transloco}}"
+                        icon="pi pi-plus"
+                        class="normal-button"
+                        (click)="showAdd()">
+                </button>
+            </div>
+
+            <!-- جدول -->
+            <div class="col-span-12 mt-4">
+                  <p-table
+styleClass="normal-table"
+ [value]="wageList"
+                         selectionMode="single"
+                         [paginator]="true"
+                         [rows]="rows"
+                         [showCurrentPageReport]="true"
+                         [(first)]="first"
+                         paginatorDropdown
+                          [currentPageReportTemplate]=paginationLabel
+                          [rowsPerPageOptions]="[5,10,25,50,100]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="row" class="row" >
+                                {{ 'wageService.table.th.row' | transloco }}
+                                <p-sortIcon field="row"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="feeTitle" class="feeTitle" >
+                                {{ 'wageService.table.th.feeTitle' | transloco }}
+                                <p-sortIcon field="feeTitle"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="feeTypeId" class="feeTypeId" >
+                                {{ 'wageService.table.th.feeType' | transloco }}
+                                <p-sortIcon field="feeTypeId"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="partyTile" class="partyTile" >
+                                {{ 'wageService.table.th.party' | transloco }}
+                                <p-sortIcon field="partyTile"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="clinetTitle" class="clinetTitle" >
+                                {{ 'wageService.table.th.client' | transloco }}
+                                <p-sortIcon field="clinetTitle"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="apiTitle" class="apiTitle" >
+                                {{ 'wageService.table.th.service' | transloco }}
+                                <p-sortIcon field="apiTitle"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="fromDate" class="fromDate" >
+                                {{ 'wageService.table.th.startDate' | transloco }}
+                                <p-sortIcon field="fromDate"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="toDate" class="toDate" >
+                                {{ 'wageService.table.th.endDate' | transloco }}
+                                <p-sortIcon field="toDate"></p-sortIcon>
+                            </th>
+                            <!--<th pSortableColumn="status" class="status" >
+                                وضعیت
+                                <p-sortIcon field="status"></p-sortIcon>
+                            </th>-->
+                            <th style="text-align: right !important;border-right: 1px solid #ebe8e8;" >
+                                {{ 'wageService.table.th.operation' | transloco }}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-wage>
+                        <tr [pSelectableRow]="wage">
+                            <td class="row">{{wage.row}}</td>
+                            <td class="feeTitle"
+                                [pTooltip]="wage.feeTitle"
+                                [tooltipDisabled]="wage.feeTitle?wage.feeTitle.length < 20:false">
+                                {{wage.feeTitle|moreChar19}}
+                            </td>
+                            <td dir="ltr" class="feeTypeId">
+                                {{wage.feeTypeId|wageType}}
+                            </td> <td dir="ltr" class="partyTile">
+                            {{wage.partyTile}}
+                        </td>
+                            <td dir="ltr" class="clinetTitle">
+                                {{wage.clinetTitle}}
+                            </td>
+                            <td dir="ltr" class="apiTitle">
+                                {{wage.apiTitle}}
+                            </td>
+                            <td dir="ltr" class="fromDate">
+                                {{wage.fromDate|castToDate}}
+                            </td>
+                            <td dir="ltr" class="toDate">
+                                {{wage.toDate|castToDate}}
+                            </td>
+                            <td class="text-right border-r  " >
+                   <!--             <button (click)="setRecord(wage);menu.toggle($event)" type="button" class="p-button-rounded  "
+                                        pButton
+                                        pRipple icon="pi pi-chevron-down" ></button>&nbsp;
+                                <p-menu  #menu [popup]="true" [model]="items"></p-menu>-->
+                                <button name="btn-operation" (click)="setRecord(wage);menu.toggle($event)" type="button"
+                                        class="p-button-rounded " pButton pRipple icon="pi pi-chevron-down"
+                                ></button>&nbsp;
+                                <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #emptymessage>
+                        <tr>
+                            <td class="text-center" colspan="9">اطلاعاتی برای نمایش وجود ندارد...</td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+</div>
+<div class="col-12" *ngIf="addFlag">
+    <app-wage-register (close)="onClose($event)" [wageObj]="registerObj"></app-wage-register>
+</div>
+<!--        <div class="col-12" *ngIf="updateFlag">
+            <app-party-update (close)="onClose($event)"></app-party-update>
+        </div>-->
+

@@ -1,0 +1,181 @@
+:host {
+    width: 100%;
+}
+
+::ng-deep {
+    .p-tooltip {
+        width: 150px;
+        min-width: 150px;
+        font-size: 14px;
+        max-width: 250px;
+
+    }
+}
+
+.row {
+    width: 5%;
+}
+
+.ruleId {
+    width: 10%;
+}
+.apiTitle {
+    width: 10%;
+}
+.retryCount {
+    width: 10%;
+}
+.maxCall {
+    width: 10%;
+}
+.callCount {
+    width: 10%;
+}
+.apiName {
+    width: 10%;
+}
+
+.partyName {
+    width: 12%
+}
+
+.moduleTitle {
+    width: 12%
+}
+
+.clientName {
+    width: 12%;
+}
+
+.callCount {
+    width: 10%;
+}
+
+.apiCount {
+    width: 12%;
+}
+
+.operation {
+    width: 21%;
+}
+hr {
+    margin: 12px 0!important;
+    border-bottom-width: 1px!important;
+}
+:host::ng-deep .p-dialog .p-dialog-content {
+    background: #ffffff;
+    color: #323130;
+    padding: 0 1rem 1rem  1rem ;
+    //height: 230px;
+}
+:host::ng-deep .p-fileupload-choose-button	 {
+    width: 14px !important;
+    height: 37px !important;
+    padding: 0 !important;
+    margin-left: 2px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 1rem;
+    padding-block:0;
+    padding-inline:0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    gap: 0;
+}
+
+:host::ng-deep .custom-file-upload .p-button.p-fileupload-choose .p-button-icon {
+    margin: 0 !important;
+}
+
+.p-button.p-button-icon-only{
+    width: 39px ;
+    height: 37px ;
+}
+.input-with-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+:host {
+    width: 100%;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.flex-item {
+    flex: 1 1 30%;
+    min-width: 250px;
+}
+
+.full-width {
+    flex: 1 1 100%;
+}
+
+.input-with-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.input-with-buttons2 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.input-without-buttons {
+    margin-top: 0.5rem;
+    width: 71.5%;
+}
+
+.full-width-input {
+    width: 100%;
+}
+
+/*button.p-button {
+    width: 38px !important;
+    height: 38px !important;
+}*/
+.p-button.p-button-icon-only{
+    width: 39px ;
+    height: 37px ;
+}
+:host::ng-deep .p-fileupload-choose-button	 {
+    width: 34px !important;
+    height: 37px !important;
+    padding: 0 !important;
+    margin-left: 2px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 1rem;
+    padding-block:0;
+    padding-inline:0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    gap: 0 !important;;
+}
+
+:host::ng-deep .custom-file-upload .p-button.p-fileupload-choose .p-button-icon {
+    margin: 0 !important;
+}
+
+:host ::ng-deep .custom-file-upload .p-fileupload-choose-button {
+    padding: 0 !important;
+    height: 32px; /* یا هر ارتفاع دلخواه */
+    width: 32px;  /* یا هر عرض دلخواه */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:host ::ng-deep .custom-file-upload .p-button-label {
+    display: none; /* اگر نمی‌خوای لیبل دیده بشه */
+}
+.p-dialog {
+    z-index: 10000 !important;
+}

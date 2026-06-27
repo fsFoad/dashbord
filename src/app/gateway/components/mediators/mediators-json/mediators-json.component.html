@@ -1,0 +1,260 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"></app-breadcrumbs>
+    <p-panel header="انتخاب فایل سرویس">
+        <div class="content-page">
+        <div class="grid grid-cols-12">
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>عنوان مدیاتور :</span></label>
+                <input [(ngModel)]="title" pInputText class="normal-input">
+            </div>
+            <div class="col-span-4"></div>
+            <div class="col-span-4"></div>
+        </div>
+        <div class="grid grid-cols-12">
+            <div class="col-span-12">
+                <label style="margin-bottom: 6px"><span>لطفا سرویس را انتخاب کنید</span></label>&nbsp;
+                <button [disabled]="showListFlag" style="margin-top: 4px" pButton label="{{'انتخاب' | transloco}}"
+                        icon="pi pi-plus" class="normal-button"
+                        (click)="showSelectApi()"></button>
+            </div>
+        </div>
+        <br>
+        <p-panel header="مشخصات سرویس">
+            <div class="content-page">
+            <div class="grid grid-cols-12">
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>عنوان ماژول :</span></label>
+                    <div >
+                        <label class="text-gray-700 ftextDetails"
+                               [pTooltip]="detModuleTitle"
+                               [tooltipDisabled]="detModuleTitle?detModuleTitle.length < 20:false"
+                        >
+                            {{ detModuleTitle|threeDotDetailsPipe }}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>عنوان سرویس :</span></label>
+                    <div >
+                        <label class="text-gray-700 ftextDetails"
+                               [pTooltip]="detModuleTitle"
+                               [tooltipDisabled]="detModuleTitle?detModuleTitle.length < 20:false"
+                        >
+                            {{ detApiTitle|threeDotDetailsPipe }}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>نام سرویس :</span></label>
+                    <div >
+                        <label class="text-gray-700 ftextDetails"
+                               [pTooltip]="detModuleTitle"
+                               [tooltipDisabled]="detModuleTitle?detModuleTitle.length < 20:false"
+                        >
+                            {{ detApiName|threeDotDetailsPipe }}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-span-4"></div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="grid grid-cols-12">
+                <div class="col-span-2">
+                    <div class="col-span-12 my-3">
+                        <button pButton label="افزودن node به خروجی جیسون"
+                                class="normal-button w-full h-12"
+                                [disabled]="disableFlgAddAndDeleteNode" (click)="showAddKey()"></button>
+                    </div>
+                    <div class="col-span-12 my-3">
+                        <button pButton label="حذف node از خروجی جیسون" [outlined]="true" severity="danger"
+                                class="normal-button w-full h-12"
+                                [disabled]="disableFlgAddAndDeleteNode" (click)="showDeleteKey()"></button>
+                    </div>
+                    <div class="col-span-12 my-3">
+                        <button pButton label="تایید خروجی Json"
+                                [disabled]="disableFlgAddAndDeleteNode" class="normal-button w-full h-12"
+                                (click)="Accept()"></button>
+                    </div>
+                    <div class="col-span-12 my-3">
+                        <button pButton label="ثبت اطلاعات مدیاتور"
+                                severity="success" (click)="registerFinal()"  class="normal-button w-full h-12"
+                                [disabled]="disableFlgRegister"></button>
+                    </div>
+                </div>
+                <div class="col-span-10 mx-2 border-b-stone-500 rounded-2xl" dir="ltr" >
+                    <div class="grid grid-cols-12">
+                        <div class="col-span-6">
+                            <p-listbox
+                                [(ngModel)]="itemSelect"
+                                [options]="itemsListShow"
+                                [listStyle]="{ 'max-height': '150px' }"
+                                optionLabel="name">
+                            </p-listbox>
+                        </div>
+                        <div class="col-span-6 " dir="ltr">
+
+                        </div>
+                    </div>
+                    <div class="col-span-12" dir="ltr" style="margin-top: 100px">
+                        <label class="normal-label"> Type Operation Node → Node Name : Value → Path</label>
+                        <div class="col-span-12 " dir="ltr">
+                            <button pButton  label=" حذف آیتم از لیست" class="normal-button" [outlined]="true" severity="danger"
+                                    icon="pi pi-trash" (click)="remove()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </p-panel>
+        </div>
+    </p-panel>
+<p-dialog [style]="{'width':'58%'}" [(visible)]="flagDeletedNode" [modal]="true" [draggable]="false"
+          [resizable]="true" appendTo="body">
+    <p-panel header="{{'پنجره حذف کلید'}}">
+        <div class="content-page">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12">
+                    <label class="normal-label"> <span>مسیر نود والد :</span></label>
+                    <input  dir="ltr" [(ngModel)]="parentNode" pInputText class="normal-input">
+                </div>
+                <div class="col-span-4">
+
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>کلید :</span></label>
+                    <input [(ngModel)]="keyNode" pInputText class="normal-input">
+                </div>
+                <div class="col-span-4"></div>
+                <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+                    <button pButton label="{{'button.cancel' | transloco}}" class="normal-button"
+                            severity="danger" icon="pi pi-times" [outlined]="true"
+                            (click)="onClose()"></button>&nbsp;
+                    <button pButton severity="success" label="{{'ثبت اطلاعات' | transloco}}" class="normal-button"
+                            (click)="registerNode(2)" icon="pi pi-save"></button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>
+<p-dialog [style]="{'width':'58%'}" [(visible)]="flagAddNode" [modal]="true" [draggable]="false"
+          [resizable]="true" appendTo="body">
+    <p-panel header="{{'پنجره افزودن کلید'}}">
+
+        <div class="content-page">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12" dir="rtl">
+                    <label style="color: red">توجه: در صورتی که مسیر نود والد برابر با * باشد نود جدید به
+                        انتهای
+                        خروجی اضافه می گردد!</label>
+                </div>
+                <div class="col-span-12">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>مسیر نود والد :</span></label>
+                    <input class="xx-ggg-12-input" dir="ltr" [(ngModel)]="parentNode" pInputText>
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>کلید :</span></label>
+                    <input dir="ltr" [(ngModel)]="keyNode" pInputText class="normal-input">
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>مقدار :</span></label>
+                    <input dir="ltr" [(ngModel)]="valueNode" pInputText class="normal-input">
+                </div>
+
+
+                <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+                    <button pButton label="{{'button.cancel' | transloco}}" class="normal-button"
+                            severity="danger" icon="pi pi-times" [outlined]="true"
+                            (click)="onClose()"></button>&nbsp;
+                    <button pButton severity="success" label="{{'ثبت اطلاعات' | transloco}}" class="normal-button"
+                            (click)="registerNode(1)" icon="pi pi-save"></button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>
+<p-dialog [style]="{'width':'58%'}" [(visible)]="geeksApi" [modal]="true" [draggable]="false"
+          [resizable]="true" appendTo="body">
+    <p-panel header="{{'جستجوی سرویس '|transloco}}">
+        <div class="content-page">
+            <div class="grid grid-cols-12">
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>عنوان ماژول :</span></label>
+                    <input [(ngModel)]="moduleTitle" pInputText (keydown.enter)="onKeydown($event)" class="normal-input">
+                </div>
+                <div class="col-span-4">
+                </div>
+                <div class="col-span-4" dir="ltr">
+
+                    <button pButton label="{{'button.clear'|transloco}}" [outlined]="true" icon="pi pi-filter-slash"
+                            class="normal-button" (click)="clearApi()"></button>&nbsp;&nbsp;
+                    <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin-top: 20px"
+                            class="normal-button" icon="pi pi-search"
+                            (click)="searchApi()"></button>
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>عنوان سرویس :</span></label>
+                    <input [(ngModel)]="apiTitle" pInputText (keydown.enter)="onKeydown($event)" class="normal-input">
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>نام سرویس :</span></label>
+                    <input [(ngModel)]="apiName" pInputText (keydown.enter)="onKeydown($event)" class="normal-input">
+                </div>
+            </div>
+        </div>
+        <br>
+        <p-panel>
+              <p-table
+styleClass="normal-table"
+ [value]="apiList" selectionMode="single"
+                     [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                     [currentPageReportTemplate]=paginationLabel
+                     [rowsPerPageOptions]="[5,10,25,50,100]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="row">ردیف</th>
+                        <th>عنوان ماژول</th>
+                        <th>عنوان سرویس</th>
+                        <th>نام سرویس</th>
+                        <th>عملیات</th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-api>
+                    <tr [pSelectableRow]="api">
+                        <td class="row">{{ api.row }}</td>
+                        <td
+                            [pTooltip]="api.moduleTitle"
+                            [tooltipDisabled]="api.moduleTitle?api.moduleTitle.length < 20:false"
+                        >
+                            {{ api.moduleTitle|moreChar19 }}
+                        </td>
+                        <td
+                            [pTooltip]="api.apiTitle"
+                            [tooltipDisabled]="api.apiTitle?api.apiTitle.length < 20:false"
+                        >
+                            {{ api.apiTitle|moreChar19 }}
+                        </td>
+                        <td
+                            [pTooltip]="api.apiName"
+                            [tooltipDisabled]="api.apiName?api.apiName.length < 20:false"
+                        >
+                            {{ api.apiName|moreChar19 }}
+                        </td>
+                        <td style="min-width: 100px">
+                            <button pButton icon="pi pi-check" label="انتخاب سرویس" dir="ltr"
+                                    (click)="selectApi(api)"
+                                    style="padding:.5rem 0.5rem"></button>&nbsp;
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-panel>
+    </p-panel>
+</p-dialog>

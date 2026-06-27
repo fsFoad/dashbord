@@ -1,0 +1,59 @@
+<div class=" p-0 m-0 w-full" id="section">    <!--    <p-panel header="{{'افزودن نود مورد نیاز' | transloco}}">-->
+    <div class="grid grid-cols-12  mx-5 my-10">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>عنوان نود :</span></label>
+            <input [(ngModel)]="nodeName" pInputText class="normal-input">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>گروه بندی :</span></label>
+            <p-dropdown
+                class="normal-dropdown"
+                [options]="headerTypeGroup"
+                optionValue="code"
+                [(ngModel)]="nodePlace"
+                optionLabel="name"
+
+            >
+                <!--style="direction:ltr"-->
+            </p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>مقدار ثابت قبل از مقدار نود :</span></label>
+            <input [(ngModel)]="staticTextBefore" dir="ltr" pInputText class="normal-input">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>مقدار ثابت بعد از مقدار نود :</span></label>
+            <input [(ngModel)]="staticTextAfter" dir="ltr" pInputText class="normal-input">
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-8">
+            <label class="normal-label"> <span>مسیر نود :</span></label>
+            <input [(ngModel)]="nodePath" pInputText dir="ltr" class="xx-ggg-8-input" >
+        </div>
+     <!--   <div dir="ltr" style="margin-top: 15px" class="col-span-12">
+            <button pButton label="{{'button.cancel' | transloco}}"
+                     severity="danger"  icon="pi pi-times"
+                    (click)="onCancel()"></button>&nbsp;
+            <button pButton severity="success" label="{{'ثبت اطلاعات' | transloco}}" icon="pi pi-save"
+                    (click)="onRegister()"></button>
+        </div>
+        -->
+
+    </div>
+    <div class="w-full mt-4 text-left p-4">
+        <button
+            pButton severity="success"
+            label="{{'button.save' | transloco}}"
+            icon="pi pi-save" class="normal-button"
+            (click)="onRegister()"></button> &nbsp;
+        <button pButton label="{{'button.cancel' | transloco}}"
+                severity="danger" icon="pi pi-times" class="normal-button"
+                [outlined]="true" (click)="onCancel()"></button>
+    </div>
+    <!--    </p-panel>-->
+</div>

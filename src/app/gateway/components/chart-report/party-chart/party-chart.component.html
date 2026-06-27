@@ -1,0 +1,51 @@
+<div class="height">
+    <div class="grid grid-cols-12">
+        <div class="col-span-4"></div>
+        <div class="col-span-4"></div>
+
+
+        <div class=" col-span-4 flex gap-2" dir="ltr" *ngIf="buttonChartShow">
+            <button pButton type="button" [outlined]="true" icon="pi pi-chart-pie" (click)="setView('pie')"></button>
+            <button pButton type="button" [outlined]="true" icon="pi pi-chart-bar" (click)="setView('bar')"></button>
+            <button pButton type="button" [outlined]="true" icon="pi pi-bars" (click)="setView('table')"></button>
+        </div>
+        <div class="col-span-4"></div>
+        <div *ngIf="showPieCharts" class=" col-span-4">
+            <p-chart type="pie" [data]="data" [options]="responsiveChartOptions"></p-chart>
+        </div>
+        <div *ngIf="showBarCharts" class=" col-span-4">
+            <p-chart type="bar" [data]="data" [options]="chartPlugins"></p-chart>
+        </div>
+        <br>
+        <div dir="ltr" *ngIf="showTable" class=" col-span-8 "></div>
+        <div dir="ltr" *ngIf="showTable" class=" col-span-4 my-2">
+            <button  pButton (click)="exportExcel()" [label]="'download.table.xls.file' | transloco" class="normal-button"></button>
+        </div>
+        <div *ngIf="showTable"    class=" col-span-12">
+              <p-table
+styleClass="normal-table"
+ [value]="piChartData" [columns]="cols">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-columns="columns" let-tableData>
+                    <tr>
+                        <td *ngFor="let cols of columns">
+                            {{tableData[cols.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div *ngIf="showTable" class=" col-span-4"></div>
+        <div *ngIf="showTable" class=" col-span-4"></div>
+
+    </div>
+
+</div>
+
+

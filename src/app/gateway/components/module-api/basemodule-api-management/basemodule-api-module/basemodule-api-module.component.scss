@@ -1,0 +1,47 @@
+:host {
+    width: 100%;
+
+}
+
+.row {
+    width: 4%;
+}
+
+.status {
+    width: 10%;
+}
+
+.operation {
+    width: 15%;
+}
+
+.title {
+    width: 13%;
+}
+
+.name {
+    width: 10%;
+}
+.type {
+    width: 4%;
+}
+
+.ui-menu-child {
+    left: -200px !important;
+}
+
+:host ::ng-deep p-dropdown.dropdown-w100{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+:host::ng-deep .p-dialog .p-dialog-content {
+    background: #ffffff;
+    color: #323130;
+    padding: 0 1rem 1rem  1rem ;
+    //height: 230px;
+}
+hr {
+    margin: 12px 0!important;
+    border-bottom-width: 1px!important;
+}

@@ -1,0 +1,134 @@
+<!--<div class="grid grid-cols-12 flex-column" id="section">-->
+<p-toast />
+<app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false"></app-breadcrumbs>
+<div class=" mx-5 my-10 p-0 m-0">
+    <div class="grid grid-cols-12 gap-4  ">
+        <div class="col-span-4" hidden>
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerModule.input.organizationCode'|transloco }} :</span></label>
+            <input [(ngModel)]="partyId" [disabled]="true" (keydown.enter)="onKeydown($event)" pInputText
+                   class="normal-input">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerModule.input.partyTitle'|transloco }} :</span></label>
+            <input [(ngModel)]="title" [disabled]="true" (keydown.enter)="onKeydown($event)" pInputText
+                   class="normal-input">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerModule.input.moduleTitle'|transloco }} :</span></label>
+            <input [(ngModel)]="moduleTitle" (keydown.enter)="onKeydown($event)" pInputText class="normal-input">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerModule.dropdown.moduleType'|transloco }} :</span></label>
+            <p-dropdown
+                class="normal-dropdown"
+                [options]="moduleTypeOptions"
+                [(ngModel)]="moduleTypeValue"
+                optionValue="code"
+                optionLabel="name"
+                (keydown.enter)="onKeydown($event)">
+            </p-dropdown>
+        </div>
+        <!-- <div class="col-span-4">
+             <label class="label-normal">
+<span class="red-color-text">* </span>
+<span >گروه ماژول :</span></label>
+             <p-dropdown
+                 class="input-w-80"
+                 appendTo="body"
+                 [options]="moduleGroupOptions"
+                 [(ngModel)]="moduleGroup"
+                 optionValue="code"
+                 optionLabel="name"
+                 (keydown.enter)="onKeydown($event)">
+             </p-dropdown>
+         </div>-->
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerModule.dropdown.authenticationMethod'|transloco }} :</span></label>
+            <p-dropdown
+                (keydown.enter)="onKeydown($event)"
+                class="normal-dropdown"
+                [options]="authenticationMethodOptions"
+                [(ngModel)]="moduleAuthMode"
+                optionValue="code"
+                optionLabel="name">
+            </p-dropdown>
+        </div>
+        <!--    <div class="col-span-4">
+                <label class="label-normal">
+<span class="red-color-text">* </span>
+<span >شیوه سرویس دهی ESB :</span></label>
+                <input [(ngModel)]="esbMode" pKeyFilter="int" (keydown.enter)="onKeydown($event)" pInputText>
+            </div>-->
+        <div class="col-span-4">
+            <label class="normal-label"><span>{{ 'registerModule.input.delayRetryTime'|transloco }} :</span></label>
+            <input [(ngModel)]="delayRetryTime" pKeyFilter="int" class="normal-input"
+                   (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"><span>{{ 'registerModule.input.limitForPeriod'|transloco }} :</span></label>
+            <input [(ngModel)]="limitForPeriod" pKeyFilter="int" class="normal-input"
+                   (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"><span>{{ 'registerModule.input.limitRefreshPeriod'|transloco }} :</span></label>
+            <input [(ngModel)]="limitRefreshPeriod" pKeyFilter="int" class="normal-input"
+                   (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"><span>{{ 'registerModule.input.retryCount'|transloco }} :</span></label>
+            <input [(ngModel)]="retryCount" pKeyFilter="int" class="normal-input" (keydown.enter)="onKeydown($event)"
+                   pInputText>
+        </div>
+        <div class="col-span-8">
+            <label class="normal-label"><span>{{ 'registerModule.input.description'|transloco }} :</span></label>
+            <input class="xx-ggg-8-input" [(ngModel)]="description" (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+
+        <div class="col-span-4">
+            <label class="normal-label"><span>{{ 'registerModule.input.status'|transloco }} :</span></label>
+            <p-toggle-switch [(ngModel)]="status"  (click)="changeFlag()"
+                             (keydown.enter)="onKeydown($event)"></p-toggle-switch>
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-4"></div>
+        <div class="col-span-4"></div>
+
+    </div>
+</div>
+<div class="w-full mt-4 text-left p-4" >
+    <button pButton pRipple label="{{'button.save' | transloco}}" icon="pi pi-save" severity="success"
+            class="normal-button"  (click)="onRegister()"></button>&nbsp;
+    <button pButton pRipple label="{{'button.cancel' | transloco}}"
+            icon="pi pi-times" severity="danger" [outlined]="true"
+            class="normal-button"   (click)="onCancel()"></button>
+
+</div>
+
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div
+                class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+            >
+                <i class="pi pi-question !text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <button pButton label="{{'module.dialog.button.yes'|transloco}}" (click)="onAccept()" class="w-32 bg-green-500 text-white border-none hover:bg-green-600 normal-button"></button>
+                <button pButton label="{{'module.dialog.button.no'|transloco}}" [outlined]="true" (click)="onReject()" class="w-32 bg-red-500 text-white border-none hover:bg-red-600 normal-button" ></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmdialog>
+

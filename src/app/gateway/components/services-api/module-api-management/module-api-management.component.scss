@@ -1,0 +1,37 @@
+:host {
+    width: 100%;
+}
+
+.selected-row {
+    background-color: yellow; /* example style */
+    font-weight: bold; /* example style */
+}
+
+.btnSearchModoule {
+    margin-top: 5%;
+}
+
+:host ::ng-deep {
+    .custom-icon {
+        width: 1rem;
+        height: 1rem;
+        background-image: url("https://cdn-icons-png.flaticon.com/512/346/346481.png");
+    }
+}
+
+.moduleTitle {
+    width: 16%;
+}
+
+.status {
+    width: 10%;
+}
+
+.moduleType {
+    width: 10%;
+
+}
+
+.row {
+    width: 5%;
+}

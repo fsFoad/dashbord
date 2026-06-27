@@ -1,0 +1,339 @@
+<p-toast />
+<app-breadcrumbs class="p-0 m-0" (backClicked)="BeforeButton()" *ngIf="!registerFlag&&!updateFlag"></app-breadcrumbs>
+
+<div class="content-page" *ngIf="!registerFlag&&!updateFlag">
+    <div class="grid grid-cols-12 gap-4 " *ngIf="!apiEndpointHeaderFlag">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>{{ 'endpointElements.detail.sourceUrl'|transloco }} :</span>
+            </label>
+            <div>
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="sourceUrl"
+                       [tooltipDisabled]="sourceUrl ? sourceUrl.length < 20 : false">
+                    {{ sourceUrl|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>{{ 'endpointElements.detail.destinationHost'|transloco }} :</span>
+            </label>
+            <div>
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="destinationHost"
+                       [tooltipDisabled]="destinationHost ? destinationHost.length < 20 : false">
+                    {{ destinationHost|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>{{ 'endpointElements.detail.destinationUri'|transloco }} :</span>
+            </label>
+            <div>
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="destinationUri"
+                       [tooltipDisabled]="destinationUri ? destinationUri.length < 20 : false">
+                    {{ destinationUri|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-4" *ngIf="apiEndpointHeaderFlag">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>{{ 'label.detail.apiName'|transloco }}:</span>
+            </label>
+            <div>
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="apiName"
+                       [tooltipDisabled]="apiName ? apiName.length < 20 : false">
+                    {{ apiName|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>{{ 'label.detail.apiTitle'|transloco }} : </span>
+            </label>
+            <div>
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="apiTitle"
+                       [tooltipDisabled]="apiTitle ? apiTitle.length < 20 : false">
+                    {{ apiTitle|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>URL:</span>
+            </label>
+            <div>
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="apiUrl"
+                       [tooltipDisabled]="apiUrl ? apiUrl.length < 20 : false">
+                    {{ apiUrl|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+
+    </div>
+    <div class="w-full mt-5">
+      <!--  <p-accordion [multiple]="true" [value]="activeAccordionIndexes">-->
+        <p-accordion [multiple]="true" [value]="activeAccordionIndexes">
+            <p-accordion-panel [value]="0">
+                <p-accordion-header>
+                    {{ 'endpointElements.header.systemElements'|transloco }}
+                    ({{ systemElementsCount || 0 }})
+                </p-accordion-header>
+                <p-accordion-content
+                    class="isSystemEndpointDetail">
+                      <p-table
+                          styleClass="normal-table" [value]="endpointListIsSystemEndpointDetail" *ngIf="tblFlag" selectionMode="single"
+                          [paginator]="true" [rows]="rowsIsSystem" [showCurrentPageReport]="true"   [first]="firstIsSystem" [paginatorDropdownAppendTo]="'body'"
+                          [currentPageReportTemplate]="paginationLabelIsSystem"  [lazy]="true"   [totalRecords]="totalRecordsIsSystem"
+                          [rowsPerPageOptions]="[5,10,20,50,100]"    (onPage)="OnchangePagenoIsSystem($event)"
+                      >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="row" class="text-right">
+                                    {{ 'endpointElements.table.header.row'|transloco }}
+                                    <p-sortIcon field="row"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="detailType"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.detailType'|transloco }}
+                                    <p-sortIcon field="detailType"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="checkElementPath"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.elementPath'|transloco }}
+                                    <p-sortIcon field="checkElementPath"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="actionType"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.actionType' |transloco }}
+                                    <p-sortIcon field="actionType"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="inputName"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.inputName'|transloco }}
+                                    <p-sortIcon field="inputName"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="ouputHeaderName"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.outputHeaderName'|transloco }}
+                                    <p-sortIcon field="ouputHeaderName"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="inputHeaderValue"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.inputHeaderValue' |transloco }}
+                                    <p-sortIcon field="inputHeaderValue"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="outputHeaderValue"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.outputHeaderValue'|transloco }}
+                                    <p-sortIcon field="outputHeaderValue"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="status"
+                                    class="text-right">
+                                    {{ 'endpointElements.table.header.status'|transloco }}
+                                    <p-sortIcon field="status"></p-sortIcon>
+                                </th>
+                                <th class="text-right border-r border-gray-200 py-2">
+                                    {{ 'endpointElements.table.header.operation'|transloco }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template let-i="rowIndex" pTemplate="body" let-EndpointHeader>
+                            <tr [pSelectableRow]="EndpointHeader">
+
+                                <td class="text-right">{{ EndpointHeader.row }}</td>
+                                <td class="text-right">
+                                    {{ EndpointHeader.detailType|detailType }}
+                                </td>
+                                <td class="text-right"
+                                    [pTooltip]="EndpointHeader.checkElementPath"
+                                    [tooltipDisabled]="EndpointHeader.checkElementPath ? EndpointHeader.checkElementPath.length < 20 : false">
+                                    {{ EndpointHeader.checkElementPath|moreChar19 }}
+                                </td>
+                                <td class="text-right">{{ EndpointHeader.actionType|headerType }}</td>
+                                <td class="text-right"
+                                    [pTooltip]="EndpointHeader.inputName"
+                                    [tooltipDisabled]="EndpointHeader.inputName ? EndpointHeader.inputName.length < 20 : false">
+                                    {{ EndpointHeader.inputName|moreChar19 }}
+                                </td>
+                                <td class="text-right"
+                                    [pTooltip]="EndpointHeader.ouputName"
+                                    [tooltipDisabled]="EndpointHeader.ouputName ? EndpointHeader.ouputName.length < 20 : false">
+                                    {{ EndpointHeader.ouputName|moreChar19 }}
+                                </td>
+                                <td class="text-right"
+                                    [pTooltip]="EndpointHeader.inputValue"
+                                    [tooltipDisabled]="EndpointHeader.inputValue ? EndpointHeader.inputValue.length < 20 : false">
+                                    {{ EndpointHeader.inputValue|moreChar19 }}
+                                </td>
+                                <td class="text-right"
+                                    [pTooltip]="EndpointHeader.outputValue"
+                                    [tooltipDisabled]="EndpointHeader.outputValue ? EndpointHeader.outputValue.length < 20 : false">
+                                    {{ EndpointHeader.outputValue|moreChar19 }}
+                                </td>
+                                <td class="text-right">
+                                    <div
+                                        [ngClass]="{
+                                            ' text-green-800 bg-green-300 ': EndpointHeader.status,
+                                            ' text-red-800 bg-red-300 ': !EndpointHeader.status
+                                            }"
+                                        class="w-[65px] float-right text-center rounded-md"
+                                    >
+                                        {{ EndpointHeader.status | statusPipe }}
+                                    </div>
+                                </td>
+                                <td class="text-right border-r  ">
+                                    <button type="button"
+                                            class="p-button-rounded " pButton
+                                            pRipple icon="pi pi-chevron-down"
+                                            (click)="setRecord(EndpointHeader); menu.toggle($event)"></button>&nbsp;
+                                    <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordion-content>
+            </p-accordion-panel>
+            <p-accordion-panel [value]="1">
+                <p-accordion-header>
+                    {{ 'endpointElements.header.nonSystemElements'|transloco }}
+                    ({{ nonSystemElements || 0 }})
+                </p-accordion-header>
+                <p-accordion-content>
+                    <div class="col-span-12">
+                        <button pButton label="{{'button.add' | transloco}}"
+                                icon="pi pi-plus" (click)="showAdd()"
+                                class="normal-button mb-3">
+                        </button>
+                    </div>
+                    <div class="col-span-12">
+                          <p-table styleClass="normal-table" [value]="endpointNotIsSystemEndpointDetail" *ngIf="tblFlag" selectionMode="single"
+                                 [paginator]="true" [rows]="rowsNotIsSystem" [showCurrentPageReport]="true" [first]="firstNotIsSystem"
+                                   [totalRecords]="totalRecordsNotIsSystem" [paginatorDropdownAppendTo]="'body'"
+                                 [currentPageReportTemplate]=paginationLabelNotIsSystem  (onPage)="OnchangePagenoNotIsSystem($event)"
+                                 [rowsPerPageOptions]="[5,10,25,50,100]">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="row" class="text-right">
+                                        {{ 'endpointElements.table.header.row'|transloco }}
+                                        <p-sortIcon field="row"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="detailType"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.detailType'|transloco }}
+                                        <p-sortIcon field="detailType"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="checkElementPath"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.elementPath' |transloco }}
+                                        <p-sortIcon field="checkElementPath"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="actionType"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.actionType'|transloco }}
+                                        <p-sortIcon field="actionType"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="inputName"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.inputName'|transloco }}
+                                        <p-sortIcon field="inputName"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="ouputHeaderName"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.outputHeaderName'|transloco }}
+                                        <p-sortIcon field="ouputHeaderName"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="inputHeaderValue"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.inputHeaderValue'|transloco }}
+                                        <p-sortIcon field="inputHeaderValue"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="outputHeaderValue"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.outputHeaderValue'|transloco }}
+                                        <p-sortIcon field="outputHeaderValue"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="status"
+                                        class="text-right">
+                                        {{ 'endpointElements.table.header.status'|transloco }}
+                                        <p-sortIcon field="status"></p-sortIcon>
+                                    </th>
+
+                                    <th class="text-right border-r border-gray-200 py-2">{{ 'endpointElements.table.header.operation'|transloco }}</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template let-i="rowIndex" pTemplate="body" let-EndpointHeader>
+                                <tr [pSelectableRow]="EndpointHeader">
+                                    <td class="text-right">{{ EndpointHeader.row }}</td>
+                                    <td class="text-right">
+                                        {{ EndpointHeader.detailType|detailType }}
+                                    </td>
+                                    <td class="text-right"
+                                        [pTooltip]="EndpointHeader.checkElementPath"
+                                        [tooltipDisabled]="EndpointHeader.checkElementPath ? EndpointHeader.checkElementPath.length < 20 : false">
+                                        {{ EndpointHeader.checkElementPath|moreChar19 }}
+                                    </td>
+                                    <td class="text-right">{{ EndpointHeader.actionType|headerType }}</td>
+                                    <td class="text-right"
+                                        [pTooltip]="EndpointHeader.inputName"
+                                        [tooltipDisabled]="EndpointHeader.inputName ? EndpointHeader.inputName.length < 20 : false">
+                                        {{ EndpointHeader.inputName|moreChar19 }}
+                                    </td>
+                                    <td class="text-right"
+                                        [pTooltip]="EndpointHeader.ouputName"
+                                        [tooltipDisabled]="EndpointHeader.ouputName ? EndpointHeader.ouputName.length < 20 : false">
+                                        {{ EndpointHeader.ouputName|moreChar19 }}
+                                    </td>
+                                    <td class="text-right"
+                                        [pTooltip]="EndpointHeader.inputValue"
+                                        [tooltipDisabled]="EndpointHeader.inputValue ? EndpointHeader.inputValue.length < 20 : false">
+                                        {{ EndpointHeader.inputValue|moreChar19 }}
+                                    </td>
+                                    <td class="text-right"
+                                        [pTooltip]="EndpointHeader.outputValue"
+                                        [tooltipDisabled]="EndpointHeader.outputValue ? EndpointHeader.outputValue.length < 20 : false">
+                                        {{ EndpointHeader.outputValue|moreChar19 }}
+                                    </td>
+                                    <td class="text-right">
+                                        <div
+                                            [ngClass]="{
+                                            ' text-green-800 bg-green-300 ': EndpointHeader.status,
+                                            ' text-red-800 bg-red-300 ': !EndpointHeader.status
+                                            }"
+                                            class="w-[65px] float-right text-center rounded-md"
+                                        >
+                                            {{ EndpointHeader.status | statusPipe }}
+                                        </div>
+                                    </td>
+                                    <td class="text-right border-r border-gray-200 py-2">
+                                        <button class="p-button-rounded " pButton icon="pi pi-pencil"
+                                                pTooltip="{{'button.edit'|transloco}}"
+                                                (click)="showUpdate(EndpointHeader)"></button>&nbsp;
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-accordion-content>
+        </p-accordion-panel>
+        </p-accordion>
+    </div>
+</div>
+<!--</p-panel>-->
+<div class="col-12" *ngIf="registerFlag">
+    <app-header-endpoint-register [input]="updateEndpointHeaderDto"
+                                  (close)="onClose($event)"></app-header-endpoint-register>
+</div>
+<div class="col-12" *ngIf="updateFlag">
+    <app-header-endpoint-update [inputUpdate]="updateEndpointHeaderDto"
+                                (close)="onClose($event)"></app-header-endpoint-update>
+</div>
+

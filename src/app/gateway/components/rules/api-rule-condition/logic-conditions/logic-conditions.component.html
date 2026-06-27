@@ -1,0 +1,248 @@
+
+<p-toast></p-toast>
+
+<app-breadcrumbs
+    class="p-0 m-0"
+    (backClicked)="BeforeButton()"
+></app-breadcrumbs>
+
+<div
+    class="min-h-screen mt-10 w-full pb-8"
+    dir="rtl"
+>
+    <div class="w-full max-w-6xl mx-auto px-16">
+        <div class="w-full animate-fade-in pb-4 flex flex-col">
+            <div class="flex-1">
+                <div class="text-center text-black mb-6">
+                    <h1 class="text-3xl font-bold mb-2 drop-shadow">
+                        گروه بندی روابط منطقی در یک قاعده
+                    </h1>
+                    <label class="text-sm opacity-90">
+                        هر شرط را با شرط های دیگر میتوانید and (&&) و or (||) کنید
+                        <br>
+                        <span class="red-color-text">نکته:در صورتی که یک شرط test run موفق نداشته باشد امکان استفاده از این بخش برای اون ایتم وجود ندارد!</span>
+                    </label>
+                </div>
+
+                <p-progressBar
+                    [value]="completionRate"
+                    [showValue]="false"
+                    styleClass="h-1.5 mb-6 bg-black/30 rounded-full overflow-hidden"
+                ></p-progressBar>
+
+                <div
+                    class="flex justify-between mb-5 bg-white/10 px-5 py-3 rounded-lg text-black backdrop-blur"
+                >
+                    <div class="text-center">
+                        <div class="text-2xl font-bold" id="cards-count">
+                            {{ cardsCount }}
+                        </div>
+                        <div class="text-xs opacity-80">
+                            تعداد گروه بندی های روابط منطقی
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="text-2xl font-bold" id="completed-count">
+                            {{ completedCount }}
+                        </div>
+                        <div class="text-xs opacity-80">
+                            گروه بندی های تکمیل
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="text-2xl font-bold" id="completion-rate">
+                            {{ completionRate }}%
+                        </div>
+                        <div class="text-xs opacity-80">
+                            درصد تکمیل
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    *ngIf="cardsCount === 0"
+                    class="text-center text-black py-10"
+                    id="empty-state"
+                >
+                    <i class="pi pi-clone text-5xl mb-4 opacity-70"></i>
+                    <h3 class="text-xl mb-2">هنوز کارتی ایجاد نشده</h3>
+                    <label class="max-w-md mx-auto text-sm">
+                        برای شروع، روی دکمه «افزودن کارت جدید» کلیک کنید و اولین کارت خود را
+                        بسازید
+                    </label>
+                </div>
+
+                <div id="cards-container">
+                    <ng-container
+                        *ngFor="let card of cards; index as i; trackBy: trackByIndex"
+                    >
+                        <div *ngIf="i > 0" class="flex items-center gap-3 my-4 animate-fade-in">
+                            <div
+                                class="relative flex-1 h-0.5 bg-gradient-to-l from-transparent via-indigo-300 to-transparent"
+                            >
+                                <span
+                                    class="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500"
+                                ></span>
+                            </div>
+
+                            <span
+                                class="text-xs text-black bg-indigo-500/20 px-3 py-1 rounded-full whitespace-nowrap"
+                            >
+                                 <span class="red-color-text">* </span>
+                                عملگر بین گروه بندی {{ i }} و گروه بندی {{ i + 1 }}
+                            </span>
+
+                            <div>
+                                <p-dropdown
+                                    class="normal-dropdown operator-dropdown"
+                                    [options]="OperatorOptions"
+                                    [(ngModel)]="betweenValues[i - 1]"
+                                    optionLabel="name"
+                                    optionValue="code"
+                                    [autoDisplayFirst]="false"
+                                ></p-dropdown>
+                            </div>
+
+                            <div
+                                class="relative flex-1 h-0.5 bg-gradient-to-r from-transparent via-indigo-300 to-transparent"
+                            >
+                                <span
+                                    class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-indigo-500"
+                                ></span>
+                            </div>
+                        </div>
+                        <p-card
+                            styleClass="mb-4 shadow-lg border border-slate-200 rounded-xl animate-slide-in p-4 w-full"
+                        >
+                            <ng-template pTemplate="header">
+                                <div class="flex items-center justify-between gap-3">
+                                    <div class="flex flex-col gap-1">
+                                        <div class="flex items-center gap-2 text-slate-900 font-semibold">
+                <span
+                    class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-500 text-white text-sm font-bold"
+                >
+                    {{ i + 1 }}
+                </span>
+                                            <span>گروه بندی قابل انتخاب</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-2 text-xs text-slate-600">
+                                            <span>وضعیت گروه:</span>
+                                            <p-toggleswitch
+                                                [(ngModel)]="cards[i].status"
+                                            ></p-toggleswitch>
+                                            <span class="text-[11px]"
+                                                  [ngClass]="cards[i].status ? 'text-green-600' : 'text-red-500'">
+                                                {{ cards[i].status ? '(فعال)' : '(غیرفعال)' }}
+                                            </span>
+                                        </div>
+
+                                        <button
+                                            *ngIf="cards.length > 1 && i === cards.length - 1"
+                                            pButton
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text p-button-danger bg-rose-100 text-rose-500 hover:text-white hover:bg-rose-500 transition-transform"
+                                            (click)="removeCard(i)"
+                                        ></button>
+                                        <button
+                                            *ngIf="cards.length > 1 && i !== cards.length - 1"
+                                            pButton
+                                            type="button"
+                                            icon="pi pi-times"
+                                            class="p-button-rounded p-button-text bg-slate-200 text-slate-400 cursor-not-allowed"
+                                            pTooltip="امکان حذف این گروه وجود ندارد"
+                                            tooltipPosition="bottom"
+                                        ></button>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                            <div class="grid logic-grid gap-3 mt-3">
+                                <div *ngFor="let value of card.selects; index as j" class="w-full">
+                                    <label class="normal-label">
+                                   <span
+                                       *ngIf="i === 0 || j === 0"
+                                       class="red-color-text"
+                                   >
+        *
+    </span>
+                                        {{ fieldLabels[j] }}:
+                                    </label>
+
+                                    <p-dropdown
+                                        *ngIf="j == 0 || j == 2"
+                                        styleClass="expression-dropdown full-dropdown expression-ltr"
+                                        [options]="getAvailableExpressionOptions(i, j)"
+                                        [(ngModel)]="cards[i].selects[j]"
+                                        optionLabel="label"
+                                        optionValue="value"
+                                        [autoDisplayFirst]="false"
+                                        (onChange)="onchangea($event)"
+                                    ></p-dropdown>
+                                    <p-dropdown
+                                        *ngIf="j == 1"
+                                        styleClass="full-dropdown operator-dropdown"
+                                        [options]="OperatorOptions"
+                                        [(ngModel)]="cards[i].selects[j]"
+                                        optionLabel="name"
+                                        optionValue="code"
+                                        [autoDisplayFirst]="false"
+                                    ></p-dropdown>
+
+                                </div>
+                            </div>
+                        </p-card>
+                    </ng-container>
+                </div>
+                <div class="flex justify-center mt-6">
+                    <button
+                        pButton
+                        type="button"
+                        class="flex items-center gap-2 rounded-full px-6 py-2 shadow-lg bg-white text-indigo-600 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                        [disabled]="!canAddCard()"
+                        (click)="addCard()"
+                        id="add-card-btn"
+                    >
+                        <span
+                            class="flex items-center justify-center w-7 h-7 rounded-full bg-indigo-500 text-white text-lg leading-none"
+                        >
+                            +
+                        </span>
+                        <span>افزودن گروه بندی روابط منطقی جدید</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-6 mb-4">
+                <p-card
+                    styleClass="shadow-lg border border-slate-200 rounded-xl bg-white w-full"
+                >
+                    <div class="flex gap-3 justify-end">
+                        <button
+                            pButton
+                            type="button"
+                            label="ثبت"
+                            icon="pi pi-save"
+                            class="normal-button"
+                            severity="success"
+                            (click)="register()"
+                        ></button>
+
+                        <button
+                            pButton
+                            class="normal-button"
+                            label="انصراف"
+                            severity="danger"
+                            [outlined]="true"
+                            (click)="onCancel()"
+                        ></button>
+                    </div>
+                </p-card>
+            </div>
+        </div>
+    </div>
+</div>

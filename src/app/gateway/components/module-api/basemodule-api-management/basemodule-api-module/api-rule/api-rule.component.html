@@ -1,0 +1,212 @@
+
+<p-toast></p-toast>
+
+<app-breadcrumbs id="section" *ngIf="!rulConditionFlag&& !addFlag && !updateFlag" (backClicked)="BeforeButton()"></app-breadcrumbs>
+
+<div   class="content-page" *ngIf="!rulConditionFlag && !addFlag && !updateFlag">
+
+        <div class="grid grid-cols-12 gap-4 ">
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span  dir="rtl">{{'apiRule.label.apiName'|transloco}}</span> :
+                </label>
+                <div class="text-right" [style.width.%]="widthName"
+                     [pTooltip]="name"
+                     [tooltipDisabled]="name ? name.length < 20 : false">
+                    <label class="text-gray-700 block truncate">{{ name | moreChar19 }}</label>
+                </div>
+            </div>
+
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span  dir="rtl">{{ 'apiRule.label.apiTitle' |transloco}}</span> :
+                </label>
+                <div class="text-right" [style.width.%]="widthTitle"
+                     [pTooltip]="title"
+                     [tooltipDisabled]="title ? title.length < 20 : false">
+                    <label class="text-gray-700 block truncate">{{ title | moreChar19 }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-12 my-4" *ngIf="!addFlag && !updateFlag">
+            <button pButton label="{{'apiRule.btn.attachApiRule' | transloco}}"
+                    (click)="showRules()" [disabled]="attachFlag" class="normal-button"
+                    icon="pi pi-link"></button>
+        </div>
+
+          <p-table
+styleClass="normal-table"
+ [value]="rulList" *ngIf="!addFlag && !updateFlag" selectionMode="single">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th  class="row" >
+                        {{ 'apiRule.table.th.row'|transloco }}
+                    </th>
+                    <th  class="name">
+                        {{ 'apiRule.table.th.name'|transloco }}
+                    </th>
+                    <th  class="ruleTemplate">
+                        {{ 'apiRule.table.th.ruleTemplate'|transloco }}
+                    </th>
+                    <th  class="status">
+                        {{ 'apiRule.table.th.status'|transloco }}
+                    </th>
+                    <th class="text-right border-r border-gray-200">
+                        {{ 'apiRule.table.th.operation'|transloco }}
+
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template let-i="rowIndex" pTemplate="body" let-roule>
+                <tr [pSelectableRow]="roule">
+                    <td>{{ roule.row }}</td>
+                    <td>{{ roule.name }}</td>
+                    <td>{{ roule.ruleTemplate | formatRule }}</td>
+                    <td>
+                        <div      [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': roule.apiRuleStatus,
+                                   ' text-red-800 bg-red-300 ': !roule.apiRuleStatus
+                                   }"
+                                  class="w-[65px] float-right text-center rounded-md"
+                        >
+                            {{ roule.apiRuleStatus | statusPipe }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r border-gray-200">
+                        <button (click)="setRecord(roule)" pButton pRipple icon="pi pi-chevron-down"
+                                class="p-button-rounded " (click)="menu.toggle($event)"></button>
+                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    <!--</p-panel>-->
+</div>
+<div class="col-span-12" *ngIf="addFlag">
+    <app-api-rule-register (close)="onClose($event)"></app-api-rule-register>
+</div>
+<div class="col-span-12" *ngIf="updateFlag">
+    <app-api-rule-update [inputUpdate]="ruleDto" (close)="onClose($event)"></app-api-rule-update>
+</div>
+<div class="col-span-12" *ngIf="rulConditionFlag">
+    <app-api-rule-condition [inputApiRule]="ruleDto" (close)="onClose($event)"></app-api-rule-condition>
+</div>
+<p-dialog [style]="{'width':'60%'}" [(visible)]="dialogRuleFlag"
+          [modal]="true" [draggable]="false" [resizable]="true" appendTo="body">
+    <p-panel header="{{'apiRule.dialog.header.selectRule' | transloco}}">
+        <div   class="content-page">
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-4">
+                <label class="normal-label">{{'apiRule.dialog.label.selectRule'|transloco}} :</label>
+                <input [(ngModel)]="ruleName" pInputText class="normal-input mt-1" />
+            </div>
+
+            <div class="col-span-4"></div>
+
+            <div class="col-span-4 justify-start items-center gap-4 h-12 mt-5-5 rtl:flex-row-reverse" dir="ltr">
+                <button pButton
+                        label="{{'button.clear' | transloco}}"
+                        icon="pi pi-filter-slash"
+                        (click)="clear()"
+                        [outlined]="true"
+                        class="my-1 px-4 py-2 border normal-button"
+                ></button>&nbsp;
+                <button pButton
+                        label="{{'button.search' | transloco}}"
+                        icon="pi pi-search"
+                        class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+                        (click)="showRules()"></button>
+            </div>
+
+            <div class="col-span-12">
+                <p-card>
+                      <p-table
+styleClass="normal-table"
+ [value]="ruleAttachList" selectionMode="single"
+                           >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th  pSortableColumn="row">
+                                    <p-sortIcon field="row"></p-sortIcon>
+                                    {{'apiRule.table.th.row'|transloco}}
+                                </th>
+                                <th  pSortableColumn="name">
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                 {{'apiRule.table.th.ruleName'|transloco}}
+                                </th>
+                                <th  pSortableColumn="ruleTemplate">
+                                     <p-sortIcon field="ruleTemplate"></p-sortIcon>
+                                 {{'apiRule.table.th.ruleTemplate'|transloco}}
+                                </th>
+                                <th  pSortableColumn="httpsstatus">
+                                     <p-sortIcon field="httpsstatus"></p-sortIcon>
+                                 {{'apiRule.table.th.httpsStatus'|transloco}}
+                                </th>
+                                <th>
+                                 {{'apiRule.table.th.operation'|transloco}}
+                                </th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template let-i="rowIndex" pTemplate="body" let-rule>
+                            <tr [pSelectableRow]="rule">
+                                <td>{{ rule.row}}</td>
+                                <td [pTooltip]="rule.name" [tooltipDisabled]="rule.name?.length < 20">
+                                    {{ rule.name | moreChar19 }}
+                                </td>
+                                <td [pTooltip]="rule.ruleTemplate" [tooltipDisabled]="rule.ruleTemplate?.toString().length < 20">
+                                    {{ rule.ruleTemplate | ruleTemplate }}
+                                </td>
+                                <td>{{ rule.httpsstatus }}</td>
+                                <td dir="ltr" class="flex justify-end items-center ">
+                                    <button pButton label="{{'button.selectedRule'|transloco}}" icon="pi pi-check"
+                                            class="normal-button" (click)="selectedRule(rule)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center" >
+                        <div class="col-span-4"></div>
+                        <div class="flex items-center justify-center gap-2 col-span-4">
+                            <button
+                                pButton
+                                pRipple class="normal-button"
+                                [disabled]="(this.pageno) == 0"
+                                (click)="previousPageStatement()"
+                                pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                            >
+                                <i class="pi pi-arrow-right"></i>
+                            </button>
+                            <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+                            <button
+                                pButton
+                                pRipple
+                                name="btn-previous-page"
+                                class="normal-button"
+                                [disabled]="this.ruleAttachList?.length < pagesize"
+                                (click)="nextPageStatement()"
+                                pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                            >
+                                <i class="pi pi-arrow-left"></i>
+                            </button>
+                            <p-dropdown class="normal-dropdown-pagination"
+                                        [options]="pagesizeOptions"
+                                        optionValue="code"
+                                        [autoDisplayFirst]="true"
+                                        optionLabel="name"
+                                        [(ngModel)]="pagesize"
+                                        (onChange)="OnchangePageno($event)"
+                                        [disabled]="nextBtnFlag">
+                            </p-dropdown>
+                        </div>
+                        <div class="col-span-4"></div>
+                    </div>
+                </p-card>
+            </div>
+        </div>
+        </div>
+    </p-panel>
+</p-dialog>

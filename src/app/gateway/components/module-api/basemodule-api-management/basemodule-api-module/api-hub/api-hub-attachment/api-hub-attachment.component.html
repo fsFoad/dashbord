@@ -1,0 +1,1530 @@
+<p-toast />
+<app-breadcrumbs [showBackButton]="false" id="section"></app-breadcrumbs>
+<div class="content-page">
+    <div class="w-full">
+        <!--    <p-panel header="{{this.headerHubApi | transloco}}">-->
+        <!--  <p-steps [model]="itemsHub" [(activeIndex)]="activeIndex"></p-steps>-->
+        <p-stepper [(value)]="activeIndex" [linear]="true" class="h-1">
+            <p-step-list>
+                <p-step *ngFor="let step of itemsHub; let i = index" [value]="i">
+                    {{ step.label }}
+                </p-step>
+            </p-step-list>
+
+        </p-stepper>
+        <div class="grid grid-cols-12" *ngIf="!selectHubFlag">
+            <div class="col-span-6">
+                <label class="normal-label"> <span>عنوان هاب :</span></label>
+                <input [(ngModel)]="hubTitle" pInputText class="normal-input"
+                       name="hubTitle" [disabled]="true">
+            </div>
+            <div class="col-span-6"></div>
+        </div>
+        <div class="panel-hub mt-2">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12" *ngIf="selectHubFlag">
+                    <div class="grid grid-cols-12">
+                        <div class="col-span-6">
+                            <label class="normal-label"> <span>عنوان هاب :</span></label>
+                            <input class="normal-input" pInputText [(ngModel)]="titleSearch"
+                                   (keydown.enter)="onKeydown($event)">
+                        </div>
+                        <div class="col-span-3" dir="ltr">
+                            <label class="normal-label"> <span>dbName :</span></label>
+                            <input class="normal-input" pInputText [(ngModel)]="dbnameSearch"
+                                   (keydown.enter)="onKeydown($event)">
+                        </div>
+                        <div class="col-span-3" dir="ltr">
+                            <label class="normal-label"> <span>ip :</span></label>
+                            <input class="normal-input" pInputText [(ngModel)]="ipSearch"
+                                   (keydown.enter)="onKeydown($event)">
+                        </div>
+                        <div class="col-span-9"></div>
+                        <div class="col-span-3 mt-2" dir="ltr">
+                            <button pButton label="{{'button.clear'|transloco}}"
+                                    class="my-1 px-4 py-2 border normal-button" [outlined]="true"
+                                    (click)="clear()"
+                                    icon="pi pi-filter-slash"></button>
+                            <button pButton label='جستجو' style="width: 110px;margin: 3px;margin-top: 3px"
+                                    (click)="searchHubAttachListClick()"
+                                    class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+                                    icon="pi pi-search"></button>
+                        </div>
+                        <div class="col-span-12">
+                            <p-table
+                                styleClass="normal-table"
+                                [value]="hubAttachList"
+                                [(selection)]="selectedHubList"
+                                dataKey="hubId"
+                                [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true" [first]="firstIndex"
+                                [currentPageReportTemplate]="this.paginationLabel" [totalRecords]="totalRecords" [lazy]="true"
+                                [rowsPerPageOptions]="[5,10,20,50,100]"
+                                paginatorDropdownAppendTo="body"
+                                selectionMode="single"
+                                (onPage)="OnchangePagenoHub($event)"
+                                [loading]="loading"
+                                (onRowUnselect)="onRowUnselect($event)"
+                                (onRowSelect)="selectedHub($event)">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="select">
+                                            select
+                                        </th>
+                                        <th pSortableColumn="row" class="row">
+                                            ردیف
+                                        </th>
+                                        <th pSortableColumn="hubTitle" class="hubTitle">
+                                            عنوان هاب
+                                        </th>
+                                        <!-- <th pSortableColumn="commandTypeId" class="commandTypeId" >
+                                             نوع دستور
+                                             <p-sortIcon field="commandTypeId"></p-sortIcon>
+                                         </th>-->
+                                        <th pSortableColumn="dbEngineId" class="dbEngineId">
+                                            dbEngine
+                                        </th>
+                                        <th pSortableColumn="dbName" class="dbName">
+                                            dbName
+                                        </th>
+                                        <th pSortableColumn="ip" class="ip">
+                                            ip
+                                        </th>
+
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-i="rowIndex" pTemplate="body" let-hub>
+                                    <tr [pSelectableRow]="hub">
+                                        <td class="select">
+                                            <p-tableRadioButton [value]="hub"></p-tableRadioButton>
+                                        </td>
+                                        <td class="row">
+                                            {{ (pageno * pagesize) + (i % pagesize) + 1 }}
+                                        </td>
+                                        <td class="hubTitle" [pTooltip]="hub.hubTitle"
+                                            [tooltipDisabled]="hub.hubTitle?hub.hubTitle.length < 20:false">
+                                            {{ hub.hubTitle|moreChar19 }}
+                                        </td>
+                                        <!--   <td class="commandTypeId">
+                                               {{ hub.commandTypeId|commandType }}
+                                           </td>-->
+                                        <td class="dbEngineId">
+                                            {{ hub.dbEngineId|dbEngine }}
+                                        </td>
+                                        <td class="dbName">
+                                            {{ hub.dbName }}
+                                        </td>
+                                        <td class="ip">
+                                            {{ hub.ip }}
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="col-span-12" *ngIf="previewFlag">
+                    <div class="grid grid-cols-12 gap-0">
+                        <div class="col-span-3 mt-1 flex items-center">
+                            <label class="mr-3 mb-2">
+                                <span>نتایج حاصل از سرویس به صورت فایل excel در خروجی نمایش داده شود :</span>
+                            </label>
+                        </div>
+                        <div class="col-span-1 flex items-center">
+                            <p-checkbox [(ngModel)]="downloadResultSet" [binary]="true" inputId="binary"></p-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-12" *ngIf="RequirementsHub">
+
+                    <p-fieldset legend=" تعیین الزامات هاب">
+
+
+                        <div class="grid grid-cols-12" style="margin-top: 5px">
+                            <div class="col-span-12">
+                                <button pButton icon="pi pi-question-circle" class="button-help rounded-2xl"
+                                        severity="warn" (click)="helpFlag=true"></button>
+                                <br>
+                            </div>
+
+                            <div class="col-span-4">
+                                <label class="normal-label">
+                                    <span>نوع دستور :</span>
+                                </label>
+                                <p-dropdown class="normal-dropdown"
+                                            [options]=hubConstants.commandType
+                                            optionValue="code"
+                                            optionLabel="name"
+                                            [(ngModel)]="commandTypeId"
+                                            name="commandTypeId"
+                                            (onChange)="changeCommand()"
+                                            [disabled]="attachmentDisableBTN"
+                                >
+                                </p-dropdown>
+                                <!--(onChange)="changDropCommandType($event)"-->
+                            </div>
+                            <div class="col-span-6" *ngIf="!customQueryFlag" dir="rtl">
+                                <label *ngIf="!spFlag">
+                                    <span class="red-color-text">* </span>
+                                    <span
+                                    >نام آبجکت در دیتابیس (Table or View) :</span></label><br *ngIf="!spFlag">
+                                <label *ngIf="spFlag">
+                                    <span class="red-color-text">* </span>
+                                    <span>نام پروسیجر :</span></label><br
+                                *ngIf="spFlag">
+                                <input class="input-w85 normal-input" [(ngModel)]="objectName" name="objectName"
+                                       [disabled]="attachmentDisableBTN"
+                                       pInputText>
+
+                            </div>
+                            <div class="col-span-8" *ngIf="customQueryFlag"></div>
+                            <!-- <div class="col-span-4"></div>-->
+
+                            <div class="col-span-4" style="margin-top: 10px">
+                                <label class="normal-label">
+                                    <span>انتخاب پیام برای موفقیت آمیز بودن عملیات :</span></label>
+                                <button pButton label="200" severity="success" [icon]="icon200_val"
+                                        class="normal-button"
+                                        (click)="openMessage200()"></button>
+
+                            </div>
+                            <div class="col-span-4" style="margin-top: 10px">
+                                <label class="normal-label">
+                                    <span>انتخاب پیام برای خطا در عملیات، سمت فرانت اند :</span></label>
+                                <button pButton label="400" severity="warn" [icon]="icon400_val" class="normal-button"
+                                        (click)="openMessage400()"></button>
+
+                            </div>
+                            <div class="col-span-4" style="margin-top: 10px">
+                                <label class="normal-label"> <span>انتخاب پیام برای خطا در عملیات، سمت  بک اند :</span></label>
+                                <button pButton label="500" severity="danger" [icon]="icon500_val" class="normal-button"
+                                        (click)="openMessage500()"></button>&nbsp;
+                            </div>
+                            <div class="col-span-12" dir="ltr">
+                                <button pButton label="{{'ثبت الزامات هاب' | transloco}}"
+                                        icon="pi pi-save" (click)="attachApiHub()" class="normal-button"
+                                        [disabled]=attachmentDisableBTN severity="success"
+                                        [pTooltip]="tooltipAttachment"
+                                        [tooltipDisabled]="!attachmentDisableBTN"
+                                ></button>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+                <div class="col-span-12" *ngIf="dbInfoFlag" dir="ltr">
+                    <p-fieldset legend="DataBase Info">
+
+                        <div class="grid grid-cols-12 gap-y-4" style="margin-top: 5px">
+                            <div class="col-span-3" dir="ltr">
+                                <label class="normal-label"> <span>DBEngine :</span></label>
+                                <p-dropdown class="normal-dropdown englishItem"
+
+                                            [options]=hubConstants.DBEngineOption
+                                            [(ngModel)]="dbEngineId"
+                                            name="dbEngineId"
+                                            styleClass="dropdown-w70"
+                                            optionValue="code"
+                                            optionLabel="name"
+                                            [disabled]="true"
+                                ></p-dropdown>
+                                <!--(onChange)="changDropEngine($event)"-->
+                            </div>
+                            <div class="col-span-3" dir="ltr">
+                                <label class="normal-label"> <span>DBName :</span></label>
+                                <input class="normal-input" [(ngModel)]="dbName" pInputText
+                                       [disabled]="true" name="dbName">
+                            </div>
+                            <div class="col-span-3">
+                                <div class="grid grid-cols-12">
+                                    <div class="col-span-3" style="margin-top: 23px" dir="ltr">
+                                        <label>
+                                                    <span
+                                                        style="margin-bottom: 10px">Auto Commit :</span></label>
+
+                                    </div>
+                                    <div class="col-span-1" style="margin-top: 20px" dir="ltr">
+                                        <p-checkbox [(ngModel)]="autoCommit" [binary]="true"
+                                                    [disabled]="true"
+                                                    name="autoCommit"
+                                                    inputId="binary"></p-checkbox>
+                                    </div>
+                                    <div style="width:62.1667%"></div>
+                                </div>
+                            </div>
+                            <div class="col-span-3">
+                                <div class="grid grid-cols-12">
+
+                                    <div class="col-span-6" style="margin-top: 23px">
+                                        <label> <span>Allow Pool Connection :</span>
+                                            <span [ngStyle]="{'color': '#ABACAC','font-size':'1rem' }">
+                                                (size: {{ connectionPoolSize }})
+                                                    </span>
+                                        </label>
+
+
+                                    </div>
+                                    <div class="col-span-1" style="margin-top: 20px">
+                                        <p-checkbox [(ngModel)]="allowCreateConnectionPool" [binary]="true"
+                                                    inputId="binary"
+                                                    [disabled]="!regTextDBFlag" name="allowCreateConnectionPool"
+                                        ></p-checkbox>
+
+                                    </div>
+                                    <div style="width:62.1667%"></div>
+                                </div>
+                            </div>
+                            <div class="col-span-3" dir="ltr">
+                                <label class="normal-label"> <span>Ip :</span></label>
+                                <input class="normal-input" [(ngModel)]="ip" pInputText
+                                       name="ip" (keyup)="concatIp($event)" [disabled]="true"
+                                >
+                            </div>
+                            <div class="col-span-3" dir="ltr">
+                                <label class="normal-label"> <span>PortNumber :</span></label>
+                                <input class="normal-input" [(ngModel)]="port" pInputText
+                                       name="port" (keyup)="concatPort($event)"
+                                       [disabled]="true">
+                            </div>
+                            <div class="col-span-3" dir="ltr">
+                                <label class="normal-label"> <span>User :</span></label>
+                                <input class="normal-input" [(ngModel)]="user" pInputText
+                                       autocomplete="new-password"
+                                       name="user" (keyup)="concatUser($event)"
+                                       [disabled]="true">
+                            </div>
+                            <div class="col-span-3" dir="ltr">
+
+                                <label class="normal-label"> <span>Password :</span></label>
+                                <p-password [(ngModel)]="password" [styleClass]="'normal-password'"
+                                            name="password" (keyup)="concatPassword($event)"
+                                            autocomplete="new-password"
+                                            [feedback]="false" [disabled]="true"></p-password>
+                            </div>
+                            <div [ngClass]="previewFlag?'col-span-3':'col-span-6'" style="
+                                       display: block;
+                                       flex-wrap: wrap;
+                                       overflow-wrap: break-word;
+                                       word-wrap: break-word;
+                                       hyphens: auto;
+                                       white-space: normal!important;" dir="ltr">
+                                <label class="normal-label"> <span>Connection string :</span></label>
+                                <label dir="ltr" style="color: #1c034f !important ;font-weight: bold"
+                                >{{ this.ipLbl + this.portLbl + this.userLbl + this.passwordLbl }}</label>
+                            </div>
+                            <div class="col-span-4" *ngIf="!customQueryFlag&&textSqlFlag"></div>
+                            <div class="col-span-8 grid grid-cols-12" dir="ltr" *ngIf="!previewFlag">
+                                <div class="col-span-4" dir="ltr" *ngIf="!previewFlag">
+                                    <button pButton label="{{'test conection'}}"
+                                            [icon]="loadingButton ? 'pi pi-spinner pi-spin' : 'pi pi-link'"
+                                            *ngIf="!previewFlag"
+                                            class="bg-[#007bff] border-[#007bff] hover:bg-[#014c9d] hover:border-[#014c9d] normal-button"
+                                            (click)="testConnectionMethod()"
+                                    ></button>&nbsp;
+                                </div>
+                                <div class="col-span-6" *ngIf="!previewFlag">
+                                    <p-message severity="success" text="connection successful !"
+                                               styleClass="messageSize"
+                                               *ngIf="connectionSuccessFlag&&resultTestConnectionFlag">
+                                    </p-message>
+                                    <p-message severity="error" text="connection failed !" styleClass="messageSize"
+                                               *ngIf="connectionFailedFlag&&resultTestConnectionFlag">
+                                    </p-message>
+                                </div>
+                            </div>
+                            <div class="col-span-3" dir="ltr" *ngIf="previewFlag">
+                                <p-message severity="success" text="connection successful !"
+                                           styleClass="messageSize"
+                                           *ngIf="connectionSuccessFlag&&resultTestConnectionFlag">
+                                </p-message>
+                                <p-message severity="error" text="connection failed !" styleClass="messageSize"
+                                           *ngIf="connectionFailedFlag&&resultTestConnectionFlag">
+                                </p-message>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+                <div class="col-span-12" *ngIf="paramFlag">
+                    <p-fieldset legend="پارامترها">
+                        <div class="grid grid-cols-12" style="margin-top: 5px" [dir]="addFlag?'rtl':'ltr'">
+                            <div [ngClass]="addFlag? 'col-span-12':'col-span-10'">
+                                <div class="grid grid-cols-12">
+                                    <div class="col-span-3" *ngIf="addFlag" dir="rtl">
+                                        <label class="normal-label">
+                                            <span class="red-color-text">* </span>
+                                            <span>نام پارامتر :</span></label>
+                                        <input class="normal-input" [(ngModel)]="paramName" name="paramName"
+                                               pInputText>
+                                    </div>
+                                    <div class="col-span-3" *ngIf="addFlag" dir="rtl">
+                                        <label class="normal-label">
+                                            <span class="red-color-text">* </span>
+                                            <span>مقدار پارامتر :</span></label>
+                                        <input class="normal-input" [(ngModel)]="paramValue" name="paramValue"
+                                               pInputText>
+                                    </div>
+                                    <div class="col-span-3" *ngIf="addFlag" dir="rtl">
+                                        <label class="normal-label">
+                                            <span class="red-color-text">* </span>
+                                            <span>نوع داده :</span></label>
+                                        <p-dropdown class="normal-dropdown"
+                                                    [options]=hubConstants.dataTypeOptions
+                                                    [(ngModel)]="dataType"
+                                                    name="dataType"
+                                                    styleClass="dropdown-w70"
+                                                    optionValue="code"
+                                                    optionLabel="name"
+                                        ></p-dropdown>
+                                    </div>
+                                    <div class="col-span-3" *ngIf="addFlag">
+                                        <label class="normal-label">
+                                            <span class="red-color-text">* </span>
+                                            <span>عملگر :</span></label>
+                                        <p-dropdown class="normal-dropdown"
+                                                    [options]="conditionOptions"
+                                                    [(ngModel)]="operationTypeId"
+                                                    optionValue="code"
+                                                    optionLabel="name"
+                                                    (keydown.enter)="onKeydown($event)">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="col-span-1" *ngIf="addFlag">
+                                        <label class="normal-label"> <span>وضعیت :</span></label>
+                                        <p-toggleswitch [(ngModel)]="status" name="status" />
+                                    </div>
+                                    <div class="col-span-12 my-2" *ngIf="addFlag ">
+                                        <button pButton label="{{'افزودن پارامتر'}}"
+                                                icon="pi pi-plus" style="margin-right: 5px"
+                                                (click)="fakeParamRegister()" class="normal-button"
+                                        ></button>&nbsp;
+                                        <button pButton icon="pi pi-refresh"
+                                                class=" normal-button bg-[#007bff] border-[#007bff] hover:bg-[#014c9d] hover:border-[#014c9d]"
+                                                (click)="loadNonStaticParams()">
+                                            <span>فراخوانی پارامتر های سرویس</span>
+                                        </button>&nbsp;
+                                        <button pButton label="{{'پاکسازی پارامتر ها' | transloco}}"
+                                                (click)="onClearParams()" severity="danger" [outlined]="true"
+                                                class=" normal-button  ltrDirection"
+                                                icon="pi pi-trash"
+                                        ></button>
+                                    </div>
+
+                                    <div class="col-span-12" dir="rtl">
+                                        <p-table
+                                            styleClass="normal-table"
+                                            [value]="paramsList" selectionMode="single" [lazy]="true"
+                                            [loading]="loading">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="row" class="row">
+                                                        ردیف
+                                                        <p-sortIcon field="row"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="paramName" class="paramName">
+                                                        نام پارامتر
+                                                        <p-sortIcon field="paramName"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="paramValue" class="paramValue">
+                                                        مقدار پارامتر
+                                                        <p-sortIcon field="paramValue"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="dataType" class="dataType">
+                                                        نوع داده
+                                                        <p-sortIcon field="dataType"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="operationTypeId" class="operationTypeId">
+                                                        عملگر
+                                                        <p-sortIcon field="operationTypeId"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="tdStatus" class="tdStatus">
+                                                        وضعیت
+                                                        <p-sortIcon field="tdStatus"></p-sortIcon>
+                                                    </th>
+                                                    <th class="operation"
+                                                        style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                                                        عملیات
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template let-i="rowIndex" pTemplate="body" let-params
+                                                         let-editing="editing">
+                                                <tr [pSelectableRow]="params"
+                                                    [ngStyle]="{'color':params.detailType!=undefined&&params.detailType!=undefined?
+                                                '#25638f' :null,
+                                                'background-color':params.detailType!=undefined&&params.detailType!=undefined?
+                                                '#799BD077':null }">
+                                                    <td class="row">{{ params.row }}</td>
+                                                    <td class="paramName">
+                                                        {{ params.paramName }}
+                                                    </td>
+                                                    <td class="paramValue" pEditableColumn>
+                                                        <p-cellEditor>
+                                                            <ng-template pTemplate="input">
+                                                                <input class="normal-input" pInputText type="text"
+                                                                       [disabled]="!addFlag"
+                                                                       [(ngModel)]="params.paramValue" required>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="output">
+                                                                {{ params.paramValue }}
+                                                            </ng-template>
+                                                        </p-cellEditor>
+
+                                                    </td>
+                                                    <td class="dataType" pEditableColumn>
+                                                        <p-cellEditor>
+                                                            <ng-template pTemplate="input">
+                                                                <p-dropdown class="normal-dropdown-cell-editor"
+                                                                            [appendTo]="'body'"
+                                                                            [options]=hubConstants.dataTypeOptions
+                                                                            [(ngModel)]="params.dataType"
+                                                                            name="dataType"
+                                                                            optionValue="code"
+                                                                            optionLabel="name"
+                                                                            [disabled]="!addFlag"
+                                                                            required
+                                                                ></p-dropdown>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="output">
+                                                                {{ params.dataType|dataTypeHub }}
+                                                            </ng-template>
+                                                        </p-cellEditor>
+                                                    </td>
+                                                    <td class="operationTypeId" pEditableColumn>
+                                                        <p-cellEditor>
+                                                            <ng-template pTemplate="input">
+                                                                <p-dropdown class="normal-dropdown-cell-editor"
+                                                                            [appendTo]="'body'"
+                                                                            [options]=conditionOptions
+                                                                            [(ngModel)]="params.operationTypeId"
+                                                                            name="operationTypeId"
+                                                                            optionValue="code"
+                                                                            optionLabel="name"
+                                                                            [disabled]="!addFlag"
+                                                                            required
+                                                                ></p-dropdown>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="output">
+                                                                {{ params.operationTypeId|condition }}
+                                                            </ng-template>
+                                                        </p-cellEditor>
+                                                    </td>
+                                                    <td class="tdStatus"
+                                                        [ngStyle]="{'text-align': 'center !important'}">
+                                                        <div [ngStyle]="{ 'border-radius':' 2.5px',
+                                                        'color':params.status == true ?'#258F30' :'#962515',
+                                                        'background-color': params.status == false ?'#F18B7D' : '#85DC8F',
+                                                        'width':'45px','margin':' 0 auto'}">
+                                                            {{ params.status|enStatus }}
+                                                        </div>
+                                                    </td>
+                                                    <td style="text-align: right !important; border-right: 1px solid #ebe8e8;"
+                                                        class="operation">
+                                                        <div class="flex items-center gap-4">
+                                                            <button
+                                                                matTooltip="{{'حذف' }}"
+                                                                (click)="deleteParam(params)"
+                                                                class="normal-button"
+                                                                [disabled]="!addFlag"
+                                                                pButton
+                                                                severity="danger"
+                                                                icon="pi pi-trash"
+                                                            ></button>
+
+                                                            <button
+                                                                pButton
+                                                                icon="pi pi-plus"
+                                                                label="افزودن المان سرویس"
+                                                                class="normal-button"
+                                                                (click)="addNonStaticTextSql(params)"
+                                                                [disabled]="!addFlag || params.detailType != undefined || params.detailType != null"
+                                                            ></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                                <div class="col-span-12 " dir="ltr"
+                                     style="margin-top: 15px;margin-right: 2px"
+                                     *ngIf="!addFlag">
+                                    <div class="col-span-12 queryListDiv">
+                                        <div style="width: 100%;padding:2px 0 5px 0;">
+                                            <label style="color:#1c034f;">
+                                                {{ templates + ' ' + lblObjectName + this.param }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2 mx-2" dir="rtl" *ngIf="!addFlag ">
+                                <div>
+                                    <button pButton label="{{'parse query'}}" style="width: 100%"
+                                            icon="pi pi-check" *ngIf="!previewFlag"
+                                            class="normal-button"
+                                            (click)="parseQuery()"
+                                    ></button> &nbsp;
+                                    <button pButton label="{{'test query'}}"
+                                            [pTooltip]="tooltipTest"
+                                            class="normal-button"
+                                            style="margin-top: 1px;width: 100%" *ngIf="!previewFlag"
+                                            (click)="testQuery()" [disabled]=""
+                                    >
+                                        <mat-icon class="size">new_releases</mat-icon>
+                                    </button>
+                                    <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center">
+                                        <p-message severity="success" text="query successful !" dir="ltr"
+                                                   styleClass="messageSize"
+                                                   *ngIf="querySuccessFlag&&resultTestQueryFlag">
+                                        </p-message>
+                                        <p-message severity="error" text="query failed !" styleClass="messageSize"
+                                                   *ngIf="queryFailedFlag&&resultTestQueryFlag" dir="ltr">
+                                        </p-message>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+                <div class="col-span-12" *ngIf="spParamFlag" dir="ltr">
+                    <p-fieldset legend="params stored procedure">
+
+                        <div class="grid grid-cols-12" style="margin-top: 5px" dir="ltr">
+                            <div class="col-span-4" *ngIf="addSpFlag" dir="ltr">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>Param Type :</span></label>
+                                <p-dropdown class="normal-dropdown-pagination"
+                                            id="123333"
+                                            [options]=hubConstants.paramTypeOptions
+                                            [(ngModel)]="paramType"
+                                            name="dataType"
+                                            [appendTo]="'body'"
+                                            optionValue="code"
+                                            optionLabel="name"
+                                            (onChange)="onChangeParamType()"
+                                ></p-dropdown>
+
+                            </div>
+                            <div class="col-span-2" *ngIf="addSpFlag" dir="ltr">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>Data Type :</span></label>
+                                <p-dropdown class="normal-dropdown"
+
+                                            [options]=hubConstants.dataTypeSpOptions
+                                            [(ngModel)]="dataType"
+                                            name="dataType"
+
+                                            optionValue="code"
+                                            optionLabel="name"
+                                            [disabled]="dataTypeFlag"
+                                ></p-dropdown>
+
+                            </div>
+                            <div class="col-span-2" *ngIf="addSpFlag">
+                                <label class="normal-label"> <span>Output Title :</span></label>
+                                <input class="normal-input" [(ngModel)]="aliasOutputParamName"
+                                       name="aliasOutputParamName"
+
+                                       pInputText>
+
+                            </div>
+                            <div class="col-span-2" *ngIf="addSpFlag">
+                                <label class="normal-label"> <span>Success Value :</span></label>
+                                <input class="normal-input" [(ngModel)]="successValue" name="aliasOutputParamName"
+                                       pInputText>
+
+                            </div>
+                            <div class="col-span-2" *ngIf="addSpFlag">
+
+                            </div>
+                            <div class="col-span-8 my-2" *ngIf="addSpFlag">
+
+                                <button pButton label="{{'add param SP'}}"
+                                        icon="pi pi-plus" *ngIf="addSpFlag"
+                                        class="normal-button"
+                                        (click)="fakeParamSpRegister()"
+                                ></button>&nbsp;
+                                <button pButton label="{{'load params api'}}"
+                                        class="buttonMatIcon ltrDirection normal-button" icon="pi pi-refresh"
+                                        (click)="loadSpNonStaticParams()" *ngIf="addSpFlag">
+                                </button>&nbsp;
+                                <button pButton label="{{'clear params' | transloco}}" (click)="onClearSpParams()"
+                                        severity="danger" icon="pi pi-trash" class=" normal-button" [outlined]="true"
+                                ></button>
+                                <button *ngIf="addSpFlag" pButton icon="pi pi-question-circle"
+                                        class="button-help rounded-2xl my-2 mx-2" severity="warn"
+                                        (click)="helpSpFlag=true"></button>
+                            </div>
+                            <div class="col-span-8 grid grid-cols-12" *ngIf="!addSpFlag">
+                                <!-- <div class="col-span-8 my-2 " dir="ltr" *ngIf="!addSpFlag">-->
+                                <div class="col-span-3" dir="ltr">
+                                    <button pButton label="{{'test stored procedure'}}" dir="rtl"
+                                            style="margin-top: 1px;margin-right:5px"
+                                            [pTooltip]="tooltipTestSp" class=" normal-button mx-2"
+                                            [tooltipDisabled]="this.spParamsList.length!=0"
+                                            (click)="testSp()" *ngIf="!previewFlag"
+                                    >
+                                        <mat-icon class="size">new_releases</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-span-3" dir="ltr">
+                                    <p-message severity="success" text="stored procedure successful !" dir="ltr"
+                                               styleClass="messageSize" [style]="{ 'margin-top.px': 1 }"
+                                               *ngIf="querySuccessFlag&&resultTestQueryFlag">
+                                    </p-message>
+                                    <p-message severity="error" text="stored procedure failed !"
+                                               styleClass="messageSize"
+                                               [style]="{ 'margin-top.px': 1 }"
+                                               *ngIf="queryFailedFlag&&resultTestQueryFlag"
+                                               dir="ltr">
+                                    </p-message>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-span-12 my-2">
+
+                            <p-table
+                                styleClass="normal-table"
+                                [value]="spParamsList" selectionMode="single" [lazy]="true"
+                                [loading]="loading">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th pSortableColumn="row" class="row">
+                                            row
+                                            <p-sortIcon field="row"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="paramName" class="paramName">
+                                            name
+                                            <p-sortIcon field="paramName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="paramType" class="paramType">
+                                            Param Type
+                                            <p-sortIcon field="paramType"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="dataType" class="dataType">
+                                            Data Type
+                                            <p-sortIcon field="dataType"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="paramValue" class="paramValue">
+                                            Output Title
+                                            <p-sortIcon field="paramValue"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="successValue" class="successValue">
+                                            Success Value
+                                            <p-sortIcon field="successValue"></p-sortIcon>
+                                        </th>
+                                        <th class="operation"
+                                            style="text-align: left !important;border-left: 1px solid #ebe8e8;">
+                                            operation
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template let-i="rowIndex" pTemplate="body" let-params>
+                                    <tr [pSelectableRow]="params" [ngStyle]="{'color':params.actionType!=undefined&&params.actionType!=undefined?
+                                                '#25638f' :null,
+                                                'background-color':params.actionType!=undefined&&params.actionType!=undefined?
+                                                '#799BD077':null }">
+                                        <td class="row">{{ params.row }}</td>
+                                        <td class="name">{{ params.name }}</td>
+                                        <td class="paramType">
+                                            {{ params.paramType|paramType }}
+                                        </td>
+                                        <td class="dataType" pEditableColumn>
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <p-dropdown
+                                                        class="normal-dropdown-cell-editor"
+                                                        [appendTo]="'body'"
+                                                        [options]=hubConstants.dataTypeSpOptions
+                                                        [(ngModel)]="params.dataType"
+                                                        name="dataType"
+                                                        optionValue="code"
+                                                        optionLabel="name"
+                                                        [disabled]="params.paramType == '2' "
+
+                                                    ></p-dropdown>
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ params.dataType|dataTypeHub }}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>
+                                        <td class="aliasOutputParamName" pEditableColumn>
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <input class="normal-input" pInputText type="text"
+                                                           [disabled]="params.paramType != '1' && params.paramType != '3'"
+                                                           [(ngModel)]="params.aliasOutputParamName" required>
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ params.aliasOutputParamName }}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>
+                                        <td class="successValue" pEditableColumn>
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <input class="normal-input" pInputText type="text"
+                                                           [disabled]="params.paramType != '1' && params.paramType != '3'"
+                                                           [(ngModel)]="params.apiDataHubParseOutputParamDomain.successValue"
+                                                           required>
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{ params.apiDataHubParseOutputParamDomain.successValue }}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </td>
+                                        <td style="text-align: left !important;border-right: 1px solid #ebe8e8;"
+                                            class="operation">
+                                            <button
+                                                style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
+                                                matTooltip="{{'حذف' | transloco}}"
+                                                (click)="deleteSpParam(params)"
+                                                [disabled]="!addSpFlag||params.disabled"
+                                                pButton severity="danger"
+                                                class=" normal-button"
+                                                icon="pi pi-trash"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-fieldset>
+                </div>
+                <div class="col-span-12" *ngIf="customQueryParamFlag">
+                    <p-fieldset legend="custom Query">
+
+                        <div class="grid grid-cols-12" style="margin-top: 5px" dir="ltr">
+                            <div [ngClass]="!previewFlag? 'col-span-10':'col-span-12'">
+                                <div class="grid grid-cols-12">
+                                    <div class="col-span-12" style="margin-top: 10px;width: 100%;text-align: left"
+                                         *ngIf="previewFlag">
+                                        <p-message severity="success" text="query successful !" dir="ltr"
+                                                   styleClass="messageSize"
+                                                   *ngIf="querySuccessFlag&&resultTestQueryFlag">
+                                        </p-message>
+                                        <p-message severity="error" text="query failed !" styleClass="messageSize"
+                                                   *ngIf="queryFailedFlag&&resultTestQueryFlag" dir="ltr">
+                                        </p-message>
+                                    </div>
+                                    <div class="col-span-12" *ngIf="customQueryInputFlag" dir="ltr">
+
+
+                                        <textarea pTextarea dir="ltr" class="inner-textarea" style="width: 100%"
+                                                  [(ngModel)]="customQuery" name="customQuery"
+                                                  [disabled]="previewFlag||!addCusFlag"
+                                        >
+                                            </textarea>
+                                        <p-table
+                                            styleClass="normal-table"
+                                            [value]="paramsCustomList" selectionMode="single" [lazy]="true"
+                                            [loading]="loading">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th pSortableColumn="row" class="row">
+                                                        row
+                                                        <p-sortIcon field="row"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="paramName" class="paramName">
+                                                        Param Name
+                                                        <p-sortIcon field="paramName"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="paramValue" class="paramValue">
+                                                        Param Value
+                                                        <p-sortIcon field="paramValue"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="dataType" class="dataType">
+                                                        Data Type
+                                                        <p-sortIcon field="dataType"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="tdStatus" class="tdStatus">
+                                                        Matched
+                                                        <p-sortIcon field="tdStatus"></p-sortIcon>
+                                                    </th>
+                                                    <th pSortableColumn="actionType" class="actionType">
+                                                        actionType
+                                                        <p-sortIcon field="actionType"></p-sortIcon>
+                                                    </th>
+                                                    <th class="operation"
+                                                        style="text-align: left !important;border-left: 1px solid #ebe8e8;">
+                                                        operation
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template let-i="rowIndex" pTemplate="body" let-params
+                                                         let-columns="columns">
+                                                <tr [pSelectableRow]="params" [ngStyle]="{'color':params.detailType!=undefined&&params.detailType!=undefined?
+                                                '#25638f' :null,
+                                                'background-color':params.detailType!=undefined&&params.detailType!=undefined?
+                                                '#799BD077':null }">
+                                                    <td class="row">{{ params.row }}</td>
+                                                    <td class="paramName">
+                                                        {{ params.paramName }}
+                                                    </td>
+                                                    <td class="paramValue" pEditableColumn>
+                                                        <p-cellEditor>
+                                                            <ng-template pTemplate="input">
+                                                                <input class="normal-input" pInputText type="text"
+                                                                       [disabled]="!addCusFlag"
+                                                                       [(ngModel)]="params.paramValue" required>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="output">
+                                                                {{ params.paramValue }}
+                                                            </ng-template>
+                                                        </p-cellEditor>
+                                                    </td>
+                                                    <td class="dataType" pEditableColumn>
+                                                        <p-cellEditor>
+                                                            <ng-template pTemplate="input">
+                                                                <p-dropdown
+                                                                    class="normal-dropdown-cell-editor"
+                                                                    [appendTo]="'body'"
+                                                                    [options]=hubConstants.dataTypeOptions
+                                                                    [(ngModel)]="params.dataType"
+                                                                    name="dataType"
+                                                                    styleClass="dropdown-w70"
+                                                                    optionValue="code"
+                                                                    optionLabel="name"
+                                                                    [disabled]="!addCusFlag"
+                                                                    required
+                                                                ></p-dropdown>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="output">
+                                                                {{ params.dataType| dataTypeHub }}
+                                                            </ng-template>
+                                                        </p-cellEditor>
+                                                    </td>
+                                                    <td class="tdStatus"
+                                                        [ngStyle]="{'text-align': 'center !important'}">
+                                                        <img *ngIf="params.matched==1"
+                                                             class="w-6 h-6 object-contain block"
+                                                             src="assets/icons/check.png">
+                                                        <img *ngIf="params.matched==0"
+                                                             class="w-6 h-6 object-contain block"
+                                                             src="assets/icons/multiply.png">
+                                                    </td>
+                                                    <td class="dataType" pEditableColumn>
+                                                        <p-cellEditor>
+                                                            <ng-template pTemplate="input">
+                                                                <p-dropdown
+                                                                    class="normal-dropdown-cell-editor"
+                                                                    [appendTo]="'body'"
+                                                                    [options]=hubConstants.actionTypeOption
+                                                                    [(ngModel)]="params.actionType"
+                                                                    name="actionType"
+                                                                    styleClass="dropdown-w70"
+                                                                    optionValue="code"
+                                                                    optionLabel="name"
+                                                                    [disabled]="!addCusFlag||(params.matched==1)"
+                                                                    (onChange)="checkDontCareAndAddEleman($event)"
+                                                                ></p-dropdown>
+                                                            </ng-template>
+                                                            <ng-template pTemplate="output">
+                                                                {{ params.actionType|actionTypeHub }}
+                                                            </ng-template>
+                                                        </p-cellEditor>
+                                                    </td>
+                                                    <td style="text-align: left !important;border-right: 1px solid #ebe8e8;"
+                                                        class="operation">
+                                                        <button pButton
+                                                                label="{{'add query param'}}"
+                                                                icon="pi pi-plus"
+                                                                (click)="addNonStatic(params)"
+                                                                class=" normal-button"
+                                                                [disabled]="!addCusFlag||(params.detailType!=undefined&&params.detailType!=null)"
+                                                        ></button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2" dir="rtl">
+                                <div class="mx-2">
+
+                                    <button pButton label="{{'validate query'}}" class="normal-button ltrDirection"
+                                            style="margin-top:1px;width: 100%" icon="pi pi-check"
+                                            (click)="validateQuery()" *ngIf="addCusFlag">
+                                    </button>&nbsp;
+                                    <button pButton label="{{'clear params' | transloco}}" (click)="onClearCusParams()"
+                                            class="normal-button  ltrDirection" icon="pi pi-trash" severity="danger"
+                                            [outlined]="true"
+                                            style="margin-top: 1px;width: 100%" *ngIf="addCusFlag"
+                                    ></button>
+                                    <button *ngIf="!previewFlag&&addCusFlag" pButton icon="pi pi-question-circle"
+                                            class="button-help rounded-2xl my-2" severity="warn"
+                                            (click)="helpCustomQueryFlag=true"></button>
+
+                                    <button pButton label="{{'test query'}}"
+                                            class="normal-button buttonMatIcon ltrDirection"
+                                            style="margin-top: 1px;width: 100%"
+                                            (click)="testCusQuery()" *ngIf="!previewFlag&&!addCusFlag"
+                                    >
+                                        <mat-icon class="size">new_releases</mat-icon>
+                                    </button>&nbsp;
+                                    <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center"
+                                         *ngIf="!previewFlag">
+                                        <p-message severity="success" text="query successful !" dir="ltr"
+                                                   styleClass="messageSize"
+                                                   *ngIf="querySuccessFlag&&resultTestQueryFlag">
+                                        </p-message>
+                                        <p-message severity="error" text="query failed !" styleClass="messageSize"
+                                                   *ngIf="queryFailedFlag&&resultTestQueryFlag" dir="ltr">
+                                        </p-message>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+                <div class="col-span-12" dir="ltr" *ngIf="textSqlFlag&&!customQueryFlag&&mapingFlag">
+                    <p-fieldset legend=" مدیاتور خروجی">
+                        <!--<legend>
+                            <span style="background-color:#99dbe7;padding: 5px;border-radius: 4px;
+                            color:#1c034f;" class="fontHub">
+
+                            </span>
+                        </legend>-->
+                        <div class="grid grid-cols-12" style="margin-top: 5px" dir="rtl">
+                            <div class="col-span-3" *ngIf="addMapFlag" dir="rtl">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>نام واقعی فیلد :</span></label>
+                                <input class="normal-input" [(ngModel)]="inputName" name="paramName"
+                                       pInputText>
+                                <!--  (keyup)="changDBName(dbName)"-->
+                            </div>
+                            <div class="col-span-3" *ngIf="addMapFlag" dir="rtl">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>نام دلخواه فیلد :</span></label>
+                                <input class="normal-input" [(ngModel)]="outputName" name="paramValue"
+                                       pInputText>
+                                <!--  (keyup)="changDBName(dbName)"-->
+                            </div>
+                            <div class="col-span-3" *ngIf="addMapFlag" dir="rtl">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>نوع فیلد :</span></label>
+                                <p-dropdown class="normal-dropdown"
+
+                                            [options]=hubConstants.dataTypeMediaOptions
+                                            [(ngModel)]="dataType"
+                                            name="dataType"
+                                            styleClass="dropdown-w70"
+                                            optionValue="code"
+                                            optionLabel="name"
+
+                                ></p-dropdown>
+                                <!--   (onChange)="changDropEngine($event)"-->
+                            </div>
+
+                            <div class="col-span-2" *ngIf="addMapFlag">
+                                <label class="normal-label"> <span>کد گذاری مقدار خروجی :</span></label>
+                                <p-toggleswitch [(ngModel)]="isEcrypt" name="isEcrypt" />
+                            </div>
+                            <!--<div class="col-1"></div>-->
+                            <div class="col-span-12 flex gap-3 my-2" *ngIf="addMapFlag">
+                                <button pButton class="normal-button " label="{{'افزودن'}}"
+                                        icon="pi pi-plus"
+                                        (click)="fakeMapRegister()"
+                                ></button>
+                                <button pButton icon="pi pi-question-circle" class="button-help rounded-2xl"
+                                        severity="warn"
+                                        (click)="helpMediatorFlag=true"></button>
+                            </div>
+                            <div dir="rtl" *ngIf="!previewFlag">
+                                <label style="color: red">
+                                </label>
+                            </div>
+                            <div class="col-span-12">
+                                <p-table
+                                    styleClass="normal-table"
+                                    [value]="mapList" selectionMode="single"
+                                    [loading]="loading">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="row" class="row">
+                                                ردیف
+                                                <p-sortIcon field="row"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="inputName" class="inputName">
+                                                نام واقعی فیلد
+                                                <p-sortIcon field="inputName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="outputName" class="outputName">
+                                                نام دلخواه فیلد
+                                                <p-sortIcon field="outputName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="dataType" class="dataType">
+                                                نوع فیلد
+                                                <p-sortIcon field="dataType"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="isEcrypt" class="isEcrypt">
+                                                کد گذاری مقدار خروجی
+                                                <p-sortIcon field="isEcrypt"></p-sortIcon>
+                                            </th>
+                                            <th class="operation"
+                                                style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                                                عملیات
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template let-i="rowIndex" pTemplate="body" let-maps let-editing="editing">
+                                        <tr [pSelectableRow]="maps">
+                                            <td class="row">{{ maps.row }}</td>
+                                            <td class="inputName">
+                                                {{ maps.inputName }}
+                                            </td>
+                                            <td class="paramValue" pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input class="normal-input" pInputText type="text"
+                                                               [(ngModel)]="maps.outputName"
+                                                               [disabled]="!addMapFlag" required>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{ maps.outputName }}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td class="dataType" pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <p-dropdown class="normal-dropdown-pagination"
+                                                                    [appendTo]="'body'"
+                                                                    [options]=hubConstants.dataTypeMediaOptions
+                                                                    [(ngModel)]="maps.dataType"
+                                                                    name="dataType"
+                                                                    optionValue="code"
+                                                                    optionLabel="name"
+                                                                    required
+                                                                    [disabled]="!addMapFlag"
+                                                        ></p-dropdown>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{ maps.dataType|dataTypeHub }}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td class="isEcrypt"
+                                                [ngStyle]="{'text-align': 'center !important'}">
+                                                <div [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': maps.status,
+                                   ' text-red-800 bg-red-300 ': !maps.status
+                                   }"
+                                                     class="w-[65px] float-right text-center rounded-md">
+                                                    {{ maps.isEcrypt|enStatus }}
+                                                </div>
+                                            </td>
+                                            <td style="text-align: right !important;border-right: 1px solid #ebe8e8;"
+                                                class="operation">
+                                                <button
+                                                    style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
+                                                    matTooltip="{{'حذف' | transloco}}"
+                                                    (click)="deleteMap(maps)"
+                                                    [disabled]="!addMapFlag"
+                                                    pButton severity="danger"
+                                                    class="normal-button "
+                                                    icon="pi pi-trash"></button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+                <div class="col-span-12" dir="ltr" *ngIf="!textSqlFlag&&!customQueryFlag&&mapingFlag">
+                    <p-fieldset legend=" مدیاتور خروجی">
+                        <!--<legend>
+                            <span style="background-color:#99dbe7;padding: 5px;border-radius: 4px;
+                            color:#1c034f;" class="fontHub">
+
+                            </span>
+                        </legend>-->
+                        <div class="grid grid-cols-12" style="margin-top: 5px" dir="rtl">
+                            <div class="col-span-3" *ngIf="addMapFlag" dir="rtl">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>نام واقعی فیلد :</span></label>
+                                <input class="normal-input" [(ngModel)]="inputName" name="paramName"
+                                       pInputText>
+                                <!--  (keyup)="changDBName(dbName)"-->
+                            </div>
+                            <div class="col-span-3" *ngIf="addMapFlag" dir="rtl">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>نام دلخواه فیلد :</span></label>
+                                <input class="normal-input" [(ngModel)]="outputName" name="paramValue"
+                                       pInputText>
+                                <!--  (keyup)="changDBName(dbName)"-->
+                            </div>
+                            <div class="col-span-3" *ngIf="addMapFlag" dir="rtl">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>نوع فیلد :</span></label>
+                                <p-dropdown class="normal-dropdown"
+
+                                            [options]=hubConstants.dataTypeOptions
+                                            [(ngModel)]="dataType"
+                                            name="dataType"
+                                            styleClass="dropdown-w70"
+                                            optionValue="code"
+                                            optionLabel="name"
+
+                                ></p-dropdown>
+                                <!--   (onChange)="changDropEngine($event)"-->
+                            </div>
+
+                            <div class="col-span-2" *ngIf="addMapFlag">
+                                <label class="normal-label"> <span>کد گذاری مقدار خروجی :</span></label>
+                                <p-toggleswitch [(ngModel)]="isEcrypt" name="isEcrypt" />
+                            </div>
+                            <!--<div class="col-1"></div>-->
+                            <div class="col-span-12 flex gap-3 my-2" *ngIf="addMapFlag">
+                                <button pButton class="normal-button " label="{{'افزودن'}}"
+                                        icon="pi pi-plus"
+                                        (click)="fakeMapRegister()"
+                                ></button>
+                                <button pButton icon="pi pi-question-circle" class="button-help rounded-2xl"
+                                        severity="warn"
+                                        (click)="helpMediatorFlag=true"></button>
+                            </div>
+                            <div dir="rtl" *ngIf="!previewFlag">
+                                <label style="color: red">
+                                </label>
+                            </div>
+                            <div class="col-span-12">
+                                <p-table
+                                    styleClass="normal-table"
+                                    [value]="mapList" selectionMode="single" [lazy]="true"
+                                    [loading]="loading">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="row" class="row">
+                                                ردیف
+                                                <p-sortIcon field="row"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="inputName" class="inputName">
+                                                نام واقعی فیلد
+                                                <p-sortIcon field="inputName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="outputName" class="outputName">
+                                                نام دلخواه فیلد
+                                                <p-sortIcon field="outputName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="dataType" class="dataType">
+                                                نوع فیلد
+                                                <p-sortIcon field="dataType"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="isEcrypt" class="isEcrypt">
+                                                کد گذاری مقدار خروجی
+                                                <p-sortIcon field="isEcrypt"></p-sortIcon>
+                                            </th>
+                                            <th class="operation"
+                                                style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                                                عملیات
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template let-i="rowIndex" pTemplate="body" let-maps let-editing="editing">
+                                        <tr [pSelectableRow]="maps">
+                                            <td class="row">{{ maps.row }}</td>
+                                            <td class="inputName">
+                                                {{ maps.inputName }}
+                                            </td>
+                                            <td class="paramValue" pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <input class="normal-input" pInputText type="text"
+                                                               [(ngModel)]="maps.outputName"
+                                                               [disabled]="!addMapFlag" required>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{ maps.outputName }}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td class="dataType" pEditableColumn>
+                                                <p-cellEditor>
+                                                    <ng-template pTemplate="input">
+                                                        <p-dropdown class="normal-dropdown-pagination"
+                                                                    [appendTo]="'body'"
+                                                                    [options]=hubConstants.dataTypeOptions
+                                                                    [(ngModel)]="maps.dataType"
+                                                                    name="dataType"
+                                                                    optionValue="code"
+                                                                    optionLabel="name"
+                                                                    required
+                                                                    [disabled]="!addMapFlag"
+                                                        ></p-dropdown>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="output">
+                                                        {{ maps.dataType|dataTypeHub }}
+                                                    </ng-template>
+                                                </p-cellEditor>
+                                            </td>
+                                            <td class="isEcrypt"
+                                                [ngStyle]="{'text-align': 'center !important'}">
+                                                <div [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': maps.status,
+                                   ' text-red-800 bg-red-300 ': !maps.status
+                                   }"
+                                                     class="w-[65px] float-right text-center rounded-md">
+                                                    {{ maps.isEcrypt|enStatus }}
+                                                </div>
+                                            </td>
+                                            <td style="text-align: right !important;border-right: 1px solid #ebe8e8;"
+                                                class="operation">
+                                                <button
+                                                    style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
+                                                    matTooltip="{{'حذف' | transloco}}"
+                                                    (click)="deleteMap(maps)"
+                                                    [disabled]="!addMapFlag"
+                                                    pButton severity="danger"
+                                                    class="normal-button "
+                                                    icon="pi pi-trash"></button>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+            </div>
+            <div class="col-span-12 my-2" dir="ltr">
+                <button pButton label="{{'خروج' | transloco}}" (click)="onCancel()"
+                        severity="danger" icon="pi pi-times" [outlined]="true" class="normal-button"
+                ></button>&nbsp;
+                <button pButton label="{{'button.continuation' | transloco}}"
+                        [disabled]="nextFlagDisabled"
+                        [pTooltip]="tooltipNext"
+                        [tooltipDisabled]="!nextFlagDisabled"
+                        icon="pi pi-arrow-circle-left"
+                        class="normal-button"
+                        (click)="onContinuation()" *ngIf="nextShowFlag">
+                </button>&nbsp;
+
+                <button pButton label="ثبت نهایی اطلاعات" severity="success"
+                        icon="pi pi-save" *ngIf="FinalRegistrationFlag" class="normal-button"
+                        (click)="attachHub()"></button>&nbsp;
+                <button label="{{'button.back' | transloco}}" pButton
+                        (click)="back()" *ngIf="backShowFlag"
+                        [disabled]="backFlagDisabled"
+                        [pTooltip]="tooltipBack"
+                        [tooltipDisabled]="!backFlagDisabled"
+                        severity="warn" class="normal-button"
+                        icon="pi pi-arrow-circle-right">
+                </button>&nbsp;
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<p-dialog [style]="{'width':'80%'}" [(visible)]="endpointDetailFlag"
+          [modal]="true" [draggable]="false"
+          [resizable]="true">
+    <app-header-endpoint-register [hubInput]="registerEndpointHeaderDto"
+                                  (close)="onClose($event)"></app-header-endpoint-register>
+</p-dialog>
+
+<ng-container *ngIf="message200Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message200Flag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <app-message-selector
+                [titleHeader]="'انتخاب پیام 200' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions200"
+                [categoryOptions]="categoryMessages200"
+                [preselectedMessageId]="messageId2X"
+                [messagesList]=messagesList200Temp
+                [clearTrigger]="clearTriggerForMessageSelector200"
+                (selectionCleared)="onChildSelectionCleared200($event)"
+                (select)="onMessageSelected200($event)"
+                [presetValue]="{code: '200'}"
+                [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+
+        </div>
+
+    </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="message400Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message400Flag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <app-message-selector
+                [titleHeader]="'انتخاب پیام 400' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions400"
+                [categoryOptions]="categoryMessages400"
+                [preselectedMessageId]="messageId4X"
+                [messagesList]=messagesList400Temp
+                [clearTrigger]="clearTriggerForMessageSelector400"
+                (selectionCleared)="onChildSelectionCleared400($event)"
+                (select)="onMessageSelected400($event)"
+                [presetValue]="{code: '400'}"
+                [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+        </div>
+
+    </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="message500Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message500Flag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+
+            <app-message-selector
+                [titleHeader]="'انتخاب پیام 500' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions500"
+                [categoryOptions]="categoryMessages500"
+                [preselectedMessageId]="messageId5X"
+                [messagesList]=messagesList500Temp
+                [clearTrigger]="clearTriggerForMessageSelector500"
+                (selectionCleared)="onChildSelectionCleared500($event)"
+                (select)="onMessageSelected500($event)"
+                [presetValue]="{code: '500'}"
+                [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+        </div>
+
+    </p-dialog>
+</ng-container>
+
+<p-dialog [style]="{'width':'50%'}" [(visible)]="helpFlag"
+          [modal]="true" [draggable]="false" header="راهنما"
+          [resizable]="true">
+    <div disabled class="red-color-text">
+
+        <label style="color: red">توجه:
+        </label><br>
+        <label style="color: red"> - با انتخاب نوع دستور (SQL Text) میتوان براساس المان های
+            سیستم یک کوئری تولید شده را به عنوان یک هاب به سرویس متصل کرد
+        </label><br>
+        <label style="color:red"> - با انتخاب نوع دستور (Execute Procedure) میتوان یک پروسیجر به
+            عنوان یک هاب به سرویس متصل کرد
+        </label><br>
+        <label class="text-red-500">
+            - با انتخاب نوع دستور (Custom Query) میتوان یک کوئری مشخص را به عنوان یک هاب به
+            سرویس متصل کرد </label>
+
+    </div>
+
+    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+        <button type="button" pButton severity="danger" label="بستن"
+                class="normal-button" icon="pi pi-times" [outlined]="true"
+                (click)="helpFlag=false"></button>
+    </div>
+</p-dialog>
+<p-dialog [style]="{'width':'50%'}" [(visible)]="helpCustomQueryFlag"
+          [modal]="true" [draggable]="false" header="راهنما"
+          [resizable]="true">
+    <div disabled class="red-color-text">
+
+        <label style="color: red">توجه:
+        </label><br>
+        <label style="color: red">
+            - در صورت match نبودن پارامتر ها، کوئری وارد
+            شده باید اصلاح گردد و درصورت عدم تغییر در کوئری، باید actionType برابر
+            Dont Care باشد که در این صورت آن پارامتر در فرآیند هاب در نظر گرفته نمی
+            شود!</label><br>
+        <label style="color: red">- درصورت اقدام به add query param به نوع سرویس دقت
+            نمائید،درصورت post بودن المان ایجاد شده از نوع body خواهد بود و در صورت
+            get بودن از نوع Query String خواهد بود!</label>
+
+    </div>
+
+    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+        <button type="button" pButton severity="danger" label="بستن"
+                class="normal-button" icon="pi pi-times" [outlined]="true"
+                (click)="helpCustomQueryFlag=false"></button>
+    </div>
+</p-dialog>
+
+
+<p-dialog [style]="{'width':'50%'}" [(visible)]="helpSpFlag"
+          [modal]="true" [draggable]="false" header="راهنما"
+          [resizable]="true">
+    <div disabled class="red-color-text">
+                <span style="color: red" dir="rtl">توجه:
+                                </span><br>
+
+        <span style="color: red" dir="rtl">
+                                -جهت اعتبارسنجی پارامتری که دارای مقدار خروجی است و نوع Param Type آن از نوع output است را میتوانید با مقداردهی قسمت  Success Value کنترل نمایید!
+                                  </span><br>
+
+        <span style="color: red" dir="rtl">
+                                    -پارامتر های ورودی براساس ساختار پروسیجر منتخب باید تعریف شوند و در صورت ناهماهنگی پارامتر ها با ساختار پروسیجر، تست آن موفقیت آمیز نخواهد بود!
+                                </span><br>
+    </div>
+
+    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+        <button type="button" pButton severity="danger" label="بستن"
+                class="normal-button" icon="pi pi-times" [outlined]="true"
+                (click)="helpSpFlag=false"></button>
+    </div>
+</p-dialog>
+
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div
+                class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+            >
+                <i class="pi pi-question !text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <button pButton label="{{'module.dialog.button.yes'|transloco}}" (click)="onAccept()"
+                        class="w-32 bg-green-500 text-white border-none hover:bg-green-600 normal-button"></button>
+                <button pButton label="{{'module.dialog.button.no'|transloco}}" [outlined]="true" (click)="onReject()"
+                        class="w-32 bg-red-500 text-white border-none hover:bg-red-600 normal-button"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmdialog>
+
+
+<p-dialog [style]="{'width':'50%'}" [(visible)]="helpMediatorFlag"
+          [modal]="true" [draggable]="false" header="راهنما"
+          [resizable]="true">
+    <div disabled class="red-color-text">
+                <span style="color: red" dir="rtl">توجه:
+                                </span><br>
+
+        <span style="color: red" dir="rtl">
+                                 -اگر مدیاتور خروجی ثبت نشده باشد تمامی فیلد ها با اسامی واقعی در خروجی نمایش داده خواهند شد!
+                                  </span><br>
+
+    </div>
+
+    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+        <button type="button" pButton severity="danger" label="بستن"
+                class="normal-button" icon="pi pi-times" [outlined]="true"
+                (click)="helpSpFlag=false"></button>
+    </div>
+</p-dialog>

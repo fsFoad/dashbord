@@ -1,0 +1,74 @@
+/* json-mediator.component.scss */
+/* استایل‌های اضافی برای تیلویند */
+:host ::ng-deep {
+    .p-dropdown {
+        width: 100%;
+    }
+
+    .p-multiselect {
+        width: 100%;
+    }
+
+    .p-toast {
+        z-index: 1000;
+    }
+}
+.icon-bg {
+    background-color: rgba(var(--theme-active-rgb), .25);
+}
+.icon-theme-muted {
+    color: rgba(var(--theme-active-rgb), .95);
+}
+/*
+.theme-card {
+    border: 1px solid #e5e7eb; !* gray-200 *!
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.theme-card:hover {
+    border-color: color-mix(in srgb, var(--theme-active) 14%, transparent);
+
+}
+*/
+.theme-card{
+    border: 1px solid #e5e7eb; /* gray-200 */
+    border-radius: 0.75rem; /* اگر لازم داری */
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease, background-color .2s ease;
+    overflow: hidden;
+}
+
+/* بهتره هم hover هم focus-within داشته باشی (وقتی داخل کارت فوکوس می‌گیری) */
+.theme-card:hover,
+.theme-card:focus-within{
+    border-color: color-mix(in srgb, var(--theme-active) 35%, #e5e7eb);
+}
+
+/* اگر می‌خوای بک‌گراند هاور هم کمی تم‌دار بشه */
+.theme-card:hover{
+    background-color: color-mix(in srgb, var(--theme-active) 4%, white);
+}
+.normal-control {
+    height: var(--control-height) !important;
+    min-height: var(--control-height) !important;
+    border-radius: var(--control-border-radius) !important;
+    font-size: var(--control-font-size) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.normal-icon-box {
+    min-height: 12px;
+    border-radius: var(--control-border-radius)
+    0.75rem
+;
+    margin-left: var(--control-margin-l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: var(--control-px);
+    padding-right: var(--control-px);
+    box-sizing: border-box;
+}

@@ -1,0 +1,139 @@
+<p-toast />
+<app-breadcrumbs id="section" *ngIf="!registerFlag&&!updateFlag&&!accessListFlag"
+                 [showBackButton]="false"></app-breadcrumbs>
+<div class="flex flex-col w-full px-5" *ngIf="!registerFlag&&!updateFlag&&!accessListFlag">
+    <div class="grid grid-cols-12  gap-4 my-10  w-full">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>نوع جستجو :</span></label>
+            <p-dropdown class="normal-dropdown"
+                        [autoDisplayFirst]="false"
+                        [options]="searchByOption"
+                        optionValue="code"
+                        [(ngModel)]="searchBy"
+                        optionLabel="name"
+                        (onChange)="onChangeSearch($event)"
+            ></p-dropdown>
+        </div>
+        <div class="col-span-4" *ngIf="hiddenApikey">
+            <label class="normal-label"><span>نام کلاینت :</span></label>
+            <input class="normal-input" [(ngModel)]="clientName" (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="col-span-4" *ngIf="!hiddenApikey">
+            <label class="normal-label"><span>apiKey :</span></label>
+            <input class="normal-input" [(ngModel)]="apiKey" (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="col-span-4" dir="ltr">
+            <button   pButton label="{{'button.clear'|transloco}}" icon="pi pi-filter-slash"
+                                                                            class="normal-button my-1 px-4 py-2 border  " [outlined]="true" (click)="clear()"></button>&nbsp;&nbsp;
+            <button class="normal-button" pButton label="{{'button.search' | transloco}}"
+                    style="width: 110px;margin: 3px;margin-top: 20px"
+                    icon="pi pi-search" (click)="search()"></button>
+        </div>
+        <div class="col-span-4">
+            <button class="normal-button" pButton label="{{'ایجاد کلاینت'}}"
+                    (click)="addClientshow()" icon="pi pi-plus"></button>
+        </div>
+
+        <div class="col-span-12  gap-4  w-full">
+              <p-table
+styleClass="normal-table"
+ [value]="clientList" selectionMode="single"
+                     [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                     [currentPageReportTemplate]=paginationLabel
+                     [rowsPerPageOptions]="[5,10,25,50,100]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'client.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="name" class="name">
+                            {{ 'client.table.header.ClientName'|transloco }}
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="shenase" class="name">
+                            {{'client.table.header.nationalCode'|transloco}}
+                            <p-sortIcon field="shenase"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="mobileNo" class="mobileNo">
+                            {{'client.table.header.mobileNo'|transloco}}
+                            <p-sortIcon field="mobileNo"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="organizationCode" class="organizationCode">
+                            {{'client.table.header.organizationCode'|transloco}}
+                            <p-sortIcon field="organizationCode"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="allowedAccountno" class="allowedAccountno">
+                            {{'client.table.header.allowedAccountNo'|transloco}}
+                            <p-sortIcon field="allowedAccountno"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status" class="status">
+                            {{ 'client.table.header.status'|transloco }}
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                            {{ 'client.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-client>
+                    <tr [pSelectableRow]="client">
+                        <td class="row">{{ client.row }}</td>
+                        <td class="name"
+                            [pTooltip]="client.name"
+                            [tooltipDisabled]="client.name?client.name.length < 20:false">
+                            {{ client.name|moreChar19 }}
+                        </td>
+                        <td class="shenase">
+                            {{ client.shenase }}
+                        </td>
+                        <td class="mobileNo">{{ client.mobileNo }}</td>
+                        <td class="organizationCode"
+                            [pTooltip]="client.organizationCode"
+                            [tooltipDisabled]="client.organizationCode?client.organizationCode.toString().length < 20:false"
+                        >
+                            {{ client.organizationCode|moreChar19 }}
+                        </td>
+                        <td class="allowedAccountno"
+                            [pTooltip]="client.allowedAccountno"
+                            [tooltipDisabled]="client.allowedAccountno?client.allowedAccountno.toString().length < 20:false"
+                        >
+                            {{ client.allowedAccountno|moreChar19 }}
+                        </td>
+                        <td class="text-right">
+                            <div
+                                [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': client.status,
+                                   ' text-red-800 bg-red-300 ': !client.status
+                                   }"
+                                class="w-[65px] float-right text-center rounded-md"
+                            >
+                                {{ client.status|statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  " >
+                            <button class="p-button-rounded "   type="button"
+                                    pButton
+                                    pRipple icon="pi pi-chevron-down" (click)="menu.toggle($event);setRecord(client)"></button>&nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+</div>
+<div class="col-span-12" *ngIf="registerFlag">
+    <app-client-register (close)="onClose($event)"></app-client-register>
+</div>
+
+<div class="col-span-12" *ngIf="updateFlag">
+    <app-client-update [updateClient]="clientDto"
+                       (close)="onClose($event)"></app-client-update>
+</div>
+<div class="col-span-12" *ngIf="accessListFlag">
+    <app-access-list [InputClient]="clientDto"
+                     (close)="onClose($event)"></app-access-list>
+</div>

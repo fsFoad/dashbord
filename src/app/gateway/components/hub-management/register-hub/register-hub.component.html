@@ -1,0 +1,1510 @@
+<p-toast />
+<app-breadcrumbs [showBackButton]="false" id="section"></app-breadcrumbs>
+
+<div class="grid gap-4">
+
+    <form #myForm="ngForm" class="space-y-6 mx-5 my-10">
+        <p-stepper [(value)]="activeIndex" linear="true">
+            <p-step-list>
+                <p-step *ngFor="let step of itemsHub; let i = index" [value]="i">
+                    {{ step.label }}
+                </p-step>
+            </p-step-list>
+        </p-stepper>
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span class="text-red-500">*</span>
+                    <span>{{ 'hubManagement.Register.input.titleHub' | transloco }} :</span>
+                </label>
+                <input
+                    [(ngModel)]="hubTitle"
+                    pInputText
+                    name="hubTitle"
+                    [disabled]="!regTextDBFlag"
+                    class="mt-1 normal-input rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 "
+                />
+            </div>
+
+            <div class="col-span-4" dir="rtl">
+                <label class="normal-label">
+                    {{ 'hubManagement.Register.btn.chooseMessage' | transloco }}:
+                </label>
+                <div class="flex flex-wrap gap-2 mt-1">
+                    <button
+                        pButton
+                        label="200"
+                        [icon]="icon200_val"
+                        [pTooltip]="tooltip200"
+                        (click)="openMessage200()"
+                        [disabled]="!regTextDBFlag"
+                        class="bg-green-500 hover:bg-green-600 text-white text-sm font-medium px-4 py-2 normal-button border border-green-500"
+                    ></button>
+                    <button
+                        pButton
+                        label="400"
+                        [icon]="icon400_val"
+                        [pTooltip]="tooltip400"
+                        (click)="openMessage400()"
+                        [disabled]="!regTextDBFlag"
+                        class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium px-4 py-2 normal-button border border-yellow-500"
+                    ></button>
+                    <button
+                        pButton
+                        label="500"
+                        [icon]="icon500_val"
+                        [pTooltip]="tooltip500"
+                        (click)="openMessage500()"
+                        [disabled]="!regTextDBFlag"
+                        class="bg-red-500 hover:bg-red-600 text-white text-sm font-medium px-4 py-2 normal-button border border-red-500"
+                    ></button>
+                </div>
+
+
+            </div>
+            <div class="col-span-4" *ngIf="regTextDBFlag">
+            </div>
+            <div class="col-span-4" dir="ltr" *ngIf="!regTextDBFlag">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'hubManagement.Register.dropdown.DBEngine'|transloco }}:</span></label>
+                <p-dropdown
+                    [options]=hubConstants.DBEngineOption
+                    [(ngModel)]="dbEngineId"
+                    name="dbEngineId"
+                    optionValue="code"
+                    optionLabel="name"
+                    class="englishItem normal-dropdown"
+                    [disabled]="!regTextDBFlag"
+                    (onChange)="onchangeDbEngine($event)"
+                    (onShow)="savePreviousDbEngineId()"
+                ></p-dropdown>
+            </div>
+        </div>
+        <div class="panel-hub">
+            <div class="col-span-12 mt-5">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-12" *ngIf="dbInfoFlag" dir="ltr">
+                        <p-fieldset [legend]="headerFieldset" *ngIf="regTextDBFlag">
+                            <p-accordion [value]="accordionValue" [multiple]="true" class="px-5">
+                                <p-accordion-panel class="isSystemMessage" value="0">
+                                    <p-accordion-header>Database Info</p-accordion-header>
+                                    <p-accordion-content>
+                                        <div class="grid grid-cols-12" style="margin-top: 5px">
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.dropdown.DBEngine'|transloco }}
+                                                        :</span></label>
+                                                <p-dropdown
+                                                    [options]=hubConstants.DBEngineOption
+                                                    [(ngModel)]="dbEngineId"
+                                                    name="dbEngineId"
+                                                    optionValue="code"
+                                                    optionLabel="name"
+                                                    class="englishItem normal-dropdown"
+                                                    [disabled]="!regTextDBFlag"
+                                                    (onChange)="onchangeDbEngine($event)"
+                                                    (onShow)="savePreviousDbEngineId()"
+                                                ></p-dropdown>
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.input.DBName'|transloco }} :</span></label>
+                                                <input [(ngModel)]="dbName" class="normal-input" pInputText
+                                                       [disabled]="!regTextDBFlag" name="dbName">
+                                            </div>
+
+                                            <div class="col-span-3 ">
+                                                <div class="grid grid-cols-12">
+                                                    <div class="col-span-3" style="margin-top: 23px"
+                                                         dir="ltr">
+                                                        <label for="autoCommit">
+                                                            <span>{{ 'hubManagement.Register.label.autoCommit'|transloco }}
+                                                                :</span></label>
+
+                                                    </div>
+                                                    <div class="col-span-1" style="margin-top: 20px" dir="ltr">
+                                                        <p-checkbox [(ngModel)]="autoCommit" [binary]="true"
+                                                                    [disabled]="!regTextDBFlag"
+                                                                    name="autoCommit"
+
+                                                                    inputId="autoCommit"></p-checkbox>
+                                                    </div>
+                                                    <div style="width:62.1667%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-span-3">
+                                                <div class="grid grid-cols-12">
+                                                    <div class="col-span-6" style="margin-right: 6px;margin-top: 23px">
+                                                        <label class="normal-label"
+                                                               for="allowCreateConnectionPool"><span
+                                                            style="margin-bottom: 10px">{{ 'hubManagement.Register.label.allowPoolConnection'|transloco }}
+                                                            :</span>
+                                                            <span [ngStyle]="{'color': '#ABACAC','font-size':'1rem' }">
+                                                ({{ 'hubManagement.Register.label.size'|transloco }}
+                                                                : {{ connectionPoolSize }})
+                                                    </span>
+                                                        </label>
+
+
+                                                    </div>
+                                                    <div class="col-span-1" style="margin-top: 20px">
+                                                        <p-checkbox [(ngModel)]="allowCreateConnectionPool"
+                                                                    [binary]="true"
+                                                                    (onChange)="ConnectionPoolChange($event)"
+                                                                    inputId="allowCreateConnectionPool"
+                                                                    [disabled]="!regTextDBFlag"
+                                                                    name="allowCreateConnectionPool"
+                                                        ></p-checkbox>
+
+                                                    </div>
+                                                    <div style="width:62.1667%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.input.Ip'|transloco }}
+                                                        :</span></label>
+                                                <input [(ngModel)]="ip" class="normal-input" pInputText maxlength="59"
+                                                       name="ip" (keyup)="concatIp($event)" [disabled]="!regTextDBFlag"
+                                                >
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span>{{ 'hubManagement.Register.input.PortNumber'|transloco }}
+                                                        :</span></label>
+                                                <input [(ngModel)]="port" class="normal-input" pInputText maxlength="4"
+                                                       name="port" (keyup)="concatPort($event)" pKeyFilter="int"
+                                                       [disabled]="!regTextDBFlag">
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.input.User'|transloco }}
+                                                        :</span></label>
+                                                <input [(ngModel)]="user" class="normal-input" pInputText
+                                                       name="user" (keyup)="concatUser($event)"
+                                                       autocomplete="new-password"
+                                                       [disabled]="!regTextDBFlag">
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.input.Password'|transloco }}
+                                                        :</span></label>
+                                                <p-password [(ngModel)]="password" [toggleMask]="true"
+                                                            [styleClass]="'normal-password'"
+                                                            [disabled]="!regTextDBFlag"
+                                                            name="password" (keyup)="concatPassword($event)"
+                                                            autocomplete="new-password"
+                                                            [feedback]="false"></p-password>
+                                            </div>
+
+                                            <div class="col-span-3" *ngIf="!textSqlFlag&&!customQueryFlag">
+                                                <div class="grid grid-cols-12">
+
+                                                    <div class="col-span-2" style="margin-right: 6px;margin-top: 23px">
+                                                        <label class="normal-label"><span
+                                                            style="margin-bottom: 10px">{{ 'hubManagement.Register.label.canCommit'|transloco }}
+                                                            :</span></label>
+                                                    </div>
+                                                    <div class="col-span-1" style="margin-top: 20px">
+                                                        <p-checkbox [(ngModel)]="canCommit" [binary]="true"
+                                                                    inputId="binary"
+                                                                    name="canCommit"
+                                                                    [disabled]="commitFlag||!regTextDBFlag"
+                                                        ></p-checkbox>
+
+                                                    </div>
+                                                    <div style="width:62.1667%"></div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-span-3" *ngIf="!textSqlFlag&&!customQueryFlag">
+                                                <div class="grid grid-cols-12">
+                                                    <div class="col-span-2" style="margin-right: 3px;margin-top: 23px"
+                                                         dir="ltr">
+                                                        <label style="margin-bottom: 10px">
+                                                    <span
+                                                        style="margin-bottom: 10px">{{ 'hubManagement.Register.label.autoCommit' }}
+                                                        :</span></label>
+
+                                                    </div>
+                                                    <div class="col-span-1" style="margin-top: 20px" dir="ltr">
+                                                        <p-checkbox [(ngModel)]="autoCommit" [binary]="true"
+                                                                    [disabled]="commitFlag||!regTextDBFlag"
+                                                                    name="autoCommit"
+                                                                    inputId="binary"></p-checkbox>
+                                                    </div>
+                                                    <div style="width:62.1667%"></div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="col-span-6 block flex-wrap break-words hyphens-auto whitespace-normal  py-5"
+                                                dir="ltr">
+                                                <label
+                                                    class="normal-label"><span>{{ 'hubManagement.Register.label.connectionString'|transloco }}
+                                                    :</span></label>
+                                                <label dir="ltr" style="color: #1c034f !important ;font-weight: bold"
+                                                >{{ this.ipLbl + this.portLbl + this.userLbl + this.passwordLbl }}</label>
+                                            </div>
+
+
+                                        </div>
+                                    </p-accordion-content>
+                                </p-accordion-panel>
+                                <p-accordion-panel class="isSystemMessage" value="1">
+                                    <p-accordion-header>Failover</p-accordion-header>
+                                    <p-accordion-content>
+                                        <div class="grid grid-cols-12" style="margin-top: 5px">
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.dropdown.host'|transloco }}
+                                                        :</span></label>
+                                                <input [(ngModel)]="host" class="normal-input" pInputText maxlength="59"
+                                                       [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')"
+                                                       name="host">
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.input.PortNumber'|transloco }}
+                                                        :</span></label>
+                                                <input [(ngModel)]="portHost" class="normal-input" pInputText
+                                                       maxlength="4"
+                                                       name="portHost" pKeyFilter="int"
+                                                       [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')">
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span class="red-color-text">* </span>
+                                                    <span>{{ 'hubManagement.Register.dropdown.protocol'|transloco }}
+                                                        :</span></label>
+                                                <p-dropdown
+                                                    [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')"
+                                                    [options]=hubConstants.Protocol
+                                                    [(ngModel)]="protocolHost"
+                                                    name="protocolHost"
+                                                    optionValue="code"
+                                                    optionLabel="name"
+                                                    class="englishItem normal-dropdown"
+                                                ></p-dropdown>
+                                            </div>
+                                            <div class="col-span-3"></div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+                                                    <span>{{ 'hubManagement.Register.input.User'|transloco }}
+                                                        :</span></label>
+                                                <input [(ngModel)]="specialUserName" class="normal-input" pInputText
+                                                       name="userHost"
+                                                       [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')"
+                                                       autocomplete="new-password">
+                                            </div>
+                                            <div class="col-span-3" dir="ltr">
+                                                <label class="normal-label">
+
+                                                    <span>{{ 'hubManagement.Register.input.Password'|transloco }}
+                                                        :</span></label>
+                                                <p-password [(ngModel)]="specialPassword" [toggleMask]="true"
+                                                            [styleClass]="'normal-password'"
+                                                            name="passwordHost"
+                                                            [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')"
+                                                            autocomplete="new-password"
+                                                            [feedback]="false"></p-password>
+                                            </div>
+                                            <div class="col-span-12 gap-3 flex justify-end">
+
+                                                <button pButton class="normal-button" label="{{'clean up'}}"
+                                                        icon="pi pi-trash" [outlined]="true" severity="danger"
+                                                        (click)="cleanUp()"
+                                                        [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')"
+                                                ></button>
+
+                                                <button pButton class="normal-button" label="{{'add'}}"
+                                                        *ngIf="addFailoverFlag"
+                                                        icon="pi pi-plus"
+                                                        [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')"
+                                                        (click)="addFailover()"
+                                                ></button>
+                                                <button pButton class=" normal-button"
+                                                        label="{{'edit'}}"
+                                                        icon="pi pi-pencil" *ngIf="!addFailoverFlag"
+                                                        (click)="editFailover(this.tempFailover)"
+                                                ></button>&nbsp;
+
+                                            </div>
+
+
+                                            <div class="col-span-12 my-3">
+                                                <p-table
+                                                    styleClass="normal-table"
+                                                    [value]="failoverList" selectionMode="single" [lazy]="true"
+                                                    [loading]="loading">
+                                                    <ng-template pTemplate="header">
+                                                        <tr>
+                                                            <th pSortableColumn="row" class="row">
+                                                                {{ 'hubManagement.Register.table.row'|transloco }}
+                                                                <p-sortIcon field="row"></p-sortIcon>
+                                                            </th>
+                                                            <th pSortableColumn="host" class="host">
+                                                                {{ 'hubManagement.Register.table.host'|transloco }}
+                                                                <p-sortIcon field="host"></p-sortIcon>
+                                                            </th>
+                                                            <th pSortableColumn="PortNumber" class="PortNumber">
+                                                                {{ 'hubManagement.Register.table.PortNumber'|transloco }}
+                                                                <p-sortIcon field="PortNumber"></p-sortIcon>
+                                                            </th>
+                                                            <th pSortableColumn="protocol" class="protocol">
+                                                                {{ 'hubManagement.Register.table.protocol'|transloco }}
+                                                                <p-sortIcon field="protocol"></p-sortIcon>
+                                                            </th>
+                                                            <th pSortableColumn="specialUserName"
+                                                                class="specialUserName">
+                                                                {{ 'hubManagement.Register.table.User'|transloco }}
+                                                                <p-sortIcon field="specialUserName"></p-sortIcon>
+                                                            </th>
+                                                            <th pSortableColumn="specialPassword"
+                                                                class="specialPassword">
+                                                                {{ 'hubManagement.Register.table.Password'|transloco }}
+                                                                <p-sortIcon field="specialPassword"></p-sortIcon>
+                                                            </th>
+                                                            <th pSortableColumn="status" class="status">
+                                                                {{ 'hubManagement.Register.table.status'|transloco }}
+                                                                <p-sortIcon field="status"></p-sortIcon>
+                                                            </th>
+                                                            <th class="text-left border-l border-gray-200">
+                                                                {{ 'hubManagement.Register.table.operation'|transloco }}
+
+                                                            </th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template let-i="rowIndex" pTemplate="body" let-failover>
+                                                        <tr [pSelectableRow]="failover">
+                                                            <td class="row">{{ failover.row }}</td>
+                                                            <td class="host">
+                                                                {{ failover.host }}
+                                                            </td>
+                                                            <td class="PortNumber">
+                                                                {{ failover.portHost }}
+                                                            </td>
+                                                            <td class="protocol">
+                                                                {{ failover.protocolHost }}
+                                                            </td>
+                                                            <td class="specialUserName">
+                                                                {{ failover.specialUserName }}
+                                                            </td>
+                                                            <td class="specialPassword">
+                                                                {{ failover.specialPassword }}
+                                                            </td>
+                                                            <td class="status"
+                                                                [ngStyle]="{'text-align': 'center !important'}">
+                                                                <div [ngClass]="
+                                                                {' text-green-800 bg-green-300 ': failover.status,
+                                                                ' text-red-800 bg-red-300 ': !failover.status
+                                                                }"
+                                                                     class="w-[65px] float-right text-center rounded-md">
+                                                                    {{ failover.status|enStatus }}
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-left border-l border-gray-200 operation">
+                                                                <button
+                                                                    type="button"
+                                                                    class="p-button-rounded "
+                                                                    pButton
+                                                                    (click)="setRecord(failover);menu.toggle($event)"
+                                                                    pRipple
+                                                                    icon="pi pi-chevron-down"
+                                                                ></button>
+                                                                <p-menu appendTo="body" #menu [popup]="true"
+                                                                        [model]="itemsFailover"></p-menu>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                            <div class="col-span-3" *ngIf="!textSqlFlag&&!customQueryFlag">
+                                                <div class="grid grid-cols-12">
+
+                                                    <div class="col-span-2" style="margin-right: 6px;margin-top: 23px">
+                                                        <label class="normal-label"><span
+                                                            style="margin-bottom: 10px">{{ 'hubManagement.Register.label.canCommit'|transloco }}
+                                                            :</span></label>
+                                                    </div>
+                                                    <div class="col-span-1" style="margin-top: 20px">
+                                                        <p-checkbox [(ngModel)]="canCommit" [binary]="true"
+                                                                    inputId="binary"
+                                                                    name="canCommit"
+                                                                    [disabled]="commitFlag||!regTextDBFlag"
+                                                        ></p-checkbox>
+
+                                                    </div>
+                                                    <div style="width:62.1667%"></div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-span-3" *ngIf="!textSqlFlag&&!customQueryFlag">
+                                                <div class="grid grid-cols-12">
+                                                    <div class="col-span-2" style="margin-right: 3px;margin-top: 23px"
+                                                         dir="ltr">
+                                                        <label style="margin-bottom: 10px">
+                                                    <span
+                                                        style="margin-bottom: 10px">{{ 'hubManagement.Register.label.autoCommit' }}
+                                                        :</span></label>
+
+                                                    </div>
+                                                    <div class="col-span-1" style="margin-top: 20px" dir="ltr">
+                                                        <p-checkbox [(ngModel)]="autoCommit" [binary]="true"
+                                                                    [disabled]="commitFlag||!regTextDBFlag"
+                                                                    name="autoCommit"
+                                                                    inputId="binary"></p-checkbox>
+                                                    </div>
+                                                    <div style="width:62.1667%"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </p-accordion-content>
+                                </p-accordion-panel>
+                            </p-accordion>
+                            <div class=" grid grid-cols-12" dir="ltr">
+                                <div class="col-span-3">
+                                    <button pButton class=" normal-button"
+                                            label="{{'hubManagement.Register.label.saveDatabaseInfo'|transloco}}"
+                                            icon="pi pi-save" *ngIf="regTextDBFlag&&!previewFlag"
+                                            (click)="registerDataBase()" severity="success"
+                                    ></button>&nbsp;
+                                </div>
+
+                            </div>
+                        </p-fieldset>
+                        <p-fieldset legend="Database Info" *ngIf="!regTextDBFlag">
+                            <div class="w-full my-2">
+                                <p-table
+                                    styleClass="normal-table"
+                                    [value]="allDbList" selectionMode="single" [lazy]="true"
+                                    [loading]="loading">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="row" class="row">
+                                                {{ 'hubManagement.Register.table.row'|transloco }}
+                                                <p-sortIcon field="row"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="type" class="type">
+                                                {{ 'hubManagement.Register.table.type'|transloco }}
+                                                <p-sortIcon field="type"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="host" class="host">
+                                                {{ 'hubManagement.Register.table.host'|transloco }}
+                                                <p-sortIcon field="host"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="PortNumber" class="PortNumber">
+                                                {{ 'hubManagement.Register.table.PortNumber'|transloco }}
+                                                <p-sortIcon field="PortNumber"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="protocol" class="protocol">
+                                                {{ 'hubManagement.Register.table.protocol'|transloco }}
+                                                <p-sortIcon field="protocol"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="specialUserName"
+                                                class="specialUserName">
+                                                {{ 'hubManagement.Register.table.User'|transloco }}
+                                                <p-sortIcon field="specialUserName"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="specialPassword"
+                                                class="specialPassword">
+                                                {{ 'hubManagement.Register.table.Password'|transloco }}
+                                                <p-sortIcon field="specialPassword"></p-sortIcon>
+                                            </th>
+                                            <th pSortableColumn="status" class="status">
+                                                {{ 'hubManagement.Register.table.status'|transloco }}
+                                                <p-sortIcon field="status"></p-sortIcon>
+                                            </th>
+                                            <th>
+                                                {{ 'hubManagement.Register.table.resultTest'|transloco }}
+
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template let-i="rowIndex" pTemplate="body" let-failover>
+                                        <tr [pSelectableRow]="failover">
+                                            <td class="row">{{ failover.row }}</td>
+                                            <td class="type">{{ failover.type }}</td>
+                                            <td class="host">
+                                                {{ failover.host }}
+                                            </td>
+                                            <td class="PortNumber">
+                                                {{ failover.portHost }}
+                                            </td>
+                                            <td class="protocol">
+                                                {{ failover.protocolHost|protocols }}
+                                            </td>
+                                            <td class="specialUserName">
+                                                {{ failover.specialUserName }}
+                                            </td>
+                                            <td class="specialPassword">
+                                                {{ failover.specialPassword }}
+                                            </td>
+                                            <td class="status"
+                                                [ngStyle]="{'text-align': 'center !important'}">
+                                                <div [ngClass]="{
+                                                                ' text-green-800 bg-green-300 ': failover.status,
+                                                                ' text-red-800 bg-red-300 ': !failover.status
+                                                                }"
+                                                     class="w-[65px] float-right text-center rounded-md">
+                                                    {{ failover.status|enStatus }}
+                                                </div>
+                                            </td>
+                                            <td class="resultTest"
+                                                [ngStyle]="{'text-align': 'center !important'}">
+                                                <div [ngClass]="getClassByTitle(failover.resultTestTitle)"
+                                                     class="w-[425px] float-right text-center rounded-md">
+                                                    {{ failover.resultTest }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                            <div class=" grid grid-cols-12" dir="ltr">
+                                <div class="col-span-3">
+
+                                    <button pButton
+                                            label="{{'hubManagement.Register.label.testConnection'|transloco}}"
+                                            [icon]="loadingButton ? 'pi pi-spinner pi-spin' : 'pi pi-link'"
+                                            *ngIf="!regTextDBFlag&&!previewFlag"
+                                            (click)="testConnectionMethod()"
+                                            class="bg-[#007bff] border-[#007bff] hover:bg-[#014c9d] hover:border-[#014c9d] normal-button"
+                                    ></button>&nbsp;
+                                </div>
+                                <!-- <div class="col-span-3">
+                                     <p-message severity="success" text="connection successful !"
+                                                class="w-1/2 text-sm"
+                                                *ngIf="connectionSuccessFlag&&resultTestConnectionFlag">
+                                     </p-message>
+                                     <p-message severity="error" text="connection failed !"
+                                                class="w-1/2 text-sm"
+                                                *ngIf="connectionFailedFlag&&resultTestConnectionFlag">
+                                     </p-message>
+                                 </div>-->
+
+                            </div>
+                        </p-fieldset>
+                    </div>
+                    <div class="col-span-12" *ngIf="paramFlag">
+                        <p-fieldset legend="{{'hubManagement.Register.headerFieldset.params'|transloco}}" dir="ltr">
+                            <div class="grid grid-cols-12" style="margin-top: 5px" dir="ltr">
+                                <div [ngClass]="addFlag? 'col-span-12':'col-10'">
+                                    <div class="grid grid-cols-12">
+                                        <div class="col-span-3" *ngIf="addFlag" dir="ltr">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>{{ '.Register.headerFieldset.paramName'|transloco }}
+                                                    :</span></label>
+                                            <input [(ngModel)]="paramName" name="paramName" class="normal-input"
+                                                   pInputText>
+                                            &lt;!&ndash; (keyup)="changDBName(dbName)"&ndash;&gt;
+                                        </div>
+                                        <div class="col-span-3" *ngIf="addFlag" dir="ltr">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>{{ 'hubManagement.Register.headerFieldset.paramValue'|transloco }}
+                                                    :</span></label>
+                                            <input [(ngModel)]="paramValue" name="paramValue" class="normal-input"
+                                                   pInputText>
+                                            &lt;!&ndash; (keyup)="changDBName(dbName)"&ndash;&gt;
+                                        </div>
+                                        <div class="col-span-3" *ngIf="addFlag" dir="ltr">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>Data Type :</span></label>
+                                            <p-dropdown
+                                                [options]=hubConstants.dataTypeOptions
+                                                [(ngModel)]="dataType"
+                                                name="dataType"
+                                                class="normal-dropdown"
+                                                optionValue="code"
+                                                optionLabel="name"
+                                            ></p-dropdown>
+                                        </div>
+                                        <div class="col-span-1" *ngIf="addFlag">
+                                            <label class="normal-label"><span>status :</span></label>
+                                            <p-toggleswitch [(ngModel)]="status" name="status" />
+                                        </div>
+                                        <div class="col-span-12" *ngIf="addFlag">
+                                            <button pButton class="normal-button" label="{{'add'}}"
+                                                    icon="pi pi-plus"
+                                                    (click)="fakeRegister()"
+                                            ></button>
+                                        </div>
+
+
+                                        <div class="col-span-12">
+                                            <p-table
+                                                styleClass="normal-table"
+                                                [value]="paramsList" selectionMode="single" [lazy]="true"
+                                                [loading]="loading">
+                                                <ng-template pTemplate="header">
+                                                    <tr>
+                                                        <th pSortableColumn="row" class="row">
+                                                            row
+                                                            <p-sortIcon field="row"></p-sortIcon>
+                                                        </th>
+                                                        <th pSortableColumn="paramName" class="paramName">
+                                                            Param Name
+                                                            <p-sortIcon field="paramName"></p-sortIcon>
+                                                        </th>
+                                                        <th pSortableColumn="paramValue" class="paramValue">
+                                                            Param Value
+                                                            <p-sortIcon field="paramValue"></p-sortIcon>
+                                                        </th>
+                                                        <th pSortableColumn="dataType" class="dataType">
+                                                            Data Type
+                                                            <p-sortIcon field="dataType"></p-sortIcon>
+                                                        </th>
+                                                        <th pSortableColumn="tdStatus" class="tdStatus">
+                                                            Status
+                                                            <p-sortIcon field="tdStatus"></p-sortIcon>
+                                                        </th>
+                                                        <th class="operation"
+                                                            style="text-align: left !important;border-left: 1px solid #ebe8e8;">
+                                                            operation
+
+                                                        </th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template let-i="rowIndex" pTemplate="body" let-params>
+                                                    <tr [pSelectableRow]="params">
+                                                        <td class="row">{{ params.row }}</td>
+                                                        <td class="paramName">
+                                                            {{ params.paramName }}
+                                                        </td>
+                                                        <td class="paramValue">
+                                                            {{ params.paramValue }}
+                                                        </td>
+                                                        <td class="dataType">
+                                                            {{ params.dataType|dataTypeHub }}
+                                                        </td>
+                                                        <td class="tdStatus"
+                                                            [ngStyle]="{'text-align': 'center !important'}">
+                                                            <div [ngStyle]="{ 'border-radius':' 2.5px',
+                                                        'color':params.status == true ?'#258F30' :'#962515',
+                                                        'background-color': params.status == false ?'#F18B7D' : '#85DC8F',
+                                                        'width':'45px','margin':' 0 auto'}">
+                                                                {{ params.status|enStatus }}
+                                                            </div>
+                                                        </td>
+                                                        <td style="text-align: left !important;border-right: 1px solid #ebe8e8;"
+                                                            class="operation">
+                                                            <button
+                                                                style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
+                                                                matTooltip="{{'حذف' | transloco}}"
+                                                                (click)="deleteParam(params)"
+                                                                [disabled]="!addFlag" severity="danger"
+                                                                pButton class=" normal-button"
+                                                                icon="pi pi-trash"></button>
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12-notPadding" dir="ltr"
+                                         style="margin-top: 15px;margin-right: 2px"
+                                         *ngIf="!addFlag">
+                                        <div class="col-span-12-notPadding queryListDiv">
+                                            <div style="width: 100%;padding:2px 0 5px 0;">
+                                                <label style="color:#1c034f;">
+                                                    {{ templates + ' ' + lblObjectName + this.param }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-2" dir="rtl" *ngIf="!addFlag" style="text-align: center">
+                                    <div>
+                                        <button pButton label="{{'parse query'}}" style="width: 100%"
+                                                icon="pi pi-check" *ngIf=" !previewFlag"
+                                                (click)="parseQuery()" class="normal-button"
+                                        ></button> &nbsp;
+                                        <button pButton label="{{'test query'}}" *ngIf=" !previewFlag"
+                                                style="margin-top: 1px;width: 100%" class="normal-button"
+                                                (click)="testQuery()" [disabled]=""
+                                        >
+                                            <mat-icon class="size">new_releases</mat-icon>
+                                        </button>
+                                        <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center">
+                                            <p-message severity="success" text="query successful !" dir="ltr"
+                                                       styleClass="messageSize"
+                                                       *ngIf="querySuccessFlag&&resultTestQueryFlag">
+                                            </p-message>
+                                            <p-message severity="error" text="query failed !"
+                                                       styleClass="messageSize"
+                                                       *ngIf="queryFailedFlag&&resultTestQueryFlag" dir="ltr">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                    <div class="col-span-12" *ngIf="spParamFlag" dir="ltr">
+                        <p-fieldset style=" border:1px solid #a19f9d;width: 100%;margin-top: 10px">
+                            <legend>
+                                        <span style="
+                                        background-color:#99e7b4;padding: 5px;
+                                        border-radius: 4px;color:#034f1b;" class="fontHub">
+                                            params stored procedure
+                                        </span>
+                            </legend>
+                            <div class="grid grid-cols-12" style="margin-top: 5px">
+                                <div [ngClass]="spTestFlag? 'col-10':'col-span-12'" dir="ltr">
+                                    <div class="grid grid-cols-12">
+
+                                        <div class="col-span-3" *ngIf="spTestFlag" dir="ltr">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>Param Name :</span></label>
+                                            <input [(ngModel)]="paramName" name="paramName" class="normal-input"
+                                                   pInputText>
+                                        </div>
+                                        <div class="col-span-3" *ngIf="spTestFlag" dir="ltr">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>Param Value :</span></label>
+                                            <input [(ngModel)]="paramValue" name="paramValue" class="normal-input"
+                                                   pInputText>
+                                        </div>
+
+                                        <div class="col-span-3" *ngIf="spTestFlag" dir="ltr">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>Data Type :</span></label>
+                                            <p-dropdown
+                                                [options]=hubConstants.dataTypeOptions
+                                                [(ngModel)]="dataType"
+                                                name="dataType"
+                                                class="normal-dropdown"
+                                                optionValue="code"
+                                                optionLabel="name"
+
+                                            ></p-dropdown>
+                                        </div>
+                                        <div class="col-span-1" *ngIf="spTestFlag">
+                                            <label class="normal-label"><span>status :</span></label>
+                                            <p-toggleswitch [(ngModel)]="status" name="status" />
+                                        </div>
+
+
+                                        <div class="col-span-6" *ngIf="spTestFlag" dir="ltr">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>Param Type :</span></label>
+                                            <p-dropdown
+                                                [options]=hubConstants.testParamTypeOptions
+                                                [(ngModel)]="paramType"
+                                                name="dataType"
+                                                class="normal-dropdown"
+                                                optionValue="code"
+                                                optionLabel="name"
+
+                                            ></p-dropdown>
+                                        </div>
+
+                                        <div class="col-span-3" *ngIf="spTestFlag">
+                                            <label class="normal-label">
+                                                <span class="red-color-text">* </span>
+                                                <span>Output Title :</span></label>
+                                            <input [(ngModel)]="aliasOutputParamName" name="aliasOutputParamName"
+                                                   class="normal-input"
+                                                   pInputText>
+                                        </div>
+                                        <div class="col-span-2" *ngIf="spTestFlag"></div>
+                                        <div class="col-span-2" style="margin-top:2px" *ngIf="spTestFlag">
+                                            <button pButton class="normal-button" label="{{'add param SP'}}"
+                                                    icon="pi pi-plus"
+                                                    (click)="fakeParamSpRegister()"
+                                            ></button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-span-2" dir="ltr" *ngIf="spTestFlag && !previewFlag">
+                                    <div>
+                                        <button pButton label="{{'test stored procedure'}}"
+                                                style="margin-top: 1px;width: 100%" class="normal-button"
+                                                [pTooltip]="tooltipTestSp"
+                                                [tooltipDisabled]="this.spParamsList.length!=0"
+                                                (click)="testSp()" [disabled]="this.spParamsList.length==0"
+                                        ></button>
+                                    </div>
+                                    <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center">
+                                        <p-message severity="success" text="query successful !" dir="ltr"
+                                                   styleClass="messageSize"
+                                                   *ngIf="querySuccessFlag&&resultTestQueryFlag">
+                                        </p-message>
+                                        <p-message severity="error" text="query failed !"
+                                                   styleClass="messageSize"
+                                                   *ngIf="queryFailedFlag&&resultTestQueryFlag" dir="ltr">
+                                        </p-message>
+                                    </div>
+                                </div>
+                                <div class="col-span-12">
+                                    <p-table
+                                        styleClass="normal-table"
+                                        [value]="spParamsList" selectionMode="single" [lazy]="true"
+                                        [loading]="loading">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th pSortableColumn="row" class="row">
+                                                    {{ 'hubManagement.Register.table.header.row'|transloco }}
+                                                    <p-sortIcon field="row"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="paramType" class="paramType">
+                                                    {{ 'hubManagement.Register.table.header.paramType'|transloco }}
+                                                    <p-sortIcon field="paramType"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="dataType" class="dataType">
+                                                    {{ 'hubManagement.Register.table.header.dataType' }}
+                                                    <p-sortIcon field="dataType"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="paramName" class="paramName">
+                                                    {{ 'hubManagement.Register.table.header.paramName' }}
+                                                    <p-sortIcon field="paramName"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="paramValue" class="paramValue">
+                                                    {{ 'hubManagement.Register.table.header.paramValue'|transloco }}
+                                                    <p-sortIcon field="paramValue"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="paramValue" class="paramValue">
+                                                    {{ 'hubManagement.Register.table.header.aliasOutputParamName'|transloco }}
+                                                    <p-sortIcon field="paramValue"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="tdStatus" class="tdStatus">
+                                                    {{ 'hubManagement.Register.table.header.Status' }}
+                                                    <p-sortIcon field="tdStatus"></p-sortIcon>
+                                                </th>
+                                                <th class="operation"
+                                                    style="text-align: left !important;border-left: 1px solid #ebe8e8;">
+                                                    operation
+
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template let-i="rowIndex" pTemplate="body" let-params>
+                                            <tr [pSelectableRow]="params">
+                                                <td class="row">{{ params.row }}</td>
+                                                <td class="paramType">
+                                                    {{ params.paramType|paramType }}
+                                                </td>
+                                                <td class="dataType">
+                                                    {{ params.dataType|dataTypeHub }}
+                                                </td>
+                                                <td class="paramName">
+                                                    {{ params.name }}
+                                                </td>
+                                                <td class="paramValue">
+                                                    {{ params.paramValue }}
+                                                </td>
+                                                <td class="paramValue">
+                                                    {{ params.aliasOutputParamName }}
+                                                </td>
+                                                <td class="tdStatus"
+                                                    [ngStyle]="{'text-align': 'center !important'}">
+                                                    <div [ngStyle]="{ 'border-radius':' 2.5px',
+                                                        'color':params.status == true ?'#258F30' :'#962515',
+                                                        'background-color': params.status == false ?'#F18B7D' : '#85DC8F',
+                                                        'width':'45px','margin':' 0 auto'}">
+                                                        {{ params.status|enStatus }}
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: left !important;border-right: 1px solid #ebe8e8;"
+                                                    class="operation">
+                                                    <button
+                                                        style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
+                                                        matTooltip="{{'delete' | transloco}}"
+                                                        (click)="deleteSpParam(params)"
+                                                        [disabled]="!spTestFlag" severity="danger"
+                                                        pButton class="normal-button "
+                                                        icon="pi pi-trash"></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                    <div class="col-span-12" *ngIf="customQueryParamFlag">
+                        <p-fieldset legend="{{'hubManagement.Register.fieldset.legend.custom Query'|transloco}}"
+                                    dir="ltr">
+                            <div class="grid grid-cols-12" style="margin-top: 5px" dir="ltr">
+                                <div [ngClass]="addFlag? 'col-span-10':'col-span-12'">
+                                    <div class="grid grid-cols-12">
+                                        <div class="col-span-12" *ngIf="customQueryInputFlag" dir="ltr">
+                                                <textarea dir="ltr" class="inner-textarea" style="width: 100%"
+                                                          [(ngModel)]="customQuery" name="customQuery"
+                                                          [disabled]="previewFlag"
+                                                          pTextarea></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-2" dir="rtl">
+                                    <div>
+                                        <button pButton label="{{'test query'}}"
+                                                style="margin-top: 1px;width: 100%" class="normal-button"
+                                                (click)="testQuery()" *ngIf="!previewFlag"
+                                        ></button>
+                                        <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center">
+                                            <p-message severity="success" text="query successful !" dir="ltr"
+                                                       styleClass="messageSize"
+                                                       *ngIf="querySuccessFlag&&resultTestQueryFlag">
+                                            </p-message>
+                                            <p-message severity="error" text="query failed !"
+                                                       styleClass="messageSize"
+                                                       *ngIf="queryFailedFlag&&resultTestQueryFlag" dir="ltr">
+                                            </p-message>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-12 block flex-wrap break-words hyphens-auto whitespace-normal py-5" dir="ltr"
+                 style=" display: flex;">
+                <button pButton label="{{'button.exit' | transloco}}"
+                        severity="danger" [outlined]="true" class="normal-button"
+                        (click)="onClose($event)" icon="pi pi-times">
+                </button>&nbsp;
+                <button pButton label="{{'button.continuation' | transloco}}" [disabled]="nextFlag"
+                        class="normal-button" icon="pi pi-arrow-circle-left"
+                        [pTooltip]="tooltipNext"
+                        [tooltipDisabled]="!nextFlag"
+                        (click)="onContinuation()" *ngIf="nextShowFlag">
+                </button>&nbsp;
+                <button class="normal-button" label="{{'button.back' | transloco}}" pButton
+                        (click)="back()" *ngIf="backShowFlag" severity="warn"
+                        icon="pi pi-arrow-circle-right">
+                </button>&nbsp;
+
+
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<p-dialog [style]="{'width':'50%'}" [(visible)]="helpFlag"
+          [modal]="true" [draggable]="false" header="help"
+          [resizable]="true">
+    <div disabled class="red-color-text">
+        <span>
+                {{ 'hubManagement.Register.help1' }}
+        </span>
+
+        <span>
+               {{ 'hubManagement.Register.help2' }}
+            </span>
+
+        <span>
+              {{ 'hubManagement.Register.help3' }}
+        </span>
+
+        <span>
+                {{ 'hubManagement.Register.help4' }}
+        </span>
+
+        <span>
+              {{ 'hubManagement.Register.help5' }}
+        </span>
+    </div>
+
+    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+        <button type="button" pButton severity="danger" class="normal-button " label="{{'button.close'|transloco}}"
+                (click)="helpFlag=false"></button>
+    </div>
+</p-dialog>
+<ng-container *ngIf="message200Flag">
+    <p-dialog [style]="{'width':'60%','height': '900px'}" [(visible)]="message200Flag"
+              [modal]="true" [draggable]="false">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <!--   <p-panel header="{{'hubManagement.Register.header.choose200' | transloco}}">
+                   <div class="grid grid-cols-12">
+                       <div class="col-span-3">
+                           <label class="normal-label">
+                               <span class="red-color-text">* </span>
+                               <span>{{ 'hubManagement.Register.dropdown.codeMessage'|transloco }} :</span></label>
+                           <p-dropdown
+                               class="normal-dropdown"
+                               [options]="statusCodeOptions200"
+                               [(ngModel)]="codeMessage200"
+                               optionValue="code"
+                               optionLabel="name"
+                               (onChange)="messageSearch200()"
+                               [disabled]="true"
+                           >
+                               &lt;!&ndash; (onChange)="onchangeStatusCode()"&ndash;&gt;
+                           </p-dropdown>
+                       </div>
+                       <div class="col-span-3">
+                           <label class="normal-label"><span>{{ 'hubManagement.Register.input.titleMessage'|transloco }}
+                               :</span></label>
+                           <input [(ngModel)]="titleMessage200" class="normal-input" pInputText>
+                       </div>
+                       <div class="col-span-3">
+                           <label class="normal-label"><span>{{ 'hubManagement.Register.dropdown.tableId'|transloco }} :</span></label>
+                           <p-dropdown
+                               class="normal-dropdown"
+                               [options]="categoryMessages200"
+                               optionValue="code"
+                               optionLabel="name"
+                               [(ngModel)]="tableIdMessage200"
+                               (onChange)="messageSearch200()">
+                           </p-dropdown>
+                       </div>
+                       <div class="col-span-3  my-1 px-4 py-2 " dir="ltr">
+                           <button pButton label="{{'button.clear'|transloco}}" class="normal-button"
+                                   icon="pi pi-filter-slash" [outlined]="true"
+                                   style="margin: 6px" (click)="messageClear200()"></button>&nbsp;&nbsp;
+                           <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin: 6px"
+                                   class="normal-button" icon="pi pi-search"
+                                   (click)="messageSearch200()"></button>
+
+                       </div>
+
+                       <div class="col-span-12 mt-5">
+                             <p-table
+       styleClass="normal-table"
+        [value]="messagesList200" selectionMode="single"
+                                    [(selection)]="selectedMessageId2XX"
+                                    dataKey="messageId" (onRowSelect)="selectedMessage200($event)"
+                                    (onRowUnselect)="onRowUnselect200($event)"
+                           >
+                               <ng-template pTemplate="header">
+                                   <tr>
+                                       <th style="width: 4rem">{{ 'hubManagement.Register.dialog.table.header.select'| transloco }}</th>
+                                       <th class="row">{{ 'hubManagement.Register.dialog.table.header.messageUnitId200'| transloco }}</th>
+                                       <th>{{ 'hubManagement.Register.dialog.table.header.codeMessage200'|transloco }}</th>
+                                       <th>{{ 'hubManagement.Register.dialog.table.header.titleMessage200'|transloco }}</th>
+                                       <th>{{ 'hubManagement.Register.dialog.table.header.tableId200' |transloco }}</th>
+                                       <th>{{ 'hubManagement.Register.dialog.table.header.isSystemMessage200' |transloco }}</th>
+                                   </tr>
+                               </ng-template>
+                               <ng-template let-i="rowIndex" pTemplate="body" let-messages>
+                                   <tr [pSelectableRow]="messages">
+                                       <td>
+                                           <p-tableRadioButton [value]="messages"></p-tableRadioButton>
+                                       </td>
+                                       <td class="row">{{ messages.messageId }}</td>
+                                       <td>{{ messages.code }}</td>
+                                       <td>
+                                           {{ messages.title|moreChar19 }}
+                                       </td>
+                                       <td>{{ messages.tableId|messagesCategory }}</td>
+                                       <td>
+                                           <img *ngIf="messages.isSystemMessage==1" class="w-6 h-6 object-contain block"
+                                                src="assets/icons/correct.jpeg">
+                                           <img *ngIf="messages.isSystemMessage==0" class="w-6 h-6 object-contain block"
+                                                src="assets/icons/cross.jpeg">
+                                       </td>
+                                   </tr>
+                               </ng-template>
+                           </p-table>
+                           <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+                               <div class="col-span-4"></div>
+
+                               <div class="flex items-center justify-center gap-2 col-span-4">
+                                   <button
+                                       pButton
+                                       pRipple
+                                       icon="pi pi-arrow-right"
+                                       pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                                       (click)="previousPageStatement200()"
+                                       [disabled]="(this.pageno) == 0 "
+                                       class="normal-button"
+                                   ></button>
+                                   <span>{{ pageDescription }}</span>
+                                   <button
+                                       pButton
+                                       pRipple
+                                       pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                                       icon="pi pi-arrow-left"
+                                       class="normal-button"
+                                       [disabled]=" this.messagesList200.length < pagesize"
+                                       (click)="nextPageStatement200()"
+
+                                   ></button>
+                                   <p-dropdown
+                                       (onChange)="OnchangePageno200($event)"
+                                       [disabled]="nextBtn200Flag"
+                                       [options]="pagesizeOptions"
+                                       optionValue="code"
+                                       optionLabel="name"
+                                       [(ngModel)]="pagesize"
+                                       class="normal-dropdown-pagination"
+                                   ></p-dropdown>
+                               </div>
+
+                               <div class="col-span-4"></div>
+                           </div>
+                       </div>
+                       <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+                           <button type="button" pButton [outlined]="true"
+                                   severity="danger" icon="pi pi-times"
+                                   label="{{'button.close'|transloco}}"
+                                   (click)="message200Flag=false" class="normal-button"
+                           ></button>
+                       </div>
+                   </div>
+
+               </p-panel>-->
+            <app-message-selector
+                *ngIf="message200Flag"
+                [titleHeader]="'انتخاب پیام 200' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions200"
+                [categoryOptions]="categoryMessages200"
+                [preselectedMessageId]="messageId2X"
+                [messagesList]=messagesList200
+                [clearTrigger]="clearTriggerForMessageSelector200"
+                (selectionCleared)="onChildSelectionCleared200($event)"
+                (select)="onMessageSelected200($event)"
+                [presetValue]="{code: '200'}"
+                [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+        </div>
+    </p-dialog>
+</ng-container>
+<ng-container *ngIf="message400Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message400Flag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <!--<p-panel header="{{'hubManagement.Register.header.choose400' | transloco}}">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-3">
+                        <label class="normal-label">
+                            <span class="red-color-text">* </span>
+                            <span>{{ 'hubManagement.Register.dropdown.codeMessage'|transloco }} :</span></label>
+                        <p-dropdown
+                            class="normal-dropdown"
+                            [options]="statusCodeOptions400"
+                            [(ngModel)]="codeMessage400"
+                            optionValue="code"
+                            optionLabel="name"
+                            (onChange)="messageSearch400()"
+                            [disabled]="true"
+                        >
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-3">
+                        <label class="normal-label">
+                            <span>{{ 'hubManagement.Register.input.titleMessage'|transloco }} :</span></label>
+                        <input [(ngModel)]="titleMessage400" class="normal-input" pInputText>
+                    </div>
+                    <div class="col-span-3">
+                        <label class="normal-label">
+                            <span>{{ 'hubManagement.Register.dropdown.tableId'|transloco }} :</span></label>
+                        <p-dropdown
+                            class="normal-dropdown"
+                            [options]="categoryMessages400"
+                            optionValue="code"
+                            optionLabel="name"
+                            [(ngModel)]="tableIdMessage400"
+                            (onChange)=" messageSearch400()">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-3  my-1 px-4 py-2 " dir="ltr">
+                        <button pButton label="{{'button.clear'|transloco}}" class="normal-button"
+                                icon="pi pi-filter-slash" [outlined]="true"
+                                style="margin: 6px" (click)="messageClear400()"></button>&nbsp;&nbsp;
+                        <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin: 6px"
+                                class="normal-button" icon="pi pi-search"
+                                (click)="messageSearch400()"></button>
+
+                    </div>
+
+                    <div class="col-span-12">
+                          <p-table
+    styleClass="normal-table"
+     [value]="messagesList400" selectionMode="single"
+                                 [(selection)]="selectedMessageId4XX"
+                                 dataKey="messageId" (onRowSelect)="selectedMessage400($event)"
+                                 (onRowUnselect)="onRowUnselect400($event)"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>{{ 'hubManagement.Register.header.choose400'|transloco }}</th>
+                                    <th class="row">{{ 'hubManagement.Register.dialog.table.header.messageUnitId400'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.codeMessage400'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.titleMessage400'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.tableId400'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.isSystemMessage400'|transloco }}</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template let-i="rowIndex" pTemplate="body" let-messages>
+                                <tr [pSelectableRow]="messages">
+                                    <td>
+                                        <p-tableRadioButton [value]="messages"></p-tableRadioButton>
+                                    </td>
+                                    <td class="row">{{ messages.messageId }}</td>
+                                    <td>{{ messages.code }}</td>
+                                    <td>
+                                        {{ messages.title|moreChar19 }}
+                                    </td>
+                                    <td>{{ messages.tableId|messagesCategory }}</td>
+                                    <td>
+                                        <img *ngIf="messages.isSystemMessage==1" class="w-6 h-6 object-contain block"
+                                             src="assets/icons/correct.jpeg">
+                                        <img *ngIf="messages.isSystemMessage==0" class="w-6 h-6 object-contain block"
+                                             src="assets/icons/cross.jpeg">
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                        <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+                            <div class="col-span-4"></div>
+
+                            <div class="flex items-center justify-center gap-2 col-span-4">
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-arrow-right" class="normal-button"
+                                    pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                                    (click)="previousPageStatement400()"
+                                    [disabled]="(this.pageno) == 0 "
+                                ></button>
+                                <span>{{ pageDescription }}</span>
+                                <button
+                                    pButton
+                                    pRipple
+                                    pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                                    icon="pi pi-arrow-left" class="normal-button"
+                                    [disabled]=" this.messagesList400.length < pagesize"
+                                    (click)="nextPageStatement400()"
+
+                                ></button>
+                                <p-dropdown
+                                    (onChange)="OnchangePageno400($event)"
+                                    [disabled]="nextBtn400Flag"
+                                    [options]="pagesizeOptions"
+                                    optionValue="code"
+                                    optionLabel="name"
+                                    [(ngModel)]="pagesize"
+                                    class="normal-dropdown-pagination"
+                                ></p-dropdown>
+                            </div>
+
+                            <div class="col-span-4"></div>
+                        </div>
+                    </div>
+                    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+                        <button type="button" pButton [outlined]="true"
+                                severity="danger" icon="pi pi-times" class="normal-button"
+                                label="{{'button.close'|transloco}}"
+                                (click)="message400Flag=false"></button>
+                    </div>
+                </div>
+
+            </p-panel>-->
+            <app-message-selector *ngIf="message400Flag"
+                                  [action$]="messageSelector400Action$"
+                                  [titleHeader]="'انتخاب پیام 400' | transloco"
+                                  [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                                  [statusCodeOptions]="statusCodeOptions400"
+                                  [categoryOptions]="categoryMessages400"
+                                  [preselectedMessageId]="messageId4X"
+                                  [messagesList]=messagesList200
+                                  [clearTrigger]="clearTriggerForMessageSelector400"
+                                  (selectionCleared)="onChildSelectionCleared400($event)"
+                                  (select)="onMessageSelected400($event)"
+                                  [presetValue]="{code: '400'}"
+                                  [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+        </div>
+
+    </p-dialog>
+</ng-container>
+<ng-container *ngIf="message500Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message500Flag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <!--<p-panel header="{{'hubManagement.Register.header.choose500' | transloco}}">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-3">
+                        <label class="normal-label">
+                            <span class="red-color-text">* </span>
+                            <span>{{ 'hubManagement.Register.dropdown.codeMessage' |transloco }} :</span></label>
+                        <p-dropdown
+                            class="normal-dropdown"
+                            [options]="statusCodeOptions500"
+                            [(ngModel)]="codeMessage500"
+                            optionValue="code"
+                            optionLabel="name"
+                            [disabled]="true"
+                        >
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-3">
+                        <label class="normal-label">
+                            <span>{{ 'hubManagement.Register.input.titleMessage'|transloco }} :</span></label>
+                        <input [(ngModel)]="titleMessage500" pInputText class="normal-input">
+                    </div>
+                    <div class="col-span-3">
+                        <label class="normal-label">
+                            <span>{{ 'hubManagement.Register.dropdown.tableId'|transloco }} :</span></label>
+                        <p-dropdown
+                            class="normal-dropdown"
+                            [options]="categoryMessages500"
+                            optionValue="code"
+                            optionLabel="name"
+                            [(ngModel)]="tableIdMessage500"
+                            (onChange)="messageSearch500()">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-3  my-1 px-4 py-2 " dir="ltr">
+                        <button pButton label="{{'button.clear'|transloco}}" class="normal-button"
+                                icon="pi pi-filter-slash" [outlined]="true"
+                                style="margin: 6px" (click)="messageClear500()"></button>&nbsp;&nbsp;
+                        <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin: 6px"
+                                class="normal-button" icon="pi pi-search"
+                                (click)="messageSearch500()"></button>
+
+                    </div>
+
+                    <div class="col-span-12">
+                          <p-table
+    styleClass="normal-table"
+     [value]="messagesList500"
+                                 selectionMode="single"
+                                 [(selection)]="selectedMessageId5XX"
+                                 dataKey="messageId" (onRowSelect)="selectedMessage500($event)"
+                                 (onRowUnselect)="onRowUnselect500($event)"
+                        >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 4rem">{{ 'hubManagement.Register.dialog.table.header.select'|transloco }}</th>
+                                    <th class="row">{{ 'hubManagement.Register.dialog.table.header.messageUnitId500'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.codeMessage500'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.titleMessage500'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.tableId500'|transloco }}</th>
+                                    <th>{{ 'hubManagement.Register.dialog.table.header.isSystemMessage500' |transloco }}</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template let-i="rowIndex" pTemplate="body" let-messages>
+                                <tr [pSelectableRow]="messages">
+                                    <td>
+                                        <p-tableRadioButton [value]="messages"></p-tableRadioButton>
+                                    </td>
+                                    <td class="row">{{ messages.messageId }}</td>
+                                    <td>{{ messages.code }}</td>
+                                    <td>
+                                        {{ messages.title|moreChar19 }}
+                                    </td>
+                                    <td>{{ messages.tableId|messagesCategory }}</td>
+                                    <td>
+                                        <img *ngIf="messages.isSystemMessage==1" class="w-6 h-6 object-contain block"
+                                             src="assets/icons/correct.jpeg">
+                                        <img *ngIf="messages.isSystemMessage==0" class="w-6 h-6 object-contain block"
+                                             src="assets/icons/cross.jpeg">
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                        <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+                            <div class="col-span-4"></div>
+
+                            <div class="flex items-center justify-center gap-2 col-span-4">
+                                <button
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-arrow-right"
+                                    pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                                    (click)="previousPageStatement500()"
+                                    [disabled]="(this.pageno) == 0 "
+                                    class="normal-button"
+                                ></button>
+                                <span>{{ pageDescription }}</span>
+                                <button
+                                    pButton
+                                    pRipple
+                                    pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                                    icon="pi pi-arrow-left"
+                                    [disabled]=" this.messagesList400.length < pagesize"
+                                    (click)="nextPageStatement500()"
+                                    class="normal-button"
+                                ></button>
+                                <p-dropdown
+                                    (onChange)="OnchangePageno500($event)"
+                                    [disabled]="nextBtn500Flag"
+                                    [options]="pagesizeOptions"
+                                    optionValue="code"
+                                    optionLabel="name"
+                                    [(ngModel)]="pagesize"
+                                    class="normal-dropdown-pagination"
+                                ></p-dropdown>
+                            </div>
+
+                            <div class="col-span-4"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-12" dir="ltr">
+                        <button type="button" pButton severity="danger" icon="pi pi-times"
+                                label="{{'button.close'|transloco}}" class="normal-button"
+                                (click)="message500Flag=false"></button>
+                    </div>
+                </div>
+
+            </p-panel>-->
+            <app-message-selector
+                *ngIf="message500Flag"
+                [titleHeader]="'انتخاب پیام 500' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions500"
+                [categoryOptions]="categoryMessages500"
+                [preselectedMessageId]="messageId5X"
+                [messagesList]=messagesList500
+                [clearTrigger]="clearTriggerForMessageSelector500"
+                (selectionCleared)="onChildSelectionCleared500($event)"
+                (select)="onMessageSelected500($event)"
+                [presetValue]="{code: '500'}"
+                [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+        </div>
+
+    </p-dialog>
+</ng-container>
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div
+                class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+            >
+                <i class="pi pi-question !text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <button pButton label="{{'module.dialog.button.yes'|transloco}}" (click)="onAccept()"
+                        class="w-32 bg-green-500 text-white border-none hover:bg-green-600 normal-button"></button>
+                <button pButton label="{{'module.dialog.button.no'|transloco}}" [outlined]="true" (click)="onReject()"
+                        class="w-32 bg-red-500 text-white border-none hover:bg-red-600 normal-button"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmdialog>

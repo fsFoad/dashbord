@@ -1,0 +1,88 @@
+<app-breadcrumbs id="section"
+                 [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page" id="section">
+    <div class="grid grid-cols-12">
+        <div class="col-span-4" *ngIf="sourceUrlByApi">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>آدرس مبدا :</span></label>
+            <p-inputgroup class="normal-input-group">
+                <input type="text"
+                       [(ngModel)]="sourceUrl"
+                       class="px-3 py-2 text-left rounded-l-none "
+                       (keydown.enter)="onKeydown($event)"
+                       dir="ltr" pInputText
+                       placeholder="for example: wallet/personalwalletaccountstatement" />
+                <p-inputgroup-addon class="normal-inputgroup-addon">
+                    /api/
+                </p-inputgroup-addon>
+            </p-inputgroup>
+        </div>
+        <div class="col-span-4"  *ngIf="!sourceUrlByApi">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>آدرس مبدا :</span>
+            </label>
+            <input [(ngModel)]="sourceUrl" (keydown.enter)="onKeydown($event)" dir="ltr" class="normal-input"
+                   pInputText
+                   placeholder="for example: wallet/personalwalletaccountstatement">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>آدرس Host :</span></label>
+            <p-inputgroup class="normal-input-group">
+                <input type="text"
+                       class="px-3 py-2 text-left rounded-l-none "
+                       [(ngModel)]="destinationHost" (keydown.enter)="onKeydown($event)" dir="ltr"
+                       pInputText placeholder="for example: www.google.com or 192.168.100.20" />
+                <p-inputgroup-addon class="normal-inputgroup-addon">
+                    https://
+                </p-inputgroup-addon>
+            </p-inputgroup>
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <div class="flex items-center gap-2">
+                <p-checkbox [(ngModel)]="sourceUrlByApi" [binary]="true" inputId="sourceUrlByApi"  (onChange)="changeSourceUrlByApi($event)"></p-checkbox>
+                <label class="normal-label" for="sourceUrlByApi">{{ 'آدرس مبدا بصورت پیش فرض دارای /api/ باشد'|transloco }}</label>
+            </div>
+        </div>
+        <div class="col-span-12">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>مسیر مقصد :</span>
+            </label>
+            <input [(ngModel)]="destinationUri" (keydown.enter)="onKeydown($event)" dir="ltr" class="xx-ggg-12-input"
+                     pInputText>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>پورت مقصد :</span>
+            </label>
+            <input [(ngModel)]="destinationPortNumber" (keydown.enter)="onKeydown($event)"
+                    pKeyFilter="int" pInputText maxlength="4" class="normal-input">
+        </div>
+        <div class="col-span-2">
+            <label class="normal-label">
+                <span>وضعیت :</span></label>
+            <p-toggleswitch [(ngModel)]="status"  />
+        </div>
+       <!-- <div class="col-span-2">
+            <label class="normal-label">
+                <span>متعلق به datahub :</span></label>
+            <p-toggleswitch [(ngModel)]="isDataHub" (onChange)="onChangeIsDataHub($event)" />
+        </div>-->
+        <div class="col-span-6"></div>
+        <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+            <button pButton label="{{'button.cancel' | transloco}}" (click)="onClose()"
+                    severity="danger" icon="pi pi-times" [outlined]="true" class="normal-button"
+            ></button>&nbsp;
+            <button pButton severity="success" label="{{'ثبت اطلاعات' | transloco}}"
+                    icon="pi pi-save" (click)="onUpdate()" class="normal-button"
+            ></button>
+        </div>
+    </div>
+
+</div>

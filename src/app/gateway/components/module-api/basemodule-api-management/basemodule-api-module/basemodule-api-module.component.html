@@ -1,0 +1,308 @@
+<p-toast   *ngIf="!rulFlag&&!chartApiFlag&&!alertClientFlag&&!alertSystemFlag&&
+                 !clientApiFlag&&!timeLimitationFlag&&!mediatorsFlag&&!apiLogFlag&&
+                 !headerFlag&&!sequenceFlag&&!producedNodeFlag&&!requiredNodeFlag&&
+                 !apiHubFlag &&!apiCacheFlag&&!addFlag&&!updateFlag&&!apiMediatorFlag&&!apiAggregatorFlag" />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"
+                 *ngIf="!rulFlag&&!chartApiFlag&&!alertClientFlag&&!alertSystemFlag&&
+                 !clientApiFlag&&!timeLimitationFlag&&!mediatorsFlag&&!apiLogFlag&&
+                 !headerFlag&&!sequenceFlag&&!producedNodeFlag&&!requiredNodeFlag&&
+                 !apiHubFlag &&!apiCacheFlag&&!addFlag&&!updateFlag&&!apiMediatorFlag&&!apiAggregatorFlag"></app-breadcrumbs>
+<div class="content-page " *ngIf="!addFlag&&!updateFlag&&!rulFlag&&
+    !timeLimitationFlag&&!mediatorsFlag&&!apiLogFlag&&!chartApiFlag&&!alertClientFlag&&
+    !alertSystemFlag&&!clientApiFlag&&!producedNodeFlag&&!headerFlag&&!requiredNodeFlag
+    &&!sequenceFlag&&!apiHubFlag&&!apiCacheFlag&&!apiMediatorFlag&&!apiAggregatorFlag">
+    <div class="">
+        <div class="grid grid-cols-12">
+            <div class="col-span-3">
+                <label class="normal-label">
+                    <span>{{ 'api.dropdown.searchType'|transloco }} :</span></label>
+                <p-dropdown class="normal-dropdown"
+                            [autoDisplayFirst]="false"
+                            [options]="searchByOption"
+                            optionValue="code"
+                            [(ngModel)]="searchBy"
+                            optionLabel="name"
+                            (onChange)="onChangeSearch($event)"
+                ></p-dropdown>
+            </div>
+            <div class="col-span-3" *ngIf="showTitle&&!showName">
+                <label class="normal-label"><span>{{ 'api.input.apiTitle'|transloco }} :</span></label>
+                <input class="normal-input" [(ngModel)]="title" pInputText (keydown.enter)="onKeydown($event)">
+            </div>
+            <div class="col-span-3" *ngIf="showName&&!showTitle">
+                <label class="normal-label"><span>{{ 'api.input.apiName'|transloco }} :</span></label>
+                <input class="normal-input" [(ngModel)]="name" pInputText (keydown.enter)="onKeydown($event)">
+            </div>
+            <div class=" col-span-3"></div>
+            <div class=" sm:flex sm:col-span-3 justify-start items-center gap-2 h-12 mt-5-5 rtl:flex-row-reverse">
+                <button
+                    pButton
+                    label="{{'button.clear' | transloco}}"
+                    icon="pi pi-filter-slash"
+                    (click)="clear()"
+                    [outlined]="true"
+                    class="w-[110px] my-1 px-4 py-2  normal-button"
+                ></button>
+                <button
+                    pButton
+                    label="{{'button.search' | transloco}}"
+                    icon="pi pi-search"
+                    class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+                    (click)="searchClick(true)"
+                ></button>
+            </div>
+        </div>
+        <div class="col-span-12 my-5">
+            <button pButton label="{{'button.addApi' | transloco}}"
+                    class="w-[160px] my-1 px-4 py-2 text-white normal-button"
+                    icon="pi pi-plus" (click)="showAdd()"></button>
+        </div>
+        <div class="col-span-12">
+            <!--
+                        <div class="flex flex-col items-center" style="width: 100%;">
+            -->
+            <small class="font-bold text-xs text-lg">
+                {{ 'آخرین به روزرسانی اطلاعات ' }}
+                {{ lastJobRunn |normalizeJalali }}
+            </small>
+            <p-table
+                styleClass="normal-table"
+                [value]="apiList"
+                [loading]="loading"
+                [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true" [first]="firstIndex"
+                [currentPageReportTemplate]="this.paginationLabel" [totalRecords]="totalRecords" [lazy]="true"
+                [rowsPerPageOptions]="[5,10,20,50,100]"
+                paginatorDropdownAppendTo="body"
+                selectionMode="single"
+                (onPage)="OnchangePageno($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="row">
+                            {{ 'api.table.header.row'|transloco }}
+                        </th>
+                        <th class="title">
+                            {{ 'api.table.header.apiTitle'|transloco }}
+                        </th>
+                        <th class="name">
+                            {{ 'api.table.header.apiName'|transloco }}
+                        </th>
+                        <th class="type">
+                            {{ 'api.table.header.apiType'|transloco }}
+                        </th>
+                        <th class="status">
+                            {{ 'api.table.header.apiStatus'|transloco }}
+                        </th>
+                        <th class="status text-center">
+                            {{ 'api.table.header.limitedCalls'|transloco }}
+                        </th>
+                        <th class="operation text-center">
+                            {{ 'api.table.header.weeklyChart'|transloco }}
+                        </th>
+                        <th class="text-right border-r  ">
+                            {{ 'api.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-api>
+                    <tr [pSelectableRow]="api">
+                        <td class="row">
+                            {{ (pageno * pagesize) + (i % pagesize) + 1 }}
+                        </td>
+                        <td class="title"
+                            [pTooltip]="api.title"
+                            [tooltipDisabled]="api.title?api.title.length < 20:false"
+                        >
+                            {{ api.title|moreChar19 }}
+                        </td>
+                        <td class="name"
+                            [pTooltip]="api.name"
+                            [tooltipDisabled]="api.name?api.name.length < 20:false"
+                        >
+                            {{ api.name|moreChar19 }}
+                        </td>
+                        <td class="type">
+                            {{ api.type|httpMethods }}
+                        </td>
+                        <td class="text-right">
+                            <div
+                                [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': api.status,
+                                   ' text-red-800 bg-red-300 ': !api.status
+                                   }"
+                                class="w-[65px] float-right text-center rounded-md"
+                            >
+                                {{ api.status | statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <label>{{ 'api.table.detail.daily'|transloco }} :{{ api.dailyCount }}</label>
+                            <hr>
+                            <label>{{ 'api.table.detail.weekly'|transloco }} :{{ api.weeklyCount }}</label>
+                            <hr>
+                            <label>{{ 'api.table.detail.monthly'|transloco }} :{{ api.monthlyCount }}</label>
+                        </td>
+                        <td class="chart" style="{'height':'10px!important'}">
+                            <p-chart [responsive]="true" [height]="'65px'" type="line"
+                                     [data]="api.basicData"
+                                     [options]="basicOptions"></p-chart>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button type="button" class="p-button-rounded "
+                                    pButton
+                                    pRipple icon="pi pi-chevron-down"
+                                    (click)="setRecord(api); menu.toggle($event)"></button>&nbsp;
+                            <p-tieredMenu appendTo="body" #menu [popup]="true" [model]="items">
+                            </p-tieredMenu>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+   <!-- <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+        <div class="col-span-4"></div>
+
+        <div class="flex items-center justify-center gap-2 col-span-4">
+            <button
+                pButton
+                pRipple
+                pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                [disabled]="pageno == 0"
+                (click)="previousPageStatement()"
+
+            ><i class="pi pi-arrow-right"></i></button>
+            <span>{{ pageDescription }}</span>
+            <button
+                pButton
+                pRipple
+                pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                [disabled]="apiList.length < pagesize"
+                (click)="nextPageStatement()"
+
+            ><i class="pi pi-arrow-left"></i></button>
+            <p-dropdown
+                [options]="pagesizeOptions"
+                optionValue="code"
+                optionLabel="name"
+                [(ngModel)]="pagesize"
+                (onChange)="OnchangePageno($event)"
+                [disabled]="nextBtnFlag"
+                class="normal-dropdown-pagination"
+            ></p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+    </div>-->
+</div>
+<div class="col-span-12" *ngIf="addFlag">
+    <app-api-module-register [inputRegister]="apiDto" (close)="onClose($event)"></app-api-module-register>
+</div>
+<div class="col-span-12" *ngIf="updateFlag">
+    <app-api-module-update [inputUpdate]="apiDto" (close)="onClose($event)"></app-api-module-update>
+</div>
+<div class="col-span-12" *ngIf="rulFlag">
+    <app-api-rule [inputApiRule]="apiDto" (close)="onClose($event)"></app-api-rule>
+</div>
+<div class="col-span-12" *ngIf="timeLimitationFlag">
+    <app-time-limitation [inputTimeLimitation]="apiDto" (close)="onClose($event)"></app-time-limitation>
+</div>
+<div class="col-span-12" *ngIf="mediatorsFlag">
+    <app-mediators-list [inputMediators]="apiDto" (close)="onClose($event)"></app-mediators-list>
+</div>
+<div class="col-span-12" *ngIf="apiLogFlag">
+    <app-api-logs [inputLog]="apiDto" (close)="onClose($event)"></app-api-logs>
+</div>
+<div class="col-span-12" *ngIf="chartApiFlag">
+    <app-chart-api [inputChart]="apiDto" (close)="onClose($event)"></app-chart-api>
+</div>
+<div class="col-span-12" *ngIf="alertClientFlag">
+    <app-alert-client (close)="onClose($event)"></app-alert-client>
+</div>
+<div class="col-span-12" *ngIf="alertSystemFlag">
+    <app-alert-system (close)="onClose($event)"></app-alert-system>
+</div>
+<div class="col-span-12" *ngIf="clientApiFlag">
+    <app-client-api-management [inputApi]="apiDto" (close)="onClose($event)"></app-client-api-management>
+</div>
+<div class="col-span-12" *ngIf="producedNodeFlag">
+    <app-produced-node [producedNodeApi]="apiDto" (close)="onClose($event)"></app-produced-node>
+</div>
+<div class="col-span-12" *ngIf="requiredNodeFlag">
+    <app-required-node [requiredNodeApi]="apiDto" (close)="onClose($event)"></app-required-node>
+</div>
+<div class="col-span-12" *ngIf="sequenceFlag">
+    <app-sequence-management [inputSequenceManagement]="apiDto" (close)="onClose($event)"></app-sequence-management>
+</div>
+<div class="col-span-12" *ngIf="headerFlag">
+    <app-header-endpoint-management [inputApiEndpointHeader]="apiDto"
+                                    (close)="onClose($event)"></app-header-endpoint-management>
+</div>
+<div class="col-span-12" *ngIf="apiHubFlag">
+    <app-api-hub [inputApiHub]="apiDto" (close)="onClose($event)"></app-api-hub>
+</div>
+<div class="col-span-12" *ngIf="apiCacheFlag">
+    <app-cache-api [inputCacheApi]="apiDto" (close)="onClose($event)"></app-cache-api>
+</div>
+<div class="col-span-12" *ngIf="apiMediatorFlag">
+    <app-input-mediator-list [input_inputMediatorsList]="apiDto" (close)="onClose($event)"></app-input-mediator-list>
+</div>
+<div class="col-span-12" *ngIf="apiAggregatorFlag">
+    <app-api-aggregator [inputAggregatorConfig]="apiDto" (close)="onClose($event)"></app-api-aggregator>
+</div>
+<ng-container *ngIf="showDialog">
+    <p-dialog [style]="{'width':'55%',' height':' 700px','min-height':'460px'}"
+              header="{{'api.dialog.header.TransferringInfoGateway'|transloco}}"
+              [(visible)]="showDialog"
+              [modal]="true" appendTo="body"
+              [draggable]="false" [resizable]="true">
+
+        <div class="grid grid-cols-12">
+            <div class="col-span-6">
+                <label class="normal-label"><span>{{ 'api.dialog.label.apiName'|transloco }} :</span></label>
+                <label class="normal-label">{{ this.apiDto.name }}</label>
+            </div>
+            <div class="col-span-6">
+                <label class="normal-label"><span>{{ 'api.dialog.dropdown.category'|transloco }} :</span></label>
+                <p-dropdown class="normal-dropdown p-fluid"
+                            [options]="apiMainCategories"
+                            optionValue="mainCategoryId"
+                            optionLabel="title"
+                            [(ngModel)]="mainCategorie"
+                            (onChange)="OnChangeCateguryOptions($event)"
+                ></p-dropdown>
+            </div>
+            <div class="col-span-6">
+                <label class="normal-label"><span>{{ 'api.dialog.label.apiTitle'|transloco }} :</span></label>
+                <label class="normal-label">{{ this.apiDto.title }}</label>
+            </div>
+            <div class="col-span-6">
+                <label class="normal-label"><span>{{ 'api.dialog.dropdown.pack'|transloco }} :</span></label>
+                <p-dropdown class="normal-dropdown p-fluid"
+                            [options]="categories"
+                            optionValue="categoryId"
+                            optionLabel="title"
+                            [(ngModel)]="categoryid"
+                ></p-dropdown>
+            </div>
+            <div class="col-span-6">
+                <label class="normal-label"><span>{{ 'api.dialog.label.apiId'|transloco }} :</span></label>
+                <label class="normal-label">{{ this.apiDto.shenase }}</label>
+            </div>
+            <div class="col-span-6">
+                <small class="red-color-text">{{ this.errorMessage }}</small>
+            </div>
+            <div class="col-span-12  flex gap-3  justify-content-end "
+                 style="position: absolute; bottom: 10px; left: 10px;">
+
+                <button pButton severity="success" class="normal-button"
+                        label="{{'api.dialog.btn.transferringInfo' | transloco}}"
+                        icon="pi pi-file-import" (click)="transferToStore()"
+                ></button>
+                <button pButton label="{{'button.cancel' | transloco}}"
+                        class="normal-button" icon="pi pi-times"
+                        severity="danger" [outlined]="true"
+                        (click)="closeDialog()"></button>
+            </div>
+        </div>
+    </p-dialog>
+</ng-container>

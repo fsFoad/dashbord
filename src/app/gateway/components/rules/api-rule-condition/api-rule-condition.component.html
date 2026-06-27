@@ -1,0 +1,144 @@
+
+<p-toast />
+<app-breadcrumbs class="p-0 m-0"  (backClicked)="BeforeButton()"  *ngIf="!displayFlag &&!registerFlag && !updateFlag&& !logicFlag"></app-breadcrumbs>
+
+<div id="section">
+    <div *ngIf="!displayFlag &&!registerFlag && !updateFlag&& !logicFlag"  class="flex flex-col content-page" >
+        <div class="text-right font-semibold text-lg mb-4">
+            {{ 'condition.header.conditionsRule' | transloco }}
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 text-right">
+            <div class="md:col-span-3" [hidden]="hideApi">
+                <label class="normal-label">
+                    <span>{{ 'condition.detail.apiName' | transloco }}</span> :
+                </label>
+                <div>
+                    <label
+                        class="block truncate"
+                        [pTooltip]="apiName"
+                        [tooltipDisabled]="apiName ? apiName.length < 20 : false"
+                    >
+                        {{ apiName | threeDotDetailsPipe }}
+                    </label>
+                </div>
+            </div>
+            <div class="md:col-span-4">
+                <label class="normal-label"> <span >{{'condition.detail.apiRuleName'|transloco}}</span> : </label>
+                    <label
+                        class=" truncate"
+                        [pTooltip]="ruleName"
+                        [tooltipDisabled]="ruleName ? ruleName.length < 20 : false"
+                    >
+                        {{ ruleName | threeDotDetailsPipe }}
+                    </label>
+            </div>
+
+            <div class="md:col-span-4">
+                <label class="normal-label"> <span >{{ 'condition.detail.format'|transloco }}</span> : </label>
+                    <label >{{ ruleTemplate | ruleTemplate }}</label>
+            </div>
+        </div>
+
+        <div class="w-full flex justify-start my-4" >
+            <button
+                pButton
+                label="{{ 'button.add' | transloco }}"
+                icon="pi pi-plus" class="normal-button"
+                (click)="showAdd()"
+            ></button>
+            &nbsp;
+            <button
+                pButton
+                [outlined]="true"
+                label="{{ 'روابط منطقی' | transloco }}"
+                icon="pi pi-question" class="normal-button"
+                (click)="showLogic()"
+            ></button>
+        </div>
+
+          <p-table
+styleClass="normal-table"
+
+            [value]="ruleConditionsList"
+            *ngIf="!registerFlag && !updateFlag&& !logicFlag"
+            selectionMode="single"
+            [paginator]="true"
+            [rows]="rows"
+            [showCurrentPageReport]="true"
+            [(first)]="first"
+            [currentPageReportTemplate]=paginationLabel
+            [rowsPerPageOptions]="[5,10,25,50,100]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="row" pSortableColumn="row">{{ 'table.header.row'|transloco }} <p-sortIcon field="row"></p-sortIcon></th>
+                    <th class="conditionType" pSortableColumn="conditionType">{{'condition.table.header.conditionType'|transloco}} <p-sortIcon field="conditionType"></p-sortIcon></th>
+                    <th class="ruleCondition" pSortableColumn="ruleCondition">{{'condition.table.header.ruleCondition'|transloco}}  <p-sortIcon field="ruleCondition"></p-sortIcon></th>
+                    <th class="conditionFieldType" pSortableColumn="conditionFieldType">{{'condition.table.header.conditionFieldType'|transloco}} <p-sortIcon field="conditionFieldType"></p-sortIcon></th>
+                    <th class="conditionName" pSortableColumn="conditionName">{{'condition.table.header.conditionName'|transloco}}  <p-sortIcon field="conditionName"></p-sortIcon></th>
+                    <th class="conditionValue" pSortableColumn="conditionValue">{{'condition.table.header.conditionValue'|transloco}}  <p-sortIcon field="conditionValue"></p-sortIcon></th>
+                    <th class="status" pSortableColumn="status">{{'condition.table.header.status'|transloco}}  <p-sortIcon field="status"></p-sortIcon></th>
+                    <th class="text-right border-r   ">{{'condition.table.header.operation'|transloco}} </th>
+                </tr>
+            </ng-template>
+
+            <ng-template let-i="rowIndex" pTemplate="body" let-condition>
+                <tr [pSelectableRow]="condition">
+                    <td  class="row">{{ condition.row }}</td>
+                    <td class="conditionType">{{ condition.conditionType | conditionType }}</td>
+                    <td class="ruleCondition">{{ condition.ruleCondition | condition }}</td>
+                    <td class="conditionFieldType">{{ condition.conditionFieldType | conditionFieldType }}</td>
+                    <td class="conditionName"
+                        [pTooltip]="condition.conditionName"
+                        [tooltipDisabled]="condition.conditionName?.length < 20"
+                    >
+                        {{ condition.conditionName | moreChar19 }}
+                    </td>
+                    <td class="conditionValue"
+                        [pTooltip]="condition.conditionValue"
+                        [tooltipDisabled]="condition.conditionValue?.toString().length < 20"
+                    >
+                        {{ condition.conditionValue | moreChar19 }}
+                    </td>
+                    <td class="text-right">
+                        <div
+                            [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': condition.status,
+                                   ' text-red-800 bg-red-300 ': !condition.status
+                                   }"
+                            class="w-[65px] float-right text-center rounded-md"
+                        >
+                            {{ condition.status | statusPipe }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r  ">
+                        <button
+                            class="rounded-full  text-white p-2"
+                            pButton
+                            icon="pi pi-pencil" pTooltip="{{'button.edit'|transloco}}"
+                            (click)="showUpdate(condition)"
+                        ></button>
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+    </div>
+
+    <div *ngIf="registerFlag">
+        <app-api-rule-condition-register  [inputreg]="conditionDto" (close)="onClose($event)"></app-api-rule-condition-register>
+    </div>
+
+    <div *ngIf="updateFlag">
+        <app-api-rule-condition-update
+            [inputUpdate]="conditionDto"
+            (close)="onClose($event)"
+        ></app-api-rule-condition-update>
+    </div>
+    <div *ngIf="logicFlag">
+        <app-logic-conditions  [inputLogic]="conditionDto" (close)="onClose($event)"></app-logic-conditions>
+    </div>
+</div>

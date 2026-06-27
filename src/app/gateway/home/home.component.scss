@@ -1,0 +1,204 @@
+:host {
+    width: 100%;
+}
+.dropdown__text{
+    text-align: right;
+}
+.button-chart{
+    //border-radius: 25px;
+
+    // display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    //  padding: 5px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    vertical-align: middle;
+    border: 1px solid;
+    border-radius: 6px;
+    color: #24292e;
+    background-color: #fafbfc;
+    border-color: #1b1f2326;
+    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px 0px,
+    rgba(255, 255, 255, 0.25) 0px 1px 0px 0px inset;
+    transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    transition-property: color, background-color, border-color;
+    :hover {
+        background-color: #f3f4f6;
+        border-color: rgba(31, 27, 35, 0.15);
+        transition-duration: 0.1s;
+    }
+
+}
+.dropdown {
+    position: relative;
+    width: 150px;
+    filter: url(#goo);
+    height: 10px;
+    &__face,
+    &__items {
+        background-color: #ffffff;
+        border: 1px solid #A19F9D;
+
+        padding: 11px;
+        border-radius: 25px;
+
+    }
+
+    &__face {
+        display: block;
+        position: relative;
+    }
+
+    &__items {
+        margin: 0;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 100%;
+        list-style: none;
+        list-style-type: none;
+        display: flex;
+        justify-content: space-between;
+        visibility: hidden;
+        z-index: -1;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.93, 0.88, 0.1, 0.8);
+
+        &::before {
+            content: "";
+            background-color: #fff;
+            position: absolute;
+            bottom: 100%;
+            right: 20%;
+            height: 10px;
+            width: 20px;
+        }
+    }
+
+    &__arrow {
+
+        border-bottom: 2px solid #000;
+        border-right: 2px solid #000;
+        position: absolute;
+        top: 50%;
+        right: 200px;
+        width: 10px;
+        height: 10px;
+        transform: rotate(45deg) translateY(-50%);
+        transform-origin: right;
+    }
+
+    input {
+        display: none;
+
+        &:checked ~ .dropdown__items {
+            top: calc(100% + 25px);
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
+
+/*body {
+    background-image: linear-gradient(140deg, #e2e2e2, #cdcdcd);
+    display: grid;
+    place-items: center;
+    font-family: "Lato", Arial, sans-serif;
+    height: 10px;
+    margin: 0;
+}*/
+
+* {
+    box-sizing: border-box;
+}
+
+svg {
+    display: none;
+}
+.message-empty-chart-wrapper {
+    padding: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.chart-container {
+    width: 100%;
+
+}
+.flex-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* تغییر پویا به یک یا دو ستون */
+    gap: 20px;
+    width: 100%; /* استفاده از 100% بجای 90% */
+    max-width: 1200px; /* محدود کردن بیشینه عرض */
+}
+.chart-area {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+    min-height: 260px;
+}
+:host ::ng-deep {
+    .chart-area {
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        background-color: #ffffff;
+        padding: 10px;
+        position: relative; // مهم برای موقعیت اسپینر
+    }
+
+    .spinner-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .message-empty-chart {
+        color: red;
+        border-radius: 15px;
+        border-color: #1b1f2326;
+    }
+    .empty-message-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        color: red;
+        border-radius: 15px;
+        min-height: 260px; // هم‌راستا با chart-area
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .text-red-500 {
+        color: red;
+    }
+    .wrapper { position: relative; }
+    .content { transition: filter .25s ease; }
+    .content.is-blurred { filter: blur(6px); pointer-events: none; }
+    .overlay {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,.25);
+        backdrop-filter: blur(2px);
+    }
+    .overlay-card {
+        padding: 12px 16px; border-radius: 12px;
+        background: rgba(0,0,0,.55);
+        box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .overlay-text {
+        color: #fff; font-size: 1rem; font-weight: 500; text-align: center;
+        line-height: 1.6;
+    }
+}

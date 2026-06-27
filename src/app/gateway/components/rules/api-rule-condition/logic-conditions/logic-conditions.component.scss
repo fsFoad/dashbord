@@ -1,0 +1,64 @@
+
+:host {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.35s ease-out;
+}
+
+:host {
+    display: block;
+}
+
+:host ::ng-deep .logic-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    column-gap: 1rem;
+}
+
+:host ::ng-deep .full-dropdown {
+    width: 100% !important;
+}
+
+:host ::ng-deep .operator-dropdown {
+    width: 98px !important;
+}
+
+:host ::ng-deep .expression-dropdown {
+    width: 100% !important;
+}
+
+@media (max-width: 640px) {
+    :host ::ng-deep .logic-grid {
+        grid-template-columns: 100%;
+    }
+}
+
+/* متن آیتم‌های لیست داخل dropdown */

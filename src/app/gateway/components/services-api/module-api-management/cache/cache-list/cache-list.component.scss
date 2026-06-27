@@ -1,0 +1,53 @@
+.row{
+    margin-right: 2px;
+   width: 3%;
+}
+.partyName{
+     width: 8%;
+ }
+.moduleName{
+    width: 8%;
+}
+.cacheStartDate{
+    width: 8%;
+}
+.apiTitle{
+    width: 12%;
+}
+.apiType{
+    width: 4%;
+}
+.messageId4x{
+    width: 3%;
+}
+.messageId5x{
+    width: 3%;
+}
+.status{
+    width: 3%;
+}
+.querystring{
+    width: 14%;
+
+}
+.path{
+    width: 38%;
+    direction: ltr;
+    margin-left: 5px;
+}
+.cacheType{
+    width: 11%;
+}
+.expiryDate{
+    width: 8%;
+}
+:host ::ng-deep.p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    padding: 0.375rem 0.3rem !important;
+
+}
+/*:host ::ng-deep.endpointPath#endpointPath{
+    direction: ltr !important;
+}*/
+.endpointPath{
+    direction: ltr !important;
+}

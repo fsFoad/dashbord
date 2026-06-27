@@ -1,0 +1,209 @@
+<p-toast *ngIf="!inputMediatorFlag"/>
+<app-breadcrumbs id="section" *ngIf="!inputMediatorFlag"
+                 (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="flex flex-col mx-5 my-10" *ngIf="!inputMediatorFlag">
+    <div class="grid grid-cols-12">
+        <div class="col-span-4">
+            <label class="normal-label"> <span>عنوان سرویس :</span></label>
+            <div >
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="detApiTitle"
+                       [tooltipDisabled]="detApiTitle?detApiTitle.length < 20:false"
+                >
+                    {{ detApiTitle|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>نام سرویس :</span></label>
+            <div >
+                <label class="text-gray-700 block truncate"
+                       [pTooltip]="detApiName"
+                       [tooltipDisabled]="detApiName?detApiName.length < 20:false"
+                >
+                    {{ detApiName|threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>نوع ماژول :</span></label>
+            <div >
+                <label class="text-gray-700 block truncate">{{ detModuleType|moduleType }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-span-12 my-4">
+        <button pButton label="{{'تعریف مدیاتور ورودی' | transloco}}" class="normal-button"
+                icon="pi pi-plus" (click)="createMediator()"></button>
+    </div>
+    <div class="col-span-12">
+
+      <!--  <p-table
+            [value]="getDisplayList()"
+            styleClass="normal-table"
+            dir="rtl"
+        >
+
+            &lt;!&ndash; HEADER &ndash;&gt;
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="row">ردیف</th>
+                    <th class="title">عنوان مدیاتور</th>
+                    <th class="appDate">تعداد نود</th>
+                    <th class="schemaName">نام کلاینت</th>
+                    <th class="rdate">شماره موبایل</th>
+                    <th>عملیات</th>
+                </tr>
+            </ng-template>
+            &lt;!&ndash; LOADING &ndash;&gt;
+            <ng-template pTemplate="loadingbody">
+                <tr *ngFor="let i of [1,2,3,4,5,6]">
+                    <td colspan="100">
+                        <p-skeleton width="100%" height="1.5rem"></p-skeleton>
+                    </td>
+                </tr>
+            </ng-template>
+            &lt;!&ndash; BODY &ndash;&gt;
+            <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+
+                &lt;!&ndash; 🔵 GROUP ROW &ndash;&gt;
+                <tr *ngIf="rowData.isGroup"
+                    (click)="toggleGroup(rowData.groupName)"
+                    class="bg-gray-200 cursor-pointer font-bold">
+                    <td class="row">
+                        {{ rowData.groupIndex }}
+                    </td>
+                    <td>
+                        <i class="pi ml-2"
+                           [ngClass]="expandedGroups[rowData.groupName] ? 'pi-chevron-down' : 'pi-chevron-left'">
+                        </i>
+                        {{ rowData.groupName }}
+
+
+
+                    </td>
+                    <td>
+                        {{ rowData.count }}
+                    </td>
+                    <td></td>
+
+                    <td></td>
+                    <td class="text-center">
+
+                    </td>
+
+                </tr>
+
+                &lt;!&ndash; 🟢 CHILD ROW &ndash;&gt;
+                <tr *ngIf="!rowData.isGroup">
+
+                    <td class="row">
+                        {{ rowData.isGroup ? rowData.groupIndex : rowData.rowIndex }}
+                    </td>
+                    <td class="mediatorTitle"
+                        [pTooltip]="rowData.mediatorTitle"
+                        [tooltipDisabled]="rowData.mediatorTitle?.length < 20">
+                        {{ rowData.mediatorTitle | moreChar19 }}
+                    </td>
+
+                    <td></td>
+                    <td class="schema-cell"
+                        [pTooltip]="rowData.clientName"
+                        [tooltipDisabled]="rowData.clientName?.length < 20">
+                        {{ rowData.clientName | moreChar19 }}
+                    </td>
+
+                    <td>
+                        {{ rowData.clientMobileNo }}
+                    </td>
+
+                    &lt;!&ndash; actions &ndash;&gt;
+                    <td class="text-right">
+                        <button
+                            (click)=" menu.toggle($event); setRecord(rowData);$event.stopPropagation()"
+                            type="button"
+                            class="p-button-rounded"
+                            pButton
+                            icon="pi pi-chevron-down">
+                        </button>
+
+                        <p-menu #menu appendTo="body"  [popup]="true" [model]="items"></p-menu>
+                    </td>
+
+                </tr>
+
+            </ng-template>
+
+
+
+        </p-table>-->
+        <p-treeTable [value]="treeNodes" dir="rtl">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ردیف</th>
+                    <th>عنوان مدیاتور</th>
+                    <th>تعداد مدیاتور ورودی متصل به کلاینت</th>
+                    <th>نام کلاینت</th>
+                    <th>شماره موبایل</th>
+                    <th>عملیات</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+                    <td colspan="100">
+                        <p-skeleton width="100%" height="1.5rem"></p-skeleton>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                <tr [ttRow]="rowNode"
+                >
+
+                    <!-- row -->
+                    <td>
+                        <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                        {{ rowData.row }}</td>
+
+                    <!-- title -->
+                    <td>
+
+                        {{ rowData.mediatorTitle }}
+                    </td>
+
+                    <!-- count (only parent) -->
+                    <td>
+                        {{ rowData.count || '' }}
+                    </td>
+
+                    <!-- client -->
+                    <td>
+                        {{ rowData.clientName || '' }}
+                    </td>
+
+                    <!-- mobile -->
+                    <td>
+                        {{ rowData.clientMobileNo || '' }}
+                    </td>
+
+                    <!-- actions -->
+                    <td>
+                        <button     *ngIf="rowData.isGroup"  type="button" class="p-button-rounded  " pButton icon="pi pi-chevron-down"
+                                (click)="setRecord(rowData); menu.toggle($event); $event.stopPropagation()">
+                        </button>
+
+                <!--        <button (click)="setRecord(rowNode);menu.toggle($event)" type="button" class="p-button-rounded  "
+                                pButton
+                                pRipple icon="pi pi-chevron-down" ></button>&nbsp;-->
+                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                    </td>
+
+                </tr>
+            </ng-template>
+
+        </p-treeTable>
+    </div>
+</div>
+<div class="col-span-12" *ngIf="inputMediatorFlag">
+    <app-input-mediator [inputMediatorApi]="apiDto" (close)="onClose($event)"></app-input-mediator>
+</div>

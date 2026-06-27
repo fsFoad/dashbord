@@ -1,0 +1,128 @@
+<p-toast *ngIf="!moduleApiFlag&&!addFlag && !updateFlag" />
+<!--<app-breadcrumbs id="section" [showBackButton]="false"
+                 *ngIf="!moduleApiFlag&&!addFlag && !updateFlag"></app-breadcrumbs>-->
+<app-breadcrumbs id="section" [showBackButton]="false"  *ngIf="!moduleApiFlag&&!addFlag && !updateFlag"></app-breadcrumbs>
+<div class="content-page" *ngIf="!moduleApiFlag&&!addFlag && !updateFlag">
+    <div class="grid grid-cols-1 xl:grid-cols-12 2xl:grid-cols-12 md:grid-cols-12  ">
+        <div class="col-span-3 flex text-left   h-12 gap-2 mt-5-5  sm:hidden ">
+            <button name="btn-search-button" pButton label="{{ 'button.search' | transloco }}"
+                    style="width: 110px;margin: 3px;margin-top: 20px"
+                    class="normal-button" icon="pi pi-search"
+                    (click)="searchClick()"></button>&nbsp;&nbsp;
+            <button name="btn-clear-button" pButton label="{{'button.clear'|transloco}}"
+                    icon="pi pi-filter-slash"
+                    class="w-[110px] my-1 px-4 py-2 normal-button "
+                    [outlined]="true" (click)="clear()"></button>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>{{ 'party.input.partyTitle'|transloco }} :</span></label>
+            <input name="input-organization-title" class="normal-input" [(ngModel)]="title"
+                   (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="hidden btns-search-clear sm:flex">
+            <button pButton
+                    label="{{'button.clear' | transloco}}"
+                    icon="pi pi-filter-slash"
+                    (click)="clear()"
+                    [outlined]="true"
+                    class="my-1 px-4 py-2 border normal-button"
+            ></button>
+
+            <button pButton
+                    label="{{'button.search' | transloco}}"
+                    icon="pi pi-search"
+                    class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+                    (click)="searchClick()"></button>
+        </div>
+        <div class="col-span-12 my-2" *ngIf="!addFlag && !updateFlag && !moduleApiFlag">
+            <button name="btn-create-party" pButton label="{{ 'party.button.partyTitle' | transloco }}"
+                    class="normal-button"
+                    icon="pi pi-plus" (click)="showAdd()"></button>
+        </div>
+        <div class="col-span-12 ">
+            <ng-container *ngIf="partyList$ | async as partyList">
+            <p-table
+                styleClass="normal-table"
+
+                [value]="partyList"
+                [totalRecords]="totalRecords$ | async"
+                *ngIf="!addFlag && !updateFlag && !moduleApiFlag"
+                [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true"  [first]="firstIndex"
+                [currentPageReportTemplate]="paginationLabel"  [lazy]="true"
+                [rowsPerPageOptions]="[5,10,20,50,100]"
+                paginatorDropdownAppendTo="body"
+                selectionMode="single"
+                (onPage)="OnchangePageno($event)"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'party.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="title" class="title">
+                            {{ 'party.table.header.partyName'|transloco }}
+                            <p-sortIcon field="title"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="createDate" class="createDate">
+                            {{ 'party.table.header.createDate'|transloco }}
+                            <p-sortIcon field="createDate"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status" class="status">
+                            {{ 'party.table.header.status'|transloco }}
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th class="text-right border-r  ">
+                            {{ 'party.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-party>
+                    <tr [pSelectableRow]="party">
+                        <td class="row">
+                            {{ (pageno * pagesize) + (i % pagesize) + 1 }}
+                        </td>
+                        <td class="partyName"
+                            [pTooltip]="party.title"
+                            [tooltipDisabled]="party.title ? party.title.length < 33 : false">
+                            {{ party.title | morChar32 }}
+                        </td>
+                        <td dir="ltr" class="createDate text-right">
+                            {{ party.createDate }}
+                        </td>
+                        <td class="text-right">
+                            <div
+                                [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': party.status,
+                                   ' text-red-800 bg-red-300 ': !party.status
+                                   }"
+                                class="w-[65px] float-right text-center rounded-md"
+                            >
+                                {{ party.status | statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button name="btn-operation" (click)="setRecord(party);menu.toggle($event)" type="button"
+                                    class="p-button-rounded " pButton pRipple icon="pi pi-chevron-down"
+                            ></button>&nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+            </ng-container>
+        </div>
+    </div>
+
+
+</div>
+<div class="w-full" *ngIf="addFlag&&!moduleApiFlag && !updateFlag">
+    <app-party-register (close)="onClose($event)"></app-party-register>
+</div>
+<div class="w-full" *ngIf="updateFlag&&!addFlag&&!moduleApiFlag ">
+    <app-party-update [inputUpdate]="partyDto" (close)="onClose($event)"></app-party-update>
+</div>
+<div class="w-full" *ngIf="moduleApiFlag&&!updateFlag&&!addFlag">
+    <app-module-api-management [inputUpdate]="partyDto" (close)="onClose($event)"></app-module-api-management>
+</div>

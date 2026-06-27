@@ -1,0 +1,236 @@
+
+<p-toast></p-toast>
+
+<app-breadcrumbs id="section" *ngIf="!ruleClientFlag" (backClicked)="BeforeButton()"></app-breadcrumbs>
+
+<div class="flex flex-col mx-5 my-10"  *ngIf="!ruleClientFlag && !registerFlag && !updateFlag">
+<!--
+    <p-panel header="{{'clientsApi.header.clientsApi' | transloco}}">
+-->
+        <div class="grid grid-cols-12 gap-4">
+
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span  dir="rtl">
+                        {{'clientsApi.detail.apiName'|transloco}} :
+                    </span>
+                </label>
+                <div class="mt-1" [pTooltip]="apiName" [tooltipDisabled]="apiName ? apiName.length < 20 : false">
+                    <label class="text-gray-700 block truncate">
+                        {{ apiName | moreChar19 }}
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span  dir="rtl">
+                        {{'clientsApi.detail.apiTitle'|transloco}} :
+                    </span>
+                </label>
+                <div class="mt-1" [pTooltip]="apiTitle" [tooltipDisabled]="apiTitle ? apiTitle.length < 20 : false">
+                    <label class="text-gray-700 block truncate">
+                        {{ apiTitle | moreChar19 }}
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-span-4"></div>
+
+            <div class="col-span-12">
+           <!--       <p-table
+                    styleClass="normal-table"
+                    [value]="clientList"
+                    *ngIf="!registerFlag && !updateFlag"
+                    selectionMode="single"
+                    [paginator]="true"
+                    [rows]="rows"
+                    [showCurrentPageReport]="true"
+                    [(first)]="first"
+                    [currentPageReportTemplate]="paginationLabel"
+                    [rowsPerPageOptions]="[5,10,25,50,100]"
+                    class="mt-4"
+                >-->
+                <p-table
+                    styleClass="normal-table"
+                    [value]="clientList"
+                    [lazy]="true"
+                    [paginator]="true"
+                    [rows]="pagesizeClient"
+                    [totalRecords]="totalRecordsClient"
+                    [showCurrentPageReport]="true"
+                    [first]="firstClient"
+                    [currentPageReportTemplate]="paginationLabel"
+                    [rowsPerPageOptions]="[5,10,25,50,100]"
+                    paginatorDropdownAppendTo="body"
+                    selectionMode="single"
+                    class="mt-4"
+                    (onPage)="OnchangePagenoClient($event)"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="row" class="text-gray-700 row">
+                                {{'clientsApi.table.header.row'|transloco}}
+                                <p-sortIcon field="row"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="name" class="text-gray-700 name">
+                                {{'clientsApi.table.header.name'|transloco}}
+                                <p-sortIcon field="name"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="mobileNo" class="text-gray-700 mobileNo">
+                                {{ 'clientsApi.table.header.mobileNo'|transloco }}
+                                <p-sortIcon field="mobileNo"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="organizationCode" class="text-gray-700 organizationCode">
+                                {{'clientsApi.table.header.organizationCode'|transloco}}
+                                <p-sortIcon field="organizationCode"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="allowedAccountno" class="text-gray-700 allowedAccountno">
+                                {{'clientsApi.table.header.allowedAccountNo'|transloco}}
+                                <p-sortIcon field="allowedAccountno"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="status" class="text-right status">
+                                {{'clientsApi.table.header.status'|transloco}}
+                                <p-sortIcon field="status"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-client>
+                        <tr [pSelectableRow]="client">
+                            <td class="row">{{ client.row }}</td>
+                            <td class="name" [pTooltip]="client.name" [tooltipDisabled]="client.name ? client.name.length < 20 : false">
+                                {{ client.name | moreChar19 }}
+                            </td>
+                            <td class="mobileNo">{{ client.mobileNo }}</td>
+                            <td class="organizationCode" [pTooltip]="client.organizationCode" [tooltipDisabled]="client.organizationCode ? client.organizationCode.toString().length < 20 : false">
+                                {{ client.organizationCode | moreChar19 }}
+                            </td>
+                            <td class="allowedAccountno" [pTooltip]="client.allowedAccountno" [tooltipDisabled]="client.allowedAccountno ? client.allowedAccountno.toString().length < 20 : false">
+                                {{ client.allowedAccountno | moreChar19 }}
+                            </td>
+                            <td class="text-right status">
+                                <div
+                                    [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': client.status,
+                                   ' text-red-800 bg-red-300 ': !client.status
+                                   }"
+                                    class="w-[65px] float-right text-center rounded-md"
+                                >
+                                    {{ client.status | statusPipe }}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+   <!-- </p-panel>-->
+
+    <div class="col-span-12" *ngIf="registerFlag">
+        <app-client-api-register [registerClintApi]="clientApiDto" (close)="onClose($event)"></app-client-api-register>
+    </div>
+
+    <div class="col-span-12" *ngIf="updateFlag">
+        <app-client-api-update [updateClient]="clientDto" (close)="onClose($event)"></app-client-api-update>
+    </div>
+
+</div>
+
+<!-- Dialog -->
+<p-dialog
+    [style]="{ 'width': '60%' }"
+    [(visible)]="dialogClientFlag"
+    [modal]="true"
+    [draggable]="false"
+    appendTo="body"
+    [resizable]="true"
+>
+    <p-panel header="{{'انتخاب کلاینت'}}">
+        <div class="grid grid-cols-12 gap-4">
+
+            <div class="col-span-4">
+                <label class="text-gray-700 font-medium">نام کلاینت :</label>
+                <input
+                    [(ngModel)]="clientName"
+                    (keydown.enter)="onKeydownSearch($event)"
+                    pInputText
+                    class="w-full mt-1"
+                />
+            </div>
+
+            <div class="col-span-4">
+                <label class="text-gray-700 font-medium">شماره موبایل :</label>
+                <input
+                    [(ngModel)]="mobile"
+                    (keydown.enter)="onKeydownSearch($event)"
+                    pInputText
+                    class="w-full mt-1"
+                />
+            </div>
+
+            <div class="col-span-4 flex items-end justify-start space-x-2" dir="ltr">
+                <button
+                    pButton
+                    label="{{'button.search' | transloco}}"
+                    icon="pi pi-search"
+                    (click)="clientSearch()"
+                    class="w-[110px] my-1 bg-blue-500 hover:bg-blue-600 text-white"
+                ></button>
+
+                <button
+                    pButton
+                    label="{{'button.clear' | transloco}}"
+                    [outlined]="true"
+                    icon="pi pi-filter-slash"
+                    (click)="clear()"
+                    class="w-[110px] my-1 bg-gray-200 hover:bg-gray-300 text-black"
+                ></button>
+            </div>
+
+            <div class="col-span-12">
+                <p-card>
+                      <p-table
+styleClass="normal-table"
+
+                        [value]="clientAttachList"
+                        selectionMode="single"
+                        [paginator]="true"
+                        [rows]="rows2"
+                        [showCurrentPageReport]="true"
+                        [(first)]="first2"
+                        [currentPageReportTemplate]="paginationLabel"
+                        [rowsPerPageOptions]="[5,10,25,50,100]"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>ردیف</th>
+                                <th>نام کلاینت</th>
+                                <th>کد سازمان</th>
+                                <th>شماره موبایل</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template let-i="rowIndex" pTemplate="body" let-client>
+                            <tr [pSelectableRow]="client">
+                                <td>{{ i + 1 }}</td>
+                                <td [pTooltip]="client.name" [tooltipDisabled]="client.name ? client.name.length < 20 : false">
+                                    {{ client.name | moreChar19 }}
+                                </td>
+                                <td [pTooltip]="client.organizationCode" [tooltipDisabled]="client.organizationCode ? client.organizationCode.toString().length < 20 : false">
+                                    {{ client.organizationCode | moreChar19 }}
+                                </td>
+                                <td>{{ client.mobileNo }}</td>
+                                <td dir="ltr">
+                                    <button pButton label="انتخاب کلاینت" icon="pi pi-check" (click)="selectedClient(client)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-card>
+            </div>
+
+        </div>
+    </p-panel>
+</p-dialog>

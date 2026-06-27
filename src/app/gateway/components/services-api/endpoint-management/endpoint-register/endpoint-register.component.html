@@ -1,0 +1,157 @@
+<app-breadcrumbs id="section"
+                 [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page" id="section">
+
+    <div class="grid grid-cols-12">
+        <div class="col-span-4" *ngIf="sourceUrlByApi">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>آدرس مبدا :</span></label>
+            <p-inputgroup class="normal-input-group">
+                <input type="text"
+                       [(ngModel)]="sourceUrl"
+                       class="px-3 py-2 text-left rounded-l-none "
+                       (keydown.enter)="onKeydown($event)"
+                       dir="ltr" pInputText
+                       placeholder="for example: wallet/personalwalletaccountstatement" />
+                <p-inputgroup-addon class="normal-inputgroup-addon">
+                    /api/
+                </p-inputgroup-addon>
+            </p-inputgroup>
+        </div>
+        <div class="col-span-4"  *ngIf="!sourceUrlByApi">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>آدرس مبدا :</span>
+            </label>
+            <input [(ngModel)]="sourceUrl" (keydown.enter)="onKeydown($event)" dir="ltr" class="normal-input"
+                   pInputText
+                   placeholder="for example: wallet/personalwalletaccountstatement">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>آدرس Host :</span></label>
+            <p-inputgroup class="normal-input-group">
+                <input type="text"
+                       class="px-3 py-2 text-left rounded-l-none "
+                       [(ngModel)]="destinationHost" (keydown.enter)="onKeydown($event)" dir="ltr"
+                       [disabled]="isDataHub"
+                       pInputText placeholder="for example: www.google.com or 192.168.100.20" />
+                <p-inputgroup-addon class="normal-inputgroup-addon">
+                    https://
+                </p-inputgroup-addon>
+            </p-inputgroup>
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <div class="flex items-center gap-2">
+                <p-checkbox [(ngModel)]="sourceUrlByApi" [binary]="true" inputId="sourceUrlByApi" (onChange)="changeSourceUrlByApi($event)"></p-checkbox>
+                <label class="normal-label" for="sourceUrlByApi">{{ 'آدرس مبدا بصورت پیش فرض دارای /api/ باشد'|transloco }}</label>
+            </div>
+        </div>
+        <div class="col-span-12 mt-2">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>مسیر مقصد :</span></label>
+            <input [(ngModel)]="destinationUri" (keydown.enter)="onKeydown($event)" dir="ltr" class="xx-ggg-12-input"
+                   [disabled]="isDataHub" pInputText>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>پورت مقصد :</span></label>
+            <input [(ngModel)]="destinationPortNumber" (keydown.enter)="onKeydown($event)"
+                   [disabled]="isDataHub" pKeyFilter="int" pInputText maxlength="4" class="normal-input">
+        </div>
+        <div class="col-span-2">
+            <label class="normal-label">
+                <span>وضعیت :</span></label>
+            <p-toggleswitch [(ngModel)]="status" />
+        </div>
+        <div class="col-span-2">
+            <label class="normal-label">
+                <span>متعلق به datahub :</span></label>
+            <p-toggleswitch [(ngModel)]="isDataHub" (onChange)="onChangeIsDataHub($event)" />
+        </div>
+        <div class="col-span-6"></div>
+        <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+            <button pButton label="{{'button.cancel' | transloco}}" (click)="onCancel()"
+                    severity="danger" icon="pi pi-times" [outlined]="true" class="normal-button"></button>&nbsp;
+            <button pButton severity="success" label="{{'ثبت اطلاعات' | transloco}}" icon="pi pi-save"
+                    (click)="onRegister()" class="normal-button"></button>&nbsp;
+        </div>
+    </div>
+</div>
+<p-dialog [style]="{'width':'60%'}" [(visible)]="dialogClientFlag"
+          [modal]="true" [draggable]="false" appendTo="body"
+          [resizable]="true">
+    <p-panel header="{{'انتخاب کلاینت' | transloco}}">
+        <div class="grid grid-cols-12">
+            <div class="col-span-4">
+                <label class="normal-label"> <span>نام کلاینت :</span></label>
+                <input [(ngModel)]="clientName" (keydown.enter)="onKeydownSearch($event)"
+                       pInputText>
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label"> <span>شماره موبایل :</span></label>
+                <input [(ngModel)]="mobile" (keydown.enter)="onKeydownSearch($event)"
+                       pInputText>
+            </div>
+            <div class="col-span-4" dir="ltr">
+                <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin: 6px"
+                        class="normal-button" icon="pi pi-search" (click)="clientSearch()"></button>&nbsp;&nbsp;
+                <button pButton label="{{'button.clear'|transloco}}" class="w-[110px] my-1 px-4 py-2 normal-button "
+                        [outlined]="true"
+                        icon="pi pi-filter-slash"
+                        style="margin: 6px" (click)="clear()"></button>
+            </div>
+
+            <div class="col-span-4"></div>
+            <div class="col-span-4"></div>
+            <div class="col-span-12">
+                <p-card>
+                    <p-table
+                        styleClass="normal-table"
+                        [value]="clientAttachList" selectionMode="single"
+                        [paginator]="true" [rows]="rows2" [showCurrentPageReport]="true" [(first)]="first2"
+                        [currentPageReportTemplate]=paginationLabel
+                        [rowsPerPageOptions]="[5,10,25,50,100]">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="row">table.header.row</th>
+                                <th>نام کلاینت</th>
+                                <th>کد سازمان</th>
+                                <th>شماره موبایل</th>
+                                <th>operation</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template let-i="rowIndex" pTemplate="body" let-client>
+                            <tr [pSelectableRow]="client">
+                                <td class="row">{{ i + 1 }}</td>
+                                <td
+                                    [pTooltip]="client.name"
+                                    [tooltipDisabled]="client.name?
+                                    client.name.length < 20:false"
+                                >
+                                    {{ client.name|moreChar19 }}
+                                </td>
+                                <td
+                                    [pTooltip]="client.organizationCode"
+                                    [tooltipDisabled]="client.organizationCode?
+                                    client.organizationCode.toString().length < 20:false"
+                                >
+                                    {{ client.organizationCode|moreChar19 }}
+                                </td>
+                                <td>{{ client.mobileNo }}</td>
+
+                                <td dir="ltr">
+                                    <button pButton label="انتخاب کلاینت" icon="pi pi-check"
+                                            (click)="selectedClient(client)"></button>&nbsp;
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-card>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>

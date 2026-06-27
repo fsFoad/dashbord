@@ -1,0 +1,278 @@
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false" *ngIf="!addFlag&&!updateFlag&&!endpointFlag&&!apiModuleFlag&&!cacheFlag"></app-breadcrumbs>
+<div class="content-page" *ngIf="!endpointFlag&&!apiModuleFlag&&!updateFlag&&!addFlag&&!cacheFlag">
+    <div class="grid grid-cols-1 xl:grid-cols-12 2xl:grid-cols-12 md:grid-cols-12  " *ngIf="!updateFlag&&!addFlag">
+        <div class="col-span-3 flex text-left   h-12 gap-2 mt-5-5  sm:hidden ">
+            <button name="btn-search-button" pButton label="{{ 'button.search' | transloco }}"
+                    class="normal-button w-[110px]" icon="pi pi-search m-2 mt-3"
+                    (click)="searchClick(true)"></button>&nbsp;&nbsp;
+            <button name="btn-clear-button" pButton label="{{'button.clear'|transloco}}"
+                    icon="pi pi-filter-slash"
+                    class="w-[110px] my-1 px-4 py-2 normal-button "
+                    [outlined]="true" (click)="clear()"></button>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>{{ 'module.table.header.moduleTitle'|transloco }} :</span></label>
+            <input class="normal-input" [(ngModel)]="moduleTitle" (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="hidden btns-search-clear sm:flex">
+            <button pButton
+                    label="{{'button.clear' | transloco}}"
+                    icon="pi pi-filter-slash"
+                    (click)="clear()"
+                    [outlined]="true"
+                    class="mt-1 px-4 pt-2 border normal-button"
+            ></button>
+            <button pButton
+                    label="{{'button.search' | transloco}}"
+                    icon="pi pi-search"
+                    class="w-[110px] mt-1 px-4 pt-2 text-white normal-button"
+                    (click)="searchClick(true)"></button>
+
+
+        </div>
+
+        <div class="col-span-12 my-2">
+            <button pButton label="{{'button.add' | transloco}}" class="normal-button"
+                    icon="pi pi-plus" (click)="showAdd()"></button>
+        </div>
+
+        <div class="col-span-12 ">
+            <p-table
+                styleClass="normal-table"
+                [value]="moduleList"
+                *ngIf="!updateFlag&&!addFlag" selectionMode="single"
+                [(first)]="first">
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'module.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="moduleTitle" class="moduleTitle">
+                            {{ 'module.table.header.moduleTitle'|transloco }}
+                            <p-sortIcon field="moduleTitle"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="moduleType" class="moduleType">
+                            {{ 'module.table.header.moduleType'|transloco }}
+                            <p-sortIcon field="moduleType"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status" class="status">
+                            {{ 'module.table.header.moduleStatus'|transloco }}
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                            {{ 'module.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-module>
+                    <tr [pSelectableRow]="module">
+                        <td class="row">{{ module.row }}</td>
+                        <td class="moduleTitle"
+                            [pTooltip]="module.moduleTitle"
+                            [tooltipDisabled]="module.moduleTitle?module.moduleTitle.length < 20:false"
+                        >
+                            {{ module.moduleTitle|moreChar19 }}
+                        </td>
+                        <td class="moduleType">{{ module.moduleType|moduleType }}</td>
+                        <td class="status" [ngStyle]="{'text-align': 'center !important'}">
+                            <div [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': module.status,
+                                   ' text-red-800 bg-red-300 ': !module.status
+                                   }"
+                                 class="w-[65px] float-right text-center rounded-md">
+                                {{ module.status|statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button (click)="setRecord(module);menu.toggle($event)" type="button"
+                                    class="p-button-rounded "
+                                    pButton
+                                    pRipple icon="pi pi-chevron-down"></button>&nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="grid grid-cols-12 col-span-12 mt-4 items-center gap-4 justify-center" *ngIf="!addFlag">
+            <div class="col-span-4"></div>
+            <div class="flex items-center justify-center gap-2 col-span-4">
+                <button
+                    pButton
+                    pRipple class="normal-button"
+                    [disabled]="(this.pageno) == 0"
+                    (click)="previousPageStatement()"
+                    pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                >
+                    <i class="pi pi-arrow-right"></i>
+                </button>
+                <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+                <button
+                    pButton
+                    pRipple
+                    name="btn-previous-page"
+                    class="normal-button"
+                    [disabled]="this.partyList.length < pagesize"
+                    (click)="nextPageStatement()"
+                    pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                >
+                    <i class="pi pi-arrow-left"></i>
+                </button>
+                <p-dropdown class="normal-dropdown-pagination"
+                            [options]="pagesizeOptions"
+                            optionValue="code"
+                            [autoDisplayFirst]="true"
+                            optionLabel="name"
+                            [(ngModel)]="pagesize"
+                            (onChange)="OnchangePageno($event)"
+                            [disabled]="nextBtnFlag">
+                </p-dropdown>
+            </div>
+            <div class="col-span-4"></div>
+        </div>
+    </div>
+</div>
+<div class="col-12" *ngIf="updateFlag">
+    <app-module-api-update (close)="onClose($event)" [inputModuleUpdate]="ModuleDto"
+                           *ngIf="updateFlag"></app-module-api-update>
+</div>
+<div class="col-12">
+    <app-basemodule-api-add *ngIf="addFlag" [inputParty]="partyDto" (close)="onClose($event)"></app-basemodule-api-add>
+</div>
+<div class="col-12" *ngIf="endpointFlag">
+    <app-endpoint-management (close)="onClose($event)" [inputEndpoint]="ModuleDto"></app-endpoint-management>
+</div>
+<div class="col-12" *ngIf="apiModuleFlag">
+    <app-basemodule-api-module [inputModule]="ModuleDto" (close)="onClose($event)"></app-basemodule-api-module>
+</div>
+<div class="w-full" *ngIf="cacheFlag">
+    <app-cache [inputCachePartyBase]="ModuleDto" (close)="onCloseCache($event)"></app-cache>
+</div>
+<p-dialog [style]="{'width':'55%'}" [(visible)]="geeks" [modal]="true" [draggable]="false"
+          [resizable]="true" appendTo="body">
+    <p-panel header="{{'module.dialog.header.chooseParty'|transloco}}">
+        <div class="content-page" *ngIf="!addFlag&&!updateFlag">
+            <div class="grid grid-cols-12">
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>{{ 'module.dialog.table.header.partyName'|transloco }}
+                        :</span></label>
+                    <input class="normal-input" [(ngModel)]="title" [minlength]="minLength_partyName" pInputText>
+                </div>
+                <div class="col-span-8" dir="ltr">
+
+                    <button pButton label="{{'button.clear'|transloco}}" [outlined]="true" icon="pi pi-filter-slash"
+                            class="normal-button mt-5 m-2" (click)="clearParty()"></button> &nbsp;&nbsp;
+                    <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin-top: 20px"
+                            class="normal-button mt-5 m-2" icon="pi pi-search" (click)="searchParty()"></button>
+                </div>
+            </div>
+            <br>
+
+          <!--  <p-table
+                styleClass="normal-table"
+                [value]="partyList" selectionMode="single">-->
+            <p-table
+                styleClass="normal-table"
+                [value]="partyList"
+                *ngIf="!updateFlag && !addFlag"
+                [paginator]="true"
+                [rows]="pagesizeParty"
+                [first]="firstParty"
+                [totalRecords]="totalRecordsParty"
+                [showCurrentPageReport]="true"
+                [currentPageReportTemplate]="paginationLabelParty"
+                [rowsPerPageOptions]="[5,10,20,50,100]"
+                paginatorDropdownAppendTo="body"
+                selectionMode="single"
+                (onPage)="OnchangePagenoParty($event)"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'module.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="title" class="title">
+                            {{ 'module.dialog.table.header.partyName'|transloco }}
+                            <p-sortIcon field="title"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="createDate" class="createDate">
+                            {{ 'module.dialog.table.header.createDate'|transloco }}
+                            <p-sortIcon field="createDate"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status" class="status">
+                            {{ 'module.dialog.table.header.partyStatus'|transloco }}
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th class="text-right border-r  ">
+                            {{ 'module.dialog.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-party>
+                    <tr [pSelectableRow]="party">
+                        <td class="row">{{ party.row }}</td>
+                        <td class="title"
+                            [pTooltip]="party.title"
+                            [tooltipDisabled]="party.title?party.title.length < 20:false"
+                        >
+                            {{ party.title|moreChar19 }}
+                        </td>
+                        <td dir="ltr" class="createDate text-right">{{ party.createDate }}</td>
+                        <td class="status" [ngStyle]="{'text-align': 'center !important'}">
+                            <div [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': party.status,
+                                   ' text-red-800 bg-red-300 ': !party.status
+                                   }"
+                                 class="w-[65px] float-right text-center rounded-md"
+                            >
+                                {{ party.status|statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button pButton icon="pi pi-check" label="{{'module.dialog.button.operation'|transloco}}"
+                                    class="normal-button" (click)="showAddParty(party)"></button>&nbsp;
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <br>
+            <div class="flex items-center justify-center gap-2 col-span-4">
+                <button
+                    pButton
+                    pRipple class="normal-button"
+                    [disabled]="(this.pagenoParty) == 0"
+                    (click)="previousPageStatementParty()"
+                    pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                >
+                    <i class="pi pi-arrow-right"></i>
+                </button>
+                <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+                <button
+                    pButton
+                    pRipple
+                    name="btn-previous-page"
+                    class="normal-button"
+                    [disabled]="this.partyList.length < pagesizeParty"
+                    (click)="nextPageStatementParty()"
+                    pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                >
+                    <i class="pi pi-arrow-left"></i>
+                </button>
+                <p-dropdown class="normal-dropdown-pagination"
+                            [options]="pagesizeOptions"
+                            optionValue="code"
+                            [autoDisplayFirst]="true"
+                            optionLabel="name"
+                            [(ngModel)]="pagesize"
+                            (onChange)="OnchangePagenoParty($event)"
+                            [disabled]="nextBtnFlagParty">
+                </p-dropdown>
+            </div>
+
+        </div>
+    </p-panel>
+</p-dialog>

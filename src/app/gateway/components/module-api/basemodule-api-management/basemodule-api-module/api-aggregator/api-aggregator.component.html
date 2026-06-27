@@ -1,0 +1,191 @@
+<div class="page-container">
+
+    <div class="loading-overlay" *ngIf="loading">
+        <app-fs-progress-spinner></app-fs-progress-spinner>
+    </div>
+    <p-toast *ngIf="!registerAggregatorFlag" />
+    <app-breadcrumbs [showBackButton]="true" id="section" *ngIf="!registerAggregatorFlag"
+                     (backClicked)="BeforeButton()"></app-breadcrumbs>
+    <div class="aggregators-wrapper" *ngIf="!registerAggregatorFlag">
+        <div class="aggregator-panel">
+            <div class="page-actions" *ngIf="pagedAggregators && pagedAggregators.length > 0;">
+                <button
+                    pButton
+                    type="button"
+                    label="ایجاد اگریگیتور"
+                    icon="pi pi-plus"
+                    class="create-btn"
+                    (click)="createAggregator()">
+                </button>
+            </div>
+            <!-- Cards -->
+            <div class="cards-grid"
+                 *ngIf="pagedAggregators && pagedAggregators.length > 0;
+                  else emptyState">
+                <div
+                    class="aggregator-card"
+                    *ngFor="let aggregator of pagedAggregators;
+                        let i = index"
+                    [class.disabled-card]="aggregator.status !== 1">
+                    <div class="card-header">
+                        <div class="card-title-section">
+                            <div class="card-counter">
+                                {{ currentPage * pageSize + i + 1 }}
+                            </div>
+                            <span class="card-title">
+                            تنظیمات اگریگیتور سرویس
+                        </span>
+                        </div>
+                        <p-menu
+                            #menu
+                            [popup]="true"
+                            appendTo="body"
+                            [model]="menuItems">
+                        </p-menu>
+                        <button
+                            pButton
+                            icon="pi pi-ellipsis-v"
+
+                            class="card-menu-btn p-button-rounded p-button-text"
+                            (click)="menu.toggle($event); setRecord(aggregator)">
+                        </button>
+                    </div>
+                    <div class="card-top">
+                        <div class="column">
+                        <span class="info-title">
+                            کلاینت های شرکت کرده در اگریگیتور:
+                        </span>
+                            <div class="chips-container">
+                            <span
+                                class="chip"
+                                *ngFor="let client of aggregator.clientNames.slice(0,6)">
+
+                                {{ client }}
+
+                            </span>
+                                <span
+                                    class="more-chip"
+                                    *ngIf="aggregator.clientNames.length > 6"
+                                    [pTooltip]="aggregator.clientNames.slice(6).join('\n')">
+                               <!-- pTooltip="{{ aggregator.clientNames.join(', ') }}"-->
+
+                                +{{ aggregator.clientNames.length - 6 }}
+                            </span>
+                            </div>
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="column">
+                        <span class="info-title">
+                            سرویس های شرکت کرده در اگریگیتور:
+                        </span>
+                            <div class="chips-container">
+                           <!-- <span class="chip" *ngFor="let api of aggregator.secondApiNames.slice(0,6)">
+                                {{ api }}
+                            </span>-->
+                                <span
+                                    class="chip"
+                                    *ngFor="let api of aggregator.secondApiNames.slice(0,6)"
+                                    [pTooltip]="api">
+
+    <span class="chip-text">
+        {{ api }}
+    </span>
+
+</span>
+                                <span
+                                    class="more-chip"
+                                    *ngIf="aggregator.secondApiNames.length > 6"
+                                    [pTooltip]="aggregator.secondApiNames.slice(6).join('\n')">
+                                +{{ aggregator.secondApiNames.length - 6 }}
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-divider"></div>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                        <span class="value">
+                            {{ aggregator.aggregatedServiceCount }}
+                        </span>
+                            <span class="label">
+                            <i class="pi pi-server"></i>
+                            سرویس
+                        </span>
+                        </div>
+                        <div class="stat-item">
+                        <span class="value">
+                            {{ aggregator.aggregateMapCount }}
+                        </span>
+
+                            <span class="label">
+                            <i class="pi pi-share-alt"></i>
+                            مپینگ
+                        </span>
+                        </div>
+                        <div class="stat-item">
+                        <span class="value">
+                            {{ aggregator.aggregateResponseCount }}
+                        </span>
+                            <span class="label">
+                            <i class="pi pi-sitemap"></i>
+                            پاسخ سرویس
+                        </span>
+                        </div>
+                        <div class="stat-item">
+                        <span
+                            class="value status-value"
+                            [class.inactive]="aggregator.status !== 1">
+                            {{ aggregator.status === 1 ? 'فعال' : 'غیرفعال' }}
+                        </span>
+                            <span class="label">
+                            <i class="pi pi-check-circle"></i>
+                            وضعیت
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #emptyState>
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        <i class="pi pi-server"></i>
+                    </div>
+
+                    <h3>هیچ اگریگیتوری یافت نشد</h3>
+
+                    <p>
+                        هنوز هیچ اگریگیتوری ثبت نشده است.
+                        برای شروع یک اگریگیتور جدید ایجاد کنید.
+                    </p>
+
+                    <button
+                        pButton
+                        label="ایجاد اگریگیتور"
+                        icon="pi pi-plus"
+                        class="p-button-primary"
+                        (click)="createAggregator()">
+                    </button>
+
+                </div>
+            </ng-template>
+            <!-- Pagination -->
+            <div class="paginator-wrapper">
+                <p-paginator
+                    [rows]="pageSize"
+                    [totalRecords]="aggregators.length"
+                    [first]="currentPage * pageSize"
+                    (onPageChange)="onPageChange($event)">
+                </p-paginator>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-span-12" *ngIf="registerAggregatorFlag">
+    <app-aggregator-config [inputAggregatorConfig]="aggregatorDto" [isViewMode]="isViewMode"
+                           (close)="onClose($event)"></app-aggregator-config>
+</div>
+
+

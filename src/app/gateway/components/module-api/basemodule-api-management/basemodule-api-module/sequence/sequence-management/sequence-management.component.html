@@ -1,0 +1,127 @@
+<p-toast *ngIf="!addFlag&&!displayFlag"/>
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()" *ngIf="!addFlag&&!displayFlag"></app-breadcrumbs >
+<div class="content-page " *ngIf="!addFlag&&!displayFlag">
+    <div>
+        <div class="col-span-12 my-5">
+            <button pButton label="{{'button.addSequence' | transloco}}"  class="w-[260px] my-1 px-4 py-2 text-white normal-button"
+                    icon="pi pi-plus" (click)="showAdd()"></button>
+        </div>
+        <div class="col-span-12">
+
+              <p-table
+styleClass="normal-table"
+ [value]="sequenceList" selectionMode="single" [lazy]="true"
+                     [loading]="loading">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="row">
+                            {{ 'sequence.table.header.row'|transloco }}
+                        </th>
+                        <th class="apiTitle">
+                            {{'sequence.table.header.apiTitle'|transloco}}
+                        </th>
+                        <th class="title">
+                            {{ 'sequence.table.header.title'|transloco }}
+                        </th>
+                        <th class="clientTitle text-center">
+                            {{'sequence.table.header.clientTitle'|transloco}}
+                        </th>
+                        <th class="status">
+                            {{ 'sequence.table.header.status'|transloco }}
+                        </th>
+                        <th class="text-right border-r  ">
+                            {{ 'sequence.table.header.operation'|transloco }}</th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-sequence>
+                    <tr [pSelectableRow]="sequence">
+                        <td class="row">{{ sequence.row }}</td>
+                        <td class="apiTitle"
+                            [pTooltip]="sequence.apiTitle"
+                            [tooltipDisabled]="sequence.apiTitle?sequence.apiTitle.length < 20:false"
+                        >
+                            {{ sequence.apiTitle|moreChar19 }}
+                        </td>
+                        <td class="title"
+                            [pTooltip]="sequence.title"
+                            [tooltipDisabled]="sequence.title?sequence.title.length < 20:false"
+                        >
+                            {{ sequence.title|moreChar19 }}
+                        </td>
+
+                        <td class="clientName text-center"
+                            [pTooltip]="sequence.clientName"
+                            [tooltipDisabled]="sequence.clientName?sequence.clientName.length < 20:false"
+                            [ngStyle]="{'text-align': 'center !important'}"
+                        >
+                            <div [ngStyle]="{ 'border-radius':' 2.5px','color':sequence.clientName === null ?
+                         '#8c1a1f' :'',
+                         'background-color': sequence.clientName === null ?'#dc8585' :false,
+                           'width':sequence.clientName === null ?'90px':'auto','margin':' 0 auto'}">
+                                {{ sequence.clientName|clientNameSequence }}
+                            </div>
+
+                        </td>
+
+                        <td class="text-right">
+                            <div
+                                [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': sequence.status,
+                                   ' text-red-800 bg-red-300 ': !sequence.status
+                                   }"
+                                class="w-[65px] float-right text-center rounded-md"
+                            >
+                                {{ sequence.status | statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button  type="button" class="p-button-rounded "
+                                     pButton pRipple icon="pi pi-chevron-down"  (click)="setRecord(sequence); menu.toggle($event)"></button>&nbsp;
+                            <p-tieredMenu appendTo="body" #menu [popup]="true" [model]="items">
+                            </p-tieredMenu>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center" >
+        <div class="col-span-4"></div>
+
+        <div class="flex items-center justify-center gap-2 col-span-4">
+            <button
+                pButton
+                pRipple
+                pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                [disabled]="pageno == 0"
+                (click)="previousPageStatement()"
+
+            > <i class="pi pi-arrow-right"></i></button>
+            <span>{{ pageDescription }}</span>
+            <button
+                pButton
+                pRipple
+                pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                [disabled]="sequenceList.length < pagesize"
+                (click)="nextPageStatement()"
+
+            > <i class="pi pi-arrow-left"></i></button>
+            <p-dropdown
+                [options]="pagesizeOptions"
+                optionValue="code"
+                optionLabel="name"
+                [(ngModel)]="pagesize"
+                (onChange)="OnchangePageno($event)"
+                [disabled]="nextBtnFlag"
+                class="normal-dropdown-pagination"
+            ></p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+    </div>
+</div>
+<div class="col-span-12" *ngIf="addFlag">
+    <app-sequence-register [inputSequenceRegister]="sequenceDto" (close)="onClose($event)"></app-sequence-register>
+</div>
+<div class="col-span-12" *ngIf="displayFlag">
+    <app-sequence [inputSequence]="sequenceDto" (close)="onClose($event)"></app-sequence>
+</div>

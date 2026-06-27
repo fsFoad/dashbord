@@ -1,0 +1,241 @@
+.dbEngineId{
+    width: 7%;
+}
+.dbName{
+    width: 7%;
+}
+.ip{
+    width: 7%;
+}
+.commandTypeId{
+    width: 12%;
+}
+
+.status{
+    width: 8%;
+    text-align: left;
+}
+
+.hubTitle{
+    width: 10%;
+}
+:host ::ng-deep.input-w85 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w92 {
+    width: 92%;
+    min-width: 92%;
+    max-width: 100%;
+}
+:host ::ng-deep.dropdown-w70 {
+    width: 70%;
+    min-width: 70%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w85 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 100%;
+}
+/*----------------------------------*/
+
+.queryListDiv {
+    border:1px solid var(--p-inputtext-border-color);
+    padding: 20px;
+    width: 100%;
+    resize: vertical;
+    overflow: auto;
+    min-width: 89px;
+    background-color: var(--p-inputtext-background);
+    border-radius: 0.75rem/* 12px */ !important;;
+}
+
+:host ::ng-deep.p-dropdown-panel .p-dropdown-items .p-dropdown-item .style-item-dropdown {
+    margin: 0;
+    padding: 0.75rem 0.5rem;
+    border: 1px solid transparent;
+    color: #323130;
+    background: transparent;
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+    text-align: left;
+}
+
+:host ::ng-deep.dropdown-w50 {
+    width: 55%;
+    min-width: 55%;
+    text-align: left;
+    max-width: 55%;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.38);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+    border-radius: 4px;
+    height: 30px;
+}
+:host ::ng-deep.dropdown-w70 {
+    width: 70%;
+    min-width: 70%;
+    max-width: 100%;
+}
+:host ::ng-deep.dropdown-w100 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 85%;
+}
+:host ::ng-deep.dropdown-wi100 {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w70 {
+    width: 70%;
+    min-width: 70%;
+    max-width: 100%;
+}
+
+:host ::ng-deep.pass-w70{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+:host ::ng-deep.input-w85 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w73 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w100 {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+:host ::ng-deep.p-panel .p-panel-content{
+    min-height: 450px;
+
+}
+
+:host ::ng-deep .content-hub{
+    height: 95%;
+}
+:host ::ng-deep .footer-hub{
+    height: 5%;
+}
+:host ::ng-deep.row {
+    width: 2%;
+}
+:host ::ng-deep.select {
+    text-align: right !important;
+    border-right: 1px solid #ebe8e8;
+    width: 1%;
+}
+.panel-hub{
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 345px;
+    display: flex;
+}
+.operation {
+
+    width: 15%;
+}
+
+.paramName {
+    width: 15%;
+
+}
+.input {
+    width: 15%;
+}
+.inputName {
+    width: 15%;
+}
+.output {
+    width: 10%;
+}
+.successValue {
+    width: 15%;
+}
+.outputName {
+    width: 15%;
+}
+.aliasOutputParamName {
+    width: 15%;
+}
+.encrypt {
+    width: 15%;
+}
+
+.paramName {
+    width: 10%;
+}
+.paramType {
+    width: 30%;
+}
+
+.dataType {
+    width: 10%;
+}
+.operationTypeId {
+    width: 10%;
+}
+
+.tdStatus {
+    width: 7%;
+}
+.isEcrypt {
+    width: 14%;
+}
+
+.paramValue {
+    width: 10%;
+}
+
+.status {
+    width: 9%;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.fontHub {
+
+    font-size: 13px;
+
+}
+.inner-textarea {
+    min-height: 85px;
+    height: 85px;
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+}
+:host ::ng-deep.messageSize{
+    font-size: 14px;
+}
+.cell-editor {
+    height: 100%;
+    width: 100%;
+}
+.row{
+    width: 10%;
+}
+.code{
+    width: 5%;
+}
+.title{
+    width: 10%;
+}
+.tableId{
+    width: 10%;
+}.isSystemMessage{
+    width: 5%;
+}
+.choose{
+    width: 5%;
+}

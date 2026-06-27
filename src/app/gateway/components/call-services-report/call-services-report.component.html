@@ -1,0 +1,89 @@
+<p-toast/>
+<app-breadcrumbs id="section" *ngIf="!serviceLog" [showBackButton]="false"></app-breadcrumbs>
+<div class="grid flex-column" *ngIf="!serviceLog">
+
+        <div class="content-page">
+            <div class="grid grid-cols-12">
+                <div class="col-span-3">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>تاریخ شروع :</span></label>
+                    <p-persian-calendar class="app-persian-calendar-style" [yearRange]="'1399:1410'"
+                                        [(ngModel)]="fromdate"></p-persian-calendar>
+                </div>
+                <div class="col-span-3">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>تاریخ پایان :</span></label>
+                                        <p-persian-calendar class="app-persian-calendar-style" [yearRange]="'1399:1410'"
+                                                            [(ngModel)]="todate"></p-persian-calendar>
+                </div>
+                <div class="col-span-3" ></div>
+                <div class="col-span-3 btns-search-clear ">
+                    <button pButton label="{{'button.clear'|transloco}}"
+                            class="my-1 px-4 py-2 border normal-button" [outlined]="true"
+                            icon="pi pi-filter-slash"
+                            (click)="clear()"></button>
+                    <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin: 6px"
+                            class="w-[110px] my-1 px-4 py-2 text-white normal-button" icon="pi pi-search" (click)="search()"></button>&nbsp;&nbsp;
+                </div>
+                <div class="col-span-12">
+                    <div *ngIf="tblFlag" dir="ltr">
+                        <button pButton label="دانلود" class="normal-button"
+                                icon="pi pi-download" (click)="downloadData()"
+
+                        ></button>
+                    </div>
+                </div>
+            </div>
+              <p-table
+styleClass="normal-table"
+ [value]="reportApiList" *ngIf="tblFlag"
+                     [paginator]="true" [rows]="rows"
+                     selectionMode="single"
+                     [showCurrentPageReport]="true"
+                     [(first)]="first"
+                     [currentPageReportTemplate]=paginationLabel
+                     [rowsPerPageOptions]="[5,10,25,50,100]"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام سازمان</th>
+                        <th>عنوان ماژول</th>
+                        <th>عنوان سرویس</th>
+                        <th>نام کلاینت</th>
+                        <th>تعداد فراخوانی موفق</th>
+                        <th>تعداد فراخوانی ناموفق</th>
+                        <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                            {{ 'callServicesReport.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-i="rowIndex" let-report>
+                    <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ report.PARTY_TITLE }}</td>
+                        <td>{{ report.MODULE_TITLE }}</td>
+                        <td>{{ report.API_TILE }}</td>
+                        <td>{{ report.CLIENT_NAME }}</td>
+                        <td>{{ report.SUCCESSCOUNT }}</td>
+                        <td>{{ report.FAILEDCOUNT }}</td>
+                        <td class="text-right border-r  ">
+                            <button (click)="setRecordReport(report)" type="button"
+                                    class="p-button-rounded  "
+                                    pButton
+                                    pRipple icon="pi pi-chevron-down" (click)="menuDaily.toggle($event)"></button>&nbsp;
+                            <p-menu appendTo="body" #menuDaily [popup]="true" [model]="itemsReport"></p-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+
+</div>
+<div class="col-span-12" *ngIf="serviceLog">
+    <app-log-reports [inputChartCallApiReport]="dataLog" (close)="onClose($event)"></app-log-reports>
+</div>

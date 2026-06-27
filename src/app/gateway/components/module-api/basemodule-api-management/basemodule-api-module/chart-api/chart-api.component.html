@@ -1,0 +1,117 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"></app-breadcrumbs>
+
+
+
+          <!--  <div class="w-max">
+                <label  >
+                    <span >وضعیت سرویس در </span>
+                </label>
+            </div>
+            <div class="col-span-0">
+                <p-dropdown
+                    id="day"
+                    class="narrow-dropdown"
+                    [options]="dayOptions"
+                    [(ngModel)]="day"
+                    optionValue="code"
+                    optionLabel="name"
+                    (onChange)="onChange($event)"
+                >
+                </p-dropdown>
+            </div>
+            <div class="col-span-2">
+                <label class="normal-label"> <span > روز گذشته</span></label>
+            </div>-->
+        <div class="grid grid-cols-12 mx-5 my-10">
+            <div class="col-span-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-max">
+                        <label>
+                            <span>وضعیت سرویس در</span>
+                        </label>
+                    </div>
+                    <div>
+                        <p-dropdown
+                            id="day"
+                            class="narrow-dropdown"
+                            [options]="dayOptions"
+                            [(ngModel)]="day"
+                            optionValue="code"
+                            optionLabel="name"
+                            (onChange)="onChange($event)">
+                        </p-dropdown>
+                    </div>
+                    <div>
+                        <label class="normal-label">
+                            <span>روز گذشته</span>
+                        </label>
+                    </div>
+
+
+
+                    <!--                <p-radio-button  inputId="Option1" label=" نمودار خطی " name="chartType" value="val1"
+                                                    (onFocus)="onFocus('val1')" [(ngModel)]="selectedValue1"></p-radio-button>
+                                 &lt;!&ndash;   <p-radiobutton inputId="Option1" label=" نمودار خطی " name="chartType" value="val1"
+                                                   (onFocus)="onFocus('val1')" [(ngModel)]="selectedValue1"/>&ndash;&gt;
+                                    <p-radio-button inputId="Option2" label=" نمودار میله ای " name="chartType" value="val2"
+                                                   (onFocus)="onFocus('val2')" [(ngModel)]="selectedValue1"></p-radio-button>-->
+                    <!-- <div class="flex flex-col gap-4">
+                            <p-radiobutton inputId="Option1" label=" نمودار خطی " name="chartType" value="val1"
+                                           (onFocus)="onFocus('val1')" [(ngModel)]="selectedValue1" />
+                            <p-radiobutton inputId="Option2" label=" نمودار میله ای " name="chartType" value="val2"
+                                           (onFocus)="onFocus('val2')" [(ngModel)]="selectedValue1" />
+                    </div>-->
+
+                </div>
+            </div>
+            <div class="col-span-4" *ngIf="chartFlag">
+                <!--<div class="flex items-center gap-4">
+                    &lt;!&ndash; اولین رادیو باتن &ndash;&gt;
+                    <div class="flex items-center">
+                        <p-radiobutton inputId="Option1" name="chartType" value="val1"
+                                       [(ngModel)]="selectedValue1" (onFocus)="onFocus('val1')">
+                        </p-radiobutton>
+                        <label for="Option1" class="ml-2">نمودار خطی</label>
+                    </div>
+
+                    &lt;!&ndash; دومین رادیو باتن &ndash;&gt;
+                    <div class="flex items-center">
+                        <p-radiobutton inputId="Option2" name="chartType" value="val2"
+                                       [(ngModel)]="selectedValue1" (onFocus)="onFocus('val2')">
+                        </p-radiobutton>
+                        <label for="Option2" class="ml-2">نمودار میله‌ای</label>
+                    </div>
+                </div>-->
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton inputId="Option1" name="chartType" value="val1"
+                                       [(ngModel)]="selectedValue1" (onFocus)="onFocus('val1')"></p-radiobutton>
+                        <label for="opt1">نمودار خطی</label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton inputId="Option2" name="chartType" value="val2"
+                                       [(ngModel)]="selectedValue1" (onFocus)="onFocus('val2')"></p-radiobutton>
+                        <label for="opt2">نمودار میله‌ای</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-4"></div>
+            <div *ngIf="chartFlag" class="col-span-12">
+                <p-chart *ngIf="chartLineFlag"
+                         [responsive]="true" type="line"
+                         [data]="chatDataLine"
+                         [options]="chatOptions"
+                ></p-chart>
+                <p-chart *ngIf="chartComboFlag"
+                         [responsive]="true" type="bar"
+                         [data]="chatDataBar"
+                         [options]="barOption"
+                ></p-chart>
+
+            </div>
+        </div>
+
+
+
+

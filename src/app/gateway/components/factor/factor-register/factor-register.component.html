@@ -1,0 +1,1059 @@
+<p-toast />
+<app-breadcrumbs id="section" *ngIf="!previewFlag"
+                 [showBackButton]="true" (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="content-page" *ngIf="!previewFlag">
+        <div class="grid grid-cols-12">
+            <div class="col-span-12 flex flex-row gap-2">
+                <div disabled>
+                    {{ titleCategory1 }}
+                    <span [ngStyle]="{ 'color': '#7229a9'}"
+                          [pTooltip]="partyTitle"
+                          [tooltipDisabled]="partyTitle?partyTitle.length < 19:false"
+                    >{{ "(" + partyTitle + ")"|threeDotBreadcrumbPipe }}
+                    </span>
+                </div>
+                <div (click)="openDialog()">
+                    &#8592;
+                    <span [ngStyle]="{ 'color': '#37A1FF'}"> {{ countApiTitle }}</span>
+                    <span [ngStyle]="{ 'color': '#7229a9'}"
+                    >{{ "(" + countApi + ")" }}
+                    </span>
+                </div>
+            </div>
+            <div class="col-span-3">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>تاریخ شروع :</span></label>
+                <p-persian-calendar class="app-persian-calendar-style"
+                                    [yearRange]="'1399:1410'"
+                                    [(ngModel)]="fromDate"
+                                    (onInput)="changeCalender($event)"
+                                    (keydown.enter)="onKeydownSearch($event)"
+                                    [disabled]="displayFlag">
+                </p-persian-calendar>
+            </div>
+            <div class="col-span-3">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>تاریخ پایان :</span></label>
+                <p-persian-calendar class="app-persian-calendar-style" [yearRange]="'1399:1410'"
+                                     [(ngModel)]="toDate"
+                                     (change)="changeCalender($event)"
+                                     (keydown.enter)="onKeydownSearch($event)"
+                                     [disabled]="displayFlag"
+                 >
+                 </p-persian-calendar>
+            </div>
+            <div class="col-span-3"></div>
+            <div class="col-span-3" dir="ltr">
+                <button pButton label="{{'button.clear'|transloco}}" icon="pi pi-filter-slash"
+                        style="margin: 3px;margin-top: 20px" (click)="clear()"
+                        class="normal-button"
+                        [outlined]="true"
+                        [disabled]="displayFlag"></button>
+                <button pButton label="{{'button.search' | transloco}}"
+                        style="width: 110px;margin: 3px;margin-top: 20px"
+                        class="normal-button" icon="pi pi-search"
+                        (click)="search()"
+                        [disabled]="displayFlag"></button>&nbsp;&nbsp;
+            </div>
+        </div>
+        <br>
+        <div class="grid grid-cols-12" *ngIf="this.factorObj.billId == null || this.factorObj.billId == undefined">
+            <div class="col-span-4 flex flex-row gap-1" dir="rtl">
+                <label for='binary'>انتخاب همه موارد</label>
+                <p-checkbox [(ngModel)]="checkedAllItems" binary="false" inputId="binary"
+                            (onChange)="selectAllItems()" [disabled]="selectFlag"></p-checkbox>
+
+            </div>
+            <div class="col-span-8"></div>
+
+        </div>
+
+          <p-table
+styleClass="normal-table"
+ [value]="summaryList" [paginator]="true" [rows]="rows"
+                 [(selection)]="selectedItem" [selectAll]="checkedAllItems"
+                 (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+                 [showCurrentPageReport]="true" [(first)]="first"
+                 [currentPageReportTemplate]=paginationLabel
+                 [rowsPerPageOptions]="[5,10,25,50,100]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4rem" transloco="">
+                        انتخاب
+                    </th>
+                    <th pSortableColumn="row" class="row">
+                        ردیف
+                        <p-sortIcon field="row"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="partyTitle" class="partyTitle">
+                        نام سازمان
+                        <p-sortIcon field="partyTitle"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="apiTitle" class="apiTitle">
+                        سرویس
+                        <p-sortIcon field="apiTitle"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="clientTitle" class="clientTitle">
+                        کلاینت
+                        <p-sortIcon field="clientTitle"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="summaryDate" class="summaryDate">
+                        تاریخ محاسبه
+                        <p-sortIcon field="summaryDate"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="rdate" class="rdate">
+                        تاریخ ثبت
+                        <p-sortIcon field="rdate"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="detailFeeAmount" class="detailFeeAmount">
+                        مبلغ صورتحساب
+                        <p-sortIcon field="detailFeeAmount"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="totalFeeAmount" class="totalFeeAmount">
+                        مبلغ قابل پرداخت
+                        <p-sortIcon field="totalFeeAmount"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="succesCount" class="succesCount">
+                        تعداد فراخوانی موفق
+                        <p-sortIcon field="succesCount"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="failedCount" class="failedCount">
+                        تعداد فراخوانی ناموفق
+                        <p-sortIcon field="failedCount"></p-sortIcon>
+                    </th>
+
+                </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-summary>
+                <tr [pSelectableRow]="summary">
+                    <td>
+                        <p-tableCheckbox [value]="summary" [disabled]="selectFlag"></p-tableCheckbox>
+                    </td>
+                    <td class="row">{{ summary.row }}</td>
+                    <td class="partyTitle"
+                        [pTooltip]="(summary.partyTitle||summary.PARTYTITLE)"
+                        [tooltipDisabled]="(summary.partyTitle||summary.PARTYTITLE)?(summary.partyTitle||summary.PARTYTITLE).length < 20:false"
+                    >
+                        {{ (summary.partyTitle || summary.PARTYTITLE)|moreChar19 }}
+                    </td>
+                    <td class="apiTitle"
+                        [pTooltip]="(summary.apiTitle||summary.APITITLE)"
+                        [tooltipDisabled]="(summary.apiTitle||summary.APITITLE)?(summary.apiTitle||summary.APITITLE).length < 20:false">
+                        {{ (summary.apiTitle || summary.APITITLE)|moreChar19 }}
+                    </td>
+                    <td class="clientTitle"
+                        [pTooltip]="(summary.clientTitle||summary.CLIENTTITLE)"
+                        [tooltipDisabled]="(summary.clientTitle||summary.CLIENTTITLE)?(summary.clientTitle||summary.CLIENTTITLE).length < 20:false">
+                        {{ (summary.clientTitle || summary.CLIENTTITLE)|moreChar19 }}
+                    </td>
+                    <td class="summaryDate">
+                        {{ (summary.summaryDate || summary.SUMMARYDATE)|castToDate }}
+                    </td>
+
+                    <td class="rdate">
+                        {{ (summary.rdate || summary.RDATE)|castToDate }}
+                    </td>
+
+                    <td class="detailFeeAmount">
+                        {{ (summary.detailFeeAmount || summary.FEEAMOUNT)|addCommaSeparator }}
+                    </td>
+                    <td class="totalFeeAmount">
+                        {{ (summary.totalFeeAmount || summary.TOTALFEEAMOUNT)|addCommaSeparator }}
+                    </td>
+                    <td class="succesCount">
+                        {{ (summary.succesCount || summary.SUCCESSCOUNT) }}
+                    </td>
+                    <td class="failedCount">
+                        {{ (summary.failedCount || summary.FAILEDCOUNT) }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <hr>
+        <div class="grid grid-cols-12">
+            <div class="col-span-4">
+                <label class="normal-label"> <span>مبلغ صورتحساب :</span></label>
+<!--                <input [(ngModel)]="bill" (keydown.enter)="onKeydown($event)" [disabled]="true"-->
+<!--                        pInputText>-->
+                                <amount-box [(ngModel)]="billTotall" [disabled]="true"></amount-box>
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label"> <span>مبلغ تخفیف :</span></label>
+                <!--                <input [(ngModel)]="Discount" (keydown.enter)="onKeydown($event)" pInputText>-->
+               <!-- <amount-box [(ngModel)]="billDiscount" (onInput)="cal($event)"
+                            (onBlur)="cal($event)" (keyup)="cal($event)"
+                            (keydown.enter)="onKeydownCal($event)"
+                            [disabled]="displayFlag"
+                ></amount-box>-->
+
+                <amount-box [(ngModel)]="billDiscount"  (keyup)="cal($event)"
+                            (keydown.enter)="onKeydownCal($event)"
+                            [disabled]="displayFlag"
+                ></amount-box>
+            </div>
+            <div class="col-span-4"></div>
+            <div class="col-span-4">
+                <label class="normal-label"> <span>تعدادکل موارد انتخاب شده :</span></label>
+                <input [(ngModel)]="countSelected" disabled
+                       pInputText class="normal-input">
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label"> <span>مبلغ مالیات :</span></label>
+            <!--    <amount-box [(ngModel)]="billTax" (onInput)="cal($event)"
+                            (onBlur)="cal($event)" (keyup)="cal($event)"
+                            (keydown.enter)="onKeydownCal($event)"
+                            [disabled]="displayFlag"
+                ></amount-box>-->
+                <amount-box [(ngModel)]="billTax" (keyup)="cal($event)"
+                            (keydown.enter)="onKeydownCal($event)"
+                            [disabled]="displayFlag"
+                ></amount-box>
+            </div>
+        </div>
+        <hr>
+        <div class="grid grid-cols-12">
+            <div class="col-span-4"></div>
+            <div class="col-span-4">
+                <label class="normal-label"> <span>مبلغ قابل پرداخت :</span></label>
+                                <amount-box [(ngModel)]="billAmount" [disabled]="true"></amount-box>
+            </div>
+        </div>
+        <hr>
+
+        <div dir="ltr" style="margin-top: 15px">
+            <button pButton label="{{'button.cancel' | transloco}}" class="normal-button"
+                    severity="danger" icon="pi pi-times" [outlined]="true"
+                    (click)="onCancel()"></button>&nbsp;
+            <button pButton label="{{'ثبت اطلاعات' | transloco}}" icon="pi pi-save"
+                    (click)="onRegister()" severity="success" class="normal-button"
+                    *ngIf="!displayFlag"></button>&nbsp;
+            <button pButton icon="pi pi-print"
+                    *ngIf="displayFlag" (click)="onPrint()"></button>
+        </div>
+
+</div>
+<div id="previewId" *ngIf="previewFlag">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+         <link
+                 href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+                 rel="stylesheet"
+         />-->
+    </head>
+    <body>
+    <section class="wrapper-invoice">
+        <!-- switch mode rtl by adding class rtl on invoice class -->
+        <div class="invoice">
+            <div style="
+            text-align: center;
+            font-family: Nazanin;
+            font-style: normal;
+            font-weight: bold;
+"><h2><b> فاکتور سرویس های </b><b>{{ headPartyTitle }}</b></h2></div>
+            <div class="invoice-information" dir="ltr">
+                <p dir="ltr"><span class="font">{{ dateFactoor|castToDate }}</span><span class="font">:تاریخ صدور</span>
+                </p>
+                <p dir="ltr"><span class="font">
+                            {{ billId.toString() + partyId.toString() + billId.toString() }}
+                        </span><span class="font">:شماره فاکتور</span></p>
+            </div>
+            <br>
+            <!-- logo brand invoice -->
+            <div class="invoice-logo-brand">
+                <!-- <h2>Tampsh.</h2> -->
+                <img src="./assets/image/tampsh.png" alt="" />
+            </div>
+            <!-- invoice head -->
+            <div class="invoice-head">
+
+                <div class="head client-data">
+                    <!-- <div class="grid grid-cols-12" style="text-align: right; margin-right: 2%;width: 50%;">-->
+                    <div class="grid fromtoDate">
+                        <div class="col-9"></div>
+                        <div class="col-1-9 ">
+                            <p><span class="font">تاریخ شروع:</span><span class="font">{{ toDate |castToDate }}</span>
+                            </p>
+                        </div>
+                        <div class="col-1-9 font">
+                            <p><span class="font">تاریخ پایان:</span><span class="font">{{ fromDate|castToDate }}</span>
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- invoice body-->
+            <br>
+            <div class="invoice-body" style=" margin-right: 1%;margin-left: 1%">
+
+
+                  <p-table
+styleClass="normal-table"
+ class="table" [value]="summaryList" style="width: 100%">
+
+                    <ng-template pTemplate="header">
+                        <tr>
+
+
+                            <th pSortableColumn="failedCount" class="failedCount font">
+                                تعداد فراخوانی ناموفق
+                            </th>
+                            <th class="font succesCountd">
+                                تعداد فراخوانی موفق
+                            </th>
+                            <th pSortableColumn="totalFeeAmount" class="font totalFeeAmount">
+                                مبلغ قابل پرداخت
+                            </th>
+                            <th pSortableColumn="detailFeeAmount" class="font detailFeeAmount">
+                                مبلغ صورتحساب
+                            </th>
+                            <th pSortableColumn="rdate" class="rdate font">
+                                تاریخ ثبت
+                            </th>
+                            <th pSortableColumn="summaryDate" class="summaryDate font">
+                                تاریخ محاسبه
+                            </th>
+                            <th pSortableColumn="clientTitle" class="clientTitle font">
+                                کلاینت
+                            </th>
+                            <th pSortableColumn="apiTitle" class="apiTitle font">
+                                سرویس
+                            </th>
+                            <th pSortableColumn="row" class="row font">
+                               ردیف
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-summary>
+                        <tr [pSelectableRow]="summary">
+                            <td class="failedCount font">
+                                {{ (summary.failedCount || summary.FAILEDCOUNT) }}
+                            </td>
+                            <td class="succesCountd font">
+                                {{ (summary.succesCount || summary.SUCCESSCOUNT) }}
+                            </td>
+                            <td class="totalFeeAmount font">
+                                {{ (summary.totalFeeAmount || summary.TOTALFEEAMOUNT)|addCommaSeparator }}
+                            </td>
+                            <td class="detailFeeAmount font">
+                                {{ (summary.detailFeeAmount || summary.FEEAMOUNT)|addCommaSeparator }}
+                            </td>
+                            <td class="rdate font">
+                                {{ (summary.rdate || summary.RDATE)|castToDate }}
+                            </td>
+                            <td class="summaryDate font">
+                                {{ (summary.summaryDate || summary.SUMMARYDATE)|castToDate }}
+                            </td>
+                            <td class="clientTitle font"
+                                [pTooltip]="(summary.clientTitle||summary.CLIENTTITLE)"
+                                [tooltipDisabled]="(summary.clientTitle||summary.CLIENTTITLE)?(summary.clientTitle||summary.CLIENTTITLE).length < 20:false">
+                                {{ (summary.clientTitle || summary.CLIENTTITLE) }}
+                            </td>
+                            <td class="apiTitle font"
+                                [pTooltip]="(summary.apiTitle||summary.APITITLE)"
+                                [tooltipDisabled]="(summary.apiTitle||summary.APITITLE)?(summary.apiTitle||summary.APITITLE).length < 20:false">
+                                {{ (summary.apiTitle || summary.APITITLE) }}
+                            </td>
+                            <td class="row font">{{ summary.row }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <table class="table">
+                    <!--<thead>
+                    <tr>
+                        <th>Item Description</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Template Invoice</td>
+                        <td>Rp.75.000</td>
+                    </tr>
+                    <tr>
+                        <td>tax</td>
+                        <td>Rp.5.000</td>
+                    </tr>
+                    </tbody>-->
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="row" class="row">
+                                ردیف
+                            </th>
+                            <th pSortableColumn="apiTitle" class="apiTitle">
+                                سرویس
+                            </th>
+                            <th pSortableColumn="clientTitle" class="clientTitle">
+                                کلاینت
+                            </th>
+                            <th pSortableColumn="summaryDate" class="summaryDate">
+                                تاریخ محاسبه
+                            </th>
+                            <th pSortableColumn="rdate" class="rdate">
+                                تاریخ ثبت
+                            </th>
+                            <th pSortableColumn="detailFeeAmount" class="detailFeeAmount">
+                                مبلغ صورتحساب
+                            </th>
+                            <th pSortableColumn="totalFeeAmount" class="totalFeeAmount">
+                                مبلغ قابل پرداخت
+                            </th>
+                            <th pSortableColumn="succesCount" class="succesCount">
+                                تعداد فراخوانی موفق
+                            </th>
+                            <th pSortableColumn="failedCount" class="failedCount">
+                                تعداد فراخوانی ناموفق
+                            </th>
+                            <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                                operation
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-summary>
+                        <tr [pSelectableRow]="summary" [ngStyle]="{'color':summary.toBill=='1'?
+                    '#258F30' :null,
+                   'background-color':summary.toBill=='1'?'#85DC8F':null }">
+                            <td class="row">{{ summary.row }}</td>
+
+                            <td class="apiTitle"
+                                [pTooltip]="summary.apiTitle"
+                                [tooltipDisabled]="summary.apiTitle?summary.apiTitle.length < 20:false">
+                                {{ summary.apiTitle|moreChar19 }}
+                            </td>
+                            <td class="clientTitle"
+                                [pTooltip]="summary.clientTitle"
+                                [tooltipDisabled]="summary.clientTitle?summary.clientTitle.length < 20:false">
+                                {{ summary.clientTitle|moreChar19 }}
+                            </td>
+                            <td class="summaryDate">
+                                {{ (summary.summaryDate || summary.SUMMARYDATE)|castToDate }}
+                            </td>
+
+                            <td class="rdate">
+                                {{ (summary.rdate || summary.RDATE)|castToDate }}
+                            </td>
+
+                            <td class="detailFeeAmount">
+                                {{ (summary.detailFeeAmount || summary.FEEAMOUNT)|addCommaSeparator }}
+                            </td>
+                            <td class="totalFeeAmount">
+                                {{ (summary.totalFeeAmount || summary.TOTALFEEAMOUNT)|addCommaSeparator }}
+                            </td>
+                            <td class="succesCount">
+                                {{ (summary.succesCount || summary.SUCCESSCOUNT) }}
+                            </td>
+                            <td class="failedCount">
+                                {{ (summary.failedCount || summary.FAILEDCOUNT) }}
+                            </td>
+
+                            <td class="text-right border-r  ">
+                                <button (click)="setRecord(summary)" type="button"
+                                        class="p-button-rounded  "
+                                        pButton
+                                        pRipple icon="pi pi-chevron-down"
+                                        (click)="menu.toggle($event)"></button>&nbsp;
+                                <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </table>
+                <div class="grid grid-cols-12">
+                    <div class="col-7"></div>
+                    <div class="col-span-2">
+                    </div>
+                    <div class="col-3 marginfs">
+                        <div class="flex-table">
+                            <div class="flex-column">
+                                <table class="table-subtotal" style="width:90%">
+                                    <tbody>
+                                    <tr>
+                                        <td><label class="normal-label">
+                                            <span transloco class="font">مبلغ تخفیف :</span></label></td>
+                                        <td><label class="normal-label">
+                                            <span class="font">{{ billDiscount|addCommaSeparator }}</span></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="normal-label">
+                                            <span transloco class="font">مبلغ مالیات :</span></label></td>
+                                        <td><label class="normal-label">
+                                            <span class="font">{{ billTax|addCommaSeparator }}</span></label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label class="normal-label">
+                                            <span transloco class="font">مبلغ قابل پرداخت :</span></label></td>
+                                        <td><label class="normal-label">
+                                            <span class="font">{{ billAmount|addCommaSeparator }}</span></label></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <!--                                    <div class="col-1"></div>-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- invoice total  -->
+
+            </div>
+            <!-- invoice footer -->
+          <!--  <div class="invoice-footer" *ngIf="hidePrint">
+                <button pButton icon="pi pi-print"
+                        (click)="onPrint()" label="چاپ"></button>
+                <button type="button" pButton severity="danger" label="بستن" class="normal-button" icon="pi pi-times"
+                        (click)="previewFlag=false"></button>
+            </div>-->
+        </div>
+
+    </section>
+
+    </body>
+</div>
+<p-dialog [style]="{'width':'55%'}" [(visible)]="dialogApisFlag"
+          [modal]="true" [draggable]="false" appendTo="body"
+          [resizable]="true">
+    <p-panel header="{{'سرویس ها' | transloco}}">
+        <div class="grid grid-cols-12">
+            <div class="col-12">
+                  <p-table
+styleClass="normal-table"
+ selectionMode="single" [value]="apiList"
+                         [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                         [currentPageReportTemplate]=paginationLabel
+                         [rowsPerPageOptions]="[5,10,25,50,100]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 4rem" transloco="">
+                                انتخاب
+                            </th>
+                            <th pSortableColumn="row" class="row">
+                                row
+                                <p-sortIcon field="row"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="title" class="title">
+                                عنوان سرویس
+                                <p-sortIcon field="title"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="name" class="name">
+                                نام سرویس
+                                <p-sortIcon field="name"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="status" class="status">
+                                وضعیت
+                                <p-sortIcon field="status"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-factor>
+                        <tr [pSelectableRow]="factor">
+                            <td>
+                                <p-tableCheckbox [value]="factor"></p-tableCheckbox>
+                            </td>
+                            <td class="row">{{ factor.row }}</td>
+                            <td class="title"
+                                [pTooltip]="factor.title"
+                                [tooltipDisabled]="factor.title?factor.title.length < 50:false"
+                            >
+                                {{ factor.title|moreCharLong }}
+                            </td>
+                            <td class="name"
+                                [pTooltip]="factor.name"
+                                [tooltipDisabled]="factor.name?factor.name.length < 50:false"
+                            >
+                                {{ factor.name|moreCharLong }}
+                            </td>
+                            <td class="status" [ngStyle]="{'text-align': 'center !important'}">
+                                <div [ngStyle]="{ 'border-radius':' 2.5px','color':factor.status == true ?
+                         '#258F30' :'#962515',
+                         'background-color': factor.status == false ?'#F18B7D' : '#85DC8F',
+                         'width':'45px','margin':' 0 auto'}">
+                                    {{ factor.status|statusPipe }}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>
+<p-dialog [style]="{'width':'80%' , 'height':'100%'}" [(visible)]="detailFlag" appendTo="body">
+    <p-panel header="{{'جزئیات فاکتور' | transloco}}">
+          <p-table
+styleClass="normal-table"
+ [value]="detailList" selectionMode="single" [lazy]="true"
+                 [loading]="loading">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="row" class="row">
+                        ردیف
+                    </th>
+                    <th pSortableColumn="partyTitle" class="partyTitle">
+                        نام سازمان
+                    </th>
+                    <th pSortableColumn="apiTitle" class="apiTitle">
+                        سرویس
+                    </th>
+                    <th pSortableColumn="clientTitle" class="clientTitle">
+                        کلاینت
+                    </th>
+                    <!--   <th pSortableColumn="summaryDate" class="summaryDate" >
+                           تاریخ محاسبه
+                       </th>
+                       <th pSortableColumn="rdate" class="rdate" >
+                           تاریخ ثبت
+                       </th>-->
+                    <th pSortableColumn="detailFeeAmount" class="detailFeeAmount">
+                        مبلغ صورتحساب
+                    </th>
+                    <!--  <th pSortableColumn="totalFeeAmount" class="totalFeeAmount" >
+                          مبلغ قابل پرداخت
+                      </th>-->
+                    <th pSortableColumn="succesCount" class="succesCount">
+                        تعداد فراخوانی موفق
+                    </th>
+                    <th pSortableColumn="failedCount" class="failedCount">
+                        تعداد فراخوانی ناموفق
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-summaryD>
+                <tr [pSelectableRow]="summaryD">
+                    <td class="row">{{ summaryD.row }}</td>
+                    <td class="partyTitle"
+                        [pTooltip]="summaryD.partyTitle"
+                        [tooltipDisabled]="summaryD.partyTitle?summaryD.partyTitle.length < 20:false"
+                    >
+                        {{ summaryD.partyTitle|moreChar19 }}
+                    </td>
+                    <td class="apiTitle"
+                        [pTooltip]="summaryD.apiTitle"
+                        [tooltipDisabled]="summaryD.apiTitle?summaryD.apiTitle.length < 20:false">
+                        {{ summaryD.apiTitle|moreChar19 }}
+                    </td>
+                    <td class="clientTitle"
+                        [pTooltip]="summaryD.clientTitle"
+                        [tooltipDisabled]="summaryD.clientTitle?summaryD.clientTitle.length < 20:false">
+                        {{ summaryD.clientTitle|moreChar19 }}
+                    </td>
+                    <!--  <td class="summaryDate">
+                          {{summaryD.summaryDate|castToDate}}
+                      </td>
+  -->
+                    <!--   <td class="rdate">
+                           {{summaryD.rdate|castToDate}}
+                       </td>
+   -->
+                    <td class="detailFeeAmount">
+                        {{ summaryD.detailFeeAmount|addCommaSeparator }}
+                    </td>
+                    <!--<td class="totalFeeAmount">
+                        {{summaryD.totalFeeAmount|addCommaSeparator}}
+                    </td>-->
+                    <td class="succesCount">
+                        {{ summaryD.succesCount }}
+                    </td>
+                    <td class="failedCount">
+                        {{ summaryD.failedCount }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-panel>
+</p-dialog>
+
+
+<!--**************************************************************************-->
+
+
+<!--<p-dialog [style]="{'width': '1222.520px' , 'height': '3508px'}" [(visible)]="previewFlag"-->
+<!--          appendTo="body">-->
+<!--    <p-panel header="پیش نمایش فاکتور">-->
+<!--        &lt;!&ndash;    <head>-->
+<!--                <title>CSS Template</title>-->
+<!--                <meta charset="utf-8">-->
+<!--                <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--                <style>-->
+<!--                    * {-->
+<!--                        box-sizing: border-box;-->
+<!--                    }-->
+
+<!--                    body {-->
+<!--                        font-family: Arial, Helvetica, sans-serif;-->
+<!--                    }-->
+
+<!--                    /* Style the header */-->
+<!--                    header {-->
+<!--                        background-color: #666;-->
+<!--                        padding: 30px;-->
+<!--                        text-align: center;-->
+<!--                        font-size: 35px;-->
+<!--                        color: white;-->
+<!--                    }-->
+
+<!--                    /* Container for flexboxes */-->
+<!--                    section {-->
+<!--                        display: -webkit-flex;-->
+<!--                        display: flex;-->
+<!--                    }-->
+
+<!--                    /* Style the navigation menu */-->
+<!--                    nav {-->
+<!--                        -webkit-flex: 1;-->
+<!--                        -ms-flex: 1;-->
+<!--                        flex: 1;-->
+<!--                        background: #ccc;-->
+<!--                        padding: 20px;-->
+<!--                    }-->
+
+<!--                    /* Style the list inside the menu */-->
+<!--                    nav ul {-->
+<!--                        list-style-type: none;-->
+<!--                        padding: 0;-->
+<!--                    }-->
+
+<!--                    /* Style the content */-->
+<!--                    article {-->
+<!--                        -webkit-flex: 3;-->
+<!--                        -ms-flex: 3;-->
+<!--                        flex: 3;-->
+<!--                        background-color: #f1f1f1;-->
+<!--                        padding: 10px;-->
+<!--                    }-->
+
+<!--                    /* Style the footer */-->
+<!--                    footer {-->
+<!--                        background-color: #777;-->
+<!--                        padding: 10px;-->
+<!--                        text-align: center;-->
+<!--                        color: white;-->
+<!--                    }-->
+
+<!--                    /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */-->
+<!--                    @media (max-width: 600px) {-->
+<!--                        section {-->
+<!--                            -webkit-flex-direction: column;-->
+<!--                            flex-direction: column;-->
+<!--                        }-->
+<!--                    }-->
+<!--                </style>-->
+<!--            </head>-->
+<!--            <body >-->
+
+<!--            <h2>CSS Layout Flexbox</h2>-->
+<!--            <p>In this example, we have created a header, two columns/boxes and a footer. On smaller screens, the columns will stack on top of each other.</p>-->
+<!--            <p>Resize the browser window to see the responsive effect.</p>-->
+
+<!--            <header>-->
+<!--                <h2>Cities</h2>-->
+<!--            </header>-->
+
+<!--            <section>-->
+<!--                <nav>-->
+<!--                    <ul>-->
+<!--                        <li><a href="#">London</a></li>-->
+<!--                        <li><a href="#">Paris</a></li>-->
+<!--                        <li><a href="#">Tokyo</a></li>-->
+<!--                    </ul>-->
+<!--                </nav>-->
+
+<!--                <article>-->
+<!--                    <h1>London</h1>-->
+<!--                    <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>-->
+<!--                    <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>-->
+<!--                </article>-->
+<!--            </section>-->
+
+<!--            <footer>-->
+<!--                <p>Footer</p>-->
+<!--            </footer>-->
+
+<!--            </body>&ndash;&gt;-->
+<!--        <div id="previewId">-->
+<!--            <head>-->
+<!--                <meta charset="UTF-8"/>-->
+<!--                <meta http-equiv="X-UA-Compatible" content="IE=edge"/>-->
+<!--                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+<!--                &lt;!&ndash; <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>-->
+<!--                 <link-->
+<!--                         href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"-->
+<!--                         rel="stylesheet"-->
+<!--                 />&ndash;&gt;-->
+<!--            </head>-->
+<!--            <body>-->
+<!--            <section class="wrapper-invoice">-->
+<!--                &lt;!&ndash; switch mode rtl by adding class rtl on invoice class &ndash;&gt;-->
+<!--                <div class="invoice">-->
+<!--                    <div style="-->
+<!--            text-align: center;-->
+<!--            font-family: Nazanin;-->
+<!--            font-style: normal;-->
+<!--            font-weight: bold;-->
+<!--"><h2><b> فاکتور سرویس های </b><b>{{headPartyTitle}}</b></h2></div>-->
+<!--                    <div class="invoice-information" dir="ltr">-->
+<!--                        <p dir="ltr"><span class="font">{{dateFactoor|castToDate}}</span><span class="font">:تاریخ صدور</span></p>-->
+<!--                        <p dir="ltr"><span class="font">-->
+<!--                            {{billId.toString()+partyId.toString()+billId.toString()}}-->
+<!--                        </span><span class="font">:شماره فاکتور</span></p>-->
+<!--                    </div>-->
+<!--                    <br>-->
+<!--                    &lt;!&ndash; logo brand invoice &ndash;&gt;-->
+<!--                    <div class="invoice-logo-brand">-->
+<!--                        &lt;!&ndash; <h2>Tampsh.</h2> &ndash;&gt;-->
+<!--                        <img src="./assets/image/tampsh.png" alt=""/>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; invoice head &ndash;&gt;-->
+<!--                    <div class="invoice-head">-->
+
+<!--                        <div class="head client-data">-->
+<!--                            <div class="grid grid-cols-12" style="text-align: right; margin-right: 2%;width: 50%;">-->
+<!--                                <div class="col-1-9 ">-->
+<!--                                    <p><span class="font">تاریخ شروع:</span><span class="font">1376/02/01</span></p>-->
+<!--                                </div>-->
+<!--                                <div class="col-1-9 font">-->
+<!--                                    <p><span class="font">تاریخ پایان:</span><span class="font">1376/05/01</span></p>-->
+<!--                                </div>-->
+<!--                                <div class="col-9"></div>-->
+<!--                            </div>-->
+
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; invoice body&ndash;&gt;-->
+
+<!--                    <div class="invoice-body" style=" margin-right: 1%;margin-left: 1%">-->
+<!--                          <p-table
+styleClass="normal-table"
+ class="table" [value]="summaryList" style="width: 100%">-->
+<!--                            <ng-template pTemplate="header">-->
+<!--                                <tr>-->
+<!--                                    <th pSortableColumn="row" class="row font" >-->
+<!--                                        table.header.row-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="apiTitle" class="apiTitle font" >-->
+<!--                                        سرویس-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="clientTitle" class="clientTitle font" >-->
+<!--                                        کلاینت-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="summaryDate" class="summaryDate font" >-->
+<!--                                        تاریخ محاسبه-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="rdate" class="rdate font" >-->
+<!--                                        تاریخ ثبت-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="detailFeeAmount" class="font detailFeeAmount" >-->
+<!--                                        مبلغ صورتحساب-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="totalFeeAmount" class="font totalFeeAmount" >-->
+<!--                                        مبلغ قابل پرداخت-->
+<!--                                    </th>-->
+<!--                                    <th class="font succesCountd" >-->
+<!--                                        تعداد فراخوانی موفق-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="failedCount" class="failedCount font" >-->
+<!--                                        تعداد فراخوانی ناموفق-->
+<!--                                    </th>-->
+<!--                                </tr>-->
+<!--                            </ng-template>-->
+<!--                            <ng-template let-i="rowIndex" pTemplate="body" let-summary>-->
+<!--                                <tr [pSelectableRow]="summary">-->
+<!--                                    <td class="row font">{{summary.row}}</td>-->
+<!--                                    <td class="apiTitle font"-->
+<!--                                        [pTooltip]="(summary.apiTitle||summary.APITITLE)"-->
+<!--                                        [tooltipDisabled]="(summary.apiTitle||summary.APITITLE)?(summary.apiTitle||summary.APITITLE).length < 20:false">-->
+<!--                                        {{(summary.apiTitle || summary.APITITLE)}}-->
+<!--                                    </td>-->
+<!--                                    <td class="clientTitle font"-->
+<!--                                        [pTooltip]="(summary.clientTitle||summary.CLIENTTITLE)"-->
+<!--                                        [tooltipDisabled]="(summary.clientTitle||summary.CLIENTTITLE)?(summary.clientTitle||summary.CLIENTTITLE).length < 20:false">-->
+<!--                                        {{(summary.clientTitle || summary.CLIENTTITLE)}}-->
+<!--                                    </td>-->
+<!--                                    <td class="summaryDate font">-->
+<!--                                        {{(summary.summaryDate || summary.SUMMARYDATE)|castToDate}}-->
+<!--                                    </td>-->
+
+<!--                                    <td class="rdate font">-->
+<!--                                        {{(summary.rdate || summary.RDATE)|castToDate}}-->
+<!--                                    </td>-->
+<!--                                    <td class="detailFeeAmount font">-->
+<!--                                        {{(summary.detailFeeAmount || summary.FEEAMOUNT)|addCommaSeparator}}-->
+<!--                                    </td>-->
+<!--                                    <td class="totalFeeAmount font">-->
+<!--                                        {{(summary.totalFeeAmount || summary.TOTALFEEAMOUNT)|addCommaSeparator}}-->
+<!--                                    </td>-->
+<!--                                    <td class="succesCountd font">-->
+<!--                                        {{(summary.succesCount || summary.SUCCESSCOUNT)}}-->
+<!--                                    </td>-->
+<!--                                    <td class="failedCount font">-->
+<!--                                        {{(summary.failedCount || summary.FAILEDCOUNT)}}-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </ng-template>-->
+<!--                        </p-table>-->
+<!--                        <table class="table">-->
+<!--                            &lt;!&ndash;<thead>-->
+<!--                            <tr>-->
+<!--                                <th>Item Description</th>-->
+<!--                                <th>Amount</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr>-->
+<!--                                <td>Template Invoice</td>-->
+<!--                                <td>Rp.75.000</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>tax</td>-->
+<!--                                <td>Rp.5.000</td>-->
+<!--                            </tr>-->
+<!--                            </tbody>&ndash;&gt;-->
+<!--                            <ng-template pTemplate="header">-->
+<!--                                <tr>-->
+<!--                                    <th pSortableColumn="row" class="row" >-->
+<!--                                        table.header.row-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="apiTitle" class="apiTitle" >-->
+<!--                                        سرویس-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="clientTitle" class="clientTitle" >-->
+<!--                                        کلاینت-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="summaryDate" class="summaryDate" >-->
+<!--                                        تاریخ محاسبه-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="rdate" class="rdate" >-->
+<!--                                        تاریخ ثبت-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="detailFeeAmount" class="detailFeeAmount" >-->
+<!--                                        مبلغ صورتحساب-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="totalFeeAmount" class="totalFeeAmount" >-->
+<!--                                        مبلغ قابل پرداخت-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="succesCount" class="succesCount" >-->
+<!--                                        تعداد فراخوانی موفق-->
+<!--                                    </th>-->
+<!--                                    <th pSortableColumn="failedCount" class="failedCount" >-->
+<!--                                        تعداد فراخوانی ناموفق-->
+<!--                                    </th>-->
+<!--                                    <th style="text-align: right !important;border-right: 1px solid #ebe8e8;" >-->
+<!--                                        operation-->
+<!--                                    </th>-->
+<!--                                </tr>-->
+<!--                            </ng-template>-->
+<!--                            <ng-template let-i="rowIndex" pTemplate="body" let-summary>-->
+<!--                                <tr [pSelectableRow]="summary" [ngStyle]="{'color':summary.toBill=='1'?-->
+<!--                    '#258F30' :null,-->
+<!--                   'background-color':summary.toBill=='1'?'#85DC8F':null }">-->
+<!--                                    <td class="row">{{summary.row}}</td>-->
+
+<!--                                    <td class="apiTitle"-->
+<!--                                        [pTooltip]="summary.apiTitle"-->
+<!--                                        [tooltipDisabled]="summary.apiTitle?summary.apiTitle.length < 20:false">-->
+<!--                                        {{summary.apiTitle|moreChar19}}-->
+<!--                                    </td>-->
+<!--                                    <td class="clientTitle"-->
+<!--                                        [pTooltip]="summary.clientTitle"-->
+<!--                                        [tooltipDisabled]="summary.clientTitle?summary.clientTitle.length < 20:false">-->
+<!--                                        {{summary.clientTitle|moreChar19}}-->
+<!--                                    </td>-->
+<!--                                    <td class="summaryDate">-->
+<!--                                        {{(summary.summaryDate || summary.SUMMARYDATE)|castToDate}}-->
+<!--                                    </td>-->
+
+<!--                                    <td class="rdate">-->
+<!--                                        {{(summary.rdate || summary.RDATE)|castToDate}}-->
+<!--                                    </td>-->
+
+<!--                                    <td class="detailFeeAmount">-->
+<!--                                        {{(summary.detailFeeAmount || summary.FEEAMOUNT)|addCommaSeparator}}-->
+<!--                                    </td>-->
+<!--                                    <td class="totalFeeAmount">-->
+<!--                                        {{(summary.totalFeeAmount || summary.TOTALFEEAMOUNT)|addCommaSeparator}}-->
+<!--                                    </td>-->
+<!--                                    <td class="succesCount">-->
+<!--                                        {{(summary.succesCount || summary.SUCCESSCOUNT)}}-->
+<!--                                    </td>-->
+<!--                                    <td class="failedCount">-->
+<!--                                        {{(summary.failedCount || summary.FAILEDCOUNT)}}-->
+<!--                                    </td>-->
+
+<!--                                    <td class="text-right border-r  " >-->
+<!--                                        <button (click)="setRecord(summary)" type="button"-->
+<!--                                                class="p-button-rounded  "-->
+<!--                                                pButton-->
+<!--                                                pRipple icon="pi pi-chevron-down"-->
+<!--                                                (click)="menu.toggle($event)"></button>&nbsp;-->
+<!--                                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </ng-template>-->
+<!--                        </table>-->
+<!--                        <div class="grid grid-cols-12">-->
+<!--                            <div class="col-7"></div>-->
+<!--                            <div class="col-span-2" >-->
+<!--                            </div>-->
+<!--                            <div class="col-3">-->
+<!--                                <div class="flex-table">-->
+<!--                                    <div class="flex-column"  >-->
+<!--                                        <table class="table-subtotal" style="width:90%">-->
+<!--                                            <tbody >-->
+<!--                                            <tr>-->
+<!--                                                <td><label class="normal-label"> -->
+<!--                                                    <span transloco class="font">مبلغ تخفیف :</span></label></td>-->
+<!--                                                <td><label class="normal-label"> -->
+<!--                                                    <span class="font">{{billDiscount|addCommaSeparator}}</span></label></td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td><label class="normal-label"> -->
+<!--                                                    <span transloco class="font">مبلغ مالیات :</span></label></td>-->
+<!--                                                <td><label class="normal-label"> -->
+<!--                                                    <span class="font">{{billTax|addCommaSeparator}}</span></label></td>-->
+<!--                                            </tr>-->
+<!--                                            <tr>-->
+<!--                                                <td><label class="normal-label"> -->
+<!--                                                    <span transloco class="font">مبلغ قابل پرداخت :</span></label></td>-->
+<!--                                                <td><label class="normal-label"> -->
+<!--                                                    <span class="font">{{billAmount|addCommaSeparator}}</span></label></td>-->
+<!--                                            </tr>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash;                                    <div class="col-1"></div>&ndash;&gt;-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; invoice total  &ndash;&gt;-->
+
+<!--                    </div>-->
+<!--                    &lt;!&ndash; invoice footer &ndash;&gt;-->
+<!--                    <div class="invoice-footer" *ngIf="hidePrint">-->
+<!--                        <button pButton icon="pi pi-print"-->
+<!--                                (click)="onPrint()" label="چاپ"></button>-->
+<!--                        <button type="button" pButton  severity="danger"  label="بستن" class="normal-button" icon="pi pi-times"-->
+<!--                                (click)="previewFlag=false"></button>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </section>-->
+
+<!--            </body>-->
+<!--        </div>-->
+<!--    </p-panel>-->
+
+
+<!--</p-dialog>-->

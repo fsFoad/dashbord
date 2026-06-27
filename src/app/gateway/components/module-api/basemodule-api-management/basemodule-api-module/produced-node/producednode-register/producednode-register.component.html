@@ -1,0 +1,56 @@
+<div class=" p-0 m-0 w-full" id="section">    <!--    <p-panel header="{{'افزودن نود مورد نیاز' | transloco}}">-->
+    <div class="grid grid-cols-12  mx-5 my-10">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>عنوان نود :</span></label>
+            <input class="normal-input" [(ngModel)]="nodeName" (keydown.enter)="onKeydown($event)" pInputText
+                   [disabled]="justReturnValueFlag">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>گروه بندی :</span></label>
+            <p-dropdown
+                class="normal-dropdown"
+                [autoDisplayFirst]="false"
+                [options]="headerTypeGroup"
+                optionValue="code"
+                [(ngModel)]="nodePlace"
+                optionLabel="name"
+                [disabled]="true"
+            >
+            </p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-8">
+            <label class="normal-label"> <span>مسیر نود :</span></label>
+            <input class="xx-ggg-8-input" [(ngModel)]="nodePath" pInputText dir="ltr"  [disabled]="justReturnValueFlag">
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-4">
+            <div class="grid grid-cols-12 mt-3">
+                <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                    <div class="flex items-center gap-2">
+                        <p-checkbox (onChange)="onchangeJustReturnValue()" [(ngModel)]="justReturnValue" [binary]="true"
+                                    inputId="binary"></p-checkbox>
+                        <label ><span
+                        >فقط دارای خروجی :</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="w-full mt-4 text-left p-4">
+    <button
+        pButton severity="success"
+        label="{{'button.save' | transloco}}"
+        icon="pi pi-save" class="normal-button"
+        (click)="onRegister()"></button> &nbsp;
+    <button pButton label="{{'button.cancel' | transloco}}"
+            severity="danger" icon="pi pi-times" class="normal-button"
+            [outlined]="true" (click)="onCancel()"></button>
+</div>

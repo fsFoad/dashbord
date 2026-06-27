@@ -1,0 +1,136 @@
+<!--
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page">
+&lt;!&ndash;<p-panel header="ثبت اطلاعات محدودیت IP">&ndash;&gt;
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-2">
+            <p-listbox  [(ngModel)]="selectedIp"
+                        [options]="ips"
+                        optionLabel="name"
+                        [listStyle]="{ 'max-height': '250px' }"
+                        [style]="{ width: '15rem' }">
+            </p-listbox>
+        </div>
+        <div class="col-span-1">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12">
+                    <button pButton
+                            severity="success" icon="pi pi-plus" (click)="addList()"></button>
+                </div>
+                <div class="col-span-12">
+                    <button pButton
+                            severity="danger" icon="pi pi-minus" (click)="remove()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label "><span > IP:</span></label>
+            <input [(ngModel)]="ip"  dir="ltr" class="normal-input"
+                   pInputText  placeholder="for example: 192.168.100.20">
+
+        </div>
+        <div class="col-span-6"></div>
+    </div>
+    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+        <button pButton label="{{'button.cancel' | transloco}}" (click)="onCancel()" [outlined]="true"
+                 severity="danger"  icon="pi pi-times"></button>&nbsp;
+        <button pButton severity="success" label="{{'ثبت نهایی' | transloco}}" icon="pi pi-save"
+                (click)="onRegister()"></button>
+    </div>
+&lt;!&ndash;</p-panel>&ndash;&gt;
+</div>
+-->
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false"></app-breadcrumbs>
+
+<div class="content-page">
+    <div class="grid grid-cols-12 gap-4 ">
+        <!-- <div class="col-span-2">
+             <label class="normal-label">
+                 <span>IP:</span>
+             </label>
+             <input
+                 [(ngModel)]="ip"
+                 dir="ltr"
+                 class="normal-input"
+                 pInputText
+                 placeholder="for example: 192.168.100.20">
+             <button
+                 pButton
+                 severity="success"
+                 icon="pi pi-plus"
+                 (click)="addList()">
+             </button>
+         </div>-->
+        <div class="col-span-2 ">
+            <label class="normal-label">
+                <span>IP:</span>
+            </label>
+            <p-input-group>
+                <input
+                    [(ngModel)]="ip"
+                    dir="ltr"
+                    class="normal-input-group"
+                    pInputText
+                    (keydown.enter)="onKeydown($event)"
+                    placeholder="192.168.100.20">
+                <p-inputgroup-addon class="normal-button-attach">
+                    <button
+                        pButton
+                        severity="success"
+                        class="normal-button-group"
+                        icon="pi pi-plus"
+
+                        (click)="addList()">
+                    </button>
+                </p-inputgroup-addon>
+            </p-input-group>
+
+        </div>
+
+        <div class="col-span-10">
+     <!--       <p-chip
+                *ngFor="let ip of addedIps; let i = index"
+                [label]="ip"
+                [removable]="true"
+
+                class="bg-gray-400 text-white mt-6 mr-2">
+            </p-chip>-->
+   <!--         <p-chip *ngFor="let ip of addedIps; let i = index" removable="true"
+                    (onRemove)="removeChip(i)"
+                    class="bg-gray-400 text-white mt-6 mr-2"
+            >
+
+                {{ ip.name }}
+
+            </p-chip>-->
+            <p-chip *ngFor="let ip of addedIps; let i = index"
+                    [label]="ip.name"
+                    removable="true"
+                    (onRemove)="removeChip(i)"
+                    class="bg-gray-400 text-white mt-6 mr-2">
+            </p-chip>
+        </div>
+    </div>
+    <div class="col-span-12 mt-4" dir="ltr">
+        <button
+            pButton
+            label="{{'button.cancel' | transloco}}"
+            (click)="onCancel()"
+            [outlined]="true"
+            class="normal-button"
+            severity="danger"
+            icon="pi pi-times">
+        </button>&nbsp;
+
+        <button
+            pButton
+            severity="success"
+            class="normal-button"
+            label="{{'ثبت نهایی' | transloco}}"
+            icon="pi pi-save"
+            (click)="onRegister()">
+        </button>
+    </div>
+</div>

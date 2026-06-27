@@ -1,0 +1,197 @@
+:host {
+    width: 100%;
+}
+.queryListDiv {
+    border: 1px solid #a19f9d;
+    padding: 20px;
+    width: 100%;
+    resize: vertical;
+    overflow: auto;
+    min-width: 89px;
+
+}
+:host ::ng-deep.pass-w70{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+:host ::ng-deep.p-dropdown-panel .p-dropdown-items .p-dropdown-item .style-item-dropdown {
+    margin: 0;
+    padding: 0.75rem 0.5rem;
+    border: 1px solid transparent;
+    color: #323130;
+    background: transparent;
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+    text-align: left;
+}
+
+:host ::ng-deep.dropdown-w50 {
+    width: 55%;
+    min-width: 55%;
+    text-align: left;
+    max-width: 55%;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.38);
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+    border-radius: 4px;
+    height: 30px;
+}
+:host ::ng-deep.dropdown-w70 {
+    width: 70%;
+    min-width: 70%;
+    max-width: 100%;
+}
+:host ::ng-deep.dropdown-w100 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 85%;
+}
+:host ::ng-deep.input-w70 {
+    width: 70%;
+    min-width: 70%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w80 {
+    width: 93%;
+    min-width: 93%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w85 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w73 {
+    width: 85%;
+    min-width: 85%;
+    max-width: 100%;
+}
+:host ::ng-deep.input-w92 {
+    width: 92%;
+    min-width: 92%;
+    max-width: 100%;
+}
+:host ::ng-deep.p-panel .p-panel-content{
+    min-height: 450px;
+
+}
+
+:host ::ng-deep .content-hub{
+    height: 95%;
+}
+:host ::ng-deep .footer-hub{
+    height: 5%;
+}
+
+.row {
+    width: 6%;
+}
+.panel-hub{
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 300px;
+    display: flex;
+}
+.operation {
+
+    width: 15%;
+}
+
+.paramName {
+    width: 15%;
+
+}
+.input {
+    width: 15%;
+}
+.inputName {
+    width: 15%;
+}
+.output {
+    width: 15%;
+}
+.outputName {
+    width: 15%;
+}
+.encrypt {
+    width: 15%;
+}
+
+.paramName {
+    width: 10%;
+}
+.paramType {
+    width: 10%;
+}
+
+.dataType {
+    width: 10%;
+}
+
+.tdStatus {
+    width: 7%;
+}
+
+.paramValue {
+    width: 10%;
+}
+
+.status {
+    width: 9%;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.fontHub {
+
+    font-size: 13px;
+
+}
+.inner-textarea {
+    min-height: 85px;
+    height: 85px;
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+}
+:host ::ng-deep.messageSize{
+    font-size: 14px;
+}
+::ng-deep {
+    .p-tooltip {
+        width: 150px;
+        min-width: 150px;
+        font-size: 14px;
+        max-width: 250px;
+
+    }
+    .registerDb{
+
+    }
+    .testDb{
+
+    }
+}
+.row{
+    width: 5%;
+}
+.host{
+    width: 10%;
+}
+.PortNumber{
+    width: 10%;
+}
+.protocol{
+    width: 6%;
+}
+.specialUserName{
+    width: 12%;
+}
+.specialPassword{
+    width: 12%;
+}
+.status{
+    width: 6%;
+
+}

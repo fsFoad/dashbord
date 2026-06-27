@@ -1,0 +1,134 @@
+<p-toast />
+<app-breadcrumbs id="section" *ngIf="!addFlag&&!updateFlag" [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page gap-5" *ngIf="!addFlag&&!updateFlag">
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 flex flex-col gap-5">
+            <div class="col-span-12">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-4">
+                        <label class="normal-label">
+                            <span class="red-color-text">* </span>
+                            <span>نام سازمان :</span></label>
+                        <p-dropdown
+                            (keydown.enter)="onKeydown($event)"
+                            appendTo="body"
+                            [options]="partyListOptions"
+                            [(ngModel)]="partyId"
+                            optionValue="partyId"
+                            [filter]="true"
+                            filterBy="title"
+                            optionLabel="title"
+                            class="normal-dropdown"
+                            (onChange)="OnchangeParty($event)">
+                        </p-dropdown>
+                    </div>
+                    <div class="col-span-8" dir="ltr">
+                        <button pButton label="{{'button.clear'|transloco}}" class="normal-button"
+                                [outlined]="true" icon="pi pi-filter-slash"
+                                (click)="clear()"></button>
+                        <button pButton label="{{'جستجو'}}"
+                                style="width: 110px;margin: 3px;margin-top: 20px"
+                                class="normal-button" icon="pi pi-search"
+                                (click)="search()"></button>&nbsp;&nbsp;
+                    </div>
+                    <div class="col-span-8"></div>
+                </div>
+            </div>
+            <div class="col-span-12" *ngIf="!addFlag&&!updateFlag">
+                <button class="normal-button" pButton label="{{'ایجاد فاکتور'}}"
+                        icon="pi pi-plus" (click)="showAdd()"></button>
+            </div>
+        </div>
+    </div>
+      <p-table
+styleClass="normal-table"
+ [value]="factorList" selectionMode="single" *ngIf="!addFlag&&!updateFlag"
+             [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+             [currentPageReportTemplate]=paginationLabel
+             [rowsPerPageOptions]="[5,10,25,50,100]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="row" class="row">
+                    {{ 'factor.table.th.row' | transloco }}
+                    <p-sortIcon field="row"></p-sortIcon>
+                </th>
+                <th pSortableColumn="partyTitle" class="partyTitle">
+                    {{ 'factor.table.th.partyTitle' | transloco }}
+                    <p-sortIcon field="partyTitle"></p-sortIcon>
+                </th>
+                <th pSortableColumn="billAmount" class="billAmount">
+                    {{ 'factor.table.th.billAmount' | transloco }}
+                    <p-sortIcon field="billAmount"></p-sortIcon>
+                </th>
+                <th pSortableColumn="billTotall" class="billTotall">
+                    {{ 'factor.table.th.billTotal' | transloco }}
+                    <p-sortIcon field="billTotall"></p-sortIcon>
+                </th>
+                <th pSortableColumn="fromDate" class="fromDate">
+                    {{ 'factor.table.th.formDate' | transloco }}
+                    <p-sortIcon field="fromDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="toDate" class="toDate">
+                    {{ 'factor.table.th.toDate' | transloco }}
+                    <p-sortIcon field="toDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="billStatus" class="billStatus">
+                    {{ 'factor.table.th.billStatus' | transloco }}
+                    <p-sortIcon field="billStatus"></p-sortIcon>
+                </th>
+                <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                    {{ 'factor.table.th.operation' | transloco }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-factor>
+            <tr [pSelectableRow]="factor">
+                <td class="row">{{ factor.row }}</td>
+                <td class="partyTitle"
+                    [pTooltip]="factor.partyTitle"
+                    [tooltipDisabled]="factor.partyTitle?factor.partyTitle.length < 20:false"
+                >
+                    {{ factor.partyTitle|moreChar19 }}
+                </td>
+                <td class="billAmount"
+                    [pTooltip]="factor.billAmount"
+                    [tooltipDisabled]="factor.billAmount?factor.billAmount.toString().length < 20:false">
+                    {{ factor.billAmount|addCommaSeparator }}
+                </td>
+                <td class="billTotall"
+                    [pTooltip]="factor.billTotall"
+                    [tooltipDisabled]="factor.billTotall?factor.billTotall.toString().length < 20:false">
+                    {{ factor.billTotall|addCommaSeparator }}
+                </td>
+                <td class="fromDate">
+                    {{ factor.fromDate|castToDate }}
+                </td>
+                <td class="toDate">
+                    {{ factor.toDate|castToDate }}
+                </td>
+                <td class="billStatus" [ngStyle]="{'text-align': 'center !important'}">
+                    <div
+                        [ngClass]="[
+    'w-[65px]', 'float-right', 'text-center', 'rounded-md',
+    factor.billStatus == 1 ? 'bg-yellow-300 text-[#966224]' :
+    factor.billStatus == 3 ? 'bg-green-300 text-[#258F30]' :
+    'bg-green-300 text-[#966224]'
+  ]"
+                         class="w-[80px] float-right text-center rounded-md">
+                        {{ factor.billStatus|billStatus }}
+                    </div>
+                </td>
+                <td class="text-right border-r  ">
+                    <button (click)="setRecord(factor)" type="button" class="p-button-rounded  "
+                            pButton
+                            pRipple icon="pi pi-chevron-down" (click)="menu.toggle($event)"></button>&nbsp;
+                    <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                </td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="col-span-12" *ngIf="addFlag">
+    <app-factor-register (close)="onClose($event)" [factorObj]="factorObj"></app-factor-register>
+</div>
