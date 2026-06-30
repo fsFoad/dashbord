@@ -6,6 +6,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { InputOtpModule } from 'primeng/inputotp';
 import { isTwoFactor } from '../../core/models/user.model';
 import { AuthService } from '../../core/services/auth.service';
+import { SettingsStore } from '../../core/services/settings.store';
 
 @Component({
   selector: 'app-login',
@@ -66,7 +67,7 @@ import { AuthService } from '../../core/services/auth.service';
               type="email"
               formControlName="email"
               autocomplete="email"
-              dir="ltr"
+              [dir]="settings.isRtl() ? 'rtl' : 'ltr'"
               class="relative w-full rounded-2xl border border-slate-200 dark:border-slate-700
                      bg-white/80 dark:bg-slate-800/80 ps-12 pe-4 py-3.5
                      text-sm sm:text-base text-slate-900 dark:text-slate-100
@@ -109,6 +110,7 @@ import { AuthService } from '../../core/services/auth.service';
               [type]="showPassword() ? 'text' : 'password'"
               formControlName="password"
               autocomplete="current-password"
+              [dir]="settings.isRtl() ? 'rtl' : 'ltr'"
               class="relative w-full rounded-2xl border border-slate-200 dark:border-slate-700
                      bg-white/80 dark:bg-slate-800/80 ps-12 pe-12 py-3.5
                      text-sm sm:text-base text-slate-900 dark:text-slate-100
@@ -252,6 +254,7 @@ export class Login {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  protected readonly settings = inject(SettingsStore);
 
   protected readonly busy = signal(false);
   protected readonly errorKey = signal<string | null>(null);

@@ -51,14 +51,14 @@ import { PortalInfoService } from '../../core/services/portal-info.service';
             <div class="absolute -bottom-2 -left-2 w-4 h-4 rounded-full bg-gradient-to-r from-indigo-400 to-purple-300 shadow-lg"></div>
           </div>
 
-          <!-- Version badge + title -->
+          <!-- App name + version badge -->
           <div class="flex justify-center mb-4">
             <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
               <span class="h-2 w-2 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 animate-pulse"></span>
-              <span class="text-xs font-medium">{{ portal()?.statusLabel ?? '' }}</span>
+              <span class="text-xs font-medium" dir="ltr">{{ portal()?.appName ?? '' }}</span>
               @if (portal()?.version) {
                 <div class="h-4 w-px bg-white/20"></div>
-                <span class="text-[11px] text-sky-200/80">v{{ portal()!.version }}</span>
+                <span class="text-[11px] text-sky-200/80" dir="ltr">v{{ portal()!.version }}</span>
               }
             </div>
           </div>
@@ -81,7 +81,7 @@ import { PortalInfoService } from '../../core/services/portal-info.service';
           @if (portal()?.features?.length) {
             <div class="grid grid-cols-2 gap-3 w-full mb-6">
               @for (f of portal()!.features; track f.title) {
-                <div class="relative group">
+                <div class="relative group h-full">
                   <div class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                        [ngClass]="{
                          'bg-gradient-to-br from-sky-500/10 to-transparent': f.color === 'sky',
@@ -90,7 +90,7 @@ import { PortalInfoService } from '../../core/services/portal-info.service';
                          'bg-gradient-to-br from-purple-500/10 to-transparent': f.color === 'purple'
                        }">
                   </div>
-                  <div class="relative flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/5 transition-all duration-300"
+                  <div class="relative flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/5 transition-all duration-300 h-full"
                        [ngClass]="{
                          'group-hover:border-sky-400/30': f.color === 'sky',
                          'group-hover:border-indigo-400/30': f.color === 'indigo',

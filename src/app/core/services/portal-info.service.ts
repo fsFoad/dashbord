@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
+import { DATA_SOURCE } from '../config/data-source.config';
 import { PortalInfo } from '../models/portal-info.model';
 
-const FALLBACK: PortalInfo = {
+/** داده mock — وقتی DATA_SOURCE.portalInfo = true یا API در دسترس نباشد */
+const MOCK: PortalInfo = {
   logoUrl: '',
-  appName: 'Dashboard',
-  tagline: 'مدیریت هوشمند سازمان',
-  description: 'پلتفرم یکپارچه مدیریت، مسیردهی و انتشار سرویس‌های سازمانی با قابلیت اتصال مستقیم به منابع داده و مانیتورینگ لحظه‌ای.',
-  version: '1.0.0',
-  statusLabel: 'سامانه فعال',
+  appName: 'API Gateway',
+  tagline: 'درگاه ارائه سرویس',
+  description:
+    'راهکار جامع تعریف، مسیردهی و انتشار سرویس‌های سازمانی با قابلیت اتصال مستقیم به منابع داده، اعمال سیاست‌های امنیتی پیشرفته و مانیتورینگ لحظه‌ای در یک پلتفرم متمرکز.',
+  version: '2.4.1',
   features: [
     {
       icon: 'M13 10V3L4 14h7v7l9-11h-7z',
@@ -44,8 +46,9 @@ export class PortalInfoService {
   private readonly http = inject(HttpClient);
 
   get(): Observable<PortalInfo> {
+    if (DATA_SOURCE.portalInfo) return of(MOCK);
     return this.http
       .get<PortalInfo>('/api/portal-info')
-      .pipe(catchError(() => of(FALLBACK)));
+      .pipe(catchError(() => of(MOCK)));
   }
 }

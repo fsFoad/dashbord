@@ -13,7 +13,6 @@ export interface PortalInfo {
   tagline: string;
   description: string;
   version: string;
-  statusLabel: string;
   features: PortalFeature[];
   badges: string[];
 }
