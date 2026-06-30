@@ -5,10 +5,10 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { ButtonModule } from 'primeng/button';
 import { Tooltip } from 'primeng/tooltip';
 import { Menu } from 'primeng/menu';
-import { Avatar } from 'primeng/avatar';
 import { Popover } from 'primeng/popover';
 import type { MenuItem as PrimeMenuItem } from 'primeng/api';
 import { Breadcrumb } from '../breadcrumb/breadcrumb';
+import { JALALI_MONTHS, dateToJalali, faDigits } from '../../../core/utils/jalali';
 import { LayoutService } from '../../../core/services/layout.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { SettingsStore } from '../../../core/services/settings.store';
@@ -20,7 +20,7 @@ import { LocalizedDatePipe } from '../../../shared/pipes/localized-date.pipe';
 
 @Component({
   selector: 'app-topbar',
-  imports: [TranslocoModule, ButtonModule, Tooltip, Menu, Avatar, Popover, Breadcrumb, LocalizedDatePipe],
+  imports: [TranslocoModule, ButtonModule, Tooltip, Menu, Popover, Breadcrumb, LocalizedDatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topbar.html',
 })
@@ -54,14 +54,24 @@ export class Topbar {
     this.language.languages.find((l) => l.code === this.settings.language())?.flagSrc ?? '',
   );
 
-  protected readonly initials = computed(() => {
-    const name = this.session.user()?.name ?? '?';
-    return name
-      .split(/\s+/)
-      .slice(0, 2)
-      .map((p) => p.charAt(0))
-      .join('');
-  });
+  /** The signed-in user's username (shown in the topbar instead of an avatar). */
+  protected readonly username = computed(() => this.session.user()?.username ?? '');
+
+  // ---- Seasonal indicator: a season icon + today's Jalali day & month (no year) ----
+  private readonly todayJalali = dateToJalali(new Date());
+
+  /** e.g. «۹ تیر» — Jalali day + month name, no year. */
+  protected readonly jalaliDayMonth =
+    `${faDigits(this.todayJalali.d)} ${JALALI_MONTHS[this.todayJalali.m - 1]}`;
+
+  /** Current season derived from the Jalali month (1-3 spring, … 10-12 winter). */
+  protected readonly season: 'spring' | 'summer' | 'autumn' | 'winter' = (() => {
+    const m = this.todayJalali.m;
+    if (m <= 3) return 'spring';
+    if (m <= 6) return 'summer';
+    if (m <= 9) return 'autumn';
+    return 'winter';
+  })();
 
   protected readonly profileItems = computed<PrimeMenuItem[]>(() => {
     this.translation(); // dependency: rebuild on language change

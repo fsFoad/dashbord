@@ -27,6 +27,14 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.10.0',
+    date: '2026-06-30',
+    entries: [
+      { type: 'feature', fa: 'نوار بالا: نمایش «نام کاربری» به‌جای عکس کاربر؛ با کلیک، منوی پروفایل/تنظیمات ظاهری/خروج باز می‌شود', en: 'Topbar: shows the username instead of a user photo; clicking it opens profile / appearance settings / logout' },
+      { type: 'feature', fa: 'نشانگر فصلی در نوار بالا: آیکون فصل جاری به‌همراه تاریخ شمسی روز و ماه (بدون سال)', en: 'Seasonal indicator in the topbar: an icon for the current season plus today’s Jalali day and month (no year)' },
+    ],
+  },
+  {
     version: '2.9.0',
     date: '2026-06-30',
     entries: [

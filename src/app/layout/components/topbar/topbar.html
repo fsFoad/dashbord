@@ -22,6 +22,59 @@
 
   <!-- Quick actions -->
   <div class="flex shrink-0 items-center gap-1">
+    <!-- Seasonal indicator: season icon + today's Jalali day & month (no year) -->
+    <div
+      [pTooltip]="('season.' + season) | transloco"
+      tooltipPosition="bottom"
+      class="me-1 hidden h-10 items-center gap-2 rounded-lg border border-surface-200 px-2.5 dark:border-surface-700 lg:flex"
+    >
+      <span class="grid size-6 shrink-0 place-items-center">
+        @switch (season) {
+          @case ('spring') {
+            <svg viewBox="0 0 24 24" class="size-6" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 13v8" stroke="#16a34a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <path d="M12 18c-2 0-3.6-1-4.2-2.6" stroke="#16a34a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+              <g fill="#f472b6">
+                <circle cx="12" cy="6.6" r="2.4"/>
+                <circle cx="8.6" cy="8.8" r="2.4"/>
+                <circle cx="15.4" cy="8.8" r="2.4"/>
+                <circle cx="9.6" cy="5.4" r="2.4"/>
+                <circle cx="14.4" cy="5.4" r="2.4"/>
+              </g>
+              <circle cx="12" cy="7" r="1.7" fill="#fde047"/>
+            </svg>
+          }
+          @case ('summer') {
+            <svg viewBox="0 0 24 24" class="size-6" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" fill="#fbbf24"/>
+              <g stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round">
+                <line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/>
+                <line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/>
+                <line x1="4.9" y1="4.9" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.1" y2="19.1"/>
+                <line x1="19.1" y1="4.9" x2="17.3" y2="6.7"/><line x1="6.7" y1="17.3" x2="4.9" y2="19.1"/>
+              </g>
+            </svg>
+          }
+          @case ('autumn') {
+            <svg viewBox="0 0 24 24" class="size-6" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3c4 2 6 5 6 9 0 3.3-2.4 6-6 6s-6-2.7-6-6c0-4 2-7 6-9z" fill="#ea580c"/>
+              <path d="M12 6v12M12 10l3-2M12 13l-3-2M12 16l3-2" stroke="#7c2d12" stroke-width="1" fill="none" stroke-linecap="round"/>
+            </svg>
+          }
+          @case ('winter') {
+            <svg viewBox="0 0 24 24" class="size-6" xmlns="http://www.w3.org/2000/svg" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round">
+              <line x1="12" y1="2" x2="12" y2="22"/><line x1="3" y1="7" x2="21" y2="17"/><line x1="21" y1="7" x2="3" y2="17"/>
+              <g stroke-width="1.3">
+                <path d="M12 5l-2 1.6M12 5l2 1.6"/><path d="M12 19l-2-1.6M12 19l2-1.6"/>
+                <path d="M4.4 8.2l.4 2M19.6 8.2l-.4 2M4.4 15.8l.4-2M19.6 15.8l-.4-2"/>
+              </g>
+            </svg>
+          }
+        }
+      </span>
+      <span class="text-xs font-medium text-surface-700 dark:text-surface-200">{{ jalaliDayMonth }}</span>
+    </div>
+
     <!-- Command palette (Ctrl+K) -->
     <button
       type="button"
@@ -144,18 +197,16 @@
       <i class="pi pi-sliders-h text-lg"></i>
     </button>
 
-    <!-- Profile -->
+    <!-- Profile (shows the username instead of a photo) -->
     <button
       type="button"
       (click)="openProfile($event)"
-      class="ms-1 flex items-center gap-2 rounded-lg p-1 pe-2 hover:bg-surface-100 dark:hover:bg-surface-800"
+      class="ms-1 flex items-center gap-2 rounded-lg px-2.5 py-2 hover:bg-surface-100 dark:hover:bg-surface-800"
       aria-label="Profile"
     >
-      <p-avatar [label]="initials()" shape="circle" styleClass="bg-primary! text-primary-contrast!" />
-      <span class="hidden max-w-32 truncate-1 text-sm font-medium md:block">
-        {{ session.user()?.name }}
-      </span>
-      <i class="pi pi-angle-down hidden text-xs text-muted-color md:block"></i>
+      <i class="pi pi-user text-sm text-muted-color"></i>
+      <span class="max-w-32 truncate-1 text-sm font-medium" dir="ltr">{{ username() }}</span>
+      <i class="pi pi-angle-down text-xs text-muted-color"></i>
     </button>
     <p-menu #profileMenu [model]="profileItems()" [popup]="true" appendTo="body" />
   </div>

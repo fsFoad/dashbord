@@ -45,7 +45,7 @@ export const USERS: MockUser[] = [
 ];
 
 export function toPublicUser(u: MockUser): User {
-  return { id: u.id, name: u.name, email: u.email, roles: u.roles };
+  return { id: u.id, name: u.name, username: u.username, email: u.email, roles: u.roles };
 }
 
 export const MEMBERS: Member[] = OWNERS.map((name, i) => ({ id: i + 1, name }));
