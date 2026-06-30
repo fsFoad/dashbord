@@ -1,0 +1,140 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()" ></app-breadcrumbs>
+<div class="content-page" >
+    <div class="col-span-12">
+          <p-table
+styleClass="normal-table"
+ [value]="apiCacheList"
+                 selectionMode="single"
+
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="row text-center">
+                        ردیف
+                    </th>
+                    <th class="partyName">
+                        نام سازمان
+                    </th>
+                    <th class="moduleName">
+                        نام ماژول
+                    </th>
+                    <th class="apiTitle">
+                        عنوان سرویس
+                    </th>
+                    <th class="apiType">
+                        نوع سرویس
+                    </th>
+                    <!--  <th class="querystring">
+                          Querystring
+                      </th>-->
+                    <th class="text-center ">
+                        Querystring / مسیر نود
+                    </th>
+                    <th class="cacheType">
+                        نوع فراخوانی
+                    </th>
+                    <th class="cacheStartDate">
+                        تاریخ شروع
+                    </th>
+                    <th class="expiryDate">
+                        انقضا کش
+                    </th>
+
+                    <th class="status">
+                        وضعیت
+                    </th>
+                    <th class="text-right border-r  ">
+                        {{ 'party.table.header.operation'|transloco }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-apiCache>
+                <tr [pSelectableRow]="apiCache">
+                    <td class="row">{{ apiCache.row }}</td>
+                    <td>
+                        {{ apiCache.partyName }}
+                    </td>
+                    <td>
+                        {{ apiCache.moduleName }}
+                    </td>
+                    <td>
+                        {{ apiCache.apiTitle }}
+                    </td>
+
+
+                    <td>
+                        {{ apiCache.apiType|httpMethods }}
+                    </td>
+                    <td class="text-center">
+
+                        <ng-container *ngIf="apiCache.apiType == '1' ; else showDropdownLabel" class="text-left">
+                            <span class="text-left endpointPath"dir="ltr">{{ apiCache.path || '---' }}</span>
+                        </ng-container>
+                        <ng-template #showDropdownLabel class="text-left">
+                            <span class="text-left endpointPath"dir="ltr">{{ getEndpointLabel(apiCache.apiId, apiCache.endpointDetailId) }}</span>
+                        </ng-template>
+
+                    </td>
+                    <td class="cacheType"
+                        [pTooltip]="apiCache.cacheType==1?'فراخوانی بصورت پیش فرض کش و درغیراینصورت بصورت مستقیم':''"
+                        [tooltipDisabled]="apiCache.cacheType ? apiCache.cacheType.length < 33 : false">
+                        {{ apiCache.cacheType |cacheType }}
+                    </td>
+                    <td class="cacheStartDate">
+                        {{ apiCache.cacheStartDate|castToDateTime  }}
+                    </td>
+                    <td class="expiryDate">
+                        {{ apiCache.shamsiCacheExpireDate |castToDateTime}}
+                    </td>
+                    <td
+                        class="status"
+                        [ngStyle]="{'text-align': 'center !important'}"
+                    >
+                        <div  [ngClass]="{
+                                 'text-green-800 bg-green-300 ': apiCache.status,
+                                   ' text-red-800 bg-red-300 ': !apiCache.status
+                                   }"
+                              class="w-[65px] float-right text-center rounded-md"
+                        >
+                            {{ apiCache.status|statusPipe }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r  ">
+                        <button type="button" class="p-button-rounded  "
+                                pButton
+                                pRipple icon="pi pi-chevron-down" (click)="setRecord(apiCache);menu.toggle($event)"></button>&nbsp;
+                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td class="text-center" colspan="11">اطلاعاتی برای نمایش وجود ندارد...</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+
+<!--
+
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div
+                class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+            >
+                <i class="pi pi-question !text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <button pButton label="{{'module.dialog.button.yes'|transloco}}" (click)="onAccept()" class="w-32 bg-green-500 text-white border-none hover:bg-green-600 normal-button"></button>
+                <button pButton label="{{'module.dialog.button.no'|transloco}}" [outlined]="true" (click)="onReject()" class="w-32 bg-red-500 text-white border-none hover:bg-red-600 normal-button" ></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmdialog>
+-->

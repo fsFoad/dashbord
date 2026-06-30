@@ -68,7 +68,7 @@ export class SettingsPanel {
 
   // Local color-picker model (hex). Defaults to the active preset swatch.
   protected readonly customColor = computed(
-    () => this.settings.customPrimaryColor() ?? this.activeSwatch(),
+      () => this.settings.customPrimaryColor() ?? this.activeSwatch(),
   );
 
   protected readonly langOptions = [
@@ -150,12 +150,12 @@ export class SettingsPanel {
   protected reset(): void { this.settings.reset(); }
   /** Current URL as a signal (updates on each navigation). */
   private readonly currentUrl = toSignal(
-    this.router.events.pipe(
-      filter((e) => e instanceof NavigationEnd),
-      map(() => this.router.url),
-      startWith(this.router.url),
-    ),
-    { initialValue: this.router.url },
+      this.router.events.pipe(
+          filter((e) => e instanceof NavigationEnd),
+          map(() => this.router.url),
+          startWith(this.router.url),
+      ),
+      { initialValue: this.router.url },
   );
   /** True when the app is currently showing the public "site" shell. */
   protected readonly isSiteMode = computed(() => this.currentUrl().startsWith('/site'));

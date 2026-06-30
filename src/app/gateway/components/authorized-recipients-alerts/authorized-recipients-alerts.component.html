@@ -1,0 +1,209 @@
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false" *ngIf="!addFlag && !updateFlag"></app-breadcrumbs>
+<div class="content-page" *ngIf="!addFlag && !updateFlag">
+    <div class="grid grid-cols-1 xl:grid-cols-12 2xl:grid-cols-12 md:grid-cols-12  ">
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span>{{ 'recipientsAlerts.dropdown.searchType'|transloco }} :</span></label>
+            <p-dropdown class="normal-dropdown"
+                        [autoDisplayFirst]="false"
+                        [options]="searchByOption"
+                        optionValue="code"
+                        [(ngModel)]="searchBy"
+                        optionLabel="name"
+                        (onChange)="onChangeSearch($event)"
+            ></p-dropdown>
+        </div>
+        <div class="col-span-3" *ngIf="!showName&&showMobile">
+            <label class="normal-label"><span>{{ 'recipientsAlerts.input.mobileNo'|transloco }} :</span></label>
+            <input class="normal-input" [(ngModel)]="mobileNo" pKeyFilter="num" maxlength="11" pInputText
+                   (keydown.enter)="onKeydown($event)">
+        </div>
+        <div class="col-span-3" *ngIf="showName&&!showMobile">
+            <label class="normal-label"><span>{{ 'recipientsAlerts.input.name'|transloco }} :</span></label>
+            <input class="normal-input" [(ngModel)]="name" pInputText (keydown.enter)="onKeydown($event)">
+        </div>
+        <div class="hidden col-span-3  sm:flex ">
+        </div>
+        <div class="col-span-3 flex text-left h-12 gap-2 mt-5-5  sm:hidden ">
+            <button name="btn-search-button" pButton label="{{ 'button.search' | transloco }}"
+                    style="width: 110px;margin: 3px;margin-top: 20px"
+                    class="normal-button" icon="pi pi-search"
+                    (click)="searchClick(true)"></button>&nbsp;&nbsp;
+            <button name="btn-clear-button" pButton label="{{'button.clear'|transloco}}"
+                    icon="pi pi-filter-slash"
+                    class="w-[110px] my-1 px-4 py-2 normal-button"
+                    [outlined]="true" (click)="clear()"></button>
+        </div>
+        <div class="hidden col-span-3 btns-search-clear sm:flex">
+            <button pButton
+                    label="{{'button.clear' | transloco}}"
+                    icon="pi pi-filter-slash"
+                    (click)="clear()"
+                    [outlined]="true"
+                    class="my-1 px-4 py-2 border normal-button"
+            ></button>
+
+            <button pButton
+                    label="{{'button.search' | transloco}}"
+                    icon="pi pi-search"
+                    class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+                    (click)="searchClick(true)"></button>
+        </div>
+        <div class="col-span-12 my-2" *ngIf="!addFlag && !updateFlag ">
+            <button name="btn-create-party" pButton label="{{ 'recipientsAlerts.button.add' | transloco }}"
+                    class="normal-button"
+                    icon="pi pi-plus" (click)="showAdd()"></button>
+        </div>
+        <div class="col-span-12 ">
+            <p-table
+                styleClass="normal-table"
+                [value]="personAlertSignal()" *ngIf="!addFlag && !updateFlag "
+                [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true" [first]="firstIndex"
+                [currentPageReportTemplate]="this.paginationLabel" [totalRecords]="totalRecords" [lazy]="true"
+                [rowsPerPageOptions]="[5,10,20,50,100]"
+                paginatorDropdownAppendTo="body"
+                selectionMode="single"
+                (onPage)="OnchangePageno($event)"
+
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'recipientsAlerts.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="name" class="name">
+                            {{ 'recipientsAlerts.table.header.name'|transloco }}
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="mobileNo" class="mobileNo">
+                            {{ 'recipientsAlerts.table.header.mobile'|transloco }}
+                            <p-sortIcon field="mobileNo"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="emailAddress" class="emailAddress">
+                            {{ 'recipientsAlerts.table.header.emailAddress'|transloco }}
+                            <p-sortIcon field="emailAddress"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="telegramUsername" class="telegramUsername">
+                            {{ 'recipientsAlerts.table.header.telegramUsername'|transloco }}
+                            <p-sortIcon field="telegramUsername"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="networkIdentifyAddress" class="networkIdentifyAddress">
+                            {{ 'recipientsAlerts.table.header.networkIdentifyAddress'|transloco }}
+                            <p-sortIcon field="networkIdentifyAddress"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fromhh" class="fromhh">
+                            {{ 'recipientsAlerts.table.header.hhfrom'|transloco }}
+                            <p-sortIcon field="fromhh"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="tohh" class="tohh">
+                            {{ 'recipientsAlerts.table.header.tohh'|transloco }}
+                            <p-sortIcon field="tohh"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="status" class="status">
+                            {{ 'recipientsAlerts.table.header.status'|transloco }}
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th class="operation">
+                            {{ 'recipientsAlerts.table.header.operation'|transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-alert>
+                    <tr [pSelectableRow]="alert">
+                        <td class="row">
+                            {{ (pageno * pagesize) + (i % pagesize) + 1 }}
+                        </td>
+                        <td class="partyName"
+                            [pTooltip]="alert.name"
+                            [tooltipDisabled]="alert.name ? alert.name.length < 33 : false">
+                            {{ alert.name | morChar32 }}
+                        </td>
+                        <td class="mobileNo">
+                            {{ alert.mobileNo }}
+                        </td>
+                        <td class="emailAddress">
+                            {{ alert.emailAddress }}
+                        </td>
+                        <td class="telegramUsername">
+                            {{ alert.telegramUsername }}
+                        </td>
+                        <td class="networkIdentifyAddress">
+                            {{ alert.networkIdentifyAddress }}
+                        </td>
+                        <td class="hhfrom">
+                            {{ alert.fromhh|hour }}
+                        </td>
+                        <td class="tohh">
+                            {{ alert.tohh|hour }}
+                        </td>
+                        <td class="text-right">
+                            <div
+                                [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': alert.status,
+                                   ' text-red-800 bg-red-300 ': !alert.status
+                                   }"
+                                class="w-[65px] float-right text-center rounded-md"
+                            >
+                                {{ alert.status | statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button name="btn-operation" (click)="setRecord(alert);menu.toggle($event)" type="button"
+                                    class="p-button-rounded " pButton pRipple icon="pi pi-chevron-down"
+                            ></button>&nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                        </td>
+                        <!-- <td class="text-right">
+                             <p-toggleSwitch
+                                 [(ngModel)]="alert.status"
+                                 (onChange)="onStatusToggle(alert)"
+                                 [style]="{ 'float': 'right' }"
+                             ></p-toggleSwitch>
+                         </td>-->
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+<!--    <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center" *ngIf="!addFlag">
+        <div class="col-span-4"></div>
+        <div class="flex items-center justify-center gap-2 col-span-4">
+            <button
+                pButton
+                pRipple class="normal-button"
+                [disabled]="(this.pageno) == 0"
+                (click)="previousPageStatement()"
+                pTooltip="{{ 'tooltip.beforePage' | transloco }}">
+                <i class="pi pi-arrow-right"></i>
+            </button>
+            <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+            <button
+                pButton
+                pRipple
+                name="btn-previous-page"
+                class="normal-button"
+                [disabled]=" this.personAlertSignal().length < pagesize"
+                (click)="nextPageStatement()"
+                pTooltip="{{ 'tooltip.nextPage' | transloco }}">
+                <i class="pi pi-arrow-left"></i>
+            </button>
+            <p-dropdown class="normal-dropdown-pagination"
+                        [options]="pagesizeOptions"
+                        optionValue="code"
+                        [autoDisplayFirst]="true"
+                        optionLabel="name"
+                        [(ngModel)]="pagesize"
+                        (onChange)="OnchangePageno($event)"
+                        [disabled]="nextBtnFlag">
+            </p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+    </div>-->
+</div>
+<div class="w-full" *ngIf="addFlag">
+    <app-register-recipients-alerts (close)="onClose($event)"
+                                    [inputUpdate]="receiverDto"></app-register-recipients-alerts>
+</div>

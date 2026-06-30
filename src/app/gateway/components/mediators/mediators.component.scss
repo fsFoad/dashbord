@@ -1,0 +1,155 @@
+:host{
+    width: 100%;
+
+}
+.outer-panel {
+    height: auto;
+}
+.inner-textarea {
+    max-height: 230px;
+    min-height: 20px;
+    height: 20px;
+}
+.horizontal-tree ::ng-deep .p-tree-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+::ng-deep .organizationchart-horizontal .p-organizationChart-node-content {
+    flex-direction: row;
+}
+.tree {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: Arial;
+    margin-top: 40px;
+}
+
+.node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.branch {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    margin-top: 40px;
+}
+
+.line {
+    height: 2px;
+    background: #ccc;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+}
+
+.connector {
+    width: 2px;
+    height: 20px;
+    background: #ccc;
+    position: absolute;
+    top: -20px;
+}
+.tree-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+    white-space: nowrap;
+}
+:host::ng-deep .p-fileupload-choose-button	 {
+    border-radius: 0.75rem;
+}
+.orgchart-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    text-align: center;
+}
+
+:host ::ng-deep .p-organizationChart-table {
+    display: table !important;
+    width: auto !important;
+    margin: auto;
+}
+:host ::ng-deep .p-organizationChart-table tr {
+    display: table-row !important;
+}
+
+:host ::ng-deep .p-organizationChart-table td {
+    display: table-cell !important;
+    text-align: center;
+    vertical-align: top;
+}
+:host ::ng-deep .p-organizationChart-line-down {
+    height: 20px !important;
+    width: 2px !important;
+    background: #ccc !important;
+    margin: 0 auto !important;
+    display: block !important;
+}
+:host ::ng-deep .p-organizationChart-line-left,
+:host ::ng-deep .p-organizationChart-line-right {
+    background: #ccc;
+    height: 2px;
+}
+:host ::ng-deep .p-organizationChart-line-top {
+    height: 20px;
+    width: 2px;
+    background: #ccc;
+    margin: 0 auto;
+}
+
+:host ::ng-deep .p-organizationChart-node-content {
+    display: table-cell;   /* ⬅️ حالت پیش‌فرض PrimeNG */
+    vertical-align: top;
+    text-align: center;
+}
+:host ::ng-deep .p-organizationChart-line {
+    display: table-row !important;
+}
+
+:host ::ng-deep .p-organizationChart-line td {
+    border-top: 2px solid #ccc !important;
+}
+
+:host ::ng-deep .p-organizationChart-line-left,
+:host ::ng-deep .p-organizationChart-line-right {
+    height: 2px !important;
+    background: #ccc !important;
+}
+
+:host ::ng-deep .p-organizationChart-line-top {
+    width: 2px !important;
+    background: #ccc !important;
+    margin: 0 auto;
+}
+.orgchart-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+.node-box {
+    padding: 6px 12px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+
+
+
+
+
+
+
+
+

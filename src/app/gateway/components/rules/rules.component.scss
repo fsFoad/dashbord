@@ -1,0 +1,27 @@
+:host {
+    width: 100%;
+}
+.ruleId{
+    width: 10%;
+}
+.name{
+    width: 12%;
+}
+.ruleTemplate{
+    width: 8%;
+}.messageTitle{
+    width:8%;
+}
+.httpsstatus{
+    width: 8%;
+}
+.errorText{
+    width: 15%;
+}
+:host ::ng-deep.p-tabpanels {
+    background: var(--p-tabs-tabpanel-background);
+    color: var(--p-tabs-tabpanel-color);
+    padding-top: 15px;
+    padding-right: 0;
+    outline: 0 none;
+}

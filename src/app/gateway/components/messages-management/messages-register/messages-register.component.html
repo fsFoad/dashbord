@@ -1,0 +1,70 @@
+
+<app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false" ></app-breadcrumbs>
+<div class="flex-column" >
+        <div class="grid grid-cols-12 gap-4 my-10 mx-5" [formGroup]="registerForm">
+            <div class="col-span-12">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'registerMessage.input.faMessage'|transloco }} :</span></label>
+                <input formControlName="text" (keydown.enter)="onKeydown($event)"
+                       class="xx-ggg-12-input"
+                       [pKeyFilter]="cust_alphanumFa" pInputText>
+            </div>
+            <div class="col-span-12">
+                <label class="normal-label"><span>{{ 'registerMessage.input.enMessage'|transloco }} :</span></label>
+                <input formControlName="textEN" dir="ltr" [pKeyFilter]="cust_alphanumEn"
+                       class="xx-ggg-12-input "
+                       (keydown.enter)="onKeydown($event)"
+                       pInputText>
+            </div>
+            <div class="col-span-4 sm:grid-cols-12  w-full">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'registerMessage.input.messageCode'|transloco }} :</span></label>
+                <input formControlName="code" class="normal-input "
+                       pKeyFilter="int" (keydown.enter)="onKeydown($event)" pInputText>
+            </div>
+            <div class="col-span-4 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'registerMessage.input.messageTitle'|transloco }} :</span></label>
+                <input formControlName="title" class="normal-input "
+                       (keydown.enter)="onKeydown($event)" pInputText>
+            </div>
+            <div class="2xl:col-span-4"></div>
+            <div class="col-span-4  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'registerMessage.input.tableId'|transloco }} :</span></label>
+                <p-dropdown
+                    [options]="categoryMessages"
+                    optionValue="code"
+                    class="normal-dropdown"
+                    optionLabel="name"
+                    formControlName="tableId"
+                    (keydown.enter)="onKeydown($event)">
+                </p-dropdown>
+            </div>
+            <div class="col-span-4  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'registerMessage.input.messageType'|transloco }} :</span></label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    [options]="typeMessages"
+                    optionValue="code"
+                    optionLabel="name"
+                    formControlName="type"
+                    (keydown.enter)="onKeydown($event)">
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="w-full mt-4 text-left p-4">
+
+            <button pButton label="{{'button.save' | transloco}}" icon="pi pi-save" severity="success"
+                    (click)="onRegister()" class="normal-button" ></button>   &nbsp;
+            <button pButton label="{{'button.cancel' | transloco}}"
+                    icon="pi pi-times" severity="danger" [outlined]="true"
+                    (click)="onCancel()" class="normal-button"></button>
+        </div>
+</div>

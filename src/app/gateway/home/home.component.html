@@ -1,0 +1,191 @@
+
+<p-toast />
+<app-breadcrumbs id="section" *ngIf="!serviceLog" [showBackButton]="showBackButtonFlag" (backClicked)="BeforeButton()"
+                 style="width: 100%"></app-breadcrumbs>
+
+<div>
+    <div class="grid grid-cols-12 justify-center items-center"
+         *ngIf="!DailyCallFlag && !successCallFlag && !failCallFlag && !serviceLog"
+         style="margin-top: 50px">
+        <!--   <p-multiSelect
+               [options]="labelOptions"
+               [(ngModel)]="selectedLabels"
+               defaultLabel="ایتم های نمودار"
+               [filter]="true"
+               [showToggleAll]="false"
+               [style]="{width: '250px'}"
+               [panelStyle]="{maxHeight: '250px'}"
+               [showToggleAll]="true"
+               (onChange)="onSelectChange($event)">
+           </p-multiSelect>-->
+
+        <div class="col-span-12 sm:col-span-12 p-2 mx-15/100 my-3/100">
+            <div class="flex items-center justify-between mb-3 w-full">
+                <div class="min-w-[480px] text-right">
+                    <p-multiSelect
+                        [options]="labelOptions"
+                        [showToggleAll]="true"
+                        [(ngModel)]="selectedLabels"
+                        (onChange)="onSelectChange($event)"
+                        defaultLabel="انتخاب کنید"
+                        optionLabel="label"
+                        optionValue="value"
+                        class="normal-dropdown"
+                    ></p-multiSelect>
+                </div>
+                <div class="flex-3 text-center">
+                    <span class="font-bold text-lg">
+                        {{ 'home.todayCalls'|transloco }}
+                        <i class="pi pi-exclamation-circle text-black align-sub ml-2"
+                           pTooltip="{{'home.infoTodayCalls'|transloco}}"></i>
+                    </span>
+                </div>
+                <div class="min-w-[200px]">
+                    <small class="font-bold text-xs text-lg">
+                        {{ 'آخرین به روزرسانی اطلاعات ' }}
+                        {{ lastJobRunn|normalizeJalali }}
+                    </small>
+                </div>
+
+            <!--    <div class="text-center mb-3" style="margin-top: 0;">
+                    <div>
+                        <span class="font-bold text-lg">{{ 'home.todayCalls'|transloco }}
+                            <i class="pi pi-exclamation-circle text-black align-sub ml-2"
+                               pTooltip="{{'home.infoTodayCalls'|transloco}}"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <p-multiSelect
+                            [options]="labelOptions"
+                            [showToggleAll]="true"
+                            [(ngModel)]="selectedLabels"
+                            (onChange)="onSelectChange($event)"
+                            defaultLabel="انتخاب کنید"
+                            optionLabel="label"
+                            optionValue="value"
+                        ></p-multiSelect>
+                    </div>
+                </div>-->
+            </div>
+            <div class="flex flex-col items-center" style="width: 100%;">
+                <div class="w-full chart-area border-1 text-center p-7 position-relative">
+                    <div *ngIf="dailyCallSpinnerFlag" class="spinner-wrapper">
+                        <app-fs-progress-spinner class="spinner"
+                                                 [style]="{ width: '50px', height: '50px' }"></app-fs-progress-spinner>
+                    </div>
+
+                    <ng-container *ngIf="!emptyDailyFlag && !dailyCallSpinnerFlag; else emptyMessage">
+                        <p-chart height="260px" width="100%" [responsive]="true" type="line" [data]="chartDataLineDaily"
+                                 [options]="barOptionDaily" #myChart
+                                 (onDataSelect)="handleChartClick($event)">
+                        </p-chart>
+                    </ng-container>
+                    <ng-template #emptyMessage>
+                        <div class="empty-message-center border-1 p-5 text-center text-red-500"
+                             *ngIf="!dailyCallSpinnerFlag">
+                            <h5>{{ 'label.message.notFound'|transloco }}</h5>
+                        </div>
+                    </ng-template>
+                </div>
+
+                <div class="flex flex-column w-full" style="margin: 20px 0;">
+
+                    <div class="chart-container" style="width: 100%;">
+                        <div class="text-center mb-3">
+                            <app-blur-overlay [active]="loading">
+                                <span class="font-bold text-lg">
+                                    {{ 'home.averageDelay.average' | transloco }}{{ this.day }}{{ 'home.averageDelay.yesterday' | transloco }}
+                                    <i class="pi pi-plus-circle" style="color: black;vertical-align: sub;"
+                                       *ngIf="this.day<7&&this.day>=1" (click)="calChartWeekly(1)"> </i>&nbsp;
+                                    <i class="pi pi-minus-circle" style="color: black;vertical-align: sub;"
+                                       *ngIf="this.day<=7&&this.day>1" (click)="calChartWeekly(2)"> </i>
+                                </span>
+                            </app-blur-overlay>
+
+                        </div>
+                        <app-blur-overlay [active]="loading" text="در حال توسعه...">
+                            <div class="chart-area border-1 p-7 text-center position-relative">
+                                <!--کامنت موقت-->
+                                <!-- <div *ngIf="delayDailySpinnerFlag" class="spinner-wrapper">
+                                     <app-fs-progress-spinner class="spinner"
+                                                              [style]="{ width: '50px', height: '50px' }"></app-fs-progress-spinner>
+                                 </div>-->
+
+                                <ng-container
+                                    *ngIf="!emptyDelayDailyFlag && !delayDailySpinnerFlag; else notFoundMessage1">
+                                    <p-chart height="260px" width="100%" [responsive]="true" type="line"
+                                             [data]="chartBarDelayDaily" [options]="barOptionDaily">
+                                    </p-chart>
+                                </ng-container>
+
+                                <ng-template #notFoundMessage1>
+                                    <div class="empty-message-center p-5 text-center text-red-500"
+                                         *ngIf="!delayDailySpinnerFlag">
+                                        <h5>{{ 'label.message.notFound'|transloco }}</h5>
+                                    </div>
+                                </ng-template>
+
+                            </div>
+                        </app-blur-overlay>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--    <app-blur-overlay [active]="loading" text="لطفاً کمی صبر کنید…">
+            &lt;!&ndash; هر محتوایی که اینجا بگذاری، هنگام active=true تار می‌شود &ndash;&gt;
+            <div class="box">
+                <h2>محتوای من</h2>
+                <p>این بخش هنگام لودینگ تار می‌شود.</p>
+                &lt;!&ndash; نمونه تصویر/لیست/فرم و ... &ndash;&gt;
+            </div>
+        </app-blur-overlay>-->
+    <div class="grid flex-column mx-5 my-5 " *ngIf="DailyCallFlag && !successCallFlag && !failCallFlag && !serviceLog">
+          <p-table
+styleClass="normal-table"
+ [value]="valueOfDailyTable">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="text-right w-3/100"><span [transloco]="'row'"></span></th>
+                    <th class="text-right w-10/100"><span [transloco]="'home.apiTitle'"></span></th>
+                    <th class="text-right w-10/100"><span [transloco]="'home.moduleTitle'"></span></th>
+                    <th class="text-right w-10/100"><span [transloco]="'home.partyTitle'"></span></th>
+                    <th class="text-right w-8/100"><span [transloco]="'home.countSuccesses'"></span></th>
+                    <th class="text-right w-8/100"><span [transloco]="'home.countFiled'"></span></th>
+                    <th class="text-right border-r  "><span [transloco]="'home.operation'"></span></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-i="rowIndex" let-daily>
+                <tr>
+                    <td class="text-right w-3/100">{{ i + 1 }}</td>
+                    <td class="text-right" [pTooltip]="daily.apiTtile"
+                        [tooltipDisabled]="daily.apiTtile ? daily.apiTtile.length < 20 : false">
+                        {{ daily.apiTtile | moreChar19 }}
+                    </td>
+                    <td class="text-right w-10/100" [pTooltip]="daily.apiTtile"
+                        [tooltipDisabled]="daily.apiTtile ? daily.apiTtile.length < 20 : false">
+                        {{ daily.moduleTitle | moreChar19 }}
+                    </td>
+                    <td class="text-right w-10/100" [pTooltip]="daily.apiTtile"
+                        [tooltipDisabled]="daily.apiTtile ? daily.apiTtile.length < 20 : false">
+                        {{ daily.partyTtile | moreChar19 }}
+                    </td>
+                    <td class="text-right w-8/100">{{ daily.successcount }}</td>
+                    <td class="text-right w-8/100">{{ daily.failedcount }}</td>
+                    <td class="text-right border-r  ">
+                        <button (click)="setRecordDaily(daily);menuDaily.toggle($event)" type="button"
+                                class="p-button-rounded"
+                                pButton pRipple icon="pi pi-chevron-down"
+                        ></button>&nbsp;
+                        <p-menu appendTo="body" #menuDaily [popup]="true" [model]="itemsDaily"></p-menu>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="col-span-12" *ngIf="serviceLog">
+        <app-log-reports [inputHomeBase]="dataLog" (close)="onClose($event)"></app-log-reports>
+    </div>
+</div>

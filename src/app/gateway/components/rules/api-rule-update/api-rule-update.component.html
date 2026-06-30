@@ -1,0 +1,151 @@
+<p-toast />
+<app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false"></app-breadcrumbs>
+<div class="grid flex-column">
+
+    <div class="grid grid-cols-12 gap-4 my-10 mx-5">
+        <div class="col-span-3 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'editRule.input.ruleName'|transloco }} :</span></label>
+            <input class="normal-input" [(ngModel)]="name" (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="col-span-3 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'editRule.dropdown.choosePublicErrorCode'|transloco }} :</span>
+            </label>
+            <p-dropdown
+                [options]="generalErrorCodesOptions"
+                [(ngModel)]="generalErrorCodes"
+                optionValue="code"
+                (onChange)="onchangeGeneralErrorCodes()"
+                optionLabel="name"
+                class="normal-dropdown"
+                (keydown.enter)="onKeydown($event)">
+            </p-dropdown>
+        </div>
+
+        <div class="col-span-3 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+            <label class="normal-label">
+
+                <span>{{ 'editRule.dropdown.ruleTemplate'|transloco }} :</span></label>
+            <p-dropdown
+                class="normal-dropdown"
+                [options]="ruleTemplateOptions"
+                [(ngModel)]="ruleTemplate"
+                optionValue="code"
+                optionLabel="name"
+                (keydown.enter)="onKeydown($event)">
+            </p-dropdown>
+        </div>
+        <div class="col-span-12">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'editRule.input.errorText'|transloco }} :</span>
+            </label>
+           <!-- <textarea dir="rtl" [(ngModel)]="errorText" (keydown.enter)="onKeydown($event)"
+                      class="border rounded p-2 xxx-gggg-12-input" pTextarea></textarea>-->
+            <textarea
+                dir="ltr"
+                [(ngModel)]="errorText"
+                (ngModelChange)="validateJson($event)"
+                pTextarea
+                class="border rounded p-2 xxx-gggg-12-input">
+</textarea>
+
+            <small
+                *ngIf="jsonValidationResult?.errors?.length"
+                class="block mt-1 text-red-500 text-xs">
+
+                <div *ngFor="let err of jsonValidationResult.errors">
+                    • {{ err }}
+                </div>
+
+            </small>
+        </div>
+
+
+    </div>
+    <p-panel header="{{'editRule.header.messageAssignment'|transloco}}" class="m-5 ">
+        <div class="grid grid-cols-12    in-panel">
+            <div class="col-span-4 ">
+                <label class="normal-label"><span>{{ 'editRule.detail.messageId'|transloco }} :</span></label>
+                <div class="text-right">
+                    <label class="normal-label">{{ this.messageId }}</label>
+                </div>
+            </div>
+            <div class="col-span-4 ">
+                <label class="normal-label"><span>{{ 'editRule.detail.titleMessage'|transloco }} :</span></label>
+                <div class="text-right">
+                    <label class="normal-label">{{ title }}</label>
+                </div>
+            </div>
+            <div class="col-span-4  flex justify-start items-center gap-0.5 h-12  rtl:flex-row-reverse">
+                <button (click)="showMessage()"
+                        style="width: 30px!important;margin-bottom: 5px;"
+                        pButton
+                        class="bg-green-500 border-green-500 text-white w-8 h-8 mr-2   flex items-center justify-center rounded-2xl"
+                        icon="pi pi-external-link"
+                        matTooltip="{{'editRule.tooltip.chooseMessage' | transloco}}"></button>&nbsp;
+                <button style="width: 30px!important;margin-bottom: 5px"
+                        matTooltip="{{'editRule.tooltip.deleteMessage' | transloco}}" (click)="clearMessage()"
+                        pButton
+                        class="bg-red-500 border-red-500 text-white w-8 h-8 rounded-2xl flex items-center justify-center "
+                        icon="pi pi-trash"></button>
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label"><span>{{ 'editRule.detail.tableId' |transloco }} :</span></label>
+                <div class="text-right">
+                    <label class="normal-label">{{ tableId|tableId }}</label>
+                </div>
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label"><span>{{ 'editRule.detail.faMessage'|transloco }} :</span></label>
+                <div class="text-right">
+                    <label class="normal-label">{{ text }}</label>
+                </div>
+            </div>
+
+        </div>
+        <div hidden>
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>message id :</span></label>
+            <input [(ngModel)]="messageId" pInputText>
+        </div>
+    </p-panel>
+    <div class="w-full mt-4 text-left p-4">
+        <button pButton
+                class="normal-button" severity="success"
+                label="{{'button.save' | transloco}}" icon="pi pi-save"
+                (click)="onUpdate()"></button>&nbsp;
+        <button pButton label="{{'button.cancel' | transloco}}"
+                severity="danger"
+                [outlined]="true"
+                icon="pi pi-times"
+                class="normal-button"
+                (click)="onCancel()"></button>
+
+    </div>
+</div>
+<ng-container *ngIf="dialogMessageFlag">
+<p-dialog [style]="{'width':'55%'}" [(visible)]="dialogMessageFlag"
+          [modal]="true" [draggable]="false" appendTo="body"
+          [resizable]="true">
+    <app-message-selector
+        [titleHeader]="'label.header.dialog.stepFourthSelectMessages' | transloco"
+        [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+        [statusCodeOptions]="statusCodeOptions"
+        [categoryOptions]="categoryMessages"
+        [typeOptions]="typeMessages"
+        [preselectedMessageId]="messageId"
+        [messagesList]=messagesList
+        [selectedRow]="selectedRow"
+        (selectionCleared)="onChildSelectionCleared($event)"
+        (select)="onMessageSelected($event)"
+        [presetValue]="{code: generalErrorCodes}"
+        [disabledControls]="{ code: true }
+"></app-message-selector>
+</p-dialog>
+</ng-container>
+

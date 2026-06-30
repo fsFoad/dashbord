@@ -1,0 +1,283 @@
+<app-breadcrumbs id="section" *ngIf="!registerFlag&&!updateFlag" [showBackButton]="false"
+                 class=" border-[#a19f9d] rounded-t-sm"></app-breadcrumbs>
+<p-toast />
+<div class="flex flex-col w-full text-[#0c0c0c] rounded-t-sm" *ngIf="!registerFlag&&!updateFlag">
+
+    <div class="grid grid-cols-12 content-page" [formGroup]="managementForm" *ngIf="!registerFlag && !updateFlag">
+        <div class="col-span-3 flex text-left   h-12 gap-2 mt-5-5  sm:hidden ">
+            <button
+                pButton
+                label="{{'button.search' | transloco}}"
+                icon="pi pi-search"
+                (click)="searchIsSystem();searchNottIsSystem();"
+                class="normal-button "
+            ></button>
+            <button
+                pButton
+                label="{{'button.clear' | transloco}}"
+                icon="pi pi-filter-slash"
+                (click)="clear()" [outlined]="true"
+                class="normal-button"
+            ></button>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">{{ 'messagesManagement.input.messageId' | transloco }}:</label>
+            <input
+                formControlName="messageId"
+                pKeyFilter="int"
+                (keydown.enter)="onKeydown($event)"
+                pInputText
+                class="normal-input "
+            />
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">{{ 'messagesManagement.table.header.code' | transloco }}:</label>
+            <input
+                formControlName="code"
+                pKeyFilter="int"
+                (keydown.enter)="onKeydown($event)"
+                pInputText
+                class="normal-input "
+            />
+        </div>
+        <div class="hidden sm:flex sm:col-span-6 justify-start items-center gap-2 h-12 mt-5-5 rtl:flex-row-reverse">
+            <button
+                pButton
+                label="{{'button.clear' | transloco}}"
+                icon="pi pi-filter-slash"
+                (click)="clear()"
+                [outlined]="true"
+                class="normal-button"
+            ></button>
+            <button
+                pButton
+                label="{{'button.search' | transloco}}"
+                icon="pi pi-search"
+                class="normal-button"
+                (click)="searchIsSystem();searchNottIsSystem();"
+            ></button>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">{{ 'input.titleMessage' | transloco }}:</label>
+            <input
+                formControlName="title"
+                (keydown.enter)="onKeydown($event)"
+                pInputText
+                class="normal-input "
+            />
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">{{ 'dropdown.categoryMessages' | transloco }}:</label>
+            <p-select
+                class="normal-dropdown"
+                [options]="categoryMessages"
+                optionValue="code"
+                optionLabel="name"
+                formControlName="tableId"
+                (onChange)= "searchIsSystem();searchNottIsSystem();"
+            ></p-select>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">{{ 'dropdown.typeMessages' | transloco }}:</label>
+            <p-select
+                class="normal-dropdown"
+                [options]="typeMessages"
+                optionValue="code"
+                optionLabel="name"
+                formControlName="type"
+                (onChange)= "searchIsSystem();searchNottIsSystem();"
+            ></p-select>
+        </div>
+    </div>
+    <p-accordion [value]="['1']" [multiple]="true" class="px-5">
+        <p-accordion-panel class="isSystemMessage" value="0">
+            <p-accordion-header>
+                {{ 'messagesManagement.header.messagesIsSystemMessage' | transloco }}
+                ({{ filteredSystemCount || 0 }})
+            </p-accordion-header>
+            <p-accordion-content>
+                <p-table  class="mt-5"
+                    styleClass="normal-table"
+                    [value]="messagesLIstIsSystemMessage" [lazy]="true"
+                    [paginator]="true" [rows]="pagesizeIsSystem" [showCurrentPageReport]="true" [first]="firstIsSystem"
+                    [currentPageReportTemplate]="this.paginationLabelIsSystem" [totalRecords]="totalRecordsIsSystem"
+                    [rowsPerPageOptions]="[5,10,20,50,100]"
+                    paginatorDropdownAppendTo="body"
+                    selectionMode="single"
+                    (onPage)="OnchangePagenoIsSystem($event)">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="messageId" class="messageId">
+                                <span [transloco]="'messagesManagement.table.header.messageId'"></span>
+                                <p-sortIcon field="messageId"></p-sortIcon>
+                            </th>
+                            <th class="code" pSortableColumn="code">
+                                <span [transloco]="'messagesManagement.table.header.code'"></span>
+                                <p-sortIcon field="code"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="title" class="title">
+                                <span [transloco]="'messagesManagement.table.header.title'"></span>
+                                <p-sortIcon field="title"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="text" class="text">
+                                <span [transloco]="'messagesManagement.table.header.faMessage'"></span>
+                                <p-sortIcon field="text"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="tableId" class="tableId">
+                                <span [transloco]="'messagesManagement.table.header.tableId'"></span>
+                                <p-sortIcon field="tableId"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="type" class="type">
+                                <span [transloco]="'messagesManagement.table.header.type'"></span>
+                                <p-sortIcon field="type"></p-sortIcon>
+                            </th>
+                            <th class="text-right border-r  ">
+                                <span [transloco]="'messagesManagement.table.header.operation'"></span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-messages>
+                        <tr [pSelectableRow]="messages">
+                            <td class="messageId"
+                                [pTooltip]="messages.messageId"
+                                [tooltipDisabled]="messages.messageId?messages.messageId.length < 20:false"
+                            >
+                                {{ messages.messageId|moreChar19 }}
+                            </td>
+                            <td class="code"
+                                [pTooltip]="messages.code"
+                                [tooltipDisabled]="messages.code?messages.code.length < 20:false"
+                            >
+                                {{ messages.code|moreChar19 }}
+                            </td>
+                            <td class="title"
+                                [pTooltip]="messages.title"
+                                [tooltipDisabled]="messages.title?messages.title.length < 20:false"
+                            >
+                                {{ messages.title|moreChar19 }}
+                            </td>
+                            <td class="text"
+                                [pTooltip]="messages.text"
+                                [tooltipDisabled]="messages.text?messages.text.length < 20:false"
+                            >
+                                {{ messages.text|moreChar19 }}
+                            </td>
+                            <td class="tableId">
+                                {{ messages.tableId|messagesCategory }}
+                            </td>
+                            <td class="type">{{ messages.type|messageType }}</td>
+                            <td class="text-right border-r  ">
+                                <button class="p-button-rounded "
+                                        pButton icon="pi pi-pencil" pTooltip="{{'button.edit'|transloco}}"
+                                        (click)="showUpdate(messages)"></button>&nbsp;
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-accordion-content>
+        </p-accordion-panel>
+        <p-accordion-panel value="1">
+            <p-accordion-header>
+                {{ 'messagesManagement.header.messagesNotIsSystemMessage' | transloco }}
+                ({{ filteredNonSystemCount || 0 }})
+            </p-accordion-header>
+            <p-accordion-content>
+                <div class="w-full my-5">
+                    <button
+                        pButton
+                        label="{{'messagesManagement.button.newMessage' | transloco}}"
+                        icon="pi pi-plus"
+                        (click)="showRegister()"
+                        class="normal-button "
+                    ></button>
+                </div>
+
+                <p-table class="mt-5"
+                    styleClass="normal-table"
+                    [value]="messagesLNottIsSystemMessage" [lazy]="true"
+                    [paginator]="true" [rows]="pagesizeNottIsSystem" [showCurrentPageReport]="true" [first]="firstNottIsSystem"
+                    [currentPageReportTemplate]="this.paginationLabelNottIsSystem" [totalRecords]="totalRecordsNottIsSystem"
+                    [rowsPerPageOptions]="[5,10,20,50,100]"
+                    paginatorDropdownAppendTo="body"
+                    selectionMode="single"
+                    (onPage)="OnchangePagenoNottIsSystem($event)">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="messageId" class="messageId">
+                                <span [transloco]="'messagesManagement.table.header.messageId'"></span>
+                                <p-sortIcon field="messageId"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="code" class="code ">
+                                <span [transloco]="'messagesManagement.table.header.code'"></span>
+                                <p-sortIcon field="code"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="title" class="title">
+                                <span [transloco]="'messagesManagement.table.header.title'"></span>
+                                <p-sortIcon field="title"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="text" class="text">
+                                <span [transloco]="'messagesManagement.table.header.faMessage'"></span>
+                                <p-sortIcon field="text"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="tableId" class="tableId">
+                                <span [transloco]="'messagesManagement.table.header.tableId'"></span>
+                                <p-sortIcon field="tableId"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="type" class="type">
+                                <span [transloco]="'messagesManagement.table.header.type'"></span>
+                                <p-sortIcon field="type"></p-sortIcon>
+                            </th>
+                            <th class="text-right border-r  ">
+                                <span [transloco]="'messagesManagement.table.header.operation'"></span>
+
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-messages>
+                        <tr [pSelectableRow]="messages">
+                            <td class="messageId"
+                                [pTooltip]="messages.messageId"
+                                [tooltipDisabled]="messages.messageId?messages.messageId.length < 20:false"
+                            >
+                                {{ messages.messageId|moreChar19 }}
+                            </td>
+                            <td class="code"
+                                [pTooltip]="messages.code"
+                                [tooltipDisabled]="messages.code?messages.code.length < 20:false"
+                            >
+                                {{ messages.code|moreChar19 }}
+                            </td>
+                            <td class="title"
+                                [pTooltip]="messages.title"
+                                [tooltipDisabled]="messages.title?messages.title.length < 20:false"
+                            >
+                                {{ messages.title|moreChar19 }}
+                            </td>
+                            <td class="text"
+                                [pTooltip]="messages.text"
+                                [tooltipDisabled]="messages.text?messages.text.length < 20:false"
+                            >
+                                {{ messages.text|moreChar19 }}
+                            </td>
+                            <td class="tableId">{{ messages.tableId|messagesCategory }}</td>
+                            <td class="type">{{ messages.type|messageType }}</td>
+                            <td class="text-right border-r  ">
+                                <button class="p-button-rounded "
+                                        pButton icon="pi pi-pencil" pTooltip="{{'button.edit'|transloco}}"
+                                        (click)="showUpdate(messages)"></button>&nbsp;
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-accordion-content>
+        </p-accordion-panel>
+    </p-accordion>
+
+
+</div>
+<div class="col-span-12" *ngIf="registerFlag">
+    <app-messages-register (close)="onCloseAndUpdate($event)"></app-messages-register>
+</div>
+<div class="col-span-12" *ngIf="updateFlag">
+    <app-messages-update [inputUpdate]="updateMessageDto" (close)="onCloseAndUpdate($event)"></app-messages-update>
+</div>

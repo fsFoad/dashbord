@@ -1,0 +1,7 @@
+:host {
+    width: 100%;
+}
+.chartjs-tooltip {
+    white-space: pre-line !important; /* Allow HTML line breaks */
+    font-size: 14px; /* Adjust font size */
+}

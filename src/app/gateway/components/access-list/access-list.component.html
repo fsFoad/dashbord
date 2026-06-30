@@ -1,0 +1,861 @@
+<p-toast *ngIf="!endpointFlag&&!apiModuleFlag&&!clientFlag"/>
+<app-breadcrumbs id="section" *ngIf="!endpointFlag&&!apiModuleFlag&&!clientFlag"
+                 [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page" *ngIf="!endpointFlag&&!apiModuleFlag&&!clientFlag">
+    <div class="grid grid-cols-12 xl:grid-cols-12 2xl:grid-cols-12 md:grid-cols-12  ">
+
+        <div class=" col-span-4">
+            <label class="normal-label">
+                <span>{{ 'input.clientName'|transloco }} :</span></label>
+            <p-dropdown
+                (keydown.enter)="onKeydown($event)"
+                (onChange)="search()"
+                [options]="clientListOptions"
+                [(ngModel)]="clientId"
+                optionValue="clientId"
+                [filter]="true"
+                filterBy="name"
+                optionLabel="name"
+                class="normal-dropdown"
+                [disabled]="clientNameFlag"
+            >
+            </p-dropdown>
+        </div>
+        <div class=" col-span-4"></div>
+
+        <div class=" col-span-4" dir="ltr">
+            <button pButton label="{{'button.clear'|transloco}}"
+                    icon="pi pi-filter-slash"
+                    (click)="clear()" class="my-1 px-4 py-2 border normal-button" [outlined]="true"></button>&nbsp;&nbsp;
+            <button pButton label="{{'button.search' | transloco}}"
+                    style="width: 110px;margin: 3px;margin-top: 20px"
+                    class="normal-button" icon="pi pi-search" (click)="search()"></button>
+
+        </div>
+        <div class=" col-span-4">
+            <label class="normal-label">
+                <span>{{ 'dropdown.partyName'|transloco }} :</span>
+            </label>
+            <p-dropdown
+                (keydown.enter)="onKeydown($event)"
+                [options]="partyListOptions"
+                [(ngModel)]="partyId"
+                optionValue="partyId"
+                [filter]="true"
+                filterBy="title"
+                optionLabel="title"
+                class="normal-dropdown"
+                (onChange)="OnchangeParty($event)">
+
+            </p-dropdown>
+        </div>
+        <div class=" col-span-4">
+            <label class="normal-label"> <span>{{ 'dropdown.moduleTitle'|transloco }} :</span></label>
+            <p-dropdown
+                (keydown.enter)="onKeydown($event)"
+                (onChange)="search()"
+                [options]="moduleListOptions"
+                [(ngModel)]="moduleId"
+                optionValue="moduleId"
+                optionLabel="moduleTitle"
+                [filter]="true"
+                filterBy="moduleTitle"
+                class="normal-dropdown"
+            >
+            </p-dropdown>
+
+        </div>
+        <div class=" col-span-4"></div>
+        <div class=" col-span-4 my-5">
+            <button pButton label="{{'button.createAccessList' | transloco}}" class="normal-button"
+                    (click)="addApiSelect()" icon="pi pi-plus"></button>
+        </div>
+
+        <div class=" col-span-12">
+            <p-table
+                styleClass="normal-table"
+                [value]="accessList" [loading]="loading"
+                [lazy]="true"
+                [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true" [first]="firstIndex"
+                [currentPageReportTemplate]="this.paginationLabel" [totalRecords]="totalRecords"
+                [rowsPerPageOptions]="[5,10,20,50,100]"
+                paginatorDropdownAppendTo="body"
+                selectionMode="single"
+                (onPage)="OnchangePageno($event)">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ "accessList.table.header.row"|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="partyName" class="partyName text-center">
+                            {{ "accessList.table.header.partyName"|transloco }}
+                            <p-sortIcon field="partyName"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="moduleTitle" class="moduleTitle text-center">
+
+                            {{ "accessList.table.header.moduleTitle"|transloco }}
+                            <p-sortIcon field="moduleTitle"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="clientName" class="clientName text-center">
+                            {{ "accessList.table.header.clientName"|transloco }}
+                            <p-sortIcon field="clientName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="apiTitle" class="apiTitle text-center">
+                            {{ "accessList.table.header.apiTitle"|transloco }}
+                            <p-sortIcon field="apiTitle"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="apiCount" class="apiCount text-center">
+                            {{ "محدودیت فراخوانی"|transloco }}
+
+                            <p-sortIcon field="apiCount"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="callCount" class="callCount text-center">
+                            {{ "accessList.table.header.callCount"|transloco }}
+
+                        </th>
+                        <th pSortableColumn="status" class="status text-center">
+                            {{ "accessList.table.header.status"|transloco }}
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th class="text-right border-r  ">
+                            {{ "accessList.table.header.operation"|transloco }}
+
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-access>
+                    <tr [pSelectableRow]="access">
+                        <td class="row">{{ access.row }}</td>
+                        <td class="partyName text-center"
+                            [pTooltip]="access.partyName"
+                            [tooltipDisabled]="access.partyName?access.partyName.length < 20:false"
+                        >
+                            {{ access.partyName|moreChar19 }}
+                        </td>
+                        <td class="moduleTitle text-center" [ngStyle]="{'text-align': 'center !important'}"
+                            [pTooltip]="access.moduleTitle"
+                            [tooltipDisabled]="access.moduleTitle?access.moduleTitle.length < 20:false">
+                            <div [ngStyle]="{ 'border-radius':' 2.5px','color':access.moduleTitle === 'فاقد ماژول' ?
+                         '#5b0e79' :'',
+                        'background-color': access.moduleTitle === 'فاقد ماژول' ?'#c987f1' :false ,
+                        'width':access.moduleTitle === 'فاقد ماژول' ?'90px':'auto','margin':' 0 auto'}">
+                                {{ access.moduleTitle|moreChar19 }}
+                            </div>
+                        </td>
+                        <td class="clientName text-center" [pTooltip]="access.clientName"
+                            [tooltipDisabled]="access.clientName?access.clientName.length < 20:false"
+                            [ngStyle]="{'text-align': 'center !important'}">
+                            <div [ngStyle]="{ 'border-radius':' 2.5px','color':access.clientName === 'اختصاص نیافته' ?
+                         '#8c1a1f' :'',
+                         'background-color': access.clientName === 'اختصاص نیافته' ?'#dc8585' :false ,
+                        'width':access.clientName === 'اختصاص نیافته' ?'90px':'auto','margin':' 0 auto'}">
+                                {{ access.clientName|moreChar19 }}
+                            </div>
+                        </td>
+
+                        <td class="apiTitle text-center" [ngStyle]="{'text-align': 'center !important'}"
+                            [pTooltip]="access.apiTitle"
+                            [tooltipDisabled]="access.apiTitle?access.apiTitle.length < 20:false">
+                            <div [ngStyle]="{ 'border-radius':' 2.5px','color':access.apiTitle === 'اختصاص نیافته' ?
+                         '#8c1a1f' :'',
+                         'background-color': access.apiTitle === 'اختصاص نیافته' ?'#dc8585' :false ,
+                        'width':access.apiTitle === 'اختصاص نیافته' ?'90px':'auto','margin':' 0 auto'}">
+                                {{ access.apiTitle|moreChar19 }}
+                            </div>
+                        </td>
+                        <td class="apiCount text-center" [ngStyle]="{'text-align': 'center !important'}">
+                            <div [ngStyle]="{ 'border-radius':' 2.5px','color':access.apiCount === 'فاقد سرویس در ماژول' ?
+                         '#79370e' :'',
+                        'background-color': access.apiCount === 'فاقد سرویس در ماژول' ?'#f1b387' :false ,
+                        'width':access.apiCount === 'فاقد سرویس در ماژول' ?'90px':'auto','margin':' 0 auto'}">
+                                {{ access.apiCount }}
+                            </div>
+                        </td>
+                        <td class="callCount text-center">
+                            <label class="normal-label"> {{ 'table.detail.daily'|transloco }}
+                                :{{ access.dailyCount }}</label>
+                            <hr>
+                            <label class="normal-label"> {{ 'table.detail.weekly'|transloco }}
+                                :{{ access.weeklyCount }}</label>
+                            <hr>
+                            <label class="normal-label"> {{ 'table.detail.monthly'|transloco }}
+                                :{{ access.monthlyCount }}</label>
+                        </td>
+                        <td class="status text-center">
+                            <div
+                                [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': access.status,
+                                   ' text-red-800 bg-red-300 ': !access.status
+                                   }"
+                                class="w-[65px]  text-center rounded-md mx-auto"
+                            >
+                                {{ access.status | statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button (click)="setRecord(access);menu.toggle($event)" type="button"
+                                    class="p-button-rounded  " pButton
+                                    pRipple icon="pi pi-chevron-down"></button>&nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>
+<div class="col-span-12" *ngIf="endpointFlag">
+    <app-endpoint-management [inputAccess]="accessDto" (close)="onClose($event)"></app-endpoint-management>
+</div>
+<div class="col-span-12" *ngIf="apiModuleFlag">
+    <app-basemodule-api-module [inputAccess]="accessDto" (close)="onClose($event)"></app-basemodule-api-module>
+</div>
+<div class="col-span-12" *ngIf="clientFlag">
+    <app-client-api-management [inputAccess]="DirectBaseAccess"
+                               (close)="onClose($event)"></app-client-api-management>
+</div>
+<p-dialog [style]="{'width':'60%'}" [(visible)]="dialogApiFlag" (onHide)="flagChange()"
+          [modal]="true" [draggable]="false" appendTo="body"
+          [resizable]="true">
+    <div class="w-full">
+        <p-fieldset legend="{{headerDialog}}">
+            <p-panel header="{{'گام آخر - بررسی اطلاعات ثبتی و ثبت نهایی'|transloco}}" *ngIf="index5">
+                <p-panel header="{{'اطلاعات ثبتی سرویس ها'|transloco}}"
+                         *ngIf="!checkedAllApi&&!checkedMultiApi">
+                    <div class="content-page">
+                        <div class="grid grid-cols-12">
+                            <div class=" col-span-4 mx-2">
+                                <label class="normal-label"> <span>{{ 'label.detail.apiTitle'|transloco }}</span> :
+                                </label>
+                                <div class="lblDetailsDia">
+                                    <label class="text-gray-700 ftextDetails"
+                                           [pTooltip]="titleApiDe"
+                                           [tooltipDisabled]="titleApiDe?titleApiDe.length < 20:false">
+                                        {{ titleApiDe|threeDotDetailsPipe }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-span-4 mx-2">
+                                <label class="normal-label"> <span>{{ 'label.detail.apiName'|transloco }}</span> :
+                                </label>
+                                <div class="lblDetailsDia">
+                                    <label class="text-gray-700 ftextDetails"
+                                           [pTooltip]="nameApiDe"
+                                           [tooltipDisabled]="nameApiDe?nameApiDe.length < 20:false">
+                                        {{ nameApiDe|threeDotDetailsPipe }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-span-4 mx-2"></div>
+                            <div class=" col-span-4 mx-2">
+                                <label class="normal-label"> <span>{{ 'label.detail.retryCountApi'|transloco }}</span> :
+                                </label>
+                                <div class="lblDetailsDia">
+                                    <label class="text-gray-700 ftextDetails"
+                                           [pTooltip]="retryCountApiDe"
+                                           [tooltipDisabled]="retryCountApiDe?retryCountApiDe.length < 20:false">
+                                        {{ retryCountApiDe }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-span-4 mx-2">
+                                <label class="normal-label"> <span>{{ 'label.detail.maxCallApi'|transloco }}</span> :
+                                </label>
+                                <div class="lblDetailsDia">
+                                    <label class="text-gray-700 ftextDetails"
+                                           [pTooltip]="maxCallApiDe"
+                                           [tooltipDisabled]="maxCallApiDe?maxCallApiDe.length < 20:false">
+                                        {{ maxCallApiDe }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-span-4 mx-2"></div>
+                            <div class=" col-span-4 mx-2">
+                                <label class="normal-label"> <span
+                                >{{ 'label.detail.dailyCountApi'|transloco }} :</span>
+                                </label>
+                                <div class="lblDetailsDia">
+                                    <label class="text-gray-700 ftextDetails">
+                                        {{ dailyCountApiDe }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-span-4 mx-2">
+                                <label class="normal-label"> <span
+                                    dir="rtl">{{ 'label.detail.weeklyCountApi'|transloco }}</span> :
+                                </label>
+                                <div class="lblDetailsDia">
+                                    <label class="text-gray-700 ftextDetails">
+                                        {{ weeklyCountApiDe }}</label>
+                                </div>
+                            </div>
+                            <div class=" col-span-4 mx-2">
+                                <label class="normal-label"> <span
+                                    dir="rtl">{{ 'label.detail.monthlyCount'|transloco }}</span> :
+                                </label>
+                                <div class="lblDetailsDia">
+                                    <label class="text-gray-700 ftextDetails">
+                                        {{ monthlyCountApiDe }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+                <p-panel header="{{'label.header.ruleRegistrationInfo'|transloco}}">
+                    <div class="content-page grid grid-cols-12">
+                        <div class=" col-span-4 mx-2">
+                            <label class="normal-label"> <span dir="rtl">{{ 'label.detail.ruleName' |transloco }}
+                                :</span>
+                            </label>
+                            <div class="lblDetailsDia">
+                                <label class="text-gray-700 ftextDetails"
+                                       [pTooltip]="ruleNameDe"
+                                       [tooltipDisabled]="ruleNameDe?ruleNameDe.length < 20:false">
+                                    {{ ruleNameDe|threeDotDetailsPipe }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4 mx-2 ">
+                            <label class="normal-label"> <span
+                                dir="rtl">{{ 'label.detail.ruleTemplate'|transloco }}</span>
+                                : </label>
+                            <div class="lblDetailsDia">
+                                <label class="text-gray-700 ftextDetails">{{ ruleTemplateDe|formatRule }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4 mx-2"></div>
+                        <div class=" col-span-4 mx-2">
+                            <label class="normal-label"> <span
+                                dir="rtl">{{ 'label.detail.httpsStatus'|transloco }}</span>
+                                :
+                            </label>
+                            <div class="lblDetailsDia"
+                                 [pTooltip]="httpsstatusDe"
+                                 [tooltipDisabled]="httpsstatusDe?httpsstatusDe.length < 20:false">
+                                <label
+                                    class="text-gray-700 ftextDetails">{{ httpsstatusDe|threeDotDetailsPipe }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+                <p-panel header="{{'label.header.messageRegistrationInfo'|transloco}}">
+                    <div class="content-page grid grid-cols-12">
+                        <div class=" col-span-4 mx-2">
+                            <label class="normal-label"> <span
+                                dir="rtl">{{ 'label.detail.idNewMessageUnit'|transloco }} : </span>
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthMessageId">
+                                <label class="text-gray-700 ftextDetails">{{ messageIdDe }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4 mx-2">
+                            <label class="normal-label"> <span
+                                dir="rtl">{{ 'label.detail.idNewCodeMessageUnit'|transloco }} :</span>
+
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthCodeMessage">
+                                <label class="text-gray-700 ftextDetails">{{ codeMessageDe }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4 mx-2"></div>
+                        <div class=" col-span-4 mx-2">
+                            <label class="normal-label"> <span
+                                dir="rtl">{{ 'label.detail.idNewTitleMessageUnit'|transloco }} :</span>
+
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthTitleMessage"
+                                 [pTooltip]="titleMessageDe"
+                                 [tooltipDisabled]="titleMessageDe?titleMessageDe.length < 20:false">
+                                <label
+                                    class="text-gray-700 ftextDetails">{{ titleMessageDe|threeDotDetailsPipe }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4 mx-2">
+                            <label class="normal-label"> <span
+                                dir="rtl">{{ 'label.detail.idNewTableIdUnit'|transloco }}  :</span>
+                            </label>
+                            <div class="lblDetailsDia">
+                                <label class="text-gray-700 ftextDetails">{{ tableIdDe|messagesCategory }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </p-panel>
+            <p-panel header="{{'گام ششم - بررسی اطلاعات ثبتی سرویس '|transloco}}" *ngIf="index6">
+                <p-panel header="{{'اطلاعات ثبتی سرویس ها'|transloco}}">
+
+                    <div
+                        class="content-page border grid grid-cols-12 border border-[#A19F9D] rounded-[12px] my-[10px] mx-[2px] py-[5px]"
+                        *ngFor="let item of selectedApi">
+                        <div class=" col-span-4">
+                            <label class="normal-label"> <span>{{ 'label.detail.apiTitle'|transloco }}</span> : </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthTitleApi">
+                                <label class="text-gray-700 ftextDetails"
+                                       [pTooltip]="item.title"
+                                       [tooltipDisabled]="item.title?item.title.length < 20:false">
+                                    {{ item.title|threeDotDetailsPipe }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4">
+                            <label class="normal-label"> <span>{{ 'label.detail.apiName'|transloco }}</span> :
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthNameApi">
+                                <label class="text-gray-700 ftextDetails"
+                                       [pTooltip]="item.name"
+                                       [tooltipDisabled]="item.name?item.name.length < 20:false">
+                                    {{ item.name|threeDotDetailsPipe }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4"></div>
+                        <div class=" col-span-4">
+                            <label class="normal-label"> <span
+                                dir="ltr">{{ 'label.detail.retryCountApi'|transloco }}</span> :
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthRetryCountApi">
+                                <label class="text-gray-700 ftextDetails"
+                                       [pTooltip]="item.retryCount"
+                                       [tooltipDisabled]="item.retryCount?item.retryCount.length < 20:false">
+                                    {{ item.retryCount|threeDotDetailsPipe }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4">
+                            <label class="normal-label"> <span
+                                dir="ltr">{{ 'label.detail.maxCallApi'|transloco }}</span> :
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthMaxCallApi">
+                                <label class="text-gray-700 ftextDetails"
+                                       [pTooltip]="item.maxCall"
+                                       [tooltipDisabled]="item.maxCall?item.maxCall.length < 20:false">
+                                    {{ item.maxCall }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4"></div>
+                        <div class=" col-span-4">
+                            <label class="normal-label"> <span
+                                dir="ltr">{{ 'label.detail.dailyCountApi'|transloco }}</span> :
+
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthDailyCountApi">
+                                <label class="text-gray-700 ftextDetails">
+                                    {{ item.dailyCount }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4">
+                            <label class="normal-label"> <span
+                                dir="ltr">{{ 'label.detail.weeklyCountApi'|transloco }}</span> :
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthWeeklyCountApi">
+                                <label class="text-gray-700 ftextDetails">
+                                    {{ item.weeklyCount }}</label>
+                            </div>
+                        </div>
+                        <div class=" col-span-4">
+                            <label class="normal-label"> <span
+                                dir="ltr">{{ 'label.detail.monthlyCount'|transloco }}</span> :
+                            </label>
+                            <div class="lblDetailsDia" [style.width.%]="widthMonthlyCountApi">
+                                <label class="text-gray-700 ftextDetails">
+                                    {{ item.monthlyCount }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+
+            </p-panel>
+
+            <p-panel header="{{'label.header.firstStepChooseService'|transloco}}"
+                     *ngIf="index1">
+                <div class="content-page">
+                    <div class="grid grid-cols-12"
+                         *ngIf="this.updateClientId == null || this.updateClientId == undefined">
+                        <div class=" col-span-4 p-field-checkbox" dir="rtl">
+                            <label>انتخاب همه سرویس ها</label>
+                            <p-checkbox [(ngModel)]="checkedAllApi" binary="true" inputId="binary"
+                                        (onChange)="selectAllApi()"></p-checkbox>
+
+                        </div>
+                        <div class="col-span-8"></div>
+
+                    </div>
+                </div>
+                <p-table
+                    styleClass="normal-table"
+
+                    [value]="apiAttachList" [(selection)]="selectedApi" [selectAll]="checkedAllApi"
+                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+                    [tableStyle]="{'min-width': '50rem'}" dataKey="apiId"
+                    [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                    [currentPageReportTemplate]="this.paginationLabel"
+                    [rowsPerPageOptions]="[5,10,25,50,100]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 4rem" class="choose">
+                                انتخاب
+                            </th>
+                            <th class="row">{{ 'accessList.table.header.dialog.row'|transloco }}</th>
+                            <th class="apiTitle text-center">{{ 'accessList.table.header.dialog.apiTitle'|transloco }}</th>
+                            <th class="apiName text-center">{{ 'accessList.table.header.dialog.apiName'|transloco }}</th>
+                            <th class="retryCount text-center">{{ 'accessList.table.header.dialog.retryCount'|transloco }}</th>
+                            <th class="maxCall text-center">{{ 'accessList.table.header.dialog.maxCall'|transloco }}</th>
+                            <th pSortableColumn="callCount text-center" class="callCount">
+                                {{ 'accessList.table.header.dialog.callCount'|transloco }}
+                            </th>
+                            <th class="  status" pSortableColumn="status">
+                                {{ 'accessList.table.header.dialog.status'|transloco }}
+                            </th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-apiAttach let-i="rowIndex">
+                        <tr [pSelectableRow]="apiAttach">
+                            <td class="choose">
+                                <p-tableCheckbox [value]="apiAttach"></p-tableCheckbox>
+                            </td>
+                            <td class="row text-center">{{ i + 1 }}</td>
+                            <td class="title text-center"
+                                [pTooltip]="apiAttach.title"
+                                [tooltipDisabled]="apiAttach.title?
+                                    apiAttach.title.toString().length < 20:false"
+                            >
+                                {{ apiAttach.title }}
+                            </td>
+                            <td class="row text-center"
+                                [pTooltip]="apiAttach.name"
+                                [tooltipDisabled]="apiAttach.name?
+                                    apiAttach.name.length < 20:false"
+                            >
+                                {{ apiAttach.name|moreChar19 }}
+                            </td>
+                            <td class="row text-center"
+                                [pTooltip]="apiAttach.retryCount"
+                                [tooltipDisabled]="apiAttach.retryCount?
+                                    apiAttach.retryCount.length < 20:false"
+                            >
+                                {{ apiAttach.retryCount }}
+                            </td>
+                            <td class="row text-center"
+                                [pTooltip]="apiAttach.maxCall"
+                                [tooltipDisabled]="apiAttach.maxCall?
+                                    apiAttach.maxCall.length < 20:false"
+                            >
+                                {{ apiAttach.maxCall }}
+                            </td>
+                            <td class="callCount text-center">
+                                <label class="normal-label"> {{ 'table.detail.dialog.monthlyCount'|transloco }}
+                                    :{{ apiAttach.dailyCount }}</label>
+                                <hr>
+                                <label class="normal-label"> {{ 'table.detail.dialog.weeklyCountApi'|transloco }}
+                                    :{{ apiAttach.weeklyCount }}</label>
+                                <hr>
+                                <label class="normal-label"> {{ 'table.detail.dialog.monthlyCount'|transloco }}
+                                    :{{ apiAttach.monthlyCount }}</label>
+                            </td>
+                            <td class="text-right">
+                                <div
+                                    [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': apiAttach.status,
+                                   ' text-red-800 bg-red-300 ': !apiAttach.status
+                                   }"
+                                    class="w-[65px] float-right text-center rounded-md"
+                                >
+                                    {{ apiAttach.status|statusPipe }}
+                                </div>
+                            </td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-panel>
+
+            <div class="w-full" *ngIf="index2" style="width: 100%">
+                <p-panel header="{{'label.header.dialog.secondStepDeterminingServiceCallLimit'|transloco}}">
+                    <div class="content-page">
+                        <div class="grid grid-cols-12">
+                            <div class=" col-span-4">
+                                <label class="normal-label">
+                                <span> {{ 'table.detail.dialog.numberServiceCallsPerDay'|transloco }}
+                                    :</span></label>
+                                <input [(ngModel)]="dailyCount" pKeyFilter="int"
+                                       class="normal-input" dir="ltr" pInputText>
+                            </div>
+                            <div class=" col-span-4">
+                                <label class="normal-label">
+                                <span>{{ 'table.detail.dialog.numberServiceCallsPerWeek'|transloco }}
+                                    :</span></label>
+                                <input [(ngModel)]="weeklyCount" pKeyFilter="int"
+                                       class="normal-input" dir="ltr" pInputText>
+                            </div>
+                            <div class=" col-span-4">
+                                <label class="normal-label">
+                                <span>{{ 'table.detail.dialog.numberServiceCallsPerMonth'|transloco }}
+                                    :</span></label>
+                                <input [(ngModel)]="monthlyCount" pKeyFilter="int"
+                                       class="normal-input" dir="ltr" pInputText>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+                <p-panel header="{{'label.header.dialog.thirdStepAppointmentSelectedServices'|transloco}}">
+                    <div class="content-page">
+                        <div class="grid grid-cols-4 space-y-3">
+                            <div class="col-span-2 ">
+                                <label class="normal-label">
+                                    <span class="text-red-500"></span>نوع احراز درخواست سرویس:
+                                </label>
+                                <p-dropdown
+                                    class="normal-dropdown"
+                                    [options]="serviceRequestVerifyOptions"
+                                    optionValue="code"
+                                    optionLabel="name"
+                                    [(ngModel)]="serviceRequestVerify"
+                                    (onChange)="verifyChange($event)"
+                                ></p-dropdown>
+                            </div>
+                            <div class="col-span-3 ">
+                            </div>
+                            <div class="col-span-2 " *ngIf="digitalSignicher">
+                                <label class="normal-label">
+                                    <span class="red-color-text"></span>
+                                    <span>کلید دیجیتال :</span>
+                                </label>
+                                <div class="input-with-buttons">
+                                    <input [(ngModel)]="digitalPublickey" pInputText class="normal-input"
+                                           [disabled]="true">
+                                    <!--                                    <button (click)="onDisplayUploadDigital()" pButton class="btnConfirm"-->
+                                    <button pButton class="btnConfirm"
+                                            icon="pi pi-eye" (click)="onDisplayUploadDigital()"
+                                            matTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"
+                                            style="width: 34px; margin-left: 2px;"></button>
+                                    <!--  <p-fileupload
+                                          mode="basic"
+                                          name="fileList"
+                                          [auto]="true"
+                                          [customUpload]="true"
+                                          [showCancelButton]="false"
+                                          [showUploadButton]="false"
+                                          chooseLabel=" "
+                                          chooseIcon="pi pi-plus"
+                                          styleClass="myUpload"
+                                          (uploadHandler)="myUploader($event, fileUploaderRef)"
+                                          #fileUploaderRef>
+                                      </p-fileupload>-->
+                                </div>
+                            </div>
+                            <div class="col-span-2 " *ngIf="digitalSignicher">
+                                <label class="normal-label">
+                                    <span>کلید عمومی :</span></label>
+                                <div class="input-with-buttons">
+                                    <input [(ngModel)]="publicKey" id="publicKey" class="normal-input" pInputText
+                                           disabled>
+                                    <!--                                    <button (click)="onDisplayUploadPublicKey()" pButton icon="pi pi-eye"-->
+                                    <button pButton icon="pi pi-eye" (click)="onDisplayUploadPublicKey()"
+                                            class="normal-button"
+                                            matTooltip="{{'مشاهده کلید کلاینت' | transloco}}"
+                                            style="width: 34px; margin-left: 2px;"></button>
+                                </div>
+                            </div>
+                            <div class="col-span-2 " *ngIf="!digitalSignicher">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>نام کاربری :</span>
+                                </label>
+                                <div class="input-with-buttons">
+                                    <input [(ngModel)]="user" pInputText class="normal-input">
+                                    <!--                                    <button (click)="onDisplayUploadDigital()" pButton class="btnConfirm"-->
+                                </div>
+                            </div>
+                            <div class="col-span-2  " *ngIf="!digitalSignicher">
+                                <label class="normal-label">
+                                    <span class="red-color-text">* </span>
+                                    <span>رمز :</span>
+                                </label>
+                                <p-password [(ngModel)]="pass" [styleClass]="'normal-password'"
+                                            name="password" [toggleMask]="true"
+                                            autocomplete="new-password"
+                                            [feedback]="false"></p-password>&nbsp;
+                                <button pButton icon="pi pi-lock" label="{{'B64' | transloco}}" (click)="onDisplayB64()"
+                                        style="width: 80px; margin-left: 2px;" class="normal-button"></button>
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+            <div class="w-full" *ngIf="index3" style="width: 100%">
+                <p-panel header="{{'label.header.dialog.thirdStepChoosingRule'|transloco}}">
+                    <div class="content-page">
+                        <div class="grid grid-cols-12">
+                            <div class=" col-span-4">
+                                <label class="normal-label"> <span
+                                >{{ 'table.detail.dialog.thirdStepChoosingRule'|transloco }} :</span></label>
+                                <input [(ngModel)]="ruleName" pInputText class="normal-input">
+                            </div>
+                            <div class=" col-span-4"></div>
+                            <div class=" col-span-4" dir="ltr">
+                                <button pButton label="{{'button.clear' | transloco}}" [outlined]="true"
+                                        icon="pi pi-filter-slash" class="normal-button"
+                                        style="margin: 3px;margin-top: 20px" (click)="clearRules()"></button>&nbsp;&nbsp;
+
+                                <button pButton label="{{'button.search' | transloco}}"
+                                        style="width: 110px;margin: 3px;margin-top: 20px"
+                                        class="normal-button" icon="pi pi-search"
+                                        (click)="searchByName()"></button>
+                            </div>
+                            <div class="col-span-12 mt-2">
+                                <p-table
+                                    styleClass="normal-table"
+                                    [value]="ruleList" [(selection)]="selectedRuleList" dataKey="ruleId"
+                                    [showCurrentPageReport]="true"
+                                    (onRowSelect)="selectedRule($event)">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th style="width: 4rem">
+                                                انتخاب
+                                            </th>
+                                            <th class="ruleId">
+                                                {{ 'table.detail.dialog.ruleId'|transloco }}
+                                            </th>
+                                            <th class="name">
+                                                {{ 'table.detail.dialog.ruleName'|transloco }}
+                                            </th>
+                                            <th class="ruleTemplate">
+                                                {{ 'table.detail.dialog.ruleTemplate'|transloco }}
+                                            </th>
+                                            <th class="httpsstatus">
+                                                {{ 'table.detail.dialog.httpsStatus'|transloco }}
+                                            </th>
+                                            <th class="messageTitle">
+                                                {{ 'table.detail.dialog.messageTitle'|transloco }}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template let-i="rowIndex" pTemplate="body" let-roule>
+                                        <tr [pSelectableRow]="roule">
+                                            <td>
+                                                <p-tableRadioButton [value]="roule"></p-tableRadioButton>
+                                            </td>
+                                            <td class="ruleId">{{ roule.ruleId }}</td>
+                                            <td class="name"
+                                                [pTooltip]="roule.name"
+                                                [tooltipDisabled]="roule.name?roule.name.length < 20:false">
+                                                {{ roule.name|moreChar19 }}
+                                            </td>
+                                            <td class="ruleTemplate">{{ roule.ruleTemplate|formatRule }}</td>
+                                            <td class="httpsstatus"
+                                                [pTooltip]="roule.httpsstatus"
+                                                [tooltipDisabled]="roule.httpsstatus?roule.httpsstatus.length < 20:false"
+                                            >
+                                                {{ roule.httpsstatus|moreChar19 }}
+                                            </td>
+                                            <td class="messageTitle"
+                                                [pTooltip]="roule.messageTitle"
+                                                [tooltipDisabled]="roule.messageTitle?roule.messageTitle.length < 20:false"
+                                            >
+                                                {{ roule.messageTitle|moreChar19 }}
+                                            </td>
+
+                                            <!--   <td dir="ltr">
+                                                   <button pButton label="{{'button.selectedRule'|transloco}}"
+                                                           icon="pi pi-check"
+                                                           (click)="selectedRule(roule)"></button>&nbsp;
+                                               </td>-->
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+
+                        </div>
+                        <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+                            <div class="col-span-4"></div>
+                            <div class="flex items-center justify-center gap-2 col-span-4">
+                                <button
+                                    pButton
+                                    pRipple class="normal-button"
+                                    [disabled]="(this.pageno) == 0"
+                                    (click)="previousPageStatement()"
+                                    pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                                >
+                                    <i class="pi pi-arrow-right"></i>
+                                </button>
+                                <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+                                <button
+                                    pButton
+                                    pRipple
+                                    name="btn-previous-page"
+                                    class="normal-button"
+                                    [disabled]="this.ruleList.length < pagesize"
+                                    (click)="nextPageStatement()"
+                                    pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                                >
+                                    <i class="pi pi-arrow-left"></i>
+                                </button>
+                                <p-dropdown class="normal-dropdown-pagination"
+                                            [options]="pagesizeOptions"
+                                            optionValue="code"
+                                            [autoDisplayFirst]="true"
+                                            optionLabel="name"
+                                            [(ngModel)]="pagesize"
+                                            (onChange)="OnchangePageno($event)"
+                                            [disabled]="nextBtnFlag">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-span-4"></div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+            <div class="w-full" *ngIf="index4">
+                    <app-message-selector
+                        [titleHeader]="'label.header.dialog.stepFourthSelectMessages' | transloco"
+                        [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                        [statusCodeOptions]="statusCodeOptions"
+                        [categoryOptions]="categoryMessages"
+                        [typeOptions]="typeMessages"
+                        [messagesList]=messagesList
+                        [preselectedMessageId]="selectedMessageId"
+                        (selectionCleared)="onChildSelectionCleared($event)"
+                        (select)="onMessageSelected($event)"
+                    ></app-message-selector>
+            </div>
+            <div class="w-full mt-4 text-left p-4">
+                <button pButton severity="success" label="{{'button.finalRegistrationInfo' | transloco}}"
+                        icon="pi pi-check" class="normal-button"
+                        *ngIf="registerFlag"
+                        (click)="onRegisterAttachment()"></button>&nbsp;
+
+                <button (click)="BeforeButtonDialog()" class="normal-button" *ngIf="beforeFlag"
+                        label="{{'button.back' | transloco}}" (click)="beforePageApi()"
+                        pButton icon="pi pi-arrow-circle-right" severity="warn"
+                ></button>&nbsp;
+
+
+                <button pButton label="{{'button.continuation' | transloco}}" (click)="nextPageApi()" *ngIf="nextFlag"
+                        class="normal-button" icon="pi pi-arrow-circle-left" [disabled]="nextDisableFlag"
+                ></button>&nbsp;
+
+
+                <button pButton label="{{'button.cancel' | transloco}}" (click)="onCancel()"
+                        severity="danger" icon="pi pi-times" [outlined]="true" class="normal-button"
+                ></button>&nbsp;
+
+
+            </div>
+
+        </p-fieldset>
+    </div>
+</p-dialog>
+<p-dialog [style]="{'width':'55%'}" header="{{'Base 64'|transloco}}" [(visible)]="showDialog1"
+          [modal]="true" appendTo="body" [draggable]="false" [resizable]="true">
+    <p-card dir="ltr" [style]="{ 'max-height': '400px', 'overflow-y': 'auto', 'word-break': 'break-word' }">
+        <span>Basic </span> {{ this.base64 }}
+    </p-card>
+</p-dialog>
+<p-dialog [style]="{'width':'55%'}" header="{{'کلید عمومی'|transloco}}" [(visible)]="showDialog2"
+          [modal]="true" appendTo="body" [draggable]="false" [resizable]="true">
+    <p-card [style]="{ 'max-height': '400px', 'overflow-y': 'auto', 'word-break': 'break-word' }">
+        <div style="white-space: pre-wrap;">{{ publicKey }}</div>
+    </p-card>
+</p-dialog>
+<p-dialog [style]="{'width':'55%'}" header="{{'کلید دیجیتال'|transloco}}" [(visible)]="showDialog3"
+          [modal]="true" appendTo="body" [draggable]="false" [resizable]="true">
+    <p-card [style]="{ 'max-height': '400px', 'overflow-y': 'auto', 'word-break': 'break-word' }">
+        {{ this.digitalPublickey }}
+    </p-card>
+</p-dialog>
+

@@ -1,0 +1,108 @@
+:host {
+    width: 100%;
+}
+.row {
+    width: 5%;
+}
+.apiTitle{
+    width: 14%;
+}
+.partyTitle{
+    width: 14%;
+}
+.clientTitle{
+    width: 18%;
+}
+.summaryDate{
+    width: 14%;
+}
+.rdate{
+    width: 12%;
+}
+.detailFeeAmount{
+    width: 15%;
+}
+.totalFeeAmount{
+    width: 18%;
+}
+.succesCount{
+    width: 15%;
+}
+.failedCount{
+    width: 15%;
+}
+/*------------------------------------------------------------------*/
+/*.rtl .invoice-body .flex-table .flex-column .table-subtotal tbody tr td {
+    text-align: right !important;
+}*/
+.rtl .invoice-body .flex-table .flex-column .table-subtotal {
+    text-align: left !important;
+}
+.rtl .invoice-body .invoice-total-amount p {
+    text-align: left !important;
+}
+.wrapper-invoice .invoice .invoice-body .flex-table .flex-column .table-subtotal {
+    border-collapse: collapse;
+    box-sizing: border-box;
+    text-align: right;
+    width:50vh;
+    margin-top: 2vh;
+}
+.marginfs{
+    margin-right: 80%;
+}
+.wrapper-invoice .invoice .invoice-body .flex-table .flex-column .table-subtotal tbody tr td {
+    font-size: 2vh;
+    border-bottom: 1px solid #181818;
+    text-align: right;
+    padding: 1vh;
+    background-color: #fff;
+
+}
+.wrapper-invoice .invoice .invoice-body .flex-table .flex-column .table-subtotal tbody tr td:nth-child(2) {
+    text-align: right;
+}
+.wrapper-invoice .invoice .invoice-information {
+    float: left;
+    margin-left: 1%;
+    margin-right: 1%;
+    text-align: right;
+    font-family: Nazanin;
+    font-style: normal;
+
+}
+.font{
+    font-family: Nazanin;
+    font-style: normal;
+    color: #181818;
+}
+.wrapper-invoice .invoice {
+    /*     width: 296mm;
+         height: 209mm;
+
+     height: auto;*/
+    size: A4 landscape;
+    width: 250mm;
+    height: 180mm;
+    background: #fff;
+    margin-top: 1.0cm;
+    margin-right:3mm;
+    margin-left:4cm;
+    margin-bottom: 4.0cm;
+    //  max-width: 110vh;
+    //width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #181818 ;
+    outline: 2px solid  #181818 ;
+
+}
+.fromtoDate{
+    margin-left:73%;
+text-align: right; margin-right: 2%;width: 50%;
+}
+.rtl .invoice-body .flex-table .flex-column .table-subtotal tbody tr td:nth-child(2) {
+    text-align: left !important;
+}
+.succesCountd{
+    width: 25%;
+}

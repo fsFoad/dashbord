@@ -1,0 +1,300 @@
+<p-panel header="پیش نمایش فاکتور">
+    <!--    <head>
+            <title>CSS Template</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                /* Style the header */
+                header {
+                    background-color: #666;
+                    padding: 30px;
+                    text-align: center;
+                    font-size: 35px;
+                    color: white;
+                }
+
+                /* Container for flexboxes */
+                section {
+                    display: -webkit-flex;
+                    display: flex;
+                }
+
+                /* Style the navigation menu */
+                nav {
+                    -webkit-flex: 1;
+                    -ms-flex: 1;
+                    flex: 1;
+                    background: #ccc;
+                    padding: 20px;
+                }
+
+                /* Style the list inside the menu */
+                nav ul {
+                    list-style-type: none;
+                    padding: 0;
+                }
+
+                /* Style the content */
+                article {
+                    -webkit-flex: 3;
+                    -ms-flex: 3;
+                    flex: 3;
+                    background-color: #f1f1f1;
+                    padding: 10px;
+                }
+
+                /* Style the footer */
+                footer {
+                    background-color: #777;
+                    padding: 10px;
+                    text-align: center;
+                    color: white;
+                }
+
+                /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
+                @media (max-width: 600px) {
+                    section {
+                        -webkit-flex-direction: column;
+                        flex-direction: column;
+                    }
+                }
+            </style>
+        </head>
+        <body >
+
+        <h2>CSS Layout Flexbox</h2>
+        <p>In this example, we have created a header, two columns/boxes and a footer. On smaller screens, the columns will stack on top of each other.</p>
+        <p>Resize the browser window to see the responsive effect.</p>
+
+        <header>
+            <h2>Cities</h2>
+        </header>
+
+        <section>
+            <nav>
+                <ul>
+                    <li><a href="#">London</a></li>
+                    <li><a href="#">Paris</a></li>
+                    <li><a href="#">Tokyo</a></li>
+                </ul>
+            </nav>
+
+            <article>
+                <h1>London</h1>
+                <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
+                <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>
+            </article>
+        </section>
+
+        <footer>
+            <p>Footer</p>
+        </footer>
+
+        </body>-->
+    <div id="preview">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+       <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link
+                href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+                rel="stylesheet"
+        />-->
+    </head>
+    <body>
+    <section class="wrapper-invoice">
+        <!-- switch mode rtl by adding class rtl on invoice class -->
+        <div class="invoice">
+            <div style="
+            text-align: center;
+            font-family: Nazanin;
+            font-style: normal;
+            font-weight: bold;
+"><h2><b> فاکتور سرویس های سازمان</b></h2></div>
+            <div class="invoice-information" dir="ltr">
+                <p dir="ltr"><span class="font"> 1403/02/03</span><span class="font">:تاریخ صدور</span></p>
+                <p dir="ltr"><span class="font">1525212</span><span class="font">:شماره فاکتور</span></p>
+            </div>
+            <!-- logo brand invoice -->
+            <div class="invoice-logo-brand">
+                <!-- <h2>Tampsh.</h2> -->
+                <img src="./assets/image/tampsh.png" alt=""/>
+            </div>
+            <!-- invoice head -->
+            <div class="invoice-head">
+
+                <div class="head client-data">
+                    <div class="grid grid-cols-12" style="text-align: right; margin-right: 10%;">
+                        <div class="col-1-9 ">
+                            <p><span class="font">تاریخ شروع:</span><span class="font">1376/02/01</span></p>
+                        </div>
+                        <div class="col-1-9 font">
+                            <p><span class="font">تاریخ پایان:</span><span class="font">1376/05/01</span></p>
+                        </div>
+                        <div class="col-9"></div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- invoice body-->
+            <div class="invoice-body" style=" margin-left: 10%;
+    margin-right: 10%;">
+                  <p-table
+styleClass="normal-table"
+ class="table" [value]="billList">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="row" class="row" >
+                                ردیف
+                            </th>
+                            <th pSortableColumn="partyTitle" class="partyTitle" >
+                                نام سازمان
+                            </th>
+                            <th pSortableColumn="apiTitle" class="apiTitle" >
+                                سرویس
+                            </th>
+                            <th pSortableColumn="clientTitle" class="clientTitle" >
+                                کلاینت
+                            </th>
+                            <th pSortableColumn="summaryDate" class="summaryDate" >
+                                تاریخ محاسبه
+                            </th>
+                            <th pSortableColumn="rdate" class="rdate" >
+                                تاریخ ثبت
+                            </th>
+                            <th pSortableColumn="detailFeeAmount" class="detailFeeAmount" >
+                                مبلغ صورتحساب
+                            </th>
+                            <th pSortableColumn="totalFeeAmount" class="totalFeeAmount" >
+                                مبلغ قابل پرداخت
+                            </th>
+                            <th pSortableColumn="succesCount" class="succesCount" >
+                                تعداد فراخوانی موفق
+                            </th>
+                            <th pSortableColumn="failedCount" class="failedCount" >
+                                تعداد فراخوانی ناموفق
+                            </th>
+                            <th style="text-align: right !important;border-right: 1px solid #ebe8e8;" >
+                                operation
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-summary>
+                        <tr [pSelectableRow]="summary"  [ngStyle]="{'color':summary.toBill=='1'?
+                    '#258F30' :null,
+                   'background-color':summary.toBill=='1'?'#85DC8F':null }">
+                            <td class="row">{{summary.row}}</td>
+                            <td class="partyTitle"
+                                [pTooltip]="summary.partyTitle"
+                                [tooltipDisabled]="summary.partyTitle?summary.partyTitle.length < 20:false"
+                            >
+                                {{summary.partyTitle|moreChar19}}
+                            </td>
+                            <td class="apiTitle"
+                                [pTooltip]="summary.apiTitle"
+                                [tooltipDisabled]="summary.apiTitle?summary.apiTitle.length < 20:false">
+                                {{summary.apiTitle|moreChar19}}
+                            </td>
+                            <td class="clientTitle"
+                                [pTooltip]="summary.clientTitle"
+                                [tooltipDisabled]="summary.clientTitle?summary.clientTitle.length < 20:false">
+                                {{summary.clientTitle|moreChar19}}
+                            </td>
+                            <td class="summaryDate">
+                                {{(summary.summaryDate||summary.SUMMARYDATE)|castToDate}}
+                            </td>
+
+                            <td class="rdate">
+                                {{(summary.rdate||summary.RDATE)|castToDate}}
+                            </td>
+
+                            <td class="detailFeeAmount">
+                                {{(summary.detailFeeAmount||summary.FEEAMOUNT)|addCommaSeparator}}
+                            </td>
+                            <td class="totalFeeAmount">
+                                {{(summary.totalFeeAmount||summary.TOTALFEEAMOUNT)|addCommaSeparator}}
+                            </td>
+                            <td class="succesCount">
+                                {{(summary.succesCount||summary.SUCCESSCOUNT)}}
+                            </td>
+                            <td class="failedCount">
+                                {{(summary.failedCount||summary.FAILEDCOUNT)}}
+                            </td>
+
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+               <!-- <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Item Description</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Template Invoice</td>
+                        <td>Rp.75.000</td>
+                    </tr>
+                    <tr>
+                        <td>tax</td>
+                        <td>Rp.5.000</td>
+                    </tr>
+                    </tbody>
+                </table>-->
+
+                <div class="flex-table">
+                    <div class="flex-column">
+                    <!--    <table class="table-subtotal">
+                            <tbody>
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>Rp.80.000</td>
+                            </tr>
+                            <tr>
+                                <td>PPN 10%</td>
+                                <td>Rp.5.000</td>
+                            </tr>
+                            <tr>
+                                <td>Credit</td>
+                                <td>Rp.0</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>Rp.80.000</td>
+                            </tr>
+                            </tbody>
+                        </table>-->
+
+                    </div>
+
+                </div>
+                <!-- invoice total  -->
+
+            </div>
+            <!-- invoice footer -->
+             <div class="invoice-footer"  *ngIf="hidePrint">
+                 <button pButton   icon="pi pi-print"
+                         (click)="onPrint()"  label="چاپ"></button>
+             </div>
+        </div>
+
+    </section>
+
+    </body>
+    </div>
+</p-panel>
+
+
+

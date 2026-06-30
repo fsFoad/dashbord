@@ -1,0 +1,190 @@
+<!--<form [formGroup]="form"  class=" w-full h-full bg-stone-50 rounded-xl p-3
+transition-transform border focus-within:border-[color:var(&#45;&#45;p-inputtext-focus-border-color)]
+focus-within:shadow-focus-ring p-fluid overflow-y-auto">-->
+<form [formGroup]="form" class="w-full h-full bg-stone-50 rounded-xl p-3 border overflow-y-auto">
+    <!--
+    <div class="flex flex-col p-4 w-full h-full " >
+    -->
+    <div class="flex flex-col h-full gap-y-1">
+        <div class="  flex flex-col  font-bold " dir="rtl">
+            <div>
+                <h3 class="w-fit px-2 bg-white rounded-xl">تنظیمات کش</h3>
+            </div>
+        </div>
+        <div class="  flex flex-col  font-bold " dir="rtl">
+            <div>
+                <h6 class="w-fit px-2  rounded-xl">
+                    <span class="text-red-500">* </span>
+                    بازه کش
+                </h6>
+            </div>
+        </div>
+        <div class=" grid grid-cols-5 gap-x-10 gap-y-1 ">
+            <div class="col-span-1  flex flex-col space-y-1" dir="rtl" *ngIf="false">
+                <label class="normal-label">دقیقه (m)
+                    :</label>
+                <p-inputNumber class="full-input-number"
+                               mode="decimal"
+                               [showButtons]="true"
+                               [min]="0"
+                               [max]="59"
+                               formControlName="minute"
+                               [disabled]="false"
+                ></p-inputNumber>
+                <!--  <p-inputNumber class="full-input-number"
+                                 mode="decimal"
+                                 [showButtons]="true"
+                                 [min]="0"
+                                 [max]="59"
+                                 maxlength=null
+                                 formControlName="minute"
+                                 [disabled]="false"
+                  ></p-inputNumber>-->
+            </div>
+            <div class="col-span-1  flex flex-col space-y-1" dir="rtl" *ngIf="false">
+                <label class="normal-label">ساعت (h)
+                    :</label>
+                <p-inputNumber class="full-input-number"
+                               mode="decimal"
+                               [showButtons]="true"
+                               [min]="0"
+                               [max]="23"
+                               formControlName="hour"
+                               [disabled]="false"
+                ></p-inputNumber>
+            </div>
+            <div class="col-span-1  flex flex-col space-y-1" dir="rtl">
+                <label class="normal-label">روز (D)
+                    :</label>
+                <p-inputNumber class="full-input-number"
+                               mode="decimal"
+                               [showButtons]="true"
+                               [min]="0"
+                               [max]="30"
+                               formControlName="day"
+                               [disabled]="false"
+                ></p-inputNumber>
+            </div>
+            <div class="col-span-1  flex flex-col space-y-1" dir="rtl">
+                <label class="normal-label">ماه (M)
+                    :</label>
+                <p-inputNumber class="full-input-number"
+                               mode="decimal"
+                               [showButtons]="true"
+                               [min]="0"
+                               [max]="11"
+                               formControlName="month"
+                               [disabled]="false"
+                ></p-inputNumber>
+            </div>
+            <div class="col-span-1  flex flex-col space-y-1" dir="rtl">
+                <label class="normal-label">سال (Y)
+                    :</label>
+                <p-inputNumber class="full-input-number"
+                               mode="decimal"
+                               [showButtons]="true"
+                               [min]="0"
+                               [max]="10"
+                               formControlName="year"
+                               [disabled]="false"
+                ></p-inputNumber>
+            </div>
+            <div class="col-span-2"></div>
+            <div class="col-span-2">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'logReports.input.onlyFromDate'|transloco }} :</span></label>
+                <p-persian-calendar class="app-persian-calendar-w100" [yearRange]="'1399:1410'"
+                                    formControlName="cacheStartDate"
+                                    [appendTo]="'body'"
+                                    [panelStyle]="{'width': '24%'}"
+                ></p-persian-calendar>
+            </div>
+            <div class="col-span-1 flex gap-4 justify-end mt-5">
+                <button pButton label="404" severity="warn" [icon]="icon400_val"
+                        class="normal-button w-15 h-12"
+                        (click)="openMessage400()"></button>
+
+                <button pButton label="500" severity="danger" [icon]="icon500_val"
+                        class="normal-button w-15 h-12"
+                        (click)="openMessage500()"></button>
+            </div>
+        </div>
+        <div class="flex-grow grid grid-cols-5 gap-x-10 gap-y-1 mt-2 ">
+
+
+            <div class="col-span-2 ">
+                <label class="normal-label">
+                    <span class="text-red-500">* </span>نوع فراخوانی:
+                </label>
+                <p-dropdown
+                    appendTo="body"
+                    class="full-dropdown"
+                    [options]="cacheTypeOptions"
+                    optionValue="code"
+                    optionLabel="name"
+                    formControlName="cacheType"
+                ></p-dropdown>
+            </div>
+
+
+        </div>
+        <div class=" mt-4 flex justify-end" dir="rtl" *ngIf="!this.flagUpdate">
+            <button pButton icon="pi pi-arrow-down" iconPos="right" label="  بروزرسانی جدول کش" class="normal-button"
+                    (click)="updateCache()">
+
+            </button>
+        </div>
+        <div class=" mt-4 flex justify-end" dir="rtl" *ngIf="this.flagUpdate">
+            <button pButton icon="pi pi-pencil" iconPos="right" label="ویرایش" class="normal-button"
+                    (click)="updateCache()">
+            </button>
+        </div>
+    </div>
+
+</form>
+<ng-container *ngIf="message500Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message500Flag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <app-message-selector
+                [titleHeader]="'انتخاب پیام 500' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions500"
+                [categoryOptions]="categoryMessages500"
+                [preselectedMessageId]="messageId5XX"
+                [clearTrigger]="clearTriggerForMessageSelector500"
+                (selectionCleared)="handleSelectionCleared('500')"
+                (select)="handleMessageSelected('500', $event)"
+                [action$]="messageSelector500Action$"
+                [presetValue]="{code: '500'}"
+                [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+        </div>
+
+    </p-dialog>
+</ng-container>
+<ng-container *ngIf="message400Flag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="message400Flag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%;margin: 1rem 1rem 0 1rem">
+            <app-message-selector
+                [titleHeader]="'انتخاب پیام 404' | transloco"
+                [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+                [statusCodeOptions]="statusCodeOptions404"
+                [categoryOptions]="categoryMessages404"
+                [preselectedMessageId]="messageId4XX"
+                [clearTrigger]="clearTriggerForMessageSelector404"
+                (selectionCleared)="handleSelectionCleared('404')"
+                [action$]="messageSelector404Action$"
+                (select)="handleMessageSelected('404', $event)"
+                [presetValue]="{code: '404'}"
+                [disabledControls]="{ code: true }
+">
+            </app-message-selector>
+        </div>
+    </p-dialog>
+</ng-container>

@@ -1,0 +1,21 @@
+
+<p-toast></p-toast>
+
+<app-breadcrumbs id="section"
+                 (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="flex flex-col gap-4 p-3 ">
+    <div class="flex flex-col md:flex-row gap-4 h-[39vh]">
+        <div
+            class="md:w-1/3 w-full bg-stone-50 rounded-xl p-3 transition-transform border focus-within:border-[color:var(--p-inputtext-focus-border-color)] focus-within:shadow-focus-ring overflow-y-auto">
+            <app-apis-cache [inputApiCache]="moduleDto"></app-apis-cache>
+        </div>
+        <div class="md:w-2/3 w-full"
+           >
+            <app-cash-config [inputApiCache]="moduleDto"></app-cash-config>
+        </div>
+    </div>
+    <div
+        class="w-full h-[43vh] bg-stone-50 rounded-xl p-3 transition-transform border focus-within:border-[color:var(--p-inputtext-focus-border-color)] focus-within:shadow-focus-ring ">
+        <app-cache-list [inputApiCache]="moduleDto" (exit)="handleExit()"></app-cache-list>
+    </div>
+</div>

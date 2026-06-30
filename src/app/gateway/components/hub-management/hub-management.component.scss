@@ -1,0 +1,35 @@
+:host {
+    width: 100%;
+}
+
+
+.row{
+  width: 5%;
+}
+.dbEngineId{
+  width: 10%;
+}
+.dbName{
+  width: 10%;
+}
+.ip{
+  width: 10%;
+}
+.commandTypeId{
+  width: 14%;
+}
+.row{
+  width: 8%;
+    text-align: right
+}
+.title{
+  width: 14%;
+}
+.status{
+  width: 8%;
+}
+.operation{
+    text-align: left !important;
+    border-right: 1px solid #ebe8e8;
+    width: 2%;
+                             }

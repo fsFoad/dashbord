@@ -1,0 +1,101 @@
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page">
+    <div class="grid grid-cols-1 xl:grid-cols-12 2xl:grid-cols-12 md:grid-cols-12  ">
+        <div class="col-span-12 ">
+              <p-table
+styleClass="normal-table"
+ [value]="alertSignal()"
+                     [showCurrentPageReport]="true" [(first)]="first"
+                     [currentPageReportTemplate]=paginationLabel
+                     [rowsPerPageOptions]="[5,10,25,50,100]"
+                     selectionMode="single" [rows]="rows" [totalRecords]="totalRecords">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            {{ 'alertCategory.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="title" class="title">
+                            {{ 'alertCategory.table.header.title'|transloco }}
+                            <p-sortIcon field="title"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="scheduled" class="scheduled">
+                            {{ 'alertCategory.table.header.scheduled'|transloco }}
+                            <p-sortIcon field="scheduled"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="lastRunScheduled" class="lastRunScheduled">
+                            {{ 'alertCategory.table.header.lastRunScheduled'|transloco }}
+                            <p-sortIcon field="lastRunScheduled"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="priorityType" class="priorityType">
+                            {{ 'alertCategory.table.header.priorityType'|transloco }}
+                            <p-sortIcon field="priorityType"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="scheduleType" class="priorityType">
+                            {{ 'alertCategory.table.header.scheduleType'|transloco }}
+                            <p-sortIcon field="scheduleType"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-alert>
+                    <tr [pSelectableRow]="alert">
+                        <td class="row">{{ alert.row }}</td>
+                        <td class="title"
+                            [pTooltip]="alert.title"
+                            [tooltipDisabled]="alert.title ? alert.title.length < 33 : false">
+                            {{ alert.title | morChar32 }}
+                        </td>
+                        <td class="scheduled">
+                            {{ alert.scheduled |scheduledStatus }}
+                        </td>
+                        <td class="lastRunScheduled text-right"  dir="ltr" >
+                            {{ alert.lastRunScheduled }}
+                        </td>
+                        <td class="priorityType text-center" [innerHTML]="alert.priorityType | priorityType">
+                        </td>
+                        <td class="scheduleType">
+                            {{ alert.scheduleType|scheduleType }}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+        <div class="col-span-4"></div>
+        <div class="flex items-center justify-center gap-2 col-span-4">
+            <button
+                pButton
+                pRipple class="normal-button"
+                [disabled]="(this.pageno) == 0"
+                (click)="previousPageStatement()"
+                pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+            >
+                <i class="pi pi-arrow-right"></i>
+            </button>
+            <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+            <button
+                pButton
+                pRipple
+                name="btn-previous-page"
+                class="normal-button"
+                [disabled]="this.alertSignal().length < pagesize"
+                (click)="nextPageStatement()"
+                pTooltip="{{ 'tooltip.nextPage' | transloco }}">
+                <i class="pi pi-arrow-left"></i>
+            </button>
+            <p-dropdown class="normal-dropdown-pagination"
+                        [options]="pagesizeOptions"
+                        optionValue="code"
+                        [autoDisplayFirst]="true"
+                        optionLabel="name"
+                        [(ngModel)]="pagesize"
+                        (onChange)="OnchangePageno($event)"
+                        [disabled]="nextBtnFlag">
+            </p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="content-normal">
+    <form [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-6">
+        <div class="grid grid-cols-12 gap-y-2">
+            <div class="col-span-12 flex flex-col space-y-1 font-bold " dir="rtl">
+                <div>
+                    <h6 class="w-fit px-2 bg-white rounded-xl">انتخاب سرویس</h6>
+                </div>
+            </div>
+            <div class="col-span-5">
+                <label class="block mb-2 font-bold">
+                    <span class="text-red-500">*</span>
+                    نوع سرویس:
+                </label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="httpMethodeOptions"
+                    formControlName="httpMethode"
+                    optionLabel="name"
+                    optionValue="code"
+                    class="normal-dropdown"
+                    (onChange)="changeHttpMethode($event)"
+                ></p-dropdown>
+            </div>
+            <div class="col-span-7"></div>
+            <div class="col-span-12 mt-1" *ngIf="tableVisible">
+                  <p-table
+styleClass="normal-table"
+
+                    [value]="filterApi"
+                    [scrollable]="true"
+                    [(selection)]="selectedItems"
+                    dataKey="apiId"
+                    [loading]="loading"
+                    [responsiveLayout]="'scroll'"
+                    [selectionMode]="isTableDisabled ? null : 'multiple'"
+                    (selectionChange)="onSelectionChange($event)"
+                    class="p-datatable-sm"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 3rem">
+                                <p-tableHeaderCheckbox [disabled]="isTableDisabled"></p-tableHeaderCheckbox>
+                            </th>
+                            <th>ردیف</th>
+                            <th>عنوان سرویس</th>
+                            <th>وضعیت</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData>
+                        <tr [pSelectableRow]="rowData">
+                            <td>
+                                <p-tableCheckbox [value]="rowData" [disabled]="isTableDisabled"></p-tableCheckbox>
+                            </td>
+                            <td>{{ rowData.row }}</td>
+                            <td>{{ rowData.apiTitle }}</td>
+                            <td>
+                                <div [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': rowData.apiStatus,
+                                   ' text-red-800 bg-red-300 ': !rowData.apiStatus
+                                   }"
+                                     class="w-[65px] float-right text-center rounded-md"
+                                >
+                                    {{ rowData.apiStatus |statusPipe }}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #emptymessage>
+                        <tr>
+                            <td class="text-center" colspan="4">اطلاعاتی برای نمایش وجود ندارد...</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+            <div class="col-span-3"></div>
+            <div class="col-span-6 flex items-center justify-center gap-2 ">
+                <button
+                    pButton
+                    pRipple
+                    class="normal-button"
+                    [disabled]="form.get('pageno').value === 0"
+                    (click)="previousPageStatement()"
+                    pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                >
+                    <i class="pi pi-arrow-right"></i>
+                </button>
+                <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+                <button
+                    pButton
+                    pRipple
+                    name="btn-previous-page"
+                    class="normal-button"
+                    [disabled]="filterApi.length < form.get('pagesize').value"
+                    (click)="nextPageStatement()"
+                    pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                >
+                    <i class="pi pi-arrow-left"></i>
+                </button>
+                <p-dropdown
+                    class="cache-normal-dropdown-pagination"
+                    [options]="pagesizeOptions"
+                    formControlName="pagesize"
+                    optionValue="code"
+                    [autoDisplayFirst]="true"
+                    optionLabel="name"
+                    [disabled]="true"
+                ></p-dropdown>
+            </div>
+            <div class="col-span-3"></div>
+        </div>
+    </form>
+</div>

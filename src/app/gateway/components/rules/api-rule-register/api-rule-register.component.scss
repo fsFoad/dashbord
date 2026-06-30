@@ -1,0 +1,8 @@
+:host {
+    width: 100%;
+}
+:host ,p-panel,p-fieldset{
+    :host {
+        width: 100%;
+    }
+}

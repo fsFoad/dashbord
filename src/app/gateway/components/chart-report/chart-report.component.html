@@ -1,0 +1,39 @@
+<p-toast />
+<app-breadcrumbs id="section"></app-breadcrumbs>
+<div class="content-page">
+
+    <p-tabView (onChange)="onTabChange($event)">
+        <p-tabPanel >
+            <ng-template pTemplate="header">
+                <span>{{ 'partys.chart.header' | transloco }}</span>&nbsp;
+                <i class="pi pi-chart-bar"></i> <!-- آیکون از PrimeIcons -->
+            </ng-template>
+            <ng-container *ngIf="showPartyCharts">
+                <app-party-chart [SelectedNumberOfDay]="selectedNumberOfDay"></app-party-chart>
+            </ng-container>
+        </p-tabPanel>
+
+        <p-tabPanel >
+            <ng-template pTemplate="header">
+                <span>{{ 'party.chart.details.header' | transloco }}</span>&nbsp;
+                <i class="pi pi-list"></i> <!-- آیکون از PrimeIcons -->
+            </ng-template>
+            <ng-container *ngIf="showPartyChartsDetails">
+                <app-party-chart-details [SelectedNumberOfDay]="selectedNumberOfDay"></app-party-chart-details>
+            </ng-container>
+        </p-tabPanel>
+    </p-tabView>
+    <div class="grid grid-cols-12">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <p-selectButton [options]="numberOfDay"
+                            [(ngModel)]="selectedNumberOfDay"
+                            optionLabel="name"
+                            optionValue="value"
+                            dir="ltr"
+            ></p-selectButton>
+        </div>
+        <div class="col-4"></div>
+    </div>
+
+</div>

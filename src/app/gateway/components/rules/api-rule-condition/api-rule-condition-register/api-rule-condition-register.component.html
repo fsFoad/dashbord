@@ -1,0 +1,372 @@
+<p-toast />
+<app-breadcrumbs class="p-0 m-0" [showBackButton]="false"></app-breadcrumbs>
+<div class="flex flex-col gap-4 p-4" id="section">
+    <div class="grid grid-cols-12  gap-4">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerCondition.dropdown.conditionType'|transloco }} :</span>
+            </label>
+            <p-dropdown
+                [options]="conditionTypeOptions"
+                [(ngModel)]="conditionType"
+                (ngModelChange)="markExpressionDirty()"
+                optionValue="code"
+                optionLabel="name"
+                class="normal-dropdown"
+            >
+            </p-dropdown>
+        </div>
+        <div class="col-span-8">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerCondition.dropdown.conditionFieldType'|transloco }} :</span>
+            </label>
+            <p-dropdown
+                class="normal-dropdown"
+                [options]="conditionFieldTypeOptions"
+                [(ngModel)]="conditionFieldType"
+                optionValue="code"
+                optionLabel="name"
+                (onChange)="onChangeConditionFieldType($event)"
+                (ngModelChange)="markExpressionDirty()"
+            >
+            </p-dropdown>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text" *ngIf="!expressionFlag">* </span>
+                <span>{{ 'registerCondition.input.conditionName'|transloco }} :</span>
+            </label>
+            <input [(ngModel)]="conditionName" [disabled]="expressionFlag" pInputText class="normal-input"
+                   (ngModelChange)="markExpressionDirty()" />
+        </div>
+        <div class="col-span-4">
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>{{ 'registerCondition.dropdown.functionType'|transloco }} :</span>
+            </label>
+            <p-dropdown
+                [options]="functionTypeOptions"
+                [(ngModel)]="functionType"
+                optionValue="code"
+                optionLabel="name"
+                class="normal-dropdown"
+                (onChange)="onChangeFunctionType($event)"
+                (ngModelChange)="markExpressionDirty()"
+                [disabled]="nodePathFlag"
+            >
+            </p-dropdown>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text" *ngIf="!expressionFlag">* </span>
+                <span>{{ 'registerCondition.dropdown.ruleCondition'|transloco }} :</span>
+            </label>
+            <p-dropdown
+                (ngModelChange)="markExpressionDirty()"
+                [options]="ruleConditionOptions"
+                [(ngModel)]="ruleCondition"
+                optionValue="code"
+                optionLabel="name"
+                class="normal-dropdown"
+                [disabled]="expressionFlag"
+            >
+            </p-dropdown>
+        </div>
+        <div class="col-span-4"></div>
+        <div class="col-span-4" *ngIf="functionType&&(substringFlag||splitFlag)&&conditionFieldType=='2'">
+            <label class="normal-label">
+                <span class="red-color-text" *ngIf="!expressionFlag">* </span>
+                <span *ngIf="substringFlag">{{ 'registerCondition.input.startIndex'|transloco }} :</span>
+                <span *ngIf="splitFlag">{{ 'registerCondition.input.Index'|transloco }} :</span>
+            </label>
+            <input [(ngModel)]="startIndex" [disabled]="expressionFlag" pInputText class="normal-input"
+                   (ngModelChange)="markExpressionDirty()" />
+        </div>
+        <div class="col-span-4" *ngIf="substringFlag&&conditionFieldType=='2'">
+            <label class="normal-label">
+                <span class="red-color-text" *ngIf="!expressionFlag">* </span>
+                <span *ngIf="substringFlag">{{ 'registerCondition.input.endIndex'|transloco }} :</span>
+            </label>
+            <input [(ngModel)]="endIndex" [disabled]="expressionFlag" pInputText class="normal-input"
+                   (ngModelChange)="markExpressionDirty()" />
+        </div>
+        <div class="col-span-4" *ngIf="substringFlag"></div>
+        <div class="col-span-4" *ngIf="(!expressionFlag||!substringFlag)">
+            <label class="normal-label">
+                <span class="red-color-text" *ngIf="!expressionFlag">* </span>
+                <span>{{ 'registerCondition.input.conditionValueType'|transloco }} :</span>
+            </label>
+            <p-dropdown
+                (ngModelChange)="markExpressionDirty()"
+                class="normal-dropdown"
+                [options]="conditionFieldTypeOptions"
+                [(ngModel)]="comparableFieldTypeForFinalValue"
+                optionValue="code"
+                [disabled]="conditionValueTypeDisabled||expressionFlag"
+                optionLabel="name">
+            </p-dropdown>
+        </div>
+        <div class="col-span-4" *ngIf="(!expressionFlag||!substringFlag)">
+            <label class="normal-label">
+                <span class="red-color-text" *ngIf="!expressionFlag">* </span>
+                <span
+                    *ngIf="conditionFieldType=='1'&&functionType!=null">{{ 'registerCondition.input.conditionValue'|transloco }}
+                    :</span>
+                <span
+                    *ngIf="(conditionFieldType=='1'&&functionType==null)||(conditionFieldType=='2'||!conditionFieldType)">{{ 'registerCondition.input.secondNumberMath'|transloco }}
+                    :</span>
+            </label>
+            <input [(ngModel)]="conditionValue" (ngModelChange)="markExpressionDirty()" [disabled]="expressionFlag"
+                   pInputText class="normal-input" />
+        </div>
+        <div class="col-span-4" *ngIf="mathFlag&&functionType!=null">
+            <label class="normal-label">
+                <span class="red-color-text" *ngIf="!expressionFlag">* </span>
+                <span *ngIf="conditionFieldType=='1'">{{ 'registerCondition.input.secondNumberMath'|transloco }}
+                    :</span>
+                <span *ngIf="conditionFieldType=='2'">{{ 'registerCondition.input.conditionValue'|transloco }} :</span>
+            </label>
+            <input [(ngModel)]="conditionValue2" (ngModelChange)="markExpressionDirty()"
+                   [disabled]="expressionFlag" pInputText class="normal-input" />
+        </div>
+        <div class="col-span-8">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                عبارت منتخب:</label>
+            <p-inputgroup class="xx-8-ggg-8-input-group">
+                <input
+                    type="text"
+                    pInputText
+                    dir="ltr"
+                    [(ngModel)]="functionStr"
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="!expressionFlag"
+                    (keydown.enter)="fillExpression()"
+                />
+                <p-inputgroup-addon class="normal-button-attach">
+                    <button
+                        pButton
+                        icon="pi pi pi-code"
+                        (click)="fillExpression()"
+                        [disabled]="expressionFlag"
+                    ></button>
+                </p-inputgroup-addon>
+            </p-inputgroup>
+            <small
+                dir="ltr"
+                class="red-color-text block mt-2 w-[87.6%] max-w-full overflow-x-auto whitespace-nowrap"
+            >
+                var a = '10.123.9'; a.split('.')[0] == 10
+            </small>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"><span>{{ 'registerCondition.input.status'|transloco }} :</span></label>
+            <p-toggleswitch [(ngModel)]="status" />
+        </div>
+        <div class="col-span-8" *ngIf="conditionType=='1'">
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+            <div class="flex items-center gap-2">
+                <p-checkbox [(ngModel)]="nodePathFlag" [binary]="true" (onChange)="changeNodePath()"
+                            inputId="checkedKarmozd"></p-checkbox>
+            <label class="normal-label">
+                مسیر نود:</label>
+            </div>
+            </div>
+            <div class="col-span-12 mt-2" >
+            <input [(ngModel)]="nodePath" dir="ltr"  [disabled]="!nodePathFlag" placeholder="/accinfo[0]/nationalcode"
+                   pInputText class="xx-8-ggg-8-input-group" />
+            </div>
+        </div>
+        <div class="col-span-4"  *ngIf="conditionType=='1'"></div>
+    </div>
+    <p-panel header="{{'editCondition.header.assignmentMessage'|transloco}}" class="mt-6">
+        <div class="grid grid-cols-12 in-panel">
+            <div class="col-span-4 ">
+                <label class="normal-label"><span>{{ 'editCondition.detail.messageId' | transloco }} :</span></label>
+                <div class="text-sm">{{ messageId }}</div>
+            </div>
+            <div class="col-span-4 ">
+                <label class="normal-label"><span>{{ 'editCondition.detail.titleMessage' | transloco }} :</span></label>
+                <div class="text-right">
+                    <div class="text-sm">{{ title }}</div>
+                </div>
+            </div>
+            <div class="col-span-4  flex justify-start items-center gap-0.5 h-12  rtl:flex-row-reverse">
+                <button (click)="showMessage()"
+                        class="bg-green-500 border-green-500 text-white w-8 h-8 mr-2 rounded-2xl flex items-center justify-center"
+                        pButton icon="pi pi-external-link"
+                        matTooltip="{{ 'registerRule.tooltip.chooseMessage' | transloco }}">
+                </button>
+                <button matTooltip="{{ 'registerRule.tooltip.deleteMessage' | transloco }}"
+                        (click)="deleteMessage()"
+                        class="bg-red-500 border-red-500 text-white w-8 h-8 rounded-2xl flex items-center justify-center "
+                        pButton icon="pi pi-trash">
+                </button>
+            </div>
+            <div class="col-span-4 ">
+                <label class="normal-label"><span>{{ 'editCondition.detail.tableId' | transloco }} :</span></label>
+                <div class="text-sm">{{ tableId | tableId }}</div>
+            </div>
+            <div class="col-span-4 ">
+                <label class="normal-label"><span>{{ 'editCondition.detail.faMessage' | transloco }} :</span></label>
+                <div class="text-sm">{{ text }}</div>
+            </div>
+        </div>
+    </p-panel>
+    <div class="w-full mt-4 text-left p-4">
+        <button pButton severity="success" label="{{'button.save' | transloco}}" icon="pi pi-save"
+                class="normal-button" (click)="onRegister()"></button>&nbsp;
+        <button pButton label="{{'button.cancel' | transloco}}" severity="danger" [outlined]="true"
+                class="normal-button" icon="pi pi-times" (click)="onCancel()"></button>
+
+    </div>
+</div>
+<ng-container *ngIf="dialogMessageFlag">
+<p-dialog [style]="{ 'width': '55%' }" [(visible)]="dialogMessageFlag"
+          [modal]="true" [draggable]="false" [resizable]="true">
+    <app-message-selector
+        [titleHeader]="'label.header.dialog.stepFourthSelectMessages' | transloco"
+        [placeholders]="{ code: '', title: '',text: '',textEN: '',  tableid: '', type : ''}"
+        [statusCodeOptions]="statusCodeOptions"
+        [categoryOptions]="categoryMessages"
+        [preselectedMessageId]="messageId"
+        [typeOptions]="typeMessages"
+        [messagesList]=messagesList
+        (selectionCleared)="onChildSelectionCleared($event)"
+        (select)="onMessageSelected($event)"
+>
+    </app-message-selector>
+  <!--  <p-panel header="{{ 'rule.dialog.header.chooseMessage' | transloco }}">
+
+        <div class="grid grid-cols-12 md:grid-cols-12 lg:grid-cols-12 gap-4 my-2 mx-5">
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span>{{ 'rule.dialog.input.codeMessage' | transloco }} :</span>
+                </label>
+                <input [(ngModel)]="codeMessage" (keydown.enter)="onKeydownSearch($event)"
+                       pInputText class="border rounded p-2 normal-input">
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span>{{ 'rule.dialog.input.messageTitle' | transloco }} :</span>
+                </label>
+                <input [(ngModel)]="titleMessage" (keydown.enter)="onKeydownSearch($event)"
+                       pInputText class="border rounded p-2 normal-input">
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span>{{ 'rule.dialog.input.faMessage' | transloco }} :</span>
+                </label>
+                <input [(ngModel)]="textMessage" (keydown.enter)="onKeydownSearch($event)"
+                       [pKeyFilter]="cust_alphanumFa"
+                       pInputText class="border rounded p-2 normal-input">
+            </div>
+            <div class="col-span-4">
+                <label class="normal-label"><span>{{ 'rule.dialog.input.enMessage' | transloco }} :</span></label>
+                <input [(ngModel)]="textENMessage" (keydown.enter)="onKeydownSearch($event)"
+                       [pKeyFilter]="cust_alphanumEn"
+                       pInputText class="border rounded p-2 normal-input">
+            </div>
+            <div class="col-span-4">
+
+                <label class="normal-label">
+                    <span>{{ 'rule.dialog.dropdown.tableId' | transloco }} :</span></label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    [options]="categoryMessages"
+                    optionValue="code"
+                    optionLabel="name"
+                    [(ngModel)]="tableIdMessage"
+                    (onChange)="search()">
+                </p-dropdown>
+            </div>
+            <div class="col-span-4">
+
+                <label class="normal-label">
+                    <span>{{ 'rule.dialog.dropdown.typeMessages' | transloco }} :</span></label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    [options]="typeMessages"
+                    optionValue="code"
+                    optionLabel="name"
+                    [(ngModel)]="typeMessage"
+                    (onChange)="search()">
+                </p-dropdown>
+            </div>
+            <div class="col-span-4"></div>
+            <div class=" sm:flex sm:col-span-8 justify-start items-center gap-2 h-12 mt-5-5 rtl:flex-row-reverse">
+
+                <button pButton
+                        label="{{ 'button.clear' | transloco }}"
+                        class="my-1 px-4 py-2 border normal-button"
+                        [outlined]="true"
+                        icon="pi pi-filter-slash"
+                        (click)="clear()"></button>
+                <button pButton
+                        label="{{ 'button.search' | transloco }}"
+                        class="normal-button"
+                        icon="pi pi-search"
+                        (click)="search()"></button>
+            </div>
+        </div>
+
+        <div class="my-10"></div>
+
+        <div>
+            <p-table
+                styleClass="normal-table"
+                [value]="messagesList"
+                selectionMode="single"
+                [paginator]="true"
+                [rows]="rows"
+                [showCurrentPageReport]="true"
+                [(first)]="first"
+                [currentPageReportTemplate]="paginationLabel"
+                [rowsPerPageOptions]="[5,10,25,50,100]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-right">
+                            {{ 'rule.dialog.table.header.messageId' | transloco }}
+                        </th>
+                        <th>{{ 'rule.dialog.table.header.codeMessage' | transloco }}</th>
+                        <th>{{ 'rule.dialog.table.header.titleMessage' | transloco }}</th>
+                        <th>{{ 'rule.dialog.table.header.tableId' | transloco }}</th>
+                        <th>{{ 'rule.dialog.table.header.isSystemMessage' | transloco }}</th>
+                        <th>{{ 'rule.dialog.table.header.operation' | transloco }}</th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-messages>
+                    <tr [pSelectableRow]="messages">
+                        <td class="text-right">{{ messages.messageId }}</td>
+                        <td [pTooltip]="messages.code"
+                            [tooltipDisabled]="messages.code ? messages.code.length < 20 : false">
+                            {{ messages.code | moreChar19 }}
+                        </td>
+                        <td [pTooltip]="messages.title"
+                            [tooltipDisabled]="messages.title ? messages.title.length < 20 : false">
+                            {{ messages.title | moreChar19 }}
+                        </td>
+                        <td>{{ messages.tableId | messagesCategory }}</td>
+                        <td>
+                            <img *ngIf="messages.isSystemMessage==1" class="w-6 h-6 object-contain "
+                                 src="assets/icons/correct.jpeg">
+                            <img *ngIf="messages.isSystemMessage==0" class="w-6 h-6 object-contain "
+                                 src="assets/icons/cross.jpeg">
+                        </td>
+                        <td dir="ltr" class="flex justify-end items-center">
+                            <button pButton label="{{'rule.dialog.table.button.chooseMessage'|transloco}}"
+                                    icon="pi pi-check"
+                                    class="normal-button" (click)="selectedMessage(messages)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-panel>-->
+</p-dialog>
+</ng-container>

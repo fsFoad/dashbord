@@ -1,0 +1,384 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()" [showBackButton]="true"></app-breadcrumbs>
+
+<div class="content-page">
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 flex flex-row gap-2">
+            <!--  <label class="normal-label"> <span >دسته بندی کارمزد :</span></label><br>-->
+            <div disabled>
+
+                {{ titleCategory01 }}
+                <span [ngStyle]="{ 'color': '#7229a9'}"
+                >{{ "(" + (fromDate|castToDate) + ")" }}
+                    </span>
+            </div>
+            <div disabled>
+                &#8592;
+                {{ titleCategory02 }}
+                <span [ngStyle]="{ 'color': '#7229a9'}"
+                >{{ "(" + (toDate|castToDate) + ")" }}
+                    </span>
+            </div>
+            <div disabled>
+                &#8592;
+                {{ titleCategory1 }}
+                <span [ngStyle]="{ 'color': '#7229a9'}"
+                      [pTooltip]="partyTitle"
+                      [tooltipDisabled]="partyTitle?partyTitle.length < 19:false"
+                >{{ "(" + partyTitle + ")"|threeDotBreadcrumbPipe }}
+                    </span>
+            </div>
+            <div *ngIf="clientFlag" disabled>
+                &#8592;
+                {{ titleCategory2 }}
+                <span [ngStyle]="{ 'color': '#7229a9'}"
+                      [pTooltip]="clientTitle"
+                      [tooltipDisabled]="clientTitle?clientTitle.length < 19:false"
+                >{{ "(" + clientTitle + ")"|threeDotBreadcrumbPipe }}
+                    </span>
+            </div>
+            <div class="cursor-pointer" (click)="openDialog()">
+                &#8592;
+                <span [ngStyle]="{ 'color': '#37A1FF'}"> {{ countApiTitle }}</span>
+                <span [ngStyle]="{ 'color': '#7229a9'}"
+                >{{ "(" + countApi + ")" }}
+                    </span>
+            </div>
+        </div>
+        <div class="col-span-8">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'wageServiceRegister.lbl.title' | transloco }} :</span></label>
+            <input pInputText [(ngModel)]="feeTitle" class="normal-input"
+                   [disabled]="disableUpdateFlag" (keydown.enter)="onKeydown($event)"
+                   [maxLength]="wageConstants.wageTitleMaxLength">
+        </div>
+        <div class="col-span-4"></div>
+        <!--   <div class="p-col-4">
+               <label class="normal-label">
+<span class="red-color-text">* </span>
+<span >تاریخ شروع :</span></label><br>
+               <p-persian-calendar class="app-persian-calendar-w89" [yearRange]="'1399:1410'"
+                                   [(ngModel)]="fromDate" [disabled]="disableUpdateFlag">
+               </p-persian-calendar>
+           </div>
+           <div class="p-col-4">
+               <label class="normal-label">
+<span class="red-color-text">* </span>
+<span >تاریخ پایان :</span></label><br>
+               <p-persian-calendar class="app-persian-calendar-w89" [yearRange]="'1399:1410'"
+                                   [(ngModel)]="toDate" [disabled]="disableUpdateFlag">
+               </p-persian-calendar>
+           </div>
+           <div class="col-4"></div>-->
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'wageServiceRegister.lbl.wageType' | transloco }} :</span></label>
+            <div class="flex flex-row gap-3 items-center">
+                <p-dropdown optionValue="id"
+                            class="normal-dropdown"
+                            appendTo='body'
+                            optionLabel="name"
+                            [(ngModel)]="feeTypeId"
+                            [options]="wageConstants.wageTypeList"
+                            [disabled]="disableUpdateFlag"
+                            (onChange)="onChangeWageType()">
+                </p-dropdown>
+                <button pButton icon="pi pi-question-circle" class="button-help rounded-2xl" severity="warn"
+                        (click)="helpFlag=true"></button>
+            </div>
+
+        </div>
+        <!--<div class="col-span-2">
+            <label class="normal-label"> <span >وضعیت :</span></label><br>
+            <p-inputSwitch [(ngModel)]="status"></p-inputSwitch>
+        </div>-->
+    </div>
+
+    <p-panel header="{{'جزئیات کارمزد' | transloco}}" class="p-5">
+        <div class="content-page">
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-4" *ngIf="!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>نوع محاسبه :</span></label>
+                    <p-dropdown optionValue="id" appendTo='body'
+                                class="normal-dropdown"
+                                optionLabel="name"
+                                [(ngModel)]="calculationTypeId"
+                                [options]="calculationTypeOptions"
+                                [disabled]="disableUpdateFlag"
+                                (onChange)="onPercentageOrFixedAmount($event)">
+                    </p-dropdown>
+                </div>
+                <div class="col-span-4" *ngIf="isPercentage&&!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>درصد :</span></label>
+                    <input [disabled]="disableUpdateFlag||nullFeeFieldPath" (keydown.enter)="onKeydownDetail($event)"
+                           [(ngModel)]="calculationValue" pInputText pKeyFilter="num">
+
+                </div>
+                <div class="col-span-4" *ngIf="!isPercentage&&!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>مبلغ ثابت :</span></label>
+                    <amount-box [(ngModel)]="calculationValue" (keydown.enter)="onKeydownDetail($event)"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath"></amount-box>
+                </div>
+                <div class="col-span-4" *ngIf="wageTypeFlag&&!wageTedadiFlag&&!sadehFlag&&!disableUpdateFlag"></div>
+
+                <div class="col-span-4" *ngIf="wageTypeFlag&&!wageTedadiFlag&&!sadehFlag&&!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>از مبلغ :</span></label>
+                    <amount-box [(ngModel)]="fromValue"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath" (keydown.enter)="onKeydownDetail($event)"></amount-box>
+                    <!-- <amount-box (onBlur)="handleMaxAndMinAmount()" [(ngModel)]="fromValue"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath" (keydown.enter)="onKeydownDetail($event)"></amount-box>-->
+                </div>
+                <div class="col-span-4" *ngIf="wageTypeFlag&&!wageTedadiFlag&&!sadehFlag&&!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>تا مبلغ :</span></label>
+                    <!--<amount-box (onBlur)="handleMaxAndMinAmount()" [(ngModel)]="toValue"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath" (keydown.enter)="onKeydownDetail($event)"></amount-box>-->
+                    <amount-box  [(ngModel)]="toValue"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath" (keydown.enter)="onKeydownDetail($event)"></amount-box>
+                </div>
+                <div class="col-span-4" *ngIf="wageTedadiFlag&&!disableUpdateFlag"></div>
+                <div class="col-span-4" *ngIf="wageTedadiFlag&&!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>از تعداد :</span></label>
+                    <amount-box [(ngModel)]="fromValue"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath" (keydown.enter)="onKeydownDetail($event)"></amount-box>
+                </div>
+                <div class="col-span-4" *ngIf="wageTedadiFlag&&!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>تا تعداد :</span></label>
+                    <amount-box [(ngModel)]="toValue" (keydown.enter)="onKeydownDetail($event)"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath"></amount-box>
+                </div>
+                <div class="col-span-4" *ngIf="!disableUpdateFlag"></div>
+                <div class="col-span-4" *ngIf="!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>حداقل مبلغ کارمزد :</span></label>
+                    <amount-box [(ngModel)]="minValue" (keydown.enter)="onKeydownDetail($event)"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath"></amount-box>
+                </div>
+                <div class="col-span-4" *ngIf="!disableUpdateFlag">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>حداکثر مبلغ کارمزد :</span></label>
+                    <amount-box [(ngModel)]="maxvalue" (keydown.enter)="onKeydownDetail($event)"
+                                [disabled]="disableUpdateFlag||nullFeeFieldPath"></amount-box>
+                </div>
+
+                <!--                <div class="col-4" *ngIf="wageTedadiFlag">
+                                    <label class="normal-label">
+    <span class="red-color-text">* </span>
+    <span >حداقل تعداد :</span></label><br>
+                                    <amount-box [(ngModel)]="minValue"></amount-box>
+                                </div>
+                                <div class="col-4" *ngIf="wageTedadiFlag">
+                                    <label class="normal-label">
+    <span class="red-color-text">* </span>
+    <span >حداکثر تعداد :</span></label><br>
+                                    <amount-box [(ngModel)]="maxvalue"></amount-box>-->
+                <!--                </div>-->
+                <div class="col-span-4" hidden *ngIf="!disableUpdateFlag">
+                    <input pInputText [(ngModel)]="temp" disabled>
+                </div>
+                <div class="col-span-4" *ngIf="!disableUpdateFlag"></div>
+                <div class="col-span-4" *ngIf="!disableUpdateFlag">
+                    <button
+                        pButton label="{{'افزودن' | transloco}}" class="normal-button"
+                        [icon]="'pi pi-plus'" [disabled]="disableUpdateFlag||sadehDonFlag"
+                        (click)="addWageDetail()" *ngIf="showAddBtn&&!disableUpdateFlag"></button>&nbsp;
+                    <button
+                        pButton label="{{'ویرایش' | transloco}}" class="normal-button"
+                        [icon]="'pi pi-pencil'" [disabled]="disableUpdateFlag"
+                        (click)="updateWage()" *ngIf="!showAddBtn&&!disableUpdateFlag"></button>&nbsp;
+                    <button pButton [outlined]="true"
+                            label="{{'button.cancel' | transloco}}" class="normal-button"
+                            severity="danger" icon="pi pi-times" [disabled]="disableUpdateFlag"
+                            (click)="clearDetail()" *ngIf="!showAddBtn&&!disableUpdateFlag"></button>&nbsp;
+                </div>
+                <div class="col-span-4" *ngIf="!disableUpdateFlag"></div>
+                <div class="col-span-4" *ngIf="!disableUpdateFlag"></div>
+                <div class="col-span-12">
+                      <p-table
+styleClass="normal-table"
+ [value]="wageDetailList">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>{{ 'wageServiceRegister.table.th.row' | transloco }}</th>
+                                <th>{{ 'wageServiceRegister.table.th.title' | transloco }}</th>
+                                <th>{{ 'wageServiceRegister.table.th.feeType' | transloco }}</th>
+                                <th>{{ 'wageServiceRegister.table.th.fixedAmount' | transloco }}</th>
+                                <th *ngIf="feeTypeId!='2'&&feeTypeId!='1'">
+                                    {{ 'wageServiceRegister.table.th.percentage' | transloco }}
+                                </th>
+
+                                <th *ngIf="wageTypeFlag&&!wageTedadiFlag&&!sadehFlag">
+                                    {{ 'wageServiceRegister.table.th.fromAmount' | transloco }}
+                                </th>
+                                <th *ngIf="wageTypeFlag&&!wageTedadiFlag&&!sadehFlag">
+                                    {{ 'wageServiceRegister.table.th.toAmount' | transloco }}
+                                </th>
+
+                                <th *ngIf="wageTedadiFlag">
+                                    {{ 'wageServiceRegister.table.th.fromTheNumber' | transloco }}
+                                </th>
+                                <th *ngIf="wageTedadiFlag">
+                                    {{ 'wageServiceRegister.table.th.toTheNumber' | transloco }}
+                                </th>
+
+                                <th>{{ 'wageServiceRegister.table.th.minFeeAmount' | transloco }}</th>
+                                <th>{{ 'wageServiceRegister.table.th.maxFeeAmount' | transloco }}</th>
+                                <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                                    {{ 'wageServiceRegister.table.th.operation' | transloco }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-wage let-i="rowIndex">
+                            <tr>
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ wage.title }}</td>
+                                <td>{{ wage.feeTypeId|wageType }}</td>
+                                <td>{{ wage.calculationTypeId == '1' ? (wage.calculationValue |addCommaSeparator) : 0 }}</td>
+                                <td *ngIf="feeTypeId!='2'&&feeTypeId!='1'">{{ wage.calculationTypeId == '2' ? (wage.calculationValue| addcaracterpipe:'%') : 0 }}</td>
+
+                                <td *ngIf="wageTypeFlag&&!wageTedadiFlag&&!sadehFlag">{{ wage.feeTypeId == '2' ? (wage.fromValue |addCommaSeparator) : wage.fromValue }}</td>
+                                <td *ngIf="wageTypeFlag&&!wageTedadiFlag&&!sadehFlag">{{ wage.feeTypeId == '2' ? (wage.toValue|addCommaSeparator) : wage.toValue }}</td>
+
+
+                                <td *ngIf="wageTedadiFlag">{{ wage.feeTypeId == '3' ? (wage.fromValue|addCommaSeparator) : wage.fromValue }}</td>
+                                <td *ngIf="wageTedadiFlag">{{ wage.feeTypeId == '3' ? (wage.toValue|addCommaSeparator) : wage.toValue }}</td>
+
+                                <td>{{
+                                        (wage.feeTypeId == '1' || wage.feeTypeId == '2' || wage.feeTypeId == '3') ?
+                                            (wage.minValue|addCommaSeparator) : wage.minValue
+                                    }}
+                                </td>
+                                <td>{{
+                                        (wage.feeTypeId == '1' || wage.feeTypeId == '2' || wage.feeTypeId == '3')
+                                            ? (wage.maxvalue|addCommaSeparator) : wage.maxvalue
+                                    }}
+                                </td>
+                                <!--                                <td>{{wage.feeTypeId == '3' ? (wage.minValue|addCommaSeparator) : 0}}</td>-->
+                                <!--                                <td>{{wage.feeTypeId == '3' ? (wage.maxvalue|addCommaSeparator) : 0}}</td>-->
+                                <td class="text-right border-r  ">
+                                    <button [disabled]="disableUpdateFlag" (click)="setRecord(wage);menu.toggle($event)"
+                                            type="button"
+                                            class="p-button-rounded  " pButton
+                                            pRipple icon="pi pi-chevron-down"></button>&nbsp;
+                                    <p-tieredMenu appendTo="body" #menu [popup]="true" [model]="items">
+                                    </p-tieredMenu>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div class="col-span-4"></div>
+                <div class="col-span-4"></div>
+            </div>
+        </div>
+
+    </p-panel>
+    <div dir="ltr" style="margin-top: 15px">
+        <button pButton label="{{'button.cancel' | transloco}}"
+                severity="danger" icon="pi pi-times" [outlined]="true" class="normal-button"
+                (click)="onCancel()"></button>&nbsp;
+        <button pButton severity="success" label="{{'ثبت اطلاعات' | transloco}}" icon="pi pi-save" class="normal-button"
+                (click)="onRegister()" [hidden]="disableUpdateFlag"
+                [disabled]="disableUpdateFlag"></button>
+    </div>
+
+</div>
+<p-dialog [style]="{'width':'55%'}" [(visible)]="dialogApisFlag"
+          [modal]="true" [draggable]="false" appendTo="body"
+          [resizable]="true">
+    <p-panel header="{{'سرویس ها' | transloco}}">
+        <div class="grid grid-cols-12">
+            <div class="col-span-12">
+                  <p-table
+styleClass="normal-table"
+ selectionMode="single" [value]="apiList"
+                         [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                         [currentPageReportTemplate]=paginationLabel
+                         [rowsPerPageOptions]="[5,10,25,50,100]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="row" class="row">
+                                {{ 'wageServiceRegister.pDialog.table.th.row' | transloco }}
+                                <p-sortIcon field="row"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="title" class="title">
+                                {{ 'wageServiceRegister.pDialog.table.th.apiTitle' | transloco }}
+                                <p-sortIcon field="title"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="name" class="name">
+                                {{ 'wageServiceRegister.pDialog.table.th.apiName' | transloco }}
+                                <p-sortIcon field="name"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="status" class="status">
+                                {{ 'wageServiceRegister.pDialog.table.th.operation' | transloco }}
+                                <p-sortIcon field="status"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-api>
+                        <tr [pSelectableRow]="api">
+                            <td class="row">{{ api.row }}</td>
+                            <td class="title"
+                                [pTooltip]="api.title"
+                                [tooltipDisabled]="api.title?api.title.length < 50:false"
+                            >
+                                {{ api.title|moreCharLong }}
+                            </td>
+                            <td class="name"
+                                [pTooltip]="api.name"
+                                [tooltipDisabled]="api.name?api.name.length < 50:false"
+                            >
+                                {{ api.name|moreCharLong }}
+                            </td>
+                            <td class="status" [ngStyle]="{'text-align': 'center !important'}">
+                                <div  [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': api.status,
+                                   ' text-red-800 bg-red-300 ': !api.status
+                                   }"
+                                      class="w-[65px] float-right text-center rounded-md">
+                                    {{ api.status|statusPipe }}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>
+<p-dialog [style]="{'width':'50%'}" [(visible)]="helpFlag"
+          [modal]="true" [draggable]="false" appendTo="body" header="توجه!!!"
+          [resizable]="true">
+    <div disabled class="red-color-text">
+        <span>
+- با تغییر نوع کارمزد دیتای شما از دست خواهد رفت، لطفا در تغییر نوع کارمزد دقت فرمائید!
+        </span>
+        <br>
+        <br>
+        <span>
+- جهت ثبت کارمزد مبلغی پلکانی لازم به ذکر  هست که حتما باید فیلد محاسبه گر کارمزد در بخش سرویس برای سرویس مورد نظر ثبت شده باشد!
+        </span>
+    </div>
+    <br>
+    <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+        <button type="button" pButton severity="danger" label="بستن" class="normal-button" icon="pi pi-times"
+                (click)="helpFlag=false"></button>
+    </div>
+</p-dialog>

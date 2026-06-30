@@ -1,0 +1,193 @@
+
+<ng-container *ngIf="!someVariable; else onlyContent">
+<p-panel header="ثبت المان سرویس" >
+    <ng-template pTemplate="content">
+        <ng-container *ngTemplateOutlet="formContent"></ng-container>
+    </ng-template>
+</p-panel>
+</ng-container>
+<ng-template #onlyContent>
+    <ng-container *ngTemplateOutlet="formContent"></ng-container>
+</ng-template>
+<ng-template #formContent>
+    <p-toast   *ngIf="someVariable"/>
+    <app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false"   *ngIf="someVariable"></app-breadcrumbs>
+    <div class=" mx-5 my-10 p-0 m-0">
+        <div class="grid grid-cols-12 gap-4  ">
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span> {{ 'registerEndpointElements.dropdown.category'|transloco }}:</span>
+                </label>
+
+                <p-dropdown
+                    class="normal-dropdown"
+                    [autoDisplayFirst]="false"
+                    [options]="headerTypeGroup"
+                    optionValue="code"
+                    [(ngModel)]="detailType"
+                    optionLabel="name"
+                    (keydown.enter)="onKeydown($event)"
+                    (onChange)="bodyState($event)"
+                    [disabled]="detailTypeFlag"
+                ></p-dropdown>
+            </div>
+
+            <div class="col-span-4">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>{{ 'registerEndpointElements.dropdown.operationType'|transloco }} :</span>
+                </label>
+
+                <p-dropdown
+                    class="normal-dropdown"
+                    (onChange)="onChangeHeaderType($event)"
+                    [autoDisplayFirst]="false"
+                    [options]="headerTypeValue"
+                    optionValue="code"
+                    [(ngModel)]="actionType"
+                    optionLabel="name"
+                    (keydown.enter)="onKeydown($event)"
+                    [disabled]="apiBaseFlag ||cacheFlag||aggregatorFlag"
+                ></p-dropdown>
+            </div>
+
+            <div class="col-span-4"></div>
+
+            <div class="col-span-4">
+                <label class="normal-label"><span class="red-color-text">{{ inputHeaderNameStar }}</span>
+                    <span>{{ 'registerEndpointElements.input.inputName'|transloco }} :</span>
+                </label>
+
+                <p-autoComplete
+                    [(ngModel)]="inputName"
+                    [disabled]="inputHeaderNameFlag || apiBaseFlag"
+                    [suggestions]="filteredGroups"
+                    field="name"
+                    [minLength]="1"
+                    [styleClass]="'normal-auto-complete'"
+                    [panelStyleClass]="'normal-auto-complete-overlay'"
+                    (completeMethod)="search($event)"
+                ></p-autoComplete>
+            </div>
+
+            <div class="col-span-4">
+                <label class="normal-label"><span class="red-color-text">{{ inputHeaderValueStar }}</span>
+                    <span>{{ 'registerEndpointElements.input.inputValue'|transloco }} :</span>
+                </label>
+
+                <input
+                    [(ngModel)]="inputValue"
+                    [disabled]="inputHeaderValueFlag || apiBaseFlag"
+                    (keydown.enter)="onKeydown($event)"
+                    pInputText
+                    class="normal-input"
+                />
+            </div>
+
+            <div class="col-span-4"></div>
+
+            <div class="col-span-4">
+                <label class="normal-label"><span class="red-color-text">{{ ouputHeaderNameStar }}</span>
+                    <span>{{ 'registerEndpointElements.input.outputName'|transloco }} :</span>
+                </label>
+
+                <p-autoComplete
+                    [(ngModel)]="ouputName"
+                    [disabled]="ouputHeaderNameFlag"
+                    [suggestions]="filteredGroups"
+                    field="name"
+                    [minLength]="1"
+                    [styleClass]="'normal-auto-complete'"
+                    [panelStyleClass]="'normal-auto-complete-overlay'"
+                    (completeMethod)="search($event)"
+                ></p-autoComplete>
+            </div>
+
+            <div class="col-span-4">
+                <label class="normal-label"><span class="red-color-text">{{ outputHeaderValueStar }}</span>
+                    <span>{{ 'registerEndpointElements.input.outputValue'|transloco }} :</span>
+                </label>
+
+                <input
+                    [(ngModel)]="outputValue"
+                    [disabled]="outputHeaderValueFlag"
+                    (keydown.enter)="onKeydown($event)"
+                    pInputText
+                    class="normal-input"
+                />
+            </div>
+
+            <div class="col-span-4"></div>
+
+            <div class="col-span-8">
+                <div class="flex items-center">
+                    <p-checkbox
+                        [(ngModel)]="checked"
+                        [binary]="true"
+                        inputId="binary"
+                        [disabled]="bodyFlag"
+                    ></p-checkbox>
+                    <label for="binary" class="normal-label mr-2">
+                        {{ 'editEndpointElements.input.pathElement'|transloco }} :
+                    </label>
+                    <!-- <div class="col-span-0 flex items-center">
+                         <p-checkbox
+                             [(ngModel)]="checked"
+                             [binary]="true"
+                             inputId="binary"
+                             [disabled]="bodyFlag"
+                         ></p-checkbox>
+                     </div>
+                     <div class="col-span-1 flex items-center">
+                         <label class="text-sm font-normal">
+                             <span>مسیر المان :</span>
+                         </label>
+                     </div>-->
+                    <!-- <div class="col-span-9 flex items-center"></div>-->
+                </div>
+
+                <input
+                    [(ngModel)]="checkElementPath"
+                    (keydown.enter)="onKeydown($event)"
+                    dir="ltr"
+                    pInputText
+                    [disabled]="!checked"
+                    (input)="onShowMessage($event)"
+                    class="xx-ggg-8-input mt-2"
+                />
+                <small class="text-red-600" *ngIf="checked">
+                    نکته: در هنگام فراخوانی سرویس در صورتی که مسیر وارد شده برای جستجوی المان صحیح نباشد درخواست با
+                    خطا
+                    مواجه خواهد شد!
+                </small>
+            </div>
+
+            <div class="col-span-12">
+                <div class=" ">
+                    <label class="normal-label">
+                        <span>{{ 'editEndpointElements.input.status'|transloco }} :</span>
+                    </label>
+                    <p-toggleswitch
+                        [(ngModel)]="status"
+                        [disabled]="aggregatorFlag"
+                        (keydown.enter)="onKeydown($event)"
+                    ></p-toggleswitch>
+                </div>
+
+
+            </div>
+        </div>
+        <!--    </p-panel>-->
+    </div>
+    <div class="w-full mt-4 text-left p-4">
+        <button pButton pRipple label="{{'button.save' | transloco}}" icon="pi pi-save" severity="success"
+                class="normal-button"
+                (click)="onRegister()"></button>&nbsp;
+        <button pButton pRipple label="{{'button.cancel' | transloco}}"
+                class="normal-button" [outlined]="true"
+                icon="pi pi-times" severity="danger"
+                (click)="onCancel()"></button>
+
+    </div>
+</ng-template>

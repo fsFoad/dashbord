@@ -1,0 +1,78 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="fle flex-col w-full px-5 gap-4 my-10 " *ngIf="!addFlag&&!updateFlag">
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 mb-2">
+            <button pButton label="{{'producedNode.button.addProducedNode' | transloco}}"
+                    icon="pi pi-plus" (click)="showAdd()" class="normal-button"></button>
+        </div>
+    </div>
+      <p-table
+styleClass="normal-table"
+ [value]="producedList" *ngIf="!addFlag&&!updateFlag"
+             selectionMode="single" [paginator]="true" [rows]="rows"
+             [showCurrentPageReport]="true" [(first)]="first"
+             [currentPageReportTemplate]=paginationLabel
+             [rowsPerPageOptions]="[5,10,25,50,100]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="row" class="row">
+
+                    {{ 'producedNode.table.header.row'|transloco }}
+                    <p-sortIcon field="row"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nodeName" class="nodeName">
+                    {{ 'producedNode.table.header.nodeName'|transloco }}
+                    <p-sortIcon field="nodeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nodePlace" class="nodePlace">
+                    {{ 'producedNode.table.header.nodePlace'|transloco }}
+                    <p-sortIcon field="nodePlace"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nodePath" class="nodePath">
+                    {{ 'producedNode.table.header.nodePath'|transloco }}
+                    <p-sortIcon field="nodePath"></p-sortIcon>
+                </th>
+                <th class="text-right border-r  ">
+                    {{ 'producedNode.table.header.operation'|transloco }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-produced>
+            <tr [pSelectableRow]="produced">
+                <td class="row">{{ produced.row }}</td>
+                <td
+                    class="nodeName"
+                    [pTooltip]="produced.nodeName"
+                    [tooltipDisabled]="produced.nodeName?produced.nodeName.length < 20:false"
+                >
+                    {{ produced.nodeName|moreChar19 }}
+                </td>
+                <td
+                    class="nodePlace"
+                >
+                    {{ produced.nodePlace|detailType }}
+                </td>
+                <td dir="ltr"
+                    class="nodePath"
+                    [pTooltip]="produced.nodePath"
+                    [tooltipDisabled]="produced.nodePath?produced.nodePath.length < 20:false"
+                >
+
+                    {{ produced.nodePath|moreChar19 }}
+                </td>
+                <td class="text-right border-r  ">
+                    <button  type="button"
+                            class="p-button-rounded " pButton
+                            pRipple icon="pi pi-chevron-down" (click)="setRecord(produced); menu.toggle($event)"></button>&nbsp;
+                    <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+</div>
+<div class="col-12" *ngIf="addFlag">
+    <app-producednode-register [producedInput]="producedDto" (close)="onClose($event)"></app-producednode-register>
+</div>

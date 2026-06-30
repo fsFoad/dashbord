@@ -1,0 +1,189 @@
+
+<p-toast />
+<app-breadcrumbs id="section" [showBackButton]="false"></app-breadcrumbs>
+<div class=" min-h-screen " dir="rtl">
+    <div class="flex flex-wrap justify-between gap-2 mt-2">
+        <div class="flex-1 min-w-[48%] mx-5 bg-white shadow-md rounded-2xl p-3 border border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2 flex items-center  mb-5">
+                <i class="pi pi-users text-blue-500 text-xl"></i>
+                انتخاب دریافت‌کنندگان آلارم
+            </h3>
+            <p-pickList
+                [source]="availableReceivers"
+                [target]="selectedReceivers"
+                sourceHeader="موارد تعیین‌نشده"
+                targetHeader="موارد انتخاب‌شده"
+                optionLabel="name"
+                [dragdrop]="false"
+                [responsive]="true"
+                [showSourceControls]="false"
+                [showTargetControls]="false"
+                [sourceStyle]="{ height: '500px', overflowY: 'auto' }"
+                [targetStyle]="{ height: '500px' , overflowY: 'auto'}"
+                [filterBy]="'name'"
+                class="modern-picklist mt-3 w-full">
+                <ng-template pTemplate="sourceHeader">
+                    <div class="text-center font-semibold text-gray-700 flex justify-center items-center gap-2">
+                        موارد تعیین‌نشده
+                        <span *ngIf="selectedSourceCount > 0"
+                              class="bg-blue-500 text-white text-xs rounded-full px-2 py-0.5">
+                {{ selectedSourceCount }}
+            </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="targetHeader">
+                    <div class="text-center font-semibold text-green-700 flex justify-center items-center gap-2">
+                        موارد انتخاب‌شده
+                        <span *ngIf="selectedTargetCount > 0"
+                              class="bg-green-500 text-white text-xs rounded-full px-2 py-0.5">
+                {{ selectedTargetCount }}
+            </span>
+                    </div>
+                </ng-template>
+                <ng-template let-item let-i="index" pTemplate="item">
+                    <div class="flex items-center px-3 py-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-all">
+                        <i class="pi pi-user text-gray-500 mr-2"></i>
+                        <span class="text-sm text-gray-700">{{ item.name }}</span>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+        <div class="flex-1 min-w-[38%] mx-5 bg-white shadow-md rounded-2xl p-3 border border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                <i class="pi pi-exclamation-triangle text-red-500 text-xl"></i>
+                انتخاب آلارم های مرتبط
+            </h3>
+            <p-pickList
+                [source]="availableErrors"
+                [target]="selectedErrors"
+                sourceHeader="موارد تعیین‌نشده"
+                targetHeader="موارد انتخاب‌شده"
+                optionLabel="title"
+                [dragdrop]="false"
+                [responsive]="true"
+                [showSourceControls]="false"
+                [showTargetControls]="false"
+                [sourceStyle]="{ height: '500px' }"
+                [targetStyle]="{ height: '500px' }"
+                [filterBy]="'title'"
+                class="modern-picklist mt-3 w-full">
+                <ng-template pTemplate="sourceHeader">
+                    <div class="text-center font-semibold text-gray-700">
+                        موارد تعیین‌نشده
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="targetHeader">
+                    <div class="text-center font-semibold text-green-700 ">
+                        موارد انتخاب‌شده
+                    </div>
+                </ng-template>
+                <ng-template let-item  pTemplate="item">
+                    <div class="flex items-center px-3 py-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-all">
+                        <i class="pi pi-bolt text-red-400 mr-2"></i>
+                        <span class="text-sm text-gray-700">{{ item.title }}</span>
+                    </div>
+                </ng-template>
+            </p-pickList>
+        </div>
+    </div>
+    <div class="flex justify-center mt-2 py-2 px-5 w-full">
+        <button
+            pButton
+            label="{{'button.save' | transloco}}"
+            icon="pi pi-save"
+            severity="success"
+            (click)="register()"
+            class="normal-button">
+        </button>
+        &nbsp;
+        <button
+            pButton
+            label="پاکسازی لیست‌ها"
+            icon="pi pi-times"
+            severity="danger"
+            [outlined]="true"
+            (click)="clearLists()"
+            class="normal-button">
+        </button>
+    </div>
+<!--    <div class="mt-3 mx-5 bg-white shadow-md rounded-2xl p-3 border border-gray-200">-->
+        <p-treeTable
+            [value]="treeData()"
+            [loading]="loadingValue"
+            scrollHeight="400px"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            styleClass="normal-treetable mt-3 mx-5"
+            dir="rtl">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="  text-right row">ردیف</th>
+                    <th class="text-right receiverName">گیرنده آلارم</th>
+                    <th class="receiverMobileNo">شماره موبایل</th>
+                    <th class="sectionTitle">عنوان آلارم</th>
+                    <th class="sectionTitle">تاریخ ایجاد دسترسی</th>
+                    <th class="sectionTitle ">عملیات</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+                    <td colspan="100">
+                        <p-skeleton width="100%" height="1.5rem"></p-skeleton>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+                <tr [ttRow]="rowNode"
+                    [ngClass]="{
+                    'parent-row-expanded': !rowNode.parent
+                    }"
+                >
+                    <td class="text-right row">{{ rowData.row }}</td>
+                    <td class="text-right receiverName">
+                        <p-treetable-toggler [rowNode]="rowNode" />
+                        {{ rowData.receiverName }}
+                    </td>
+                    <td class="receiverMobileNo">{{ rowData.receiverMobileNo }}</td>
+                    <td class="sectionTitle">{{ rowData.sectionTitle }}</td>
+                    <td class="assignDate text-right"  dir="ltr">
+                        {{ rowData.assignDate  }}
+                    </td>
+                    <td>
+                        <p-button
+                            *ngIf="rowData.sectionId"
+                            icon="pi pi-times"
+                            [rounded]="true"
+                            variant="text"
+                            severity="danger"
+                            matTooltip="حذف موردی"
+                            (click)="deleteChild(rowData)">
+                        </p-button>
+                        <p-button
+                            *ngIf="rowData.sectionIds && rowData.sectionIds.length > 0"
+                            icon="pi pi-trash"
+                            matTooltip="حذف دسته ای"
+                            [rounded]="true"
+                            variant="text"
+                            severity="danger"
+                            (click)="deleteChild(rowData)">
+                        </p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-treeTable>
+  <!--  </div>-->
+</div>
+<p-confirmdialog #cd>
+    <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+        <div class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded">
+            <div class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20">
+                <i class="pi pi-question !text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex items-center gap-2 mt-6">
+                <button pButton label="{{'module.dialog.button.yes'|transloco}}" (click)="onAccept()" class="w-32 bg-green-500 text-white border-none normal-button hover:bg-green-600"></button>
+                <button pButton label="{{'module.dialog.button.no'|transloco}}" [outlined]="true" (click)="onReject()" class="w-32 bg-red-500 text-white border-none normal-button hover:bg-red-600" ></button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmdialog>

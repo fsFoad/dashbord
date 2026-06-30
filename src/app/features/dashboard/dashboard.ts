@@ -25,7 +25,7 @@ import { SkeletonCard } from '../../shared/components/skeleton/skeleton-card';
 @Component({
   selector: 'app-dashboard-page',
   imports: [
-    RouterLink, TranslocoModule, ButtonModule, Tooltip, HasRoleDirective,
+ TranslocoModule, ButtonModule, Tooltip, HasRoleDirective,
     KpiWidget, RevenueChart, StatusChart, TasksChart, RecentActivity, SkeletonCard, AiInsight],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard.html',

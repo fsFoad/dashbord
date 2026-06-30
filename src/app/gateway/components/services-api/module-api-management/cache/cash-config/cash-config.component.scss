@@ -1,0 +1,140 @@
+:host{
+    height: 100%;
+    width: 100%;
+}
+/* استایلهای سفارشی برای Material و PrimeNG */
+.mat-form-field {
+    @apply w-full;
+}
+
+.p-calendar .p-inputtext {
+    @apply w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+}
+
+.p-dropdown {
+    @apply w-full;
+}
+.modern-datetime-picker {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Vazir', sans-serif;
+
+    h3 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+
+    .datetime-form {
+        .datetime-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+
+            @media (max-width: 600px) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-group {
+            label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: #5a6a7d;
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+
+            .otp-container {
+                display: flex;
+                justify-content: center;
+
+                &.year p-inputOtp {
+                    input {
+                        width: 35px !important;
+                    }
+                }
+
+                p-inputOtp {
+                    display: flex;
+                    gap: 0.5rem;
+
+                    input {
+                        width: 45px;
+                        height: 45px;
+                        text-align: center;
+                        font-size: 1.1rem;
+                        border: 2px solid #e0e4e8;
+                        border-radius: 8px;
+                        transition: all 0.2s ease;
+                        color: #2c3e50;
+
+                        &:focus {
+                            border-color: #4285f4;
+                            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+                            outline: none;
+                        }
+
+                        &::placeholder {
+                            color: #c0c6cc;
+                        }
+                    }
+                }
+            }
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+
+            button {
+                min-width: 120px;
+                border-radius: 8px;
+                font-weight: 500;
+                transition: all 0.2s ease;
+
+                &.submit-btn {
+                    background: #4285f4;
+                    border: none;
+
+                    &:hover {
+                        background: #3367d6;
+                    }
+                }
+
+                &.today-btn {
+                    background: #f1f3f4;
+                    color: #5a6a7d;
+                    border: none;
+
+                    &:hover {
+                        background: #e0e4e8;
+                    }
+                }
+            }
+        }
+
+        .hint {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #7a8a9d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+
+            i {
+                font-size: 1rem;
+            }
+        }
+    }
+}

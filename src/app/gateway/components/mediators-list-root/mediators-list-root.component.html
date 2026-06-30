@@ -1,0 +1,216 @@
+<p-toast />
+<app-breadcrumbs id="section" *ngIf="!jsonMediatorsFlag&&!xmlMediatorsFlag&&!nodeListFlag"></app-breadcrumbs>
+<div class="content-page" *ngIf="!jsonMediatorsFlag&&!xmlMediatorsFlag&&!nodeListFlag">
+    <div class="grid grid-cols-12">
+        <div class="col-span-3">
+            <label class="normal-label"> <span>عنوان مدیاتور :</span></label>
+            <input [(ngModel)]="mediatorTitle" (keydown.enter)="onKeydown($event)" pInputText class="normal-input">
+        </div>
+        <div class="col-span-9" dir="ltr">
+
+            <button pButton label="{{'button.clear'|transloco}}"
+                    icon="pi pi-filter-slash"
+                    class="my-1 px-4 border normal-button" [outlined]="true" (click)="clear()"></button>&nbsp;&nbsp;
+            <button pButton label="{{'جستجو'}}" style="width: 110px;margin: 3px;margin-top: 20px"
+                    class="normal-button" icon="pi pi-search" (click)="search()"></button>
+        </div>
+    </div>
+    <div class="col-span-12">
+          <p-table
+styleClass="normal-table"
+ [value]="MediatorsList" selectionMode="single"
+                 [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                 [currentPageReportTemplate]=paginationLabel
+                 [rowsPerPageOptions]="[5,10,25,50,100]">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="row" class="row">
+                        ردیف
+                        <p-sortIcon field="row"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="title" class="title">
+                        عنوان مدیاتور
+                        <p-sortIcon field="title"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="apiName" class="apiName">
+                        نام سرویس
+                        <p-sortIcon field="apiName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="apiTitle" class="apiTitle">
+                        عنوان سرویس
+                        <p-sortIcon field="apiTitle"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="moduleType" class="moduleType">
+                        نوع ماژول
+                        <p-sortIcon field="moduleType"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="schemaName" class="schemaName">
+                        فضای نام
+                        <p-sortIcon field="schemaName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="rdate" dir="ltr" class="rdate text-right">
+                        تاریخ ثبت
+                        <p-sortIcon field="rdate"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="appDate" class="appDate text-right">
+                        تاریخ تائید
+                        <p-sortIcon field="appDate"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="isApproval" class="isApproval">
+                        وضعیت تائید
+                        <p-sortIcon field="isApproval"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status" class="status">
+                        وضعیت
+                        <p-sortIcon field="status"></p-sortIcon>
+                    </th>
+                    <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">عملیات
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-api>
+                <tr [pSelectableRow]="api">
+                    <td class="row">{{ api.row }}</td>
+                    <td class="title"
+                        [pTooltip]="api.title"
+                        [tooltipDisabled]="api.title?api.title.length < 20:false"
+                    >
+                        {{ api.title|moreChar19 }}
+                    </td>
+                    <td class="apiName"
+                        [pTooltip]="api.apiName"
+                        [tooltipDisabled]="api.apiName?api.apiName.length < 20:false"
+                    >
+                        {{ api.apiName|moreChar19 }}
+                    </td>
+                    <td class="apiTitle"
+                        [pTooltip]="api.apiTitle"
+                        [tooltipDisabled]="api.apiTitle?api.apiTitle.length < 20:false"
+                    >
+                        {{ api.apiTitle|moreChar19 }}
+                    </td>
+                    <td class="moduleType">{{ api.moduleTypeId|moduleType }}</td>
+                    <td class="name schema-cell"
+                        [tooltipOptions]="{ tooltipStyleClass: 'schema-tooltip' }"
+                        [pTooltip]="'\u200E' + api.schemaName"
+                        [tooltipDisabled]="api.schemaName?api.schemaName.length < 20:false"
+                    >
+                        <span class="schema-text">{{ api.schemaName | moreChar19 }}</span>
+                    </td>
+                    <td class="rdate"
+                        [pTooltip]="api.rdate"
+                        [tooltipDisabled]="api.rdate?api.rdate.length < 11:false"
+                    >{{ api.rdate|historyMoreChar }}
+                    </td>
+                    <td class="appDate"
+                        [pTooltip]="api.appDate"
+                        [tooltipDisabled]="api.appDate?api.appDate.length < 11:false"
+                    >{{ api.appDate|historyMoreChar }}
+                    </td>
+                    <td class="isApproval" [ngStyle]="{'text-align': 'center !important'}">
+                        <div  [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': api.isApproval,
+                                   ' text-red-800 bg-red-300 ': !api.isApproval
+                                   }"
+                              class="w-[65px] float-right text-center rounded-md">
+                            <!-- [ngStyle]="{ 'border-radius':' 2.5px','color':api.isApproval == true ?
+        '#258F30' :'#962515',
+        'background-color': api.isApproval == false ?'#F18B7D' : '#85DC8F',
+        'width':'70px','margin':' 0 auto'}"-->
+                            {{ api.isApproval|isApproval }}
+                        </div>
+                    </td>
+                    <td class="status" [ngStyle]="{'text-align': 'center !important'}">
+                        <div [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': api.status,
+                                   ' text-red-800 bg-red-300 ': !api.status
+                                   }"
+                             class="w-[65px] float-right text-center rounded-md">
+                           <!-- [ngStyle]="{ 'border-radius':' 2.5px','color':api.status == true ?
+                         '#258F30' :'#962515',
+                         'background-color': api.status == false ?'#F18B7D' : '#85DC8F',
+                         'width':'45px','margin':' 0 auto'}"
+                        >-->
+                            {{ api.status|statusPipe }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r  ">
+                        <button (click)="setRecord(api);menu.toggle($event)" type="button" class="p-button-rounded  "
+                                pButton
+                                pRipple icon="pi pi-chevron-down"  ></button>&nbsp;
+                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<div class="w-full" *ngIf="jsonMediatorsFlag">
+    <app-mediators-json [inputListMedia]="flag" (close)="onClose($event)"></app-mediators-json>
+</div>
+<div class="w-full" *ngIf="xmlMediatorsFlag">
+    <app-mediators [inputListMedia]="flag" (close)="onClose($event)"></app-mediators>
+</div>
+<div class="w-full" *ngIf="nodeListFlag">
+    <app-node-change-list [inputListMedia]="mediatorDto" (close)="onClose($event)"></app-node-change-list>
+</div>
+<p-dialog [style]="{'width':'58%'}" [(visible)]="flagAddNode" [modal]="true" [draggable]="false"
+          appendTo="body"
+          [resizable]="true">
+    <p-panel header="{{'پنجره افزودن کلید'|transloco}}">
+        <div class="content-page">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>مسیر نود :</span></label>
+                    <input dir="ltr"  [(ngModel)]="tempPath" pInputText class="xx-ggg-12-input">
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>کلید :</span></label>
+                    <input dir="ltr" [(ngModel)]="keyNode" pInputText class="normal-input">
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label"> <span>مقدار :</span></label>
+                    <input dir="ltr" [(ngModel)]="valueNode" pInputText class="normal-input">
+                </div>
+                <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+                    <button pButton label="{{'button.cancel'|transloco}}" [outlined]="true"
+                            severity="danger" icon="pi pi-times" class="normal-button"
+                            (click)="onClosePopup()"></button>&nbsp;
+                    <button pButton severity="success" label="{{'ثبت اطلاعات'}}" class="normal-button"
+                            (click)="registerNode(1)" icon="pi pi-save"></button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>
+<p-dialog [style]="{'width':'58%'}" [(visible)]="flagDeletedNode" [modal]="true" [draggable]="false"
+          [resizable]="true" appendTo="body">
+    <p-panel header="{{'پنجره حذف کلید'}}">
+        <div class="content-page">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12">
+                    <label class="normal-label"> <span>مسیر نود والد :</span></label>
+                    <input class="xx-ggg-12-input" dir="ltr" [(ngModel)]="tempPath" pInputText>
+                </div>
+                <div class="col-span-4">
+                    <label class="normal-label">
+                        <span class="red-color-text">* </span>
+                        <span>کلید :</span></label>
+                    <input class="xx-ggg-12-input" [(ngModel)]="keyNode" pInputText >
+                </div>
+                <div class="col-span-4"></div>
+                <div class="col-span-12" dir="ltr" style="margin-top: 15px">
+                    <button pButton label="{{'button.cancel' | transloco}}"  class="normal-button"
+                            severity="danger" icon="pi pi-times" [outlined]="true"
+                            (click)="onClosePopup()"></button>&nbsp;
+                    <button pButton severity="success" label="{{'ثبت اطلاعات'}}"  class="normal-button"
+                            (click)="registerNode(2)" icon="pi pi-save"></button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</p-dialog>

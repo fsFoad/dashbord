@@ -1,0 +1,44 @@
+<div class="grid flex-column" >
+    <p-panel header="تغییرات نسخه سامانه">
+        <div class="grid grid-cols-12">
+            <div class="col-4" *ngFor="let item of tempVersion" style="height: 300px">
+                <p-card [header]="'v'+item.releaseVersion "
+                         styleClass="cardStyle">
+                    <span>{{item.releaseVersion}}</span>
+                    <span>{{item.releaseDate}}</span>
+                    <br>
+                    <span>{{item.releaseDate}}</span>
+                    <span>{{item.changeTitle}}</span>
+                    <hr>
+                    <span *ngFor="let items of item.releaseNotePartDomains">{{items.title}}</span>
+                </p-card>
+                <br>
+            </div>
+        </div>
+        <div class="grid text-left">
+            <div class="col-4-5"></div>
+            <div class="p-col-2" style="margin-top: 5px">
+                <!--                        <br>-->
+                <button pButton pRipple icon="pi pi-arrow-right"
+                        pTooltip="{{'tooltip.nextPage'}}"
+                        [disabled]="
+                         this.tempVersion.length < 3"
+                        (click)="nextPageStatement()"
+                ></button>
+
+
+                <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+                <button pButton pRipple icon="pi pi-arrow-left"
+                        pTooltip="{{'tooltip.beforePage'}}"
+                        (click)="previousPageStatement()"
+                        [disabled]="+(this.pageno) == 0 "
+                ></button>
+
+
+            </div>
+            <div class="col-1-5">
+            </div>
+            <div class="col-4-5"></div>
+        </div>
+    </p-panel>
+</div>

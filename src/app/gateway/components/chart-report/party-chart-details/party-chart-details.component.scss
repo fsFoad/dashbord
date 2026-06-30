@@ -1,0 +1,16 @@
+:host {
+    width: 100%;
+}.center-flex {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 6px;
+    align-items: center;
+}
+.height {
+    display: block;
+    height: 100%;
+    min-height: 460px;
+}
+.p-dropdown-item span {
+    font-size: 7px;
+}

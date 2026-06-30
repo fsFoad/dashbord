@@ -1,0 +1,91 @@
+<p-toast />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="content-page">
+    <div class="grid grid-cols-12">
+        <div class="col-span-12">
+              <p-table
+styleClass="normal-table"
+ [value]="nodesList" selectionMode="single"
+                     [paginator]="true" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                     [currentPageReportTemplate]=paginationLabel
+                     [rowsPerPageOptions]="[5,10,25,50,100]">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="row">
+                            ردیف
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nodeName" class="nodeName">
+                            نام نود
+                            <p-sortIcon field="nodeName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nodeValue" class="nodeValue">
+                            مقدار نود
+                            <p-sortIcon field="nodeValue"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="changeTypeId" class="changeTypeId">
+                            نوع عملیات نود
+                            <p-sortIcon field="changeTypeId"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="schemaName" class="schemaName">
+                            مسیر نود
+                            <p-sortIcon field="schemaName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status" class="status">
+                            وضعیت
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th class="text-right border-r  " >
+                            عملیات
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-api>
+                    <tr [pSelectableRow]="api">
+                        <td class="row">{{ api.row }}</td>
+                        <td class="nodeName"
+                            [pTooltip]="api.nodeName"
+                            [tooltipDisabled]="api.nodeName?api.nodeName.length < 20:false"
+                        >
+                            {{ api.nodeName|moreChar19 }}
+                        </td>
+                        <td class="nodeValue"
+                            [pTooltip]="api.nodeValue"
+                            [tooltipDisabled]="api.nodeValue?api.nodeValue.length < 20:false"
+                        >
+                            {{ api.nodeValue|moreChar19 }}
+                        </td>
+                        <td class="changeTypeId">
+                            {{ api.changeTypeId|changeTypeId }}
+                        </td>
+                        <td class="schemaName"
+                            [pTooltip]="api.schemaName"
+                            [tooltipDisabled]="api.schemaName?api.schemaName.length < 20:false"
+                        >
+                            {{ api.schemaName|moreChar19 }}
+                        </td>
+                        <td class="status" [ngStyle]="{'text-align': 'center !important'}">
+                            <div  [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': api.status,
+                                   ' text-red-800 bg-red-300 ': !api.status
+                                   }"
+                                  class="w-[65px] float-right text-center rounded-md">
+                                {{ api.status|statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button (click)="setRecord(api);menu.toggle($event)" type="button" class="p-button-rounded  "
+                                    pButton
+                                    pRipple icon="pi pi-chevron-down" ></button>&nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+        </div>
+
+    </div>
+</div>
+

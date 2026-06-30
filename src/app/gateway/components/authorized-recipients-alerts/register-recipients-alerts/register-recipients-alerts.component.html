@@ -1,0 +1,97 @@
+<p-toast />
+<app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false" ></app-breadcrumbs>
+<div class="flex-column" >
+    <div class="grid grid-cols-12 gap-4 my-10 mx-5" [formGroup]="registerForm">
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerRecipientsAlerts.input.name'|transloco }} :</span></label>
+            <input formControlName="name" (keydown.enter)="onKeydown($event)"
+                   class="normal-input"
+                    pInputText>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerRecipientsAlerts.input.mobileNo'|transloco }} :</span>
+            </label>
+            <input formControlName="mobileNo" dir="ltr" maxlength="11" pKeyFilter="num" class="normal-input" (keydown.enter)="onKeydown($event)"
+                   pInputText>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span>{{ 'registerRecipientsAlerts.input.emailAddress'|transloco }} :</span>
+            </label>
+            <input formControlName="emailAddress" dir="ltr"  class="normal-input" (keydown.enter)="onKeydown($event)"
+                   pInputText>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span>{{ 'registerRecipientsAlerts.input.telegramUsername'|transloco }} :</span>
+            </label>
+            <input formControlName="telegramUsername" dir="ltr" class="normal-input" (keydown.enter)="onKeydown($event)"
+                   pInputText>
+        </div>
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span>{{ 'registerRecipientsAlerts.input.networkIdentifyAddress'|transloco }} :</span>
+            </label>
+            <input formControlName="networkIdentifyAddress" dir="ltr" class="normal-input" (keydown.enter)="onKeydown($event)"
+                   pInputText>
+        </div>
+
+        <div class="col-span-3 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerRecipientsAlerts.input.fromhh'|transloco }} :</span></label>
+            <p-inputNumber
+                dir="ltr"
+                mode="decimal"
+                formControlName="fromhh"
+                [showButtons]="true"
+                [min]="0"
+                [max]="24"
+                class="normal-input-number">
+            </p-inputNumber>
+        </div>
+        <div class="col-span-3  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>{{ 'registerRecipientsAlerts.input.tohh'|transloco }} :</span></label>
+            <p-inputNumber
+                dir="ltr"
+                mode="decimal"
+                formControlName="tohh"
+                [showButtons]="true"
+                [min]="0"
+                [max]="24"
+                class="normal-input-number">
+            </p-inputNumber>
+        </div>
+        <div class="hidden lg:col-span-3 lg:block">
+        </div>
+        <div class="col-span-12 sm:grid-cols-12 w-full">
+            <label class="normal-label">
+                <span>{{ 'registerRecipientsAlerts.input.description'|transloco }} :</span></label>
+            <input formControlName="description" class="xxx-gggg-12-input"
+                    (keydown.enter)="onKeydown($event)" pInputText>
+        </div>
+        <div class="col-span-12  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
+            <label class="normal-label">
+                <span>{{ 'registerRecipientsAlerts.input.status'|transloco }} :</span></label>
+            <p-toggleSwitch
+                formControlName="status"
+                (onChange)="onStatusToggle($event)"
+                [style]="{ 'float': 'right' }"
+            ></p-toggleSwitch>
+        </div>
+    </div>
+    <div class="w-full mt-4 text-left p-4">
+
+        <button pButton label="{{'button.save' | transloco}}" icon="pi pi-save" severity="success"
+                (click)="onRegister()" class="normal-button" ></button>   &nbsp;
+        <button pButton label="{{'button.cancel' | transloco}}"
+                icon="pi pi-times" severity="danger" [outlined]="true"
+                (click)="onCancel()" class="normal-button"></button>
+    </div>
+</div>

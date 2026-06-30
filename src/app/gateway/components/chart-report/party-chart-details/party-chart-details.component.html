@@ -1,0 +1,58 @@
+<div class="height flex-column">
+    <br>
+    <div class="grid grid-cols-12" #secondPanel>
+        <div class=" col-span-4">
+            <p-dropdown
+                [options]="partysData"
+                class="normal-dropdown"
+                optionLabel="title"
+                optionValue="partyId"
+                [(ngModel)]="selectedPartyId"
+                [placeholder]="'choose.your.party' | transloco"
+                (onChange)="selectedParty()"
+            ></p-dropdown>
+        </div>
+        <div class=" col-span-4"></div>
+        <div class="col-span-4 flex gap-2" dir="ltr" *ngIf="chooseTypeOfChart">
+            <button pButton type="button" [outlined]="true" icon="pi pi-chart-pie" (click)="setView('pie')"></button>
+            <button pButton type="button" [outlined]="true" icon="pi pi-chart-bar" (click)="setView('bar')"></button>
+            <button pButton type="button" [outlined]="true" icon="pi pi-bars" (click)="setView('table')"></button>
+        </div>
+        <div class=" col-span-4" *ngIf="!showTable "></div>
+        <div *ngIf="showPieCharts" class=" col-span-4">
+            <p-chart type="pie" [data]="partyDataForCharts" [options]="responsiveChartOptions"></p-chart>
+        </div>
+        <div *ngIf="showBarCharts" class=" col-span-4">
+            <p-chart type="bar" [data]="partyDataForCharts" [options]="chartPlugins"></p-chart>
+        </div>
+
+        <div dir="ltr" *ngIf="showTable" class="col-span-8"></div>
+        <div dir="ltr" *ngIf="showTable" class=" col-span-4 mt-8 mb-2">
+            <button pButton class="normal-button" (click)="exportExcel()" [label]="'download.table.xls.file' | transloco"></button>
+        </div>
+        <div *ngIf="showTable" class=" col-span-12">
+              <p-table
+styleClass="normal-table"
+ [value]="piChartData" [columns]="cols">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-columns="columns" let-tableData>
+                    <tr>
+                        <td *ngFor="let cols of columns">
+                            {{tableData[cols.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div *ngIf="showTable" class=" col-span-4"></div>
+        <div *ngIf="showTable" class=" col-span-4"></div>
+
+    </div>
+</div>
+

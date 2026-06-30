@@ -1,0 +1,33 @@
+p-card-header{
+  color: darkorchid !important;
+}
+.p-fieldset-legend {
+  color: darkorchid !important;
+}
+p-fieldset-legend {
+  color: darkorchid !important;
+}
+.myFieldStyle{
+  color: darkorchid !important;
+
+}
+myFieldset .ui-fieldset, .ui-fieldset .ui-fieldset-legend {
+  background-color: transparent;
+  color: darkorchid;
+}
+.myFieldset.p-fieldset .p-fieldset-legend {
+  padding: 1rem;
+  border: 1px solid #a19f9d;
+  color: #d9161f !important;
+  background-color: #dc85a3 !important;
+  font-weight: 600;
+  border-radius: 2px;
+}
+.p-fieldset .p-fieldset-legend{
+  background-color: #dc85a3 !important;
+}
+:host ::ng-deep .p-checkbox {
+     display: inline-flex !important;
+     vertical-align: middle;
+     margin: 0 !important;
+ }

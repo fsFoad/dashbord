@@ -1,0 +1,277 @@
+<!--
+<app-breadcrumbs id="section"   *ngIf="!multipleApiFlag"></app-breadcrumbs>
+<div class="content-page">
+        <div class="grid grid-cols-12" *ngIf="!multipleApiFlag">
+            <div class="col-span-3">
+                <label class="normal-label">
+                    <span class="red-color-text">* </span>
+                    <span>نوع گزارش:</span>
+                </label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    optionValue="code"
+                    [options]="typeChartOption"
+                    [(ngModel)]="typeChart"
+                    filterBy="name"
+                    optionLabel="name"
+                ></p-dropdown>
+
+            </div>
+            <div class=" col-span-3">
+                <label class="normal-label">*<span >تاریخ شروع</span>:</label>
+                <p-persian-calendar class="app-persian-calendar-style" [yearRange]="'1399:1410'"
+                                    [(ngModel)]="fromdate"></p-persian-calendar>
+            </div>
+            <div class=" col-span-3">
+                <label class="normal-label"> *<span >تاریخ پایان</span>:</label>
+                <p-persian-calendar class="app-persian-calendar-style" [yearRange]="'1399:1410'"
+                                    [(ngModel)]="todate"></p-persian-calendar>
+            </div>
+            <div class=" col-span-3 flex gap-3 justify-content-end">
+                <button pButton label="{{'نمایش'}}" icon="pi pi-chart-bar" (click)="showChart()"
+                        class="normal-button"
+                        style="margin: 3px;margin-top: 20px;width: 110px"></button>
+
+                <button pButton label="{{'پاکسازی'}}" [outlined]="true"
+                        icon="pi pi-filter-slash" class="normal-button"
+                        style="margin: 3px;margin-top: 20px;width: 110px" (click)="clear()"></button>
+
+            </div>
+            <div class=" col-span-3">
+                <label class="normal-label">*<span >نام کلاینت</span>:</label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    optionValue="clientId"
+                    [options]="clientListOptions"
+                    [(ngModel)]="clientId"
+                    [filter]="true"
+                    filterBy="name"
+                    optionLabel="name"
+                ></p-dropdown>
+            </div>
+            <div class=" col-span-3 " dir="rtl">
+                <label class="normal-label">*<span  dir="rtl">میزان پاسخ‌دهی</span>:</label>
+                <p-inputNumber dir="ltr"
+                               mode="decimal"
+                               [(ngModel)]="delay"
+                               [showButtons]="true"
+                               [min]="0"
+                               class="normal-input-number"
+
+                               [max]="100">
+                </p-inputNumber>
+            </div>
+            <div class=" col-span-3">
+                <label class="normal-label">
+                    <span >{{'dropdown.moduleTitle'|transloco}}</span>:</label>
+                <p-dropdown
+                    class="normal-dropdown"
+                    [options]="moduleListOptions"
+                    [(ngModel)]="moduleid"
+                    optionValue="moduleId"
+                    [filter]="true"
+                    filterBy="moduleTitle"
+                    optionLabel="moduleTitle">
+                    &lt;!&ndash; [options]="protocolOptions"
+                      &ndash;&gt;
+                </p-dropdown>
+            </div>
+            <div class=" col-span-3"></div>
+
+            <div *ngIf="chartLineFlag" class="d-flex justify-content-center"
+                 style="
+                  margin-top: 40px;
+                  width: 100%;
+                  justify-content: center;
+                  text-align: center; ">
+                <p class="chart-description"
+                   style="font-size: 14px; font-weight: bold; color: red; text-align: center;">
+                    {{ comment }}
+                </p>
+                <div
+                    style="
+                    margin-top: 40px;
+                    width: 100%;
+                    justify-content: center;
+                    display: flex; "
+                >
+
+                    <ng-container *ngIf="chartLineDataFlag; else notFoundMessage2">
+                        <p-chart type="line" width="1100px" height="550px" [data]="data" [options]="options"
+                                 [responsive]="true"
+                                 style="border-radius:15px; border-color: #1b1f2326;margin-bottom: 220px"
+                                 class="chartjs-tooltip border-1 p-3" #chart
+                                 (onDataSelect)="handleChartClick($event)"></p-chart>
+                    </ng-container>
+                    <ng-template #notFoundMessage2 style="margin: 98px; width: 50%;">
+                        <div class="message-empty-chart p-5 text-center"
+                             style="color: red; border: 1px solid #1b1f2326;border-radius:15px;margin-bottom: 220px;
+                width: 1100px; height: 550px; display: flex; justify-content: center; align-items: center;">
+                            <h5 class="text-red-500" style="color: red;">داده‌ای یافت نشد!</h5>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    <div class="col-span-12" *ngIf="multipleApiFlag">
+        <app-multiple-apis-chart [inputMultipleApies]="multipleapiDto"
+                                 (close)="onClose($event)"></app-multiple-apis-chart>
+    </div>
+</div>
+-->
+<p-toast />
+<app-breadcrumbs id="section" *ngIf="!multipleApiFlag" [showBackButton]="false"></app-breadcrumbs>
+
+<div class="content-page" *ngIf="!multipleApiFlag">
+    <div class="grid grid-cols-12 gap-4" >
+
+        <!-- نوع گزارش -->
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                نوع گزارش:
+            </label>
+            <p-dropdown
+                class="normal-dropdown"
+                optionValue="code"
+                [options]="typeChartOption"
+                [(ngModel)]="typeChart"
+                filterBy="name"
+                optionLabel="name"
+            ></p-dropdown>
+        </div>
+
+        <!-- تاریخ شروع -->
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                تاریخ شروع:
+            </label>
+
+            <p-persian-calendar
+                class="app-persian-calendar-style"
+                [yearRange]="'1399:1410'"
+                [(ngModel)]="fromdate">
+            </p-persian-calendar>
+        </div>
+
+        <!-- تاریخ پایان -->
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>تاریخ پایان:</label>
+
+            <p-persian-calendar
+                class="app-persian-calendar-style"
+                [yearRange]="'1399:1410'"
+                [(ngModel)]="todate">
+            </p-persian-calendar>
+        </div>
+
+        <!-- دکمه‌ها -->
+        <div class="col-span-3 flex gap-3 justify-end items-end">
+            <button
+                pButton
+                label="نمایش"
+                icon="pi pi-chart-bar"
+                (click)="showChart()"
+                class="normal-button w-[110px] mt-5">
+            </button>
+
+            <button
+                pButton
+                label="پاکسازی"
+                icon="pi pi-filter-slash"
+                [outlined]="true"
+                (click)="clear()"
+                class="normal-button w-[110px] mt-5">
+            </button>
+        </div>
+
+        <!-- نام کلاینت -->
+        <div class="col-span-3">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>نام کلاینت:</label>
+
+            <p-dropdown
+                class="normal-dropdown"
+                optionValue="clientId"
+                [options]="clientListOptions"
+                [(ngModel)]="clientId"
+                [filter]="true"
+                filterBy="name"
+                optionLabel="name">
+            </p-dropdown>
+        </div>
+
+        <!-- میزان پاسخ‌دهی -->
+        <div class="col-span-3" dir="rtl">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                میزان پاسخ‌دهی:</label>
+            <p-inputNumber
+                dir="ltr"
+                mode="decimal"
+                [(ngModel)]="delay"
+                [showButtons]="true"
+                [min]="0"
+                [max]="100"
+                class="normal-input-number">
+            </p-inputNumber>
+        </div>
+
+        <!-- ماژول -->
+        <div class="col-span-3">
+            <label class="normal-label">
+                {{'dropdown.moduleTitle'|transloco}}:
+            </label>
+            <p-dropdown
+                class="normal-dropdown"
+                [options]="moduleListOptions"
+                [(ngModel)]="moduleid"
+                optionValue="moduleId"
+                [filter]="true"
+                filterBy="moduleTitle"
+                optionLabel="moduleTitle">
+            </p-dropdown>
+        </div>
+
+        <!-- Spacer -->
+        <div class="col-span-3"></div>
+
+        <!-- نمودار -->
+        <div *ngIf="chartLineFlag" class="col-span-12 flex flex-col items-center mt-10">
+            <p class="chart-description text-center text-red-500 font-bold text-sm">
+                {{ comment }}
+            </p>
+
+            <div class="w-full flex justify-center mt-10">
+                <ng-container *ngIf="chartLineDataFlag; else notFoundMessage2">
+                    <p-chart  #chart
+                        type="line"
+                        width="1100px"
+                        height="550px"
+                        [data]="data"
+                        [options]="options"
+                        [responsive]="true"
+                        class="chartjs-tooltip border border-gray-300 rounded-lg p-3 mb-56"
+                        (onDataSelect)="handleChartClick($event)">
+                    </p-chart>
+                </ng-container>
+
+                <ng-template #notFoundMessage2>
+                    <div
+                        class="message-empty-chart text-center text-red-500 border border-gray-300 rounded-lg p-5 mb-56 flex justify-center items-center"
+                        style="width: 1100px; height: 550px;">
+                        <h5>داده‌ای یافت نشد!</h5>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Multiple APIs Mode -->
+
+</div>
+<div class="w-full" *ngIf="multipleApiFlag">
+    <app-multiple-apis-chart  [inputMultipleApies]="multipleapiDto" (close)="onClose($event)"> </app-multiple-apis-chart>
+</div>

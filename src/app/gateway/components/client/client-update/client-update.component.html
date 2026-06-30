@@ -1,0 +1,124 @@
+<p-toast />
+<app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page">
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>نام :</span></label>
+                <input [(ngModel)]="name" pInputText class="normal-input">
+
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>کدملی/شناسه ملی :</span></label>
+                <input [(ngModel)]="shenase" pKeyFilter="int" pInputText class="normal-input">
+
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>شماره موبایل :</span></label>
+                <input [(ngModel)]="mobileNo" maxlength="11" minlength="11" pInputText class="normal-input">
+
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>کلید کلاینت :</span></label>
+            <div class="input-with-buttons2">
+                <input [(ngModel)]="apikey" pInputText class="normal-input" disabled>
+                <button (click)="onDisplay()" pButton icon="pi pi-eye"
+                        matTooltip="{{'مشاهده کلید کلاینت' | transloco}}" style="width: 34px;margin-left: 2px"></button>
+                <button (click)="generateApikey()" pButton icon="pi pi-plus"
+                        matTooltip="{{'ایجاد کلید کلاینت' | transloco}}" style="width: 34px;margin-right: 2px"></button>
+
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span class="red-color-text">* </span>
+                <span>کلید دیجیتال :</span></label>
+            <div class="input-with-buttons">
+                <input [(ngModel)]="digitalPublickey" pInputText class="normal-input">
+                <button (click)="onDisplayUploadDigital()" icon="pi pi-eye" pButton class="btnConfirm"
+                        matTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"
+                        style="width: 34px; margin-left: 2px;"></button>
+                <p-fileupload
+                    mode="basic"
+                    [auto]="true"
+                    [customUpload]="true"
+                    [showCancelButton]="false"
+                    [showUploadButton]="false"
+                    [disabled]="stepUpload"
+                    chooseLabel=" "
+                    #fileUploaderRef
+                    (uploadHandler)="myUploader($event, fileUploaderRef)"
+
+                    (onSelect)="onSelectDigital($event)"
+                    icon="pi pi-upload"
+                    multiple="multiple"
+                    matTooltip="{{'انتخاب فایل' | transloco}}"
+                    styleClass="custom-file-upload">
+                </p-fileupload>
+            </div>
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>کلید عمومی :</span></label>
+            <div class="input-with-buttons">
+                <input [(ngModel)]="publicKey" id="publicKey" class="normal-input" pInputText disabled>
+                <button (click)="onDisplayUploadPublicKey()" pButton icon="pi pi-eye"
+                        matTooltip="{{'مشاهده کلید کلاینت' | transloco}}"
+                        style="width: 34px; margin-left: 2px;"></button>
+            </div>
+        </div>
+
+        <div class="col-span-4">
+            <label class="normal-label"> <span>کد سازمان :</span></label>
+                <input [(ngModel)]="organizationCode" pInputText class="normal-input">
+
+        </div>
+        <div class="col-span-4">
+            <label class="normal-label"> <span>شماره حساب های مجاز :</span></label>
+
+                <input [(ngModel)]="allowedAccountno" pKeyFilter="int" pInputText class="normal-input">
+
+        </div>
+
+        <div class="col-span-4"></div>
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span>وضعیت :</span></label>
+            <p-toggleswitch [(ngModel)]="status" />
+        </div>
+
+    </div>
+</div>
+<div class="w-full mt-4 text-left p-4">
+    <button pButton pRipple label="{{'button.save' | transloco}}" icon="pi pi-save" severity="success"
+            class="normal-button"
+            (click)="onUpdate()"></button>&nbsp;
+    <button pButton pRipple label="{{'button.cancel' | transloco}}"
+            class="normal-button"
+            icon="pi pi-times" severity="danger" [outlined]="true"
+            (click)="onCancel()"></button>
+
+</div>
+<p-dialog [style]="{'width':'55%'}" header="{{'کلید کلاینت'|transloco}}" [(visible)]="showDialog"
+          [modal]="true" appendTo="body" [draggable]="false" [resizable]="true">
+    <p-card class="break-word">
+        {{ this.apikey }}
+    </p-card>
+</p-dialog>
+<p-dialog [style]="{'width':'55%'}" header="{{'کلید عمومی'|transloco}}" [(visible)]="showDialog2"
+          [modal]="true" appendTo="body" [draggable]="false" [resizable]="true">
+    <p-card class="break-word">
+        {{ this.publicKey }}
+    </p-card>
+</p-dialog>
+<p-dialog [style]="{'width':'55%'}" header="{{'کلید دیجیتال'|transloco}}" [(visible)]="showDialog3"
+          [modal]="true" appendTo="body" [draggable]="false" [resizable]="true">
+    <p-card class="break-word">
+        {{ this.digitalPublickey }}
+    </p-card>
+</p-dialog>

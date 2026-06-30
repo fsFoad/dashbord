@@ -1,0 +1,45 @@
+:host {
+    width: 100%;
+}
+.row{
+    width: 8%;
+}
+.title{
+    width: 17%;
+}
+.schemaName{
+
+    width: 17%;
+}
+.appDate{
+    width: 11%;
+}
+.rdate{
+    width: 11%;
+}
+.isApproval{
+    width: 13%;
+}
+.status{
+    width: 10%;
+}
+:host ::ng-deep .p-table td.schema-cell {
+    direction: ltr !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+:host ::ng-deep .schema-text {
+    direction: ltr;
+    text-align: left;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+:host ::ng-deep .schema-tooltip {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: bidi-override !important;
+}

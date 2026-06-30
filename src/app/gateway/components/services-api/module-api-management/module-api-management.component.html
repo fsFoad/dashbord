@@ -1,0 +1,147 @@
+<p-toast></p-toast>
+
+<app-breadcrumbs id="section" *ngIf="!endpointFlag && !apiModuleFlag && !addFlag && !updateFlag&& !cacheFlag"
+                 (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="content-page" *ngIf="!endpointFlag && !apiModuleFlag && !addFlag && !updateFlag&& !cacheFlag">
+    <div class="grid grid-cols-12     ">
+        <div class="col-span-12 md:col-span-4 space-y-1">
+            <label class="font-semibold text-gray-800">{{ 'module.header.PartyTitle' | transloco }}:</label>
+            <label class="text-gray-700 block truncate" [pTooltip]="title" [tooltipDisabled]="title?.length < 20">
+                {{ title | threeDotDetailsPipe }}
+            </label>
+        </div>
+        <div class="col-span-12 pt-4">
+            <button pButton label="{{ 'module.btn.add' | transloco }}" icon="pi pi-plus"
+                    class="normal-button" (click)="showAdd()"></button>
+        </div>
+
+        <div class="col-span-12 pt-4">
+            <p-table
+                styleClass="normal-table"
+                [value]="moduleList" *ngIf="!addFlag && !updateFlag"
+                [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true" [first]="firstIndex"
+                [currentPageReportTemplate]="this.paginationLabel" [totalRecords]="totalRecords" [lazy]="true"
+                [rowsPerPageOptions]="[5,10,20,50,100]"
+                paginatorDropdownAppendTo="body"
+                selectionMode="single"
+                (onPage)="OnchangePageno($event)"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="row" class="text-right row">
+                            {{ 'module.table.header.row'|transloco }}
+                            <p-sortIcon field="row"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="moduleTitle" class="text-right moduleTitle">
+                            <p-sortIcon field="moduleTitle"></p-sortIcon>
+                            {{ 'module.table.header.moduleTitle'|transloco }}
+                        </th>
+                        <th pSortableColumn="moduleType" class="text-right moduleType">
+                            {{ 'module.table.header.moduleType'|transloco }}
+                            <p-sortIcon field="moduleType"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status" class="text-right status">
+                            {{ 'module.table.header.moduleStatus'|transloco }}
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th class="text-right border-r  ">
+                            {{ 'module.table.header.operation' | transloco }}
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template let-i="rowIndex" pTemplate="body" let-module>
+                    <tr [pSelectableRow]="module">
+                        <td class="text-right">{{ module.row }}</td>
+                        <td class="text-right truncate" [pTooltip]="module.moduleTitle"
+                            [tooltipDisabled]="module.moduleTitle?.length < 20">
+                            {{ module.moduleTitle | moreChar19 }}
+                        </td>
+                        <td class="text-right">{{ module.moduleType | moduleType }}</td>
+                        <td class="text-center">
+                            <div
+                                [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': module.status,
+                                   ' text-red-800 bg-red-300 ': !module.status
+                                   }"
+                                class="w-[65px] float-right text-center rounded-md"
+                            >
+                                {{ module.status | statusPipe }}
+                            </div>
+                        </td>
+                        <td class="text-right border-r  ">
+                            <button type="button" class="p-button-rounded " pButton pRipple
+                                    icon="pi pi-chevron-down" (click)="menu.toggle($event)" (click)="setRecord(module)"
+                                    name="operationButton">
+                            </button>
+                            &nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items" name="operationMenu"></p-menu>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+ <!--   <div class="grid grid-cols-12 items-center gap-4 justify-center">
+        <div class="col-span-4"></div>
+
+        <div class="flex items-center justify-center gap-2 col-span-4">
+            <button
+                pButton
+                pRipple
+                [disabled]="pageno === 0"
+                (click)="previousPageStatement()"
+                class="normal-button"
+                pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+            >
+                <i class="pi pi-arrow-right"></i>
+            </button>
+            <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+            <button
+                pButton
+                pRipple
+                name="btn-previous-page"
+                class="p-button p-ripple"
+                [disabled]="moduleList.length < pagesize"
+                (click)="nextPageStatement()"
+                class="normal-button"
+                pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+            >
+                <i class="pi pi-arrow-left"></i>
+            </button>
+            <p-dropdown
+                class="normal-dropdown-pagination"
+                [options]="pagesizeOptions"
+                optionValue="code"
+                [autoDisplayFirst]="true"
+                optionLabel="name"
+                [(ngModel)]="pagesize"
+                (onChange)="OnchangePageno($event)"
+                [disabled]="nextBtnFlag">
+            </p-dropdown>
+        </div>
+
+        <div class="col-span-4"></div>
+    </div>-->
+
+</div>
+<div class="w-full" *ngIf="addFlag">
+    <app-module-api-add [inputParty]="partyDto" (close)="onClose($event)"></app-module-api-add>
+</div>
+<div class="w-full" *ngIf="updateFlag">
+    <app-module-api-update [inputPartyBaseModuleUpdate]="updateModuleDto"
+                           (close)="onClose($event)"></app-module-api-update>
+</div>
+
+<div class="w-full" *ngIf="endpointFlag">
+    <app-endpoint-management [inputEndpoint]="updateModuleDto" (close)="onClose($event)"></app-endpoint-management>
+</div>
+
+<div class="w-full" *ngIf="apiModuleFlag">
+    <app-basemodule-api-module [inputModulePartyBase]="moduleDto" (close)="onClose($event)"></app-basemodule-api-module>
+</div>
+
+<div class="w-full" *ngIf="cacheFlag">
+    <app-cache [inputCachePartyBase]="moduleDto" (close)="onClose($event)"></app-cache>
+</div>

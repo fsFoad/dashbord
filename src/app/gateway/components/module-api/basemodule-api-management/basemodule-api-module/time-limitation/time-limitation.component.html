@@ -1,0 +1,128 @@
+
+<p-toast  *ngIf="!timeLimitationFlag && !addUpdateFlag" />
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"  *ngIf="!timeLimitationFlag && !addUpdateFlag"></app-breadcrumbs>
+
+<div class="flex flex-col mx-5 my-10"  *ngIf="!timeLimitationFlag && !addUpdateFlag">
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span dir="rtl">نام سرویس</span> :
+            </label>
+            <div
+                class="text-right"
+                [pTooltip]="title"
+                [tooltipDisabled]="title ? title.length < 20 : false"
+            >
+                <label class="text-gray-700 block truncate">{{ title | threeDotDetailsPipe }}</label>
+            </div>
+        </div>
+
+        <div class="col-span-4">
+            <label class="normal-label">
+                <span dir="rtl">URL</span> :
+            </label><br>
+            <div
+
+                [pTooltip]="url"
+                [tooltipDisabled]="url ? url.length < 20 : false"
+            >
+                <label class="text-gray-700 block truncate">{{ url | threeDotDetailsPipe }}</label>
+            </div>
+        </div>
+
+        <div class="col-span-4"></div>
+    </div>
+
+    <div class="col-span-12 mt-4" *ngIf="!addUpdateFlag">
+        <button
+            pButton
+            label="{{'افزودن' | transloco}}"
+            icon="pi pi-plus" class="normal-button"
+            (click)="showAddUpdate(false)"
+        ></button>
+    </div>
+    <div class="col-span-12 mt-4">
+          <p-table
+styleClass="normal-table"
+
+            [value]="timeLimitationList"
+            *ngIf="!addUpdateFlag"
+            selectionMode="single"
+            [paginator]="true"
+            [rows]="rows"
+            [showCurrentPageReport]="true"
+            [(first)]="first"
+            [currentPageReportTemplate]="paginationLabel"
+            [rowsPerPageOptions]="[5, 10, 25, 50, 100]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="row" class="text-right">
+                        {{ 'timeLimitation.table.header.row'|transloco }}
+                        <p-sortIcon field="row"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fromDateTime" class="text-right">
+                        تاریخ شروع
+                        <p-sortIcon field="fromDateTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="toDateTime" class="text-right">
+                        تاریخ پایان
+                        <p-sortIcon field="toDateTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="limitType" class="text-right">
+                        نوع محدودیت
+                        <p-sortIcon field="limitType"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="status" class="text-center">
+                        وضعیت
+                        <p-sortIcon field="status"></p-sortIcon>
+                    </th>
+                    <th class="text-right border-r border-gray-200">
+                        {{ 'timeLimitation.table.header.operation' |transloco}}
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template let-i="rowIndex" pTemplate="body" let-timeLimitation>
+                <tr [pSelectableRow]="timeLimitation">
+                    <td class="text-right">{{ timeLimitation.row }}</td>
+                    <td class="text-right" dir="ltr">{{ timeLimitation.fromDateTime }}</td>
+                    <td class="text-right" dir="ltr">{{ timeLimitation.toDateTime }}</td>
+                    <td class="text-right">{{ timeLimitation.limitType | limitType }}</td>
+                    <td class="text-center">
+                        <div
+                            [ngStyle]="{
+                'border-radius': '2.5px',
+                'color': timeLimitation.status == true ? '#258F30' : '#962515',
+                'background-color': timeLimitation.status == false ? '#F18B7D' : '#85DC8F',
+                'width': '45px',
+                'margin': '0 auto'
+              }"
+                        >
+                            {{ timeLimitation.status | statusPipe }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r border-gray-200">
+                        <button
+                            class="p-button-rounded  "
+                            pButton
+                            icon="pi pi-pencil"
+                            pTooltip="ویرایش"
+                            (click)="showAddUpdate(true, timeLimitation)"
+                        ></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+
+
+
+</div>
+<div class="col-span-12" *ngIf="addUpdateFlag">
+    <app-time-limitation-register
+        [inputUpdate]="objectTimeLimitation"
+        (close)="onClose($event)"
+    ></app-time-limitation-register>
+</div>

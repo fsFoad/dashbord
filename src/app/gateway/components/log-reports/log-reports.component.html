@@ -1,0 +1,317 @@
+
+<p-toast />
+<app-breadcrumbs id="section" class="p-0 m-0" (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="content-page">
+<div class="grid grid-cols-12  ">
+    <div class="col-span-3 flex text-left   h-12 gap-2 mt-5-5  sm:hidden ">
+        <button
+            pButton
+            label="{{'button.clear' | transloco}}"
+            icon="pi pi-filter-slash"
+            (click)="clear()"
+            [outlined]="true"
+            class="my-1 px-4 py-2 border normal-button"
+        ></button>
+        <button
+            pButton
+            label="{{'button.search' | transloco}}"
+            icon="pi pi-search"
+            (click)="search()"
+            class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+        ></button>
+    </div>
+    <div class="col-span-3">
+        <label class="normal-label">
+            <span class="red-color-text">* </span>
+            <span>{{ 'logReports.input.onlyFromDate'|transloco }} :</span></label>
+        <p-persian-calendar class="app-persian-calendar-style" [yearRange]="'1399:1410'"
+                            [(ngModel)]="onlyFromdate"
+                            (keydown.enter)="onKeydown($event)"
+                            [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"></p-persian-calendar>
+    </div>
+    <div class="col-span-3">
+        <label class="normal-label">
+            <span class="red-color-text">* </span>
+            <span>{{ 'logReports.input.onlyToDate'|transloco }} :</span></label>
+        <p-persian-calendar class="app-persian-calendar-style" [yearRange]="'1399:1410'"
+                            [(ngModel)]="onlyTodate" [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
+                            (keydown.enter)="onKeydown($event)"></p-persian-calendar>
+    </div>
+
+    <div class="col-span-3">
+        <label class="normal-label"> <span>{{ 'logReports.dropdown.party'|transloco }} :</span></label>
+        <p-dropdown
+            (keydown.enter)="onKeydown($event)"
+            [options]="partyListOptions"
+            [(ngModel)]="partyId"
+            optionValue="partyId"
+            [filter]="true"
+            filterBy="title"
+            optionLabel="title"
+            class="normal-dropdown"
+            (onChange)="OnchangeParty($event)"
+            [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined">
+        </p-dropdown>
+    </div>
+    <div class="hidden sm:flex sm:col-span-3 justify-start items-center gap-2 h-12 mt-5-5 rtl:flex-row-reverse">
+        <button
+            pButton
+            label="{{'button.clear' | transloco}}"
+            icon="pi pi-filter-slash"
+            (click)="clear()"
+            [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
+            [outlined]="true"
+            class="my-1 px-4 py-2 border normal-button"
+        ></button>
+        <button
+            pButton
+            label="{{'button.search' | transloco}}"
+            icon="pi pi-search"
+            (click)="search()"
+            class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+        ></button>
+    </div>
+
+    <div class="col-span-3">
+        <label class="normal-label"> <span>{{ 'logReports.dropdown.module'|transloco }} :</span></label>
+        <p-dropdown
+            [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
+            [options]="moduleListOptions"
+            [(ngModel)]="moduleId"
+            optionValue="moduleId"
+            [filter]="true"
+            filterBy="moduleTitle"
+            optionLabel="moduleTitle"
+            class="normal-dropdown"
+            (onChange)="onchangeModule($event)"
+        >
+        </p-dropdown>
+    </div>
+    <div class="col-span-3">
+
+        <label class="normal-label"> <span>{{ 'logReports.dropdown.api'|transloco }} :</span></label>
+        <p-dropdown
+            [options]="apiListOptionsFirst"
+            [(ngModel)]="apiId"
+            optionValue="apiId"
+            [filter]="true"
+            filterBy="title"
+            optionLabel="title"
+            class="normal-dropdown"
+            [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
+        >
+        </p-dropdown>
+    </div>
+    <div class="col-span-3">
+        <label class="normal-label"> <span>{{ 'logReports.dropdown.clientListOptions'|transloco }}  :</span></label>
+        <p-dropdown
+            optionValue="clientId"
+            optionLabel="name"
+            filterBy="name"
+            [filter]="true"
+            class="normal-dropdown"
+            [options]="clientListOptions"
+            [(ngModel)]="clientId"
+            [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
+            (keydown.enter)="onKeydown($event)"
+        >
+        </p-dropdown>
+    </div>
+    <div class="col-span-3">
+        <div *ngIf="tblFlag" dir="ltr">
+            <button pButton label="{{'button.download'|transloco}}"
+                    icon="pi pi-download" (click)="downloadData()"
+                    class="w-[110px] my-1 px-4 py-2 text-white normal-button"
+            ></button>
+        </div>
+    </div>
+    <div class="col-span-12 mt-5">
+          <p-table
+styleClass="normal-table"
+ [value]="logList" *ngIf="tblFlag" selectionMode="single" (onRowSelect)="expandTheRowEvent($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="row" class="row text-right">
+                        {{ 'logReports.table.header.row'|transloco }}
+                        <p-sortIcon field="row"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="REQUESTDATE" class="REQUESTDATE text-right">
+
+                        {{ 'logReports.table.header.RequestDate'|transloco }}
+                        <p-sortIcon field="REQUESTDATE"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="PARTY_TITLE" class="API_NAME text-right">
+                        {{ 'logReports.table.header.party'|transloco }}
+                        <p-sortIcon field="PARTY_TITLE"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="MODULETITLE" class="API_NAME text-right">
+                        {{ 'logReports.table.header.module'|transloco }}
+                        <p-sortIcon field="MODULETITLE"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="API_NAME" class="API_NAME text-right">
+                        {{ 'logReports.table.header.apiName'|transloco }}
+                        <p-sortIcon field="API_NAME"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="API_TITLE" class="API_TITLE text-right">
+                        {{ 'logReports.table.header.apiTitle'|transloco }}
+                        <p-sortIcon field="API_TITLE"></p-sortIcon>
+                    </th>
+
+                    <th pSortableColumn="STATUS" class="STATUS text-right">
+                        {{ 'logReports.table.header.status'|transloco }}
+                        <p-sortIcon field="STATUS"></p-sortIcon>
+                    </th>
+                    <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">
+                        {{ 'logReports.table.header.operation'|transloco }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-log>
+                <tr [pSelectableRow]="log">
+                    <td class="row text-right">{{ log.row }}</td>
+                    <td class="REQUESTDATE text-right" dir="ltr">{{ log.REQUESTDATE|castToDateTime }}</td>
+                    <td class="PARTY_TITLE text-right"
+                        [pTooltip]="log.PARTY_TITLE"
+                        [tooltipDisabled]="log.PARTY_TITLE?log.PARTY_TITLE.length < 20:false"
+                    >
+                        {{ log.PARTY_TITLE|moreChar19 }}
+                    </td>
+                    <td class="MODULETITLE text-right"
+                        [pTooltip]="log.MODULETITLE"
+                        [tooltipDisabled]="log.MODULETITLE?log.MODULETITLE.length < 20:false"
+                    >
+                        {{ log.MODULETITLE|moreChar19 }}
+                    </td>
+                    <td class="API_NAME text-right"
+                        [pTooltip]="log.API_NAME"
+                        [tooltipDisabled]="log.API_NAME?log.API_NAME.length < 20:false"
+                    >
+                        {{ log.API_NAME|moreChar19 }}
+                    </td>
+                    <td class="API_TITLE text-right"
+                        [pTooltip]="log.API_TITLE"
+                        [tooltipDisabled]="log.API_TITLE?log.API_TITLE.length < 20:false"
+                    >
+                        {{ log.API_TITLE|moreChar19 }}
+                    </td>
+
+                    <!--  <td class="STATUS text-right" [ngStyle]="{'text-align': 'center !important'}">
+                          <div [ngStyle]="{ 'border-radius':' 2.5px','color':log.STATUS == true ?
+                           '#258F30' :'#962515',
+                           'background-color': log.STATUS == false ?'#F18B7D' : '#85DC8F',
+                           'width':'45px','margin':' 0 auto'}" class="text-right">
+                              {{ log.STATUS|successful }}
+                          </div>
+                      </td>-->
+                    <td class="STATUS text-right">
+                        <div
+                            [ngStyle]="{
+      'border-radius': '2.5px',
+      'color': log.STATUS == true ? '#258F30' : '#962515',
+      'background-color': log.STATUS == false ? '#F18B7D' : '#85DC8F',
+      'width': '45%',
+      'text-align': 'right',
+      'padding': '0 10px'
+    }"
+                        >
+                            {{ log.STATUS | successful }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r  " >
+                        <button
+                            *ngIf="!log.expanded"
+                            pButton
+                            pTooltip="{{'logReports.tooltip.more'|transloco}}"
+                            icon="pi pi-ellipsis-h" severity="warn"
+                            class="rounded-3xl "
+                            (click)="expandTheRow(log)">
+                        </button>
+                        <button
+                            *ngIf="log.expanded"
+                            pButton
+                            pTooltip="{{'logReports.tooltip.close'|transloco}}"
+                            icon="pi pi-ellipsis-h" severity="warn"
+                            class="rounded-3xl "
+                            (click)="expandTheRow(log)">
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="log.expanded">
+                    <td></td>
+                    <td>
+                        <label class="normal-label"> <span>{{ 'apiLogs.table.header.ClientName'|transloco }} :</span></label>
+                        <label
+                            [pTooltip]="log.CLIENT_NAME"
+                            [tooltipDisabled]="log.CLIENT_NAME?log.CLIENT_NAME.length < 20:false"
+                        >
+                            {{ log.CLIENT_NAME|moreChar19 }}
+                        </label>
+                    </td>
+                    <td>
+                        <label class="normal-label"> <span>{{ 'logReports.table.detail.DestinationHost'|transloco }} :</span></label>
+                        <label dir="ltr"
+                               [pTooltip]="log.DESTINATIONHOST"
+                               [tooltipDisabled]="log.DESTINATIONHOST?log.DESTINATIONHOST.length < 20:false"
+                        >
+                            {{ log.DESTINATIONHOST|moreChar19 }}
+                        </label>
+                    </td>
+                    <td>
+                        <button  class="rounded-3xl " pButton icon="pi pi-eye"
+                                pTooltip="{{'logReports.dialog.header'|transloco}}"
+                                (click)="show(log)"></button>&nbsp;
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+</div>
+
+
+<div class="flex items-center justify-center gap-2 col-span-4 mt-6 mx-5" *ngIf="tblFlag">
+    <button
+        pButton
+        pRipple
+        icon="pi pi-arrow-right" class="normal-button"
+        pTooltip="{{'tooltip.nextPage'|transloco}}"
+        [disabled]="logList.length < pagesize"
+        (click)="nextPageStatement()">
+    </button>
+
+    <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+
+    <button
+        pButton
+        pRipple class="normal-button"
+        icon="pi pi-arrow-left"
+        pTooltip="{{'tooltip.beforePage'|transloco}}"
+        (click)="previousPageStatement()"
+        [disabled]="pageno === 0">
+    </button>
+    <div>
+        <p-dropdown class="normal-dropdown-pagination"
+            [options]="pagesizeOptions"
+            appendTo="body"
+            optionValue="code"
+            optionLabel="name"
+            [(ngModel)]="pagesize"
+            (onChange)="OnchangePageno($event)"
+            [disabled]="nextBtnFlag"
+        >
+        </p-dropdown>
+    </div>
+</div>
+</div>
+<!-- <div class="col-span-12" dir="ltr" *ngIf="this.inputChartCallApiReport != undefined">
+     <button (click)="BeforeButton()"
+             style="width: 30px!important;" pButton
+             class="btn-warning p-button-warning" icon="pi pi-arrow-right"
+             matTooltip="{{'button.back' | transloco}}"></button>
+ </div>-->
+<p-toast position="top-center"></p-toast>
+

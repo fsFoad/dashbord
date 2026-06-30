@@ -1,0 +1,107 @@
+<p-toast />
+<app-breadcrumbs id="section" *ngIf="!serviceLog" [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page" *ngIf="!serviceLog">
+      <p-table
+styleClass="normal-table"
+ [value]="billCartableList" name="billCartableTable" selectionMode="single">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="row" name="rowHeader" class="row">
+                    {{ 'apiStoreBillCartable.table.th.row' | transloco }}
+                    <p-sortIcon field="row"></p-sortIcon>
+                </th>
+                <th pSortableColumn="partyTitle" name="partyTitleHeader" class="partyTitle">
+                    {{ 'apiStoreBillCartable.table.th.clientName' | transloco }}
+                    <p-sortIcon field="partyTitle"></p-sortIcon>
+                </th>
+                <th pSortableColumn="apiCategoryTitle" name="apiCategoryTitleHeader" class="apiCategoryTitle">
+                    {{ 'apiStoreBillCartable.table.th.apiCategoryTitle' | transloco }}
+                    <p-sortIcon field="apiCategoryTitle"></p-sortIcon>
+                </th>
+                <th pSortableColumn="rdate" name="rdateHeader" class="rdate">
+                    {{ 'apiStoreBillCartable.table.th.rDate' | transloco }}
+                    <p-sortIcon field="rdate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="status" name="statusHeader" class="status">
+                    {{ 'apiStoreBillCartable.table.th.status' | transloco }}
+                    <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th style="text-align: right !important; border-right: 1px solid #ebe8e8;" translate
+                    name="operationHeader">
+                    {{ 'apiStoreBillCartable.table.th.operation' | transloco }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template let-i="rowIndex" pTemplate="body" let-billCartable>
+            <tr [pSelectableRow]="billCartable" name="moduleRow">
+                <td class="row">{{ billCartable.row }}</td>
+                <td class="partyTitle" [pTooltip]="billCartable.partyTitle"
+                    [tooltipDisabled]="billCartable.partyTitle ? billCartable.partyTitle.length < 20 : false">
+                    {{ billCartable.partyTitle | moreChar19 }}
+                </td>
+                <td class="apiCategoryTitle" [pTooltip]="billCartable.apiCategoryTitle"
+                    [tooltipDisabled]="billCartable.apiCategoryTitle ? billCartable.apiCategoryTitle.length < 20 : false">
+                    {{ billCartable.apiCategoryTitle | moreChar19 }}
+                </td>
+                <td class="rdate">{{ billCartable.rdate |timePipe }}</td>
+                <td class="status" [ngStyle]="{'text-align': 'center !important'}">
+                    <div  [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': billCartable.status,
+                                   ' text-red-800 bg-red-300 ': !billCartable.status
+                                   }"
+                          class="w-[65px] float-right text-center rounded-md">
+                        {{ billCartable.status | statusPipe }}
+                    </div>
+                </td>
+                <td style="text-align: right !important; border-right: 1px solid #ebe8e8;">
+                    <button (click)="setRecord(billCartable)" type="button" class="p-button-rounded p-button-lightGreen"
+                            pButton pRipple
+                            icon="pi pi-chevron-down" (click)="menu.toggle($event)" name="operationButton"></button>&nbsp;
+                    <p-menu appendTo="body" #menu [popup]="true" [model]="items" name="operationMenu"></p-menu>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <br>
+</div>
+
+<div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center">
+    <div class="col-span-4"></div>
+
+    <div class="flex items-center justify-center gap-2 col-span-4">
+        <button
+            pButton
+            pRipple
+            pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+            [disabled]="pageno == 0"
+            (click)="previousPageStatement()"
+            class="normal-button"
+        ><i class="pi pi-arrow-right normal-button"></i></button>
+        <span>{{ pageDescription }}</span>
+        <button
+            pButton
+            pRipple
+            pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+            [disabled]="billCartableList.length < pagesize"
+            (click)="nextPageStatement()"
+            class="normal-button"
+
+        ><i class="pi pi-arrow-left "></i>
+        </button>
+        <p-dropdown
+            [options]="pagesizeOptions"
+            optionValue="code"
+            optionLabel="name"
+            [(ngModel)]="pagesize"
+            (onChange)="OnchangePageno($event)"
+            [disabled]="nextBtnFlag"
+            class="normal-dropdown-pagination"
+        ></p-dropdown>
+    </div>
+
+    <div class="col-span-4"></div>
+</div>
+<!--<div class="col-12" *ngIf="serviceLog">
+    <app-log-reports [inputChartCallApiReport]="dataLog" (close)="onClose($event)"></app-log-reports>
+</div>-->
+

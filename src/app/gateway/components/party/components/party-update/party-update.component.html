@@ -1,0 +1,27 @@
+<p-toast />
+<app-breadcrumbs id="section" class="p-0 m-0" [showBackButton]="false"></app-breadcrumbs>
+<div class="content-page">
+    <div class="grid grid-cols-12   ">
+            <div class="col-span-4">
+                <label class="normal-label"> <span >{{'editParty.header.PartyTitle'|transloco}} :</span></label>
+                <input name="input-organization-title" class="normal-input" [(ngModel)]="title" (keydown.enter)="onKeydown($event)" pInputText>
+            </div>
+            <div class="col-span-4 pt-3.5">
+                <label class="normal-label"> <span >{{ 'editParty.header.status'|transloco }} :</span></label>
+                <p-toggle-switch [(ngModel)]="status" (keydown.enter)="onKeydown($event)"></p-toggle-switch>
+            </div>
+
+        </div>
+
+
+</div>
+<div class="w-full mt-4 text-left p-4" >
+    <button pButton label="{{'button.save' | transloco}}" icon="pi pi-save" severity="success"
+            class="normal-button"
+            (click)="onUpdate()"></button>&nbsp;
+    <button pButton pRipple [outlined]="true"  label="{{'button.cancel' | transloco}}"
+            class="normal-button"
+            icon="pi pi-times" severity="danger"
+            (click)="onClose()"></button>&nbsp;
+
+</div>

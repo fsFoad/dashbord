@@ -1,0 +1,69 @@
+:host {
+    width: 100%;
+}
+.row{
+     width: 6%;
+ }
+
+.status{
+     width: 6%;
+ }
+.isApproval{
+     width: 6%;
+ }
+.appDate{
+     width: 4%;
+ }
+
+.apiName{
+     width: 5%;
+ }
+
+.title{
+     width: 6%;
+ }
+
+.apiTitle{
+     width: 10%;
+ }
+.moduleType{
+     width: 10%;
+ }
+.rdate{
+     width: 8%;
+ }
+.appDate{
+     width: 8%;
+ }
+.schemaName{
+     width: 10%;
+ }
+::ng-deep {
+    .p-tooltip {
+        width: 150px;
+        min-width: 150px;
+        font-size: 14px;
+        max-width: 250px;
+        direction:ltr
+    }
+}
+:host ::ng-deep .p-table td.schema-cell {
+    direction: ltr !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+:host ::ng-deep .schema-text {
+    direction: ltr;
+    text-align: left;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+:host ::ng-deep .schema-tooltip {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: bidi-override !important;
+}

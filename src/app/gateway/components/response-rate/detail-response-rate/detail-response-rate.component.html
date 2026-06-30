@@ -1,0 +1,138 @@
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"></app-breadcrumbs>
+<p-toast />
+
+    <div class="content-page">
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-3">
+                <label>*<span>مرتب سازی براساس</span>:</label><br>
+                <p-dropdown
+                    appendTo="body"
+                    optionValue="code"
+                    [options]="sorttypeOption"
+                    [(ngModel)]="sorttype"
+                    filterBy="name"
+                    optionLabel="name"
+                    (onChange)="changeSorttype()"
+                ></p-dropdown>
+
+            </div>
+            <div class="col-span-9"></div>
+            <div class="col-span-12">
+                  <p-table
+styleClass="normal-table"
+ [value]="detailList" selectionMode="single"
+                         [paginator]="false" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first"
+                         paginatorDropdownAppendTo="body"
+                         currentPageReportTemplate="نمایش {first} تا {last} از مجموع {totalRecords} رکورد"
+                         [rowsPerPageOptions]="[5,10,25,50,100]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="row" class="row">
+                                ردیف
+                                <p-sortIcon field="row"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="title" class="title">
+                                عنوان سرویس
+                                <p-sortIcon field="title"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="shenase" class="name">
+                                میزان تاخیر
+                                <p-sortIcon field="shenase"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="fromDate" class="fromDate" >
+                                شروع تاریخ
+                                <p-sortIcon field="fromDate"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="toDate" class="toDate" >
+                                پایان تاریخ
+                                <p-sortIcon field="toDate"></p-sortIcon>
+                            </th>
+
+
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-detail>
+                        <tr [pSelectableRow]="detail">
+                            <td class="row">{{ detail.row }}</td>
+                            <td class="title"
+                                [pTooltip]="detail.title"
+                                [tooltipDisabled]="detail.title?detail.title.length < 33:false">
+                                {{ detail.title|morChar32 }}
+                            </td>
+                            <td class="diffSecond">
+                                {{ detail.diffSecond }}
+                            </td>
+                            <td class="fromDateTime text-right" dir="ltr">
+                                {{ detail.fromDateTime|timePipe }}
+                            </td>
+                            <td class="toDateTime  text-right" dir="ltr">
+                                {{ detail.toDateTime|timePipe }}
+                            </td>
+
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <!--<br>
+        <div class="grid text-left">
+            <div class="col-4-5"></div>
+            <div class="col-1-8" style="margin-top: 5px">
+                <button name="nextPageButton" pButton pRipple icon="pi pi-arrow-right"
+                        pTooltip="{{ 'صفحه بعد' | transloco }}"
+                        [disabled]="this.detailList.length < pagesize"
+                        (click)="nextPageStatement()"></button>
+                <span>&nbsp;{{ pageDescription }}&nbsp;</span>
+                <button name="btn-previous-page" pButton pRipple icon="pi pi-arrow-left"
+                        pTooltip="{{ 'صفحه قبل' | transloco }}"
+                        (click)="previousPageStatement()"
+                        [disabled]="(this.pageno) == 0"></button>
+            </div>
+            <div class="col-1-2">
+                <p-dropdown name="dropdown-pageSize" [options]="pagesizeOptions" appendTo="body"
+                            optionValue="code" optionLabel="name" [(ngModel)]="pagesize"
+                            (onChange)="OnchangePageno($event)" [disabled]="nextBtnFlag">
+                </p-dropdown>
+            </div>
+            <div class="col-4-5"></div>
+        </div>-->
+
+    </div>
+    <div class="grid grid-cols-12 mt-4 items-center gap-4 justify-center" >
+        <div class="col-span-4"></div>
+
+        <div class="flex items-center justify-center gap-2 col-span-4">
+            <button
+                pButton
+                pRipple
+                pTooltip="{{ 'tooltip.beforePage' | transloco }}"
+                [disabled]="pageno == 0"
+                (click)="previousPageStatement()"
+                class="normal-button"
+            ><i class="pi pi-arrow-right normal-button"></i></button>
+            <span>{{ pageDescription }}</span>
+            <button
+                pButton
+                pRipple
+                pTooltip="{{ 'tooltip.nextPage' | transloco }}"
+                [disabled]="this.detailList.length < pagesize"
+                (click)="nextPageStatement()"
+                class="normal-button"
+
+            ><i class="pi pi-arrow-left "></i>
+            </button>
+            <p-dropdown
+                [options]="pagesizeOptions"
+                optionValue="code"
+                optionLabel="name"
+                [(ngModel)]="pagesize"
+                (onChange)="OnchangePageno($event)"
+                [disabled]="nextBtnFlag"
+                class="normal-dropdown-pagination"
+            ></p-dropdown>
+        </div>
+
+        <div class="col-span-4"></div>
+    </div>
+

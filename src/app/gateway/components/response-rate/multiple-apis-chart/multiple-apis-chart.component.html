@@ -1,0 +1,92 @@
+<!--
+<app-breadcrumbs id="section" (backClicked)="BeforeButton()"   *ngIf="!detailsFlag"></app-breadcrumbs>
+
+<p-toast />
+    <p-panel [header]="headerTitle">
+        <div class="content-page">
+        <div class="grid grid-cols-12"  *ngIf="!detailsFlag">
+            <div  class="d-flex justify-content-center"
+                 style="
+                  /*margin-top: 40px;*/
+                  width: 100%;
+                  margin-top: 9.5%;
+                  justify-content: center;
+                  text-align: center; ">
+            <p class="chart-description"
+               style="font-size: 14px; font-weight: bold; color: red; text-align: center;">
+                {{ comment }}
+            </p>
+            <div  class="d-flex justify-content-center"
+                 style="
+             margin-top: 40px;
+             width: 100%;
+             display: flex;
+             justify-content: center;">
+                <p-chart type="bar" [width]="widthCondition?'1500px':'1100px'"  height="650px" [data]="data" [options]="options" [responsive]="true"
+                         class="chartjs-tooltip border-1 p-3"  #chart style="border-radius:15px; border-color: #1b1f2326;margin:0 0 4% 0 "
+                         (onDataSelect)="handleChartClick($event)"></p-chart>
+            </div>
+            </div>
+          &lt;!&ndash;  <div *ngIf="chartBarFlag&&widthCondition" class="d-flex justify-content-center"
+                 style="
+             margin-top: 40px;
+             width: 100%;
+             display: flex;
+             justify-content: center;">
+                <p-chart type="bar" [width]="widthCondition?" height="550px" [data]="data" [options]="options" [responsive]="true"
+                         class="chartjs-tooltip"  #chart
+                         (onDataSelect)="handleChartClick($event)"></p-chart>
+            </div>&ndash;&gt;
+        </div>
+        <div class="col-12" dir="ltr">
+            <button (click)="BeforeButton()"
+                    style="width: 30px!important;" pButton
+                    class="btnConfirm p-button-warning" icon="pi pi-arrow-right"
+                    matTooltip="{{'بازگشت' | transloco}}"></button>
+        </div>
+        </div>
+    </p-panel>
+    <div class="col-12" *ngIf="detailsFlag">
+        <app-detail-response-rate [inputDetails]="detailsDto" (close)="onClose($event)"></app-detail-response-rate>
+    </div>
+
+-->
+<app-breadcrumbs
+    id="section"
+    (backClicked)="BeforeButton()"
+    *ngIf="!detailsFlag"
+></app-breadcrumbs>
+
+<p-toast></p-toast>
+
+
+    <div class="content-page" *ngIf="!detailsFlag">
+        <div *ngIf="!detailsFlag" class="flex flex-col items-center justify-center min-h-screen w-full text-center">
+
+            <p class="text-[14px] font-bold text-red-600 mb-10">
+                {{ comment }}
+            </p>
+
+            <p-chart
+                type="bar"
+                [width]="widthCondition ? '1500px' : '1100px'"
+                height="650px"
+                [data]="data"
+                [options]="options"
+                [responsive]="true"
+                class="chartjs-tooltip border border-[#1b1f2326] p-3 rounded-[15px] mb-[4%]"
+                #chart
+                (onDataSelect)="handleChartClick($event)"
+            ></p-chart>
+        </div>
+
+
+    </div>
+
+
+<div class="col-span-12" *ngIf="detailsFlag">
+    <app-detail-response-rate
+        [inputDetails]="detailsDto"
+        (close)="onClose($event)"
+    ></app-detail-response-rate>
+</div>

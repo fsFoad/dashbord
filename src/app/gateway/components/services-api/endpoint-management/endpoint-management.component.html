@@ -1,0 +1,307 @@
+<p-toast></p-toast>
+<app-breadcrumbs id="section" *ngIf="!registerFlag && !updateFlag &&!ipLimitFlag && !headerFlag && !clientFlag"
+                 (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div class="content-page"
+     *ngIf="!registerFlag && !updateFlag && !ipLimitFlag && !headerFlag && !clientFlag">
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">عنوان ماژول :</label>
+            <div class="text-right">
+                <label
+                    class="text-gray-700 text-sm"
+                    [pTooltip]="moduleTitle"
+                    [tooltipDisabled]="moduleTitle ? moduleTitle.length < 20 : false"
+                >
+                    {{ moduleTitle | threeDotDetailsPipe }}
+                </label>
+            </div>
+        </div>
+
+        <div class="col-span-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">نوع ماژول :</label>
+            <div class="text-right">
+                <label class="text-gray-700 text-sm">{{ moduleType | moduleType }}</label>
+            </div>
+        </div>
+
+        <div class="col-span-12">
+            <button
+                pButton
+                [disabled]="addButtonFlag"
+                icon="pi pi-plus"
+                class="mt-2 normal-button"
+                (click)="showAdd()"
+                label="{{ 'افزودن' | transloco }}"
+                name="add-endpoint-button"
+            ></button>
+        </div>
+    </div>
+    <div class="col-span-12 mt-5">
+        <p-table
+            styleClass="normal-table"
+            [value]="newEndpointList" *ngIf="!registerFlag&&!updateFlag"
+            (onRowSelect)="expandTheRowEvent($event)"
+            [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true" [first]="firstIndex"
+            [currentPageReportTemplate]="this.paginationLabel" [totalRecords]="totalRecords" [lazy]="true"
+            [rowsPerPageOptions]="[5,10,20,50,100]"
+            paginatorDropdownAppendTo="body"
+            selectionMode="single"
+            (onPage)="OnchangePageno($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="row">{{ 'endpoint.table.header.row'|transloco }}</th>
+                    <th class="sourceUrl">{{ 'endpoint.table.header.sourceUrl'|transloco }}</th>
+                    <th class="destinationHost">{{ 'endpoint.table.header.destinationHost'|transloco }}</th>
+                    <th class="destinationPortNumber">{{ 'endpoint.table.header.destinationPortNumber'|transloco }}</th>
+                    <th class="destinationUri">{{ 'endpoint.table.header.destinationUri'|transloco }}</th>
+                    <th class="clientName" *ngIf="!clientBase">{{ 'endpoint.table.header.clientName'|transloco }}</th>
+                    <th class="status">{{ 'endpoint.table.header.status'|transloco }}</th>
+                    <th style="text-align: right !important;border-right: 1px solid #ebe8e8;">{{ 'endpoint.table.header.operation'|transloco }}</th>
+                </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-endpoint>
+                <tr [pSelectableRow]="endpoint">
+                    <td class="row">{{ i + 1 }}</td>
+                    <td class="sourceUrl"
+                        [pTooltip]="endpoint.sourceUrl"
+                        [tooltipDisabled]="endpoint.sourceUrl?endpoint.sourceUrl.length < 20:false"
+                    >
+                        {{ endpoint.sourceUrl|moreChar19 }}
+                    </td>
+                    <td class="destinationHost"
+                        [pTooltip]="endpoint.destinationHost"
+                        [tooltipDisabled]="endpoint.destinationHost?endpoint.destinationHost.length < 20:false"
+                    >
+                        {{ endpoint.destinationHost|moreChar19 }}
+                    </td>
+                    <td class="destinationPortNumber"
+                        [pTooltip]="endpoint.destinationPortNumber"
+                        [tooltipDisabled]="endpoint.destinationPortNumber?endpoint.destinationPortNumber.length < 20:false"
+                    >
+                        {{ endpoint.destinationPortNumber|moreChar19 }}
+                    </td>
+                    <td class="destinationUri"
+                        [pTooltip]="endpoint.destinationUri"
+                        [tooltipDisabled]="endpoint.destinationUri?endpoint.destinationUri.length < 20:false"
+                    >
+                        {{ endpoint.destinationUri|moreChar19 }}
+                    </td>
+                    <td class="clientName" *ngIf="!clientBase"
+                        [pTooltip]="endpoint.clientName"
+                        [tooltipDisabled]="endpoint.clientName?endpoint.clientName.length < 20:false"
+                    >
+                        {{ endpoint.clientName }}
+                    </td>
+                    <td class="text-right">
+                        <div [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': endpoint.status,
+                                   ' text-red-800 bg-red-300 ': !endpoint.status
+                                   }"
+                             class="w-[65px] float-right text-center rounded-md">
+                            {{ endpoint.status|statusPipe }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r  ">
+                        <button
+                            *ngIf="!endpoint.expanded"
+                            pButton
+                            pTooltip="اطلاعات بیشتر"
+                            icon="pi pi-ellipsis-h"
+                            class="p-button-rounded p-button-warning"
+                            (click)="expandTheRow(endpoint)" name="expand-button">
+                        </button>
+                        <button
+                            *ngIf="endpoint.expanded"
+                            pButton
+                            pTooltip="بستن"
+                            icon="pi pi-ellipsis-h"
+                            class="p-button-rounded p-button-warning"
+                            (click)="expandTheRow(endpoint)" name="close-button">
+                        </button>&nbsp;
+                        <button (click)="setRecord(endpoint)" type="button" class="p-button-rounded"
+                                pButton pRipple icon="pi pi-chevron-down" (click)="menu.toggle($event)"
+                                name="toggle-menu-button"></button>&nbsp;
+                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                    </td>
+
+                </tr>
+                <tr *ngIf="endpoint.expanded">
+                    <td></td>
+                    <td>
+                        <label dir="rtl"><span>ip های مجاز :</span></label><br>
+                    </td>
+                    <td>
+                        <label dir="rtl"></label><br>
+                        <label [pTooltip]="endpoint.ipAddress"
+                               [tooltipDisabled]="endpoint.ipAddress?endpoint.ipAddress.length < 20:false"
+
+                        >
+                            {{ endpoint.ipAddress|moreChar19 }}
+                        </label>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </ng-template>+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">
+                        <div
+                            class="message-empty-chart text-center      flex justify-center items-center"
+                        >
+                            <h5>داده‌ای یافت نشد!</h5>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<div class="w-full" *ngIf="registerFlag">
+    <app-endpoint-register [inputRegister]="moduleIdReg" (close)="onClose()"></app-endpoint-register>
+</div>
+
+<div class="w-full" *ngIf="updateFlag">
+    <app-endpoint-update [inputUpdate]="endpointDto" (close)="onClose()"></app-endpoint-update>
+</div>
+
+<div class="w-full" *ngIf="headerFlag">
+    <app-header-endpoint-management [inputEndpointHeader]="endpointDto"
+                                    (close)="onClose()"></app-header-endpoint-management>
+</div>
+
+<!--<div class="w-full" *ngIf="clientFlag">
+    <app-client-api-management [inputclient]="endpointDto" (close)="onClose()"></app-client-api-management>
+</div>-->
+
+<div class="w-full" *ngIf="ipLimitFlag">
+    <app-ip-limitation [inputIpLimit]="endpointDto" (close)="onClose()"></app-ip-limitation>
+</div>
+
+<!--</div>-->
+<p-dialog [style]="{'width':'60%'}" [(visible)]="dialogAllEndpointModuleFlag"
+          [modal]="true" [draggable]="false" appendTo="body"
+          [resizable]="true" name="dialogAllEndpointModuleFlag">
+    <p-panel header="{{'نمایش سایر اندپوینت های ماژول' | transloco}}" name="panelHeader">
+        <p-card name="pCard">
+            <p-table
+                styleClass="normal-table"
+                [value]="otherEndpointList"
+                selectionMode="single" (onRowSelect)="expandTheRowEvent($event)"
+                [paginator]="true" [rows]="pagesize" [showCurrentPageReport]="true"
+                [totalRecords]="totalRecords" [first]="firstIndex"
+                [currentPageReportTemplate]=paginationLabel
+                [rowsPerPageOptions]="[5,10,25,50,100]" name="endpointTable">
+                <ng-template pTemplate="header" name="headerTemplate">
+                    <tr>
+                        <th class="row" transloco name="headerRow">table.header.row</th>
+                        <th class="sourceUrl" transloco name="sourceUrlHeader">آدرس مبدا</th>
+                        <th class="destinationHost" transloco name="destinationHostHeader">آدرس مقصد</th>
+                        <th class="destinationPortNumber" transloco name="destinationPortHeader">پورت مقصد</th>
+                        <th class="destinationUri" transloco name="destinationUriHeader">مسیرمقصد</th>
+                        <th class="clientName" transloco name="clientNameHeader">نام کلاینت</th>
+                        <th class="status" transloco name="statusHeader">وضعیت</th>
+                        <th style="text-align: right !important;border-right: 1px solid #ebe8e8;" transloco
+                            name="operationHeader">operation
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template let-i="rowIndex" pTemplate="body" let-endpoint name="bodyTemplate" >
+                    <tr [pSelectableRow]="endpoint" name="row">
+                        <td class="row" name="rowIndex">{{ i + 1 }}</td>
+                        <td dir="ltr" class="sourceUrl"
+                            [pTooltip]="endpoint.sourceUrl"
+                            [tooltipDisabled]="endpoint.sourceUrl?endpoint.sourceUrl.length < 20:false"
+                            name="sourceUrl">
+                            {{ endpoint.sourceUrl|moreChar19 }}
+                        </td>
+                        <td dir="ltr" class="destinationHost"
+                            [pTooltip]="endpoint.destinationHost"
+                            [tooltipDisabled]="endpoint.destinationHost?endpoint.destinationHost.length < 20:false"
+                            name="destinationHost">
+                            {{ endpoint.destinationHost|moreChar19 }}
+                        </td>
+                        <td dir="ltr" class="destinationPortNumber"
+                            [pTooltip]="endpoint.destinationPortNumber"
+                            [tooltipDisabled]="endpoint.destinationPortNumber?endpoint.destinationPortNumber.length < 20:false"
+                            name="destinationPortNumber">
+                            {{ endpoint.destinationPortNumber|moreChar19 }}
+                        </td>
+                        <td dir="ltr" class="destinationUri"
+                            [pTooltip]="endpoint.destinationUri"
+                            [tooltipDisabled]="endpoint.destinationUri?endpoint.destinationUri.length < 20:false"
+                            name="destinationUri">
+                            {{ endpoint.destinationUri|moreChar19 }}
+                        </td>
+                        <td class="clientName"
+                            [pTooltip]="endpoint.clientName"
+                            [tooltipDisabled]="endpoint.clientName?endpoint.clientName.length < 20:false"
+                            name="clientName">
+                            {{ endpoint.clientName }}
+                        </td>
+                        <td class="status" [ngStyle]="{'text-align': 'center !important'}" name="status">
+                            <div [ngStyle]="{ 'border-radius':' 2.5px','color':endpoint.status == true ? '#258F30' :'#962515',
+                         'background-color': endpoint.status == false ?'#F18B7D' : '#85DC8F',
+                         'width':'45px','margin':' 0 auto'}" name="statusDiv">
+                                {{ endpoint.status|statusPipe }}
+                            </div>
+                        </td>
+                        <td style="text-align: right !important;border-right: 1px solid #ebe8e8;" name="operationCell">
+                            <button
+                                *ngIf="!endpoint.expanded"
+                                pButton
+                                pTooltip="اطلاعات بیشتر"
+                                icon="pi pi-ellipsis-h"
+                                class="p-button-rounded p-button-warning"
+                                (click)="expandTheRow(endpoint)" name="expandButton">
+                            </button>
+                            <button
+                                *ngIf="endpoint.expanded"
+                                pButton
+                                pTooltip="بستن"
+                                icon="pi pi-ellipsis-h"
+                                class="p-button-rounded p-button-warning"
+                                (click)="expandTheRow(endpoint)" name="collapseButton">
+                            </button>&nbsp;
+                            <p-menu appendTo="body" #menu [popup]="true" [model]="items" name="menu"></p-menu>
+                        </td>
+                    </tr>
+                    <tr *ngIf="endpoint.expanded" name="expandedRow">
+                        <td name="emptyCell"></td>
+                        <td name="ipLabel">
+                            <label dir="rtl"><span transloco name="allowedIpsLabel">ip های مجاز :</span></label><br>
+                        </td>
+                        <td name="ipAddressLabel">
+                            <label dir="rtl" name="ipAddressLabelText"></label><br>
+                            <label [pTooltip]="endpoint.ipAddress"
+                                   [tooltipDisabled]="endpoint.ipAddress?endpoint.ipAddress.length < 20:false"
+                                   name="ipAddressTooltip">
+                                {{ endpoint.ipAddress|moreChar19 }}
+                            </label>
+                        </td>
+                        <td name="emptyCell2"></td>
+                        <td name="emptyCell3"></td>
+                        <td name="emptyCell4"></td>
+                        <td name="emptyCell5"></td>
+                        <td name="emptyCell6"></td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">
+                            <div
+                                class="message-empty-chart text-center      flex justify-center items-center"
+
+                            >
+                                <h5>داده‌ای یافت نشد!</h5>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+    </p-panel>
+</p-dialog>

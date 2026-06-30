@@ -1,0 +1,224 @@
+<div class=" flex flex-col p-4  w-full h-full">
+    <div class=" flex flex-col  font-bold " dir="rtl">
+        <div>
+            <h6 class="w-fit px-2 bg-white rounded-xl">جدول کش</h6>
+        </div>
+    </div>
+    <div class="flex-grow overflow-y-auto mt-3">
+          <p-table
+styleClass="normal-table"
+ [value]="cacheList" size="small" selectionMode="single"
+                 [showCurrentPageReport]="true" [paginator]="true" [rows]="rows"
+                 [(first)]="first" editMode="cell"
+                 [totalRecords]="cacheList?.length"
+                 [currentPageReportTemplate]="'label.pagination.table' | transloco"
+                 [rowsPerPageOptions]="[5,10,25,50,100]"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="row text-center">
+                        ردیف
+                    </th>
+                    <th class="partyName">
+                        نام سازمان
+                    </th>
+                    <th class="moduleName">
+                        نام ماژول
+                    </th>
+                    <th class="apiTitle">
+                        عنوان سرویس
+                    </th>
+                    <th class="apiType">
+                        نوع سرویس
+                    </th>
+                    <!--  <th class="querystring">
+                          Querystring
+                      </th>-->
+                    <th class="text-center ">
+                        Querystring / مسیر نود
+                    </th>
+                    <th class="cacheType">
+                        نوع فراخوانی
+                    </th>
+                    <th class="cacheStartDate">
+                        تاریخ شروع
+                    </th>
+                    <th class="expiryDate">
+                        انقضا کش
+                    </th>
+                    <th class="messageId4x">
+                        پیام404
+                    </th>
+                    <th class="messageId5x">
+                        پیام500
+                    </th>
+                    <th class="status">
+                        وضعیت
+                    </th>
+                    <th class="text-right border-r  ">
+                        {{ 'party.table.header.operation'|transloco }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template let-i="rowIndex" pTemplate="body" let-cache>
+                <tr [pSelectableRow]="cache"
+                    [ngStyle]="cache.savedFlag ? {
+                    'color': '#147800',
+                    'background-color': '#d2f9d2'
+                    } : {}"
+                >
+                    <td class="row text-center">{{ cache.row }}</td>
+                    <td class="partyName"
+                        [pTooltip]="cache.partyName"
+                        [tooltipDisabled]="cache.partyName ? cache.partyName.length < 33 : false">
+                        {{ cache.partyName | morChar32 }}
+                    </td>
+                    <td class="moduleName"
+                        [pTooltip]="cache.moduleName"
+                        [tooltipDisabled]="cache.moduleName ? cache.moduleName.length < 33 : false">
+                        {{ cache.moduleName | morChar32 }}
+                    </td>
+                    <td class="apiTitle"
+                        [pTooltip]="cache.apiTitle"
+                        [tooltipDisabled]="cache.apiTitle ? cache.apiTitle.length < 33 : false">
+                        {{ cache.apiTitle | morChar32 }}
+                    </td>
+
+                    <td class="apiType">
+                        {{ cache.apiType |httpMethods }}
+                    </td>
+                    <!--       <td class="querystring"
+                               [pTooltip]="cache.querystring"
+                               [tooltipDisabled]="cache.querystring ? cache.querystring.length < 33 : false">
+                               {{ cache.querystring }}
+                           </td>-->
+
+                    <td class="path " pEditableColumn>
+                        <p-cellEditor>
+
+                            <!-- نمایش عادی قبل از کلیک -->
+                            <ng-template pTemplate="output">
+                                <ng-container *ngIf="cache.apiType == 1 ; else showDropdownLabel">
+                                    {{ cache.path || '---' }}
+                                </ng-container>
+                                <ng-template #showDropdownLabel>
+                                    {{ getEndpointLabel(cache.apiId, cache.endpointDetailId) }}
+                                </ng-template>
+                            </ng-template>
+
+                            <!-- حالت ویرایش پس از کلیک -->
+                            <ng-template pTemplate="input" dir="ltr">
+                                <ng-container *ngIf="cache.apiType == 1; else dropdownTemplate"  dir="ltr">
+                                    <input
+                                        pInputText
+                                        dir="ltr"
+                                        class="w-full ltr:text-left"
+                                        [(ngModel)]="cache.path"
+                                        [disabled]="cache.savedFlag"
+                                        (click)="debugLog(cache, 'input')"
+                                    />
+                                </ng-container>
+                                <ng-template #dropdownTemplate>
+                                    <p-dropdown
+                                        class="w-full"
+                                        appendTo="body"
+                                        placeholder="-"
+                                        id="endpointPath"
+                                        panelStyleClass="endpointPath"
+                                        [(ngModel)]="cache.endpointDetailId"
+                                        [options]="endpointOptionsMap[cache.apiId] || []"
+                                        optionValue="endpointDetailId"
+                                        optionLabel="inputName"
+                                        [disabled]="cache.savedFlag"
+                                        (click)="debugLog(cache, 'dropdown'); loadEndpointOptionsFor(cache.apiId)"
+                                    >
+                                    </p-dropdown>
+                                </ng-template>
+                            </ng-template>
+
+                        </p-cellEditor>
+                        <!-- [pTooltip]="cache.path"
+                         [tooltipDisabled]="cache.path ? cache.path.length < 33 : false">
+                         {{ cache.path | morChar32 }}-->
+                    </td>
+
+                    <td class="cacheType"
+                        [pTooltip]="cache.cacheType==1?'فراخوانی بصورت پیش فرض کش و درغیراینصورت بصورت مستقیم':''"
+                        [tooltipDisabled]="cache.cacheType ? cache.cacheType.length < 33 : false">
+                        {{ cache.cacheType |cacheType }}
+                    </td>
+                    <td class="cacheStartDate">
+                        {{ cache.cacheStartDate|castToDateTime  }}
+                    </td>
+                    <td class="expiryDate">
+                        {{ cache.expiryDate }}
+                    </td>
+                    <td class="messageId4x">
+                        <div
+                            [ngClass]="{
+                                 ' text-green-800 bg-green-300 ': cache.messageId4x,
+                                   ' text-red-800 bg-red-300 ': !cache.messageId4x
+                                   }"
+                            class="w-[65px] float-right text-center rounded-md"
+                        > {{ cache.messageId4x ? 'دارد' : 'ندارد' }}
+                        </div>
+                    </td>
+                    <td class="messageId5x">
+                        <div
+                            [ngClass]="{
+                            ' text-green-800 bg-green-300 ': cache.messageId5x,
+                              ' text-red-800 bg-red-300 ': !cache.messageId5x
+                            }"
+                            class="w-[65px] float-right text-center rounded-md"
+                        >{{ cache.messageId5x ? 'دارد' : 'ندارد' }}
+                        </div>
+                    </td>
+                    <td class="text-center status">
+                        <div
+                            [ngClass]="{
+                                'text-yellow-800 bg-yellow-300 ': cache.status==null,
+                                 ' text-green-800 bg-green-300 ': cache.status,
+                                   ' text-red-800 bg-red-300 ': !cache.status
+                                   }"
+                            class="w-[65px] float-right text-center rounded-md"
+                        >
+                            {{ cache.status | statusPipe }}
+                        </div>
+                    </td>
+                    <td class="text-right border-r  ">
+                        <button name="btn-operation" (click)="setRecord(cache);menu.toggle($event)" type="button"
+                                class="p-button-rounded " pButton pRipple icon="pi pi-chevron-down"
+                        ></button>&nbsp;
+                        <p-menu appendTo="body" #menu [popup]="true" [model]="items"></p-menu>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #emptymessage>
+                <tr>
+                    <td class="text-center" colspan="14">اطلاعاتی برای نمایش وجود ندارد...</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+    <div class="mt-4 flex justify-start" dir="ltr">
+        <button pButton label="{{'button.exit' | transloco}}"
+                severity="danger" [outlined]="true" class="normal-button"
+                (click)="onExit($event)" icon="pi pi-times">
+        </button>&nbsp;
+        <button pButton label="ثبت نهایی اطلاعات" severity="success"
+                icon="pi pi-save" class="normal-button"
+                (click)="saveCache()"></button>&nbsp;
+
+    </div>
+</div>
+<ng-container *ngIf="elementsFlag">
+    <p-dialog [style]="{'width':'60%'}" [(visible)]="elementsFlag"
+              [modal]="true" [draggable]="false"
+              [resizable]="true">
+        <div style="width: 100%">
+            <app-header-endpoint-register [cacheInput]="registerEndpointHeaderDto"
+                                          (closeCache)="closeElementCache($event)"></app-header-endpoint-register>
+        </div>
+    </p-dialog>
+</ng-container>

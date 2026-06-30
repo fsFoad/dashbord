@@ -1,0 +1,1172 @@
+<p-toast />
+<app-breadcrumbs [showBackButton]="true" id="section" (backClicked)="BeforeButton()"></app-breadcrumbs>
+<div
+    class="aggregator-config"
+    [formGroup]="form">
+
+    <!-- RIGHT PANEL -->
+    <section class="builder-panel">
+
+        <!-- HEADER -->
+        <div class="theme-card builder-header">
+
+            <div class="header-content">
+
+                <!-- LEFT ACTIONS -->
+                <div class="header-actions">
+
+                    <button
+                        pButton
+                        type="button"
+                        icon="pi pi-trash"
+                        label="پاکسازی سرویس ها"
+                        [disabled]="isViewMode"
+                        class="p-button-outlined clear-services-btn"
+                        (click)="clearServices()">
+                    </button>
+
+                    <button
+                        pButton
+                        type="button"
+                        icon="pi pi-plus"
+                        label="افزودن سرویس جدید"
+
+                        class="add-service-header-btn"
+                        [disabled]="isViewMode"
+                        (click)="addService()">
+                    </button>
+
+                </div>
+
+                <!-- TITLE -->
+                <div class="flex flex-row gap-6 items-start flex-nowrap w-full">
+
+                    <!-- CLIENTS -->
+                    <div class="flex-1 min-w-0  max-w-[620px]">
+
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            <span class="text-red-500 mr-1">*</span>
+                            انتخاب کلاینت
+
+                        </label>
+
+                        <p-multiSelect
+                            appendTo="body"
+                            formControlName="clientIds"
+                            [options]="clientListOptions"
+                            optionLabel="name"
+                            optionValue="clientId"
+                            [filter]="true"
+                            filterBy="name"
+                            [showToggleAll]="true"
+                            defaultLabel="انتخاب کنید"
+                            class="normal-dropdown w-full"
+                        >
+                        </p-multiSelect>
+                        <p class="text-xs text-gray-500 mt-1">
+                            عملیات روی تمام کلاینت‌ها انتخاب شده اعمال می‌شود
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="services-wrapper">
+
+            @for (service of services.controls;
+                track service;
+                let i = $index) {
+                @if (service.get('status')?.value !== 0) {
+                    <div
+                        class="service-node-wrapper">
+
+                        <!-- DELETE -->
+                        <button
+                            pButton
+                            type="button"
+                            icon="pi pi-times"
+                            *ngIf="!isViewMode"
+                            class="service-delete-btn p-button-rounded p-button-text p-button-danger"
+                            (click)="removeService(i)">
+                        </button>
+
+                        <!-- CARD -->
+                        <div
+                            class="theme-card service-card"
+                            [formGroup]="service">
+
+                            <!-- BADGE -->
+                            <div class="service-node-badge">
+                                {{ i + 1 }}
+                            </div>
+
+                            <!-- HEADER -->
+                            <div class="service-header">
+
+                                <div>
+
+                                    <div class="service-title">
+
+                                        <i class="pi pi-box"></i>
+                                        {{
+                                            getSelectedServiceTitle(service)
+                                        }}
+
+                                    </div>
+
+                                    <div class="service-subtitle">
+                                        تنظیمات سرویس
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- GRID -->
+                            <div class="service-grid">
+
+                                <!-- ORG -->
+                                <div class="field">
+
+                                    <label class="field-label">
+                                        <span class="text-red-500 mr-1">*</span>
+                                        سازمان مقصد:
+                                    </label>
+                                    <p-dropdown
+                                        appendTo="body"
+                                        placeholder="انتخاب سازمان"
+                                        formControlName="org"
+                                        [disabled]="isViewMode"
+                                        [options]="partyListOptions"
+
+                                        optionValue="partyId"
+
+                                        optionLabel="title"
+
+                                        [filter]="true"
+
+                                        filterBy="title"
+
+                                        class="full-dropdown"
+
+                                        styleClass="normal-control w-full"
+                                        (onFocus)="storePreviousValue(service, 'org')"
+                                        (onChange)="onChangeParty(service, $event)">
+                                    </p-dropdown>
+                                </div>
+
+                                <!-- MODULE -->
+                                <div class="field">
+
+                                    <label class="field-label">
+                                        <span class="text-red-500 mr-1">*</span>
+                                        ماژول مقصد:
+                                    </label>
+                                    <p-dropdown
+                                        appendTo="body"
+
+                                        formControlName="module"
+                                        [disabled]="isViewMode"
+                                        [options]="service.controls.moduleOptions.value"
+
+                                        optionLabel="moduleTitle"
+
+                                        optionValue="moduleId"
+
+                                        class="full-dropdown"
+                                        [filter]="true"
+                                        styleClass="normal-control w-full"
+                                        placeholder="انتخاب ماژول"
+                                        (onFocus)="storePreviousValue(service, 'module')"
+                                        (onChange)="onChangeModule(service, $event)">
+                                    </p-dropdown>
+                                </div>
+
+                                <!-- SERVICE -->
+                                <div class="field">
+
+                                    <label class="field-label">
+                                        <span class="text-red-500 mr-1">*</span>
+                                        سرویس مقصد:
+                                    </label>
+
+
+                                    <p-dropdown
+                                        appendTo="body"
+                                        formControlName="service"
+                                        [options]="service.controls.apiOptions.value"
+                                        optionValue="apiId"
+                                        optionLabel="title"
+                                        class="full-dropdown"
+                                        [disabled]="isViewMode"
+                                        [filter]="true"
+                                        styleClass="normal-control w-full"
+                                        placeholder="انتخاب سرویس"
+                                        (onFocus)="storePreviousValue(service, 'service')"
+                                        (onChange)="onChangeApi(service, $event)">
+                                    </p-dropdown>
+                                </div>
+
+                            </div>
+
+                            <!-- MAPPING -->
+                            <div class="mapping-section">
+
+                                <!-- HEADER -->
+                                <div class=" gap-2 mapping-header">
+
+                                    <button
+                                        pButton
+                                        type="button"
+                                        label="افزودن المان مبدا"
+                                        icon="pi pi-plus"
+                                        [outlined]="true"
+                                        (click)="openSourceElementDialog()">
+                                    </button>
+
+                                    <button
+                                        pButton
+                                        type="button"
+                                        label="افزودن المان مقصد"
+                                        icon="pi pi-plus"
+                                        [outlined]="true"
+                                        (click)="openDestinationElementDialog(i)">
+                                    </button>
+
+                                    <button
+                                        pButton
+                                        type="button"
+                                        label="افزودن مپینگ"
+                                        icon="pi pi-sitemap"
+                                        (click)="addConnection(i)">
+                                    </button>
+
+                                </div>
+                                <!-- BUILDER -->
+                                @if (mappingDrafts[i]) {
+                                <div
+                                    class="mapping-builder"
+                                    [formGroup]="mappingDrafts[i]">
+
+                                    <!-- SOURCE -->
+                                    <div class="mapping-column">
+
+                                        <div class="mapping-column-title">
+                                            مبدا
+                                        </div>
+                                        <label class="field-label">
+                                            سرویس:
+                                        </label>
+                                        <p-dropdown
+                                            formControlName="genServiceId"
+                                            [options]="[
+      {
+        label: apiTitle,
+        value: apiId
+      }
+    ]"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+
+                                        <label class="field-label">
+                                            گروه بندی:
+                                        </label>
+                                        <p-dropdown
+                                            formControlName="genType"
+                                            [options]="mappingTypes"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+                                        <label class="field-label">
+                                            المان:
+                                        </label>
+
+                                        <p-dropdown
+                                            formControlName="genElement"
+                                            [options]="getAvailableSourceElements(service)"
+                                            [disabled]="isViewMode"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+
+                                    <!-- ARROW -->
+                                    <div class="mapping-arrow">
+
+                                        <i class="pi pi-arrow-left"></i>
+
+                                    </div>
+
+                                    <!-- TARGET -->
+                                    <div class="mapping-column">
+
+                                        <div class="mapping-column-title size-3.5 ">
+                                            مقصد
+                                        </div>
+                                        <label class="field-label">
+                                            سرویس:
+                                        </label>
+                                        <p-dropdown
+                                            formControlName="reqServiceId"
+                                            [options]="[
+    {
+        label:
+            service.controls.service.value
+                ? getSelectedServiceTitle(service)
+                : '-',
+
+        value:
+            service.controls.service.value ?? null
+    }
+]"
+                                            [disabled]="isViewMode"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+
+                                        <label class="field-label">
+                                            گروه بندی:
+                                        </label>
+                                        <p-dropdown
+                                            formControlName="reqType"
+                                            [options]="mappingTypes"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+                                        <label class="field-label">
+                                            المان:
+                                        </label>
+                                        <p-dropdown
+                                            formControlName="reqElement"
+                                            [options]="getAvailableTargetElements(
+        service,
+        mappingDrafts[i].get('reqServiceId')?.value
+    )"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+
+                                </div>
+                                }
+                                <!-- TABLE -->
+                                @if (getConnections(service)
+                                    .controls.length) {
+
+                                    <p-table
+                                        [value]="getVisibleConnections(service)"
+                                        responsiveLayout="scroll"
+                                        styleClass="mapping-table">
+
+                                        <ng-template
+                                            pTemplate="header">
+
+                                            <tr>
+
+                                                <th>
+                                                    Source
+                                                </th>
+
+                                                <th width="60">
+                                                </th>
+
+                                                <th>
+                                                    Target
+                                                </th>
+
+                                                <th width="70">
+                                                </th>
+
+                                            </tr>
+
+                                        </ng-template>
+
+                                        <ng-template
+                                            pTemplate="body"
+                                            let-row
+                                            let-rowIndex="rowIndex">
+
+                                            <tr
+                                                [formGroup]="row">
+
+                                                <!-- SOURCE -->
+                                                <td>
+
+                                                    <div class="mapping-preview">
+
+                                                        <div class="mapping-chip source">
+                                                            سرویس:
+                                                            {{
+                                                                getServiceTitleById(
+                                                                    row.controls.genServiceId.value
+                                                                )
+                                                            }}
+                                                        </div>
+
+                                                        <div class="mapping-chip source">
+                                                            گروه بندی:
+                                                            {{
+                                                                row.controls.genType.value
+                                                            }}
+                                                        </div>
+
+                                                        <div class="mapping-path">
+                                                            المان:
+                                                            {{
+                                                                row.controls.genElementInputName.value
+                                                                    ? row.controls.genElementInputName.value
+                                                                    : '-'
+                                                            }}
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <!-- CENTER ARROW -->
+                                                <td class="mapping-center-arrow">
+
+                                                    <i class="pi pi-arrow-left"></i>
+
+                                                </td>
+
+                                                <!-- TARGET -->
+                                                <td>
+
+                                                    <div class="mapping-preview">
+
+                                                        <div class="mapping-chip target">
+                                                            سرویس:
+                                                            {{
+                                                                getServiceTitleById(
+                                                                    row.controls.reqServiceId.value
+                                                                )
+                                                            }}
+                                                        </div>
+
+                                                        <div class="mapping-chip target">
+                                                            گروه بندی:
+                                                            {{
+                                                                row.controls.reqType.value
+                                                            }}
+                                                        </div>
+
+                                                        <div class="mapping-path">
+                                                            المان:
+                                                            {{
+                                                                row.controls.reqElementInputName.value
+                                                                    ? row.controls.reqElementInputName.value
+                                                                    : '-'
+                                                            }}
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
+
+                                                <!-- DELETE -->
+                                                <td>
+
+                                                    <button
+                                                        pButton
+                                                        type="button"
+                                                        icon="pi pi-trash"
+                                                        *ngIf="!isViewMode"
+                                                        class="p-button-rounded p-button-text p-button-danger"
+                                                        (click)="removeConnection(i, row)">
+                                                    </button>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </ng-template>
+
+                                    </p-table>
+                                } @else {
+
+                                    <div
+                                        class="empty-state">
+
+                                        <i class="pi pi-info-circle"></i>
+
+                                        <span>
+                                        هیچ مپینگ تعریف نشده است
+                                    </span>
+
+                                    </div>
+
+                                }
+
+                            </div>
+                            <div class="response-section">
+
+                                <div class="response-header">
+
+                                    <div class="response-title">
+                                        <i class="pi pi-send"></i>
+                                        نحوه پاسخ‌دهی
+                                    </div>
+
+                                </div>
+                                <div class="field mb-4">
+
+                                    <label class="field-label">
+                                        <span class="text-red-500 mr-1">*</span>
+                                        نام روت خروجی سرویس:
+                                    </label>
+
+                                    <input
+                                        pInputText
+                                        formControlName="outputJsonRootNodeName"
+                                        placeholder="customer" />
+
+                                </div>
+                                <div class="response-grid">
+
+                                    <!-- 200 -->
+                                    <div class="response-card success">
+
+                                        <div class="response-card-title">
+                                            200 Success
+                                        </div>
+
+                                        <p-dropdown
+                                            formControlName="responseMode200"
+                                            [options]="responseModeOptions"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+
+                                        @if (service.controls.responseMode200.value === 'selected') {
+
+                                            <div class="field checkbox-field mt-3">
+
+                                                <div class="flex align-items-center gap-2">
+
+                                                    <p-checkbox
+                                                        [binary]="true"
+                                                        formControlName="isArray200">
+                                                    </p-checkbox>
+
+                                                    <label class="mb-0">
+                                                        خروجی در قالب آرایه
+                                                    </label>
+
+                                                </div>
+
+                                            </div>
+
+                                        }
+                                    </div>
+
+                                    <!-- 400 -->
+                                    <div class="response-card warning">
+
+                                        <div class="response-card-title">
+                                            400 Validation
+                                        </div>
+
+                                        <p-dropdown
+                                            formControlName="responseMode400"
+                                            [options]="responseModeOptions"
+                                            optionLabel="label"
+                                            optionValue="value"
+                                            appendTo="body">
+                                        </p-dropdown>
+
+                                        @if (service.controls.responseMode400.value === 'selected') {
+
+                                            <div class="field checkbox-field mt-3">
+
+                                                <div class="flex align-items-center gap-2">
+
+                                                    <p-checkbox
+                                                        [binary]="true"
+                                                        formControlName="isArray400">
+                                                    </p-checkbox>
+
+                                                    <label class="mb-0">
+                                                        خروجی در قالب آرایه
+                                                    </label>
+
+                                                </div>
+
+                                            </div>
+
+                                        }
+
+                                    </div>
+
+                                    <!--                 &lt;!&ndash; 401 &ndash;&gt;
+                                                     <div class="response-card danger">
+
+                                                         <div class="response-card-title">
+                                                             401 Unauthorized
+                                                         </div>
+
+                                                         <div class="response-pass-through">
+                                                             کل پاسخ خطای 401 بدون تغییر منتقل می‌شود
+                                                         </div>
+
+                                                     </div>-->
+                                    <!-- 401 -->
+                                    <div class="response-card danger">
+
+                                        <div class="response-card-title">
+                                            401 Unauthorized
+                                        </div>
+
+                                        <div class="field mt-3">
+
+                                            <label class="field-label">
+                                                <span class="text-red-500 mr-1">*</span>
+                                                جیسون خروجی:
+                                            </label>
+
+                                            <!--       <textarea
+                                                       pInputTextarea
+                                                       rows="8"
+                                                       formControlName="outputStaticJson401"
+                                                       placeholder='{"message":"Unauthorized"}'>
+
+                                                   </textarea>-->
+                                            <textarea
+                                                pInputTextarea
+                                                rows="8"
+                                                dir="ltr"
+                                                formControlName="outputStaticJson401"
+                                                (ngModelChange)="validateJson401($event, i)"
+                                                placeholder='{"message":"Unauthorized"}'>
+</textarea>
+
+                                            <small
+                                                *ngIf="jsonValidation401[i]?.errors?.length"
+                                                class="block mt-1 text-red-500 text-xs">
+
+                                                <div *ngFor="let err of jsonValidation401[i].errors">
+                                                    • {{ err }}
+                                                </div>
+
+                                            </small>
+                                        </div>
+
+                                    </div>
+                                    <!--  &lt;!&ndash; 500 &ndash;&gt;
+                                      <div class="response-card danger">
+
+                                          <div class="response-card-title">
+                                              500 Internal Error
+                                          </div>
+
+                                          <div class="response-pass-through">
+                                              کل پاسخ خطای 500 بدون تغییر منتقل می‌شود
+                                          </div>
+
+                                      </div>
+      -->
+                                    <!-- 500 -->
+                                    <div class="response-card danger">
+
+                                        <div class="response-card-title">
+                                            500 Internal Error
+                                        </div>
+
+                                        <div class="field mt-3">
+
+                                            <label class="field-label">
+                                                <span class="text-red-500 mr-1">*</span>
+                                                جیسون خروجی:
+                                            </label>
+
+                                            <!--      <textarea
+                                                      pInputTextarea
+                                                      rows="8"
+                                                      formControlName="outputStaticJson500"
+                                                      placeholder='{"message":"Internal Server Error"}'>
+
+                                                  </textarea>-->
+                                            <textarea
+                                                pInputTextarea
+                                                rows="8"
+                                                dir="ltr"
+                                                formControlName="outputStaticJson500"
+                                                (ngModelChange)="validateJson500($event, i)"
+                                                placeholder='{"message":"Internal Server Error"}'>
+</textarea>
+
+                                            <small
+                                                *ngIf="jsonValidation500[i]?.errors?.length"
+                                                class="block mt-1 text-red-500 text-xs">
+
+                                                <div *ngFor="let err of jsonValidation500[i].errors">
+                                                    • {{ err }}
+                                                </div>
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- 200 -->
+                                @if (service.controls.responseMode200.value === 'selected') {
+
+                                    <div class="response-output-builder success">
+
+                                        <div class="response-output-header">
+                                            <i class="pi pi-check-circle"></i>
+                                            <span>نودهای منتخب 200 Success</span>
+
+                                            <button
+                                                pButton
+                                                type="button"
+                                                icon="pi pi-plus"
+                                                label="افزودن نود"
+                                                class="p-button-sm"
+                                                (click)="addOutput200(i)">
+                                            </button>
+                                        </div>
+                                        <div class="output-scroll">
+
+                                            @for (field of getOutputs200(service).controls;
+                                                track field;
+                                                let oi = $index) {
+                                                <div class="output-node-wrapper">
+                                                    <div class="output-node-badge success">
+                                                        {{ oi + 1 }}
+                                                    </div>
+                                                    <div
+                                                        class="output-field"
+                                                        [formGroup]="field">
+
+                                                        <div class="output-grid">
+
+                                                            <div class="field">
+
+                                                                <label class="field-label">
+                                                                    سرویس:
+                                                                </label>
+
+                                                                <p-dropdown
+                                                                    formControlName="sourceId"
+                                                                    [options]="sourceServices()"
+                                                                    optionLabel="label"
+                                                                    optionValue="value"
+                                                                    appendTo="body">
+                                                                </p-dropdown>
+
+                                                            </div>
+
+                                                            <div class="field">
+
+                                                                <label class="field-label">
+                                                                    گروه بندی:
+                                                                </label>
+
+                                                                <p-dropdown
+                                                                    formControlName="sourceType"
+                                                                    [options]="[
+                                    {
+                                        label:'Body',
+                                        value:'body'
+                                    }
+                                ]"
+                                                                    optionLabel="label"
+                                                                    optionValue="value"
+                                                                    appendTo="body">
+                                                                </p-dropdown>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <label class="field-label">
+                                                            <span class="text-red-500 mr-1">*</span>
+                                                            مسیر:
+                                                        </label>
+
+                                                        <input
+                                                            pInputText
+                                                            dir="ltr"
+                                                            formControlName="sourcePath"
+                                                            placeholder="/data/customer[0]/name" />
+
+                                                        <label class="field-label">
+                                                            نام جدید نود:
+                                                        </label>
+
+                                                        <input
+                                                            pInputText
+                                                            dir="ltr"
+                                                            formControlName="key"
+                                                            placeholder="customerId" />
+
+                                                        <button
+                                                            pButton
+                                                            type="button"
+                                                            icon="pi pi-trash"
+                                                            class="p-button-rounded p-button-text p-button-danger remove-btn"
+                                                            (click)="removeOutput200(i, oi)">
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                }
+
+                                <!-- 400 -->
+
+                                @if (service.controls.responseMode400.value === 'selected') {
+
+                                    <div class="response-output-builder warning">
+
+                                        <div class="response-output-header">
+
+                                            <i class="pi pi-exclamation-circle"></i>
+
+                                            <span>نودهای منتخب 400 Validation</span>
+
+                                            <button
+                                                pButton
+                                                type="button"
+                                                icon="pi pi-plus"
+                                                label="افزودن نود"
+                                                class="p-button-sm"
+                                                (click)="addOutput400(i)">
+                                            </button>
+
+                                        </div>
+
+                                        <div class="output-scroll">
+
+                                            @for (
+                                                field of getVisibleOutputs400(service);
+                                                track field;
+                                                let oi = $index
+                                                ) {
+                                                <div class="output-node-wrapper">
+                                                    <div class="output-node-badge warning">
+                                                        {{ oi + 1 }}
+                                                    </div>
+                                                    <div
+                                                        class="output-field"
+                                                        [formGroup]="field">
+
+                                                        <div class="output-grid">
+
+                                                            <div class="field">
+
+                                                                <label class="field-label">
+                                                                    سرویس:
+                                                                </label>
+
+                                                                <p-dropdown
+                                                                    formControlName="sourceId"
+                                                                    [options]="sourceServices()"
+                                                                    optionLabel="label"
+                                                                    optionValue="value"
+                                                                    appendTo="body">
+                                                                </p-dropdown>
+
+                                                            </div>
+
+                                                            <div class="field">
+
+                                                                <label class="field-label">
+                                                                    گروه بندی:
+                                                                </label>
+
+                                                                <p-dropdown
+                                                                    formControlName="sourceType"
+                                                                    [options]="[
+                                    {
+                                        label:'Body',
+                                        value:'body'
+                                    }
+                                ]"
+                                                                    optionLabel="label"
+                                                                    optionValue="value"
+                                                                    appendTo="body">
+                                                                </p-dropdown>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <label class="field-label">
+                                                            <span class="text-red-500 mr-1">*</span>
+                                                            مسیر:
+                                                        </label>
+
+                                                        <input
+                                                            pInputText
+                                                            dir="ltr"
+                                                            formControlName="sourcePath"
+                                                            placeholder="/data/customer[0]/id" />
+
+                                                        <label class="field-label">
+                                                            نام جدید نود:
+                                                        </label>
+
+                                                        <input
+                                                            pInputText
+                                                            dir="ltr"
+                                                            formControlName="key"
+                                                            placeholder="customerId" />
+
+                                                        <button
+                                                            pButton
+                                                            type="button"
+                                                            icon="pi pi-trash"
+                                                            class="p-button-rounded p-button-text p-button-danger remove-btn"
+                                                            (click)="removeOutput400(i, oi)">
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+                                }
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+
+            }
+        </div>
+    </section>
+
+    <aside class="output-panel">
+        <!-- PREVIEW -->
+        <div class="theme-card panel-card curl-import-card">
+
+            <button
+                pButton
+                type="button"
+                icon="pi pi-upload"
+                label="ورودی کرل سرویس"
+                [disabled]="isViewMode"
+                class="w-full"
+                [outlined]="true"
+                (click)="openCurlDialog()">
+            </button>
+
+        </div>
+        <div class="theme-card panel-card json-card">
+            <div class="panel-title">
+                <i class="pi pi-eye"></i>
+                <span>بادی کرل وارد شده برای سرویس اصلی</span>
+            </div>
+            <div class="json-scroll">
+                @if (curlRequestBody()) {
+                    <pre class="curl-json-preview">{{ formattedCurlJson() }}</pre>
+                } @else {
+                    <div class="empty-curl-preview">
+                        <i class="pi pi-file-import"></i>
+                        <span>
+                        هنوز cURL وارد نشده است
+                    </span>
+                    </div>
+                }
+
+
+            </div>
+            <div class="json-footer">
+                <button
+                    pButton
+                    severity="success"
+                    label="ثبت اطلاعات"
+                    class="w-full"
+                    [disabled]="isViewMode"
+                    (click)="saveAggregator()"
+                    icon="pi pi-save">
+                </button>
+
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- DIALOG -->
+<p-dialog
+    [visible]="curlDialogVisible()"
+    (visibleChange)="curlDialogVisible.set($event)"
+    [modal]="true"
+    [style]="{ width: '700px' }"
+    [draggable]="false"
+    [resizable]="false"
+    header="Import cURL">
+
+    <div class="curl-dialog">
+
+        <div class="field">
+
+
+
+
+            <textarea
+                dir="ltr"
+                pInputTextarea
+                rows="12"
+                [ngModel]="curlInput()"
+                (ngModelChange)="validateCurlLive($event)">
+</textarea>
+
+            @if (curlValidationMessage()) {
+
+                <div
+                    class="curl-validation"
+                    [class.success]="curlValid()"
+                    [class.error]="!curlValid()">
+
+                    <i
+                        [class]="
+                curlValid()
+                    ? 'pi pi-check-circle'
+                    : 'pi pi-times-circle'
+            ">
+                    </i>
+
+                    {{ curlValidationMessage() }}
+
+                </div>
+
+            }
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="dialog-actions">
+
+            <button
+                pButton
+                type="button"
+                label="لغو"
+                class="p-button-text"
+                (click)="closeCurlDialog()">
+            </button>
+
+            <button
+                pButton
+                type="button"
+                icon="pi pi-check"
+                label="Import"
+                (click)="importCurl()">
+            </button>
+
+        </div>
+
+    </div>
+
+</p-dialog>
+<p-confirmDialog key="mappingResetDialog">
+
+    <ng-template
+        pTemplate="headless"
+        let-message
+        let-onAccept="onAccept"
+        let-onReject="onReject">
+
+        <div
+            class="flex flex-col items-center p-8 bg-surface-0 dark:bg-surface-900 rounded-2xl"
+            dir="rtl">
+
+            <div
+                class="rounded-full bg-yellow-500 text-white inline-flex justify-center items-center h-24 w-24 -mt-20">
+
+                <i class="pi pi-exclamation-triangle !text-5xl"></i>
+
+            </div>
+
+            <span class="font-bold text-2xl block mb-2 mt-6">
+
+                {{ message.header }}
+
+            </span>
+
+            <p class="mb-4 text-gray-700 text-center leading-7">
+
+                {{ message.message }}
+
+            </p>
+
+            <div class="flex items-center gap-3 mt-4">
+
+                <button
+                    pButton
+                    type="button"
+                    label="بله"
+                    (click)="onAccept()"
+                    class="bg-red-500 border-none">
+
+                </button>
+
+                <button
+                    pButton
+                    type="button"
+                    label="خیر"
+                    [outlined]="true"
+                    (click)="onReject()">
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </ng-template>
+
+</p-confirmDialog>
+
+<p-dialog
+    [(visible)]="sourceElementDialogVisible"
+    header="ثبت المان مبدا"
+    [modal]="true"
+    [style]="{ width: '70rem' }">
+
+    <ng-container *ngIf="sourceElementDialogVisible">
+        <app-header-endpoint-register
+            [aggregatorInput]="aggregatorConfigDto"
+            (close)="onSourceElementDialogClose($event)">
+        </app-header-endpoint-register>
+    </ng-container>
+
+</p-dialog>
+
+<p-dialog
+    [(visible)]="destinationElementDialogVisible"
+    header="ثبت المان مقصد"
+    [modal]="true"
+    [style]="{ width: '70rem' }">
+
+    <ng-container *ngIf="destinationElementDialogVisible">
+        <app-header-endpoint-register
+            [aggregatorInput]="aggregatorConfigDto"
+            (close)="onDestinationElementDialogClose($event)">
+        </app-header-endpoint-register>
+    </ng-container>
+
+</p-dialog>

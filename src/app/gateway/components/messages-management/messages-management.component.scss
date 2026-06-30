@@ -1,0 +1,62 @@
+:host {
+    width: 100%;
+}
+
+::ng-deep {
+    .p-tooltip {
+        width: 150px;
+        min-width: 150px;
+        font-size: 14px;
+        max-width: 250px;
+
+    }
+}
+
+.newMessage {
+    margin-bottom: 10px;
+}
+
+.btnSearch {
+    width: 40%;
+    margin-left: 10%;
+    margin-top: 2%;
+}
+
+:host ::ng-deep {
+    .c-icons {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* .systemMessageIcon {
+         background-image: url("../../../../../assets/icons/systemMessage.png");
+     }*/
+
+    #isSystemMessage .ui-accordion-content {
+        background-color: blue  !important;
+    }
+}
+
+.messageId{
+    width: 8%;
+}
+.code{
+    width: 5%;
+}
+.title{
+    width: 15%;
+}
+.text{
+    width: 15%;
+}
+.tableId{
+    width: 8%;
+}
+.type{
+    width: 12%;
+}
+.cust-col-12 {
+    flex: 0 0 auto;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    width: 100%;
+}

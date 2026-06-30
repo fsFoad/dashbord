@@ -1,0 +1,50 @@
+:host {
+    width: 100%;
+
+}
+.sss{
+    margin-top: 26px;
+    margin-right:  2.5px;
+}
+.Calmargin-top {
+    margin-top: 18px;
+    margin-right: 2px;
+}
+.btnsSearch{
+    margin-top: 20px;
+}
+
+.row{
+    width: 5%;
+}
+.REQUESTDATE{
+    width: 8.5%;
+}
+.API_NAME{
+    width: 12%;
+}
+.API_TITLE{
+    width: 12%;
+}
+.STATUS{
+    width: 7%;
+}
+.CLIENT_NAME{
+    width: 11%;
+}
+::ng-deep {
+    .p-tooltip {
+        width: 150px;
+        min-width: 150px;
+        font-size: 14px;
+        max-width: 250px;
+
+    }
+}
+.spinner-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11001; /* افزایش مقدار z-index */
+}

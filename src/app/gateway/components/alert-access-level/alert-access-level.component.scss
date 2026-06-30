@@ -1,0 +1,132 @@
+[data-pc-section='list'] {
+    height: 1500px !important;
+    min-height: 1500px !important;
+    max-height: 1500px !important;
+    overflow-y: auto !important;
+}
+:host ::ng-deep .p-picklist-header {
+    display: block !important;
+    background: #f9fafb !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    padding: 0.5rem 1rem !important;
+    text-align: center !important;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+/*
+:host ::ng-deep .p-picklist-list-container {
+    height: 600px !important;
+    max-height: 600px !important;
+}
+
+:host ::ng-deep .p-picklist-source-list-container,
+:host ::ng-deep .p-picklist-target-list-container {
+    height: 250px !important;
+    max-height: 250px !important;
+    overflow-y: auto !important;
+}
+*/
+:host ::ng-deep .p-picklist-list-container {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+:host ::ng-deep .p-picklist-source-list-container,
+:host ::ng-deep .p-picklist-target-list-container {
+    height: 500px !important; /* ارتفاع ثابت فقط در این سطح */
+    overflow-y: auto !important;
+}
+
+:host ::ng-deep .p-picklist .p-listbox-list-wrapper {
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+:host ::ng-deep .p-picklist .p-picklist-list-container,
+:host ::ng-deep .p-picklist .p-listbox,
+:host ::ng-deep .p-picklist .p-listbox-list-wrapper,
+:host ::ng-deep .p-picklist .p-listbox-list-container {
+    height: 300px !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+}
+:host ::ng-deep .p-treetable .row {
+    width: 5px !important;
+    min-width: 5px !important;
+    text-align: center !important;
+    padding-right: 0 !important;
+}
+.receiverName{
+    width: 10px;
+}
+.receiverMobileNo{
+    width: 15px;
+}
+
+.sectionTitle{
+    width: 15px;
+}
+:host ::ng-deep .p-treetable thead > tr > th {
+
+    text-align: right !important;
+  /*  height: 35px; !* کمی فشرده‌تر *!*/
+}
+:host ::ng-deep .p-treetable .parent-row-expanded > td {
+    background-color: color-mix(in srgb, var(--p-primary) 5%, transparent) !important;
+    color: var(--p-primary) !important;
+    font-weight: 600;
+}
+:host ::ng-deep .p-treetable tr[aria-level="2"] > td {
+    background-color: #fff !important;
+    color: var(--primary) !important;
+}
+
+:host ::ng-deep .p-treetable td {
+    box-sizing: border-box;
+}
+:host ::ng-deep .p-treetable-scrollable-body {
+    overflow-x: hidden !important;
+}
+
+
+
+
+
+:host ::ng-deep .p-picklist {
+    width: 100%;
+}
+/*
+:host ::ng-deep .p-picklist-source-list-container,
+:host ::ng-deep .p-picklist-target-list-container {
+    height: 500px !important;
+    overflow-y: auto !important;
+}
+
+:host ::ng-deep .p-picklist .p-listbox,
+:host ::ng-deep .p-picklist .p-listbox-list-wrapper {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}*/
+:host ::ng-deep .p-confirm-dialog .p-dialog-footer {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 0.5rem;
+}
+
+/* ترتیب دکمه‌ها */
+:host ::ng-deep .p-confirm-dialog .p-dialog-footer .confirm-accept {
+    order: 2 !important; /* ✅ بله راست */
+}
+
+:host ::ng-deep .p-confirm-dialog .p-dialog-footer .confirm-reject {
+    order: 1 !important; /* ❌ خیر چپ */
+}
+:host ::ng-deep .p-picklist .p-listbox,
+:host ::ng-deep .p-picklist .p-listbox-list-wrapper,
+:host ::ng-deep .p-picklist .p-picklist-list-container {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
