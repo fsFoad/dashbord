@@ -20,19 +20,23 @@ import { JALALI_MONTHS, JALALI_WEEKDAYS_FULL, dateToJalali, faDigits } from '../
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      class="flex flex-col items-center gap-2 border-b border-surface-200 p-3 dark:border-surface-800"
+      class="flex flex-col items-center gap-2.5 px-3 pb-4 pt-3"
       [class.p-2]="slim()"
     >
-      <!-- Avatar → profile page -->
+      <!-- Avatar → profile page (soft ring + online dot) -->
       <a
         routerLink="/profile"
         [pTooltip]="slim() ? (session.user()?.name ?? '') : ''"
         [tooltipPosition]="tooltipPos()"
-        class="block rounded-full transition-transform hover:scale-105"
+        class="relative block rounded-full ring-2 ring-white/15 transition duration-200 hover:scale-105 hover:ring-white/35"
         aria-label="Profile"
       >
         <p-avatar [label]="initials()" [size]="slim() ? 'normal' : 'large'" shape="circle"
-          styleClass="bg-primary! text-primary-contrast!" />
+          styleClass="bg-white/15! text-white! font-semibold!" />
+        <span
+          class="absolute bottom-0 end-0 size-3 rounded-full bg-emerald-400 ring-2"
+          style="--tw-ring-color: var(--pack-sidebar-color)"
+        ></span>
       </a>
 
       @if (!slim()) {
@@ -45,12 +49,12 @@ import { JALALI_MONTHS, JALALI_WEEKDAYS_FULL, dateToJalali, faDigits } from '../
         <div
           [pTooltip]="('season.' + season) | transloco"
           [tooltipPosition]="tooltipPos()"
-          class="flex items-center justify-center gap-1.5 text-xs font-medium text-surface-700 dark:text-surface-200"
+          class="flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-medium ring-1 ring-white/10"
         >
-          <span class="grid size-5 shrink-0 place-items-center">
+          <span class="grid size-4 shrink-0 place-items-center">
             @switch (season) {
               @case ('spring') {
-                <svg viewBox="0 0 24 24" class="size-5" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 24 24" class="size-4" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 13v8" stroke="#16a34a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
                   <path d="M12 18c-2 0-3.6-1-4.2-2.6" stroke="#16a34a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
                   <g fill="#f472b6">
@@ -61,7 +65,7 @@ import { JALALI_MONTHS, JALALI_WEEKDAYS_FULL, dateToJalali, faDigits } from '../
                 </svg>
               }
               @case ('summer') {
-                <svg viewBox="0 0 24 24" class="size-5" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 24 24" class="size-4" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="12" cy="12" r="4" fill="#fbbf24"/>
                   <g stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round">
                     <line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/>
@@ -72,13 +76,13 @@ import { JALALI_MONTHS, JALALI_WEEKDAYS_FULL, dateToJalali, faDigits } from '../
                 </svg>
               }
               @case ('autumn') {
-                <svg viewBox="0 0 24 24" class="size-5" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 24 24" class="size-4" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 3c4 2 6 5 6 9 0 3.3-2.4 6-6 6s-6-2.7-6-6c0-4 2-7 6-9z" fill="#ea580c"/>
                   <path d="M12 6v12M12 10l3-2M12 13l-3-2M12 16l3-2" stroke="#7c2d12" stroke-width="1" fill="none" stroke-linecap="round"/>
                 </svg>
               }
               @case ('winter') {
-                <svg viewBox="0 0 24 24" class="size-5" xmlns="http://www.w3.org/2000/svg" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round">
+                <svg viewBox="0 0 24 24" class="size-4" xmlns="http://www.w3.org/2000/svg" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round">
                   <line x1="12" y1="2" x2="12" y2="22"/><line x1="3" y1="7" x2="21" y2="17"/><line x1="21" y1="7" x2="3" y2="17"/>
                   <g stroke-width="1.3">
                     <path d="M12 5l-2 1.6M12 5l2 1.6"/><path d="M12 19l-2-1.6M12 19l2-1.6"/>
