@@ -3,13 +3,14 @@ import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@ang
 import { RouterOutlet } from '@angular/router';
 import { PortalInfo } from '../../core/models/portal-info.model';
 import { PortalInfoService } from '../../core/services/portal-info.service';
+import { SettingsStore } from '../../core/services/settings.store';
 
 @Component({
   selector: 'app-auth-layout',
   imports: [RouterOutlet, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="flex min-h-dvh overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+    <div dir="ltr" class="flex min-h-dvh overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
 
       <!-- Left branding panel (desktop only) -->
       <div class="hidden lg:flex lg:w-1/2 relative flex-col items-center justify-center overflow-hidden">
@@ -139,7 +140,7 @@ import { PortalInfoService } from '../../core/services/portal-info.service';
       </div>
 
       <!-- Right login panel -->
-      <div class="relative flex flex-col justify-center w-full px-4 py-12 sm:px-6 lg:px-12 lg:w-1/2">
+      <div [attr.dir]="settings.isRtl() ? 'rtl' : 'ltr'" class="relative flex flex-col justify-center w-full px-4 py-12 sm:px-6 lg:px-12 lg:w-1/2">
 
         <!-- Mobile: ambient background blobs -->
         <div class="pointer-events-none absolute inset-0 overflow-hidden lg:hidden" aria-hidden="true">
@@ -175,6 +176,7 @@ import { PortalInfoService } from '../../core/services/portal-info.service';
 })
 export class AuthLayout implements OnInit {
   private readonly portalInfoService = inject(PortalInfoService);
+  protected readonly settings = inject(SettingsStore);
 
   protected readonly portal = signal<PortalInfo | null>(null);
 
