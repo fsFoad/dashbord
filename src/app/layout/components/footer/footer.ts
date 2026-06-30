@@ -14,7 +14,7 @@ import { LocalizedDatePipe } from '../../../shared/pipes/localized-date.pipe';
  */
 @Component({
   selector: 'app-footer',
-  imports: [TranslocoModule, WhatsNew],
+  imports: [TranslocoModule, WhatsNew, Tooltip, LocalizedDatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer
