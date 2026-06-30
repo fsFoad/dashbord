@@ -90,21 +90,21 @@ import { PortalInfoService } from '../../core/services/portal-info.service';
                          'bg-gradient-to-br from-purple-500/10 to-transparent': f.color === 'purple'
                        }">
                   </div>
-                  <div class="relative flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/5 transition-all duration-300 h-full"
+                  <div class="relative flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5 transition-all duration-300 h-full"
                        [ngClass]="{
                          'group-hover:border-sky-400/30': f.color === 'sky',
                          'group-hover:border-indigo-400/30': f.color === 'indigo',
                          'group-hover:border-emerald-400/30': f.color === 'emerald',
                          'group-hover:border-purple-400/30': f.color === 'purple'
                        }">
-                    <div class="flex-shrink-0 mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center"
+                    <div class="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center"
                          [ngClass]="{
                            'bg-gradient-to-br from-sky-500/20 to-indigo-500/20': f.color === 'sky',
                            'bg-gradient-to-br from-indigo-500/20 to-purple-500/20': f.color === 'indigo',
                            'bg-gradient-to-br from-emerald-500/20 to-teal-500/20': f.color === 'emerald',
                            'bg-gradient-to-br from-purple-500/20 to-pink-500/20': f.color === 'purple'
                          }">
-                      <svg class="w-4 h-4"
+                      <svg class="w-3.5 h-3.5"
                            [ngClass]="{
                              'text-sky-300': f.color === 'sky',
                              'text-indigo-300': f.color === 'indigo',
@@ -115,9 +115,9 @@ import { PortalInfoService } from '../../core/services/portal-info.service';
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="f.icon"></path>
                       </svg>
                     </div>
-                    <div>
-                      <h3 class="text-sm font-semibold text-white mb-0.5">{{ f.title }}</h3>
-                      <p class="text-xs text-sky-100/70">{{ f.description }}</p>
+                    <div class="min-w-0">
+                      <h3 class="text-xs font-semibold text-white leading-tight">{{ f.title }}</h3>
+                      <p class="text-[10px] text-sky-100/70 leading-tight whitespace-nowrap">{{ f.description }}</p>
                     </div>
                   </div>
                 </div>
