@@ -30,8 +30,9 @@ export const CHANGELOG: Release[] = [
     version: '2.10.0',
     date: '2026-06-30',
     entries: [
-      { type: 'feature', fa: 'نوار بالا: نمایش «نام کاربری» به‌جای عکس کاربر؛ با کلیک، منوی پروفایل/تنظیمات ظاهری/خروج باز می‌شود', en: 'Topbar: shows the username instead of a user photo; clicking it opens profile / appearance settings / logout' },
-      { type: 'feature', fa: 'نشانگر فصلی در نوار بالا: آیکون فصل جاری به‌همراه تاریخ شمسی روز و ماه (بدون سال)', en: 'Seasonal indicator in the topbar: an icon for the current season plus today’s Jalali day and month (no year)' },
+      { type: 'feature', fa: 'انتقال اکشن‌های سراسری (جستجو، زبان، دارک/لایت، اعلان‌ها، تنظیمات ظاهری، منوی پروفایل با آواتار دایره‌ای) از نوار بالا به بالای منو در ساید‌بار؛ نوار بالا فقط دکمه منو و بردکرامب را نگه می‌دارد', en: 'Moved the global actions (search, language, dark/light, notifications, appearance settings, profile menu with circular avatar) from the topbar to the top of the sidebar; the topbar now keeps only the menu toggle and breadcrumb' },
+      { type: 'feature', fa: 'نشانگر فصلی در ساید‌بار: آیکون فصل جاری به‌همراه تاریخ شمسی روز و ماه (بدون سال)', en: 'Seasonal indicator in the sidebar: an icon for the current season plus today’s Jalali day and month (no year)' },
+      { type: 'improvement', fa: 'افزودن «نام کاربری» به مدل کاربر؛ زیر نام کاربر در منوی پروفایل ساید‌بار نمایش داده می‌شود', en: 'Added username to the user model; shown under the user name in the sidebar profile area' },
     ],
   },
   {
