@@ -15,7 +15,7 @@
       [outlined]="true"
       size="small"
     />
-   <!-- <a routerLink="/dashboard/analytics">
+    <a routerLink="/dashboard/analytics">
       <p-button [label]="'analytics.title' | transloco" icon="pi pi-chart-line" severity="secondary" size="small" />
     </a>
     @if (widgets.editMode()) {
@@ -41,12 +41,12 @@
         size="small"
         (onClick)="widgets.editMode.set(true)"
       />
-    }-->
+    }
   </div>
 </div>
 
 <!-- Hidden widgets (restore chips, edit mode only) -->
-<!--@if (widgets.editMode() && widgets.hidden().length) {
+@if (widgets.editMode() && widgets.hidden().length) {
   <div class="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-dashed border-surface-300 p-3 dark:border-surface-700">
     <span class="text-xs text-muted-color">{{ 'dashboard.hiddenWidgets' | transloco }}:</span>
     @for (id of widgets.hidden(); track id) {
@@ -60,7 +60,7 @@
       </button>
     }
   </div>
-}-->
+}
 
 <!-- Widget grid -->
 <div class="grid grid-cols-12 gap-4">

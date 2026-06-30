@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { BRANDING } from '../../core/config/branding.config';
 import { resolveSiteMegaMenu } from '../../core/config/menu.config';
@@ -9,6 +9,7 @@ import { THEME_PACKS } from '../../core/config/theme-packs.config';
 import { LanguageService } from '../../core/services/language.service';
 import { Footer } from '../components/footer/footer';
 import { SiteMegaMenu } from './site-mega-menu/site-mega-menu';
+import { SiteMobileAccordion } from './site-mobile-menu/site-mobile-accordion';
 
 /**
  * "Site" layout — a public-facing shell with a modern, clean horizontal
@@ -23,7 +24,7 @@ import { SiteMegaMenu } from './site-mega-menu/site-mega-menu';
  */
 @Component({
   selector: 'app-site-layout',
-  imports: [RouterLink, RouterLinkActive, RouterOutlet, TranslocoModule, Footer, SiteMegaMenu],
+  imports: [RouterLink, RouterOutlet, TranslocoModule, Footer, SiteMegaMenu, SiteMobileAccordion],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="flex min-h-dvh flex-col bg-surface-50 dark:bg-surface-950">
@@ -189,24 +190,11 @@ import { SiteMegaMenu } from './site-mega-menu/site-mega-menu';
           <div
             class="animate-fade-up mx-auto mt-2 max-w-[80rem] overflow-hidden rounded-2xl border border-surface-200 bg-surface-0/95 p-2 shadow-lg dark:border-surface-800 dark:bg-surface-900/95 lg:hidden"
           >
-            <nav class="flex flex-col gap-0.5">
+            <nav class="flex max-h-[70vh] flex-col gap-0.5 overflow-y-auto">
               @for (link of navLinks; track link.id) {
-                <a
-                  [routerLink]="firstRoute(link)"
-                  [fragment]="link.fragment"
-                  routerLinkActive
-                  #rlaM="routerLinkActive"
-                  (click)="mobileOpen.set(false)"
-                  [class.bg-primary]="rlaM.isActive"
-                  [class.text-primary-contrast]="rlaM.isActive"
-                  [class.text-surface-700]="!rlaM.isActive"
-                  [class.dark:text-surface-200]="!rlaM.isActive"
-                  [class.hover:bg-surface-100]="!rlaM.isActive"
-                  [class.dark:hover:bg-surface-800]="!rlaM.isActive"
-                  class="rounded-xl px-4 py-3 text-sm font-medium transition-colors"
-                >
-                  {{ link.labelKey | transloco }}
-                </a>
+                <app-site-mobile-accordion
+                  [item]="link"
+                  (navigate)="mobileOpen.set(false)" />
               }
               <a
                 routerLink="/dashboard"
@@ -261,14 +249,5 @@ export class SiteLayout {
         { passive: true },
       );
     }
-  }
-  /** First navigable route inside an item (for mobile category taps). */
-  protected firstRoute(item: MenuItem): string | undefined {
-    if (item.route) return item.route;
-    for (const c of item.children ?? []) {
-      const r = this.firstRoute(c);
-      if (r) return r;
-    }
-    return undefined;
   }
 }

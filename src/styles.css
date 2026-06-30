@@ -428,3 +428,51 @@ body {
   /* tighter paginator on mobile */
   .p-paginator { flex-wrap: wrap; row-gap: 0.25rem; }
 }
+
+/* ============================================================
+ * data-table: frozen (sticky) columns via pure CSS.
+ * ستون frozen هنگام اسکرول افقی در لبه‌ی شروع می‌چسبد.
+ * (بدون نیاز به دایرکتیو PrimeNG — فقط position: sticky)
+ * ============================================================ */
+.dt-frozen {
+  position: sticky;
+  inset-inline-start: 0;                 /* در RTL سمت راست، در LTR سمت چپ می‌چسبد */
+  z-index: 2;
+  background-color: var(--p-surface-0);  /* پس‌زمینه لازم است تا محتوای زیرین دیده نشود */
+}
+.app-dark .dt-frozen {
+  background-color: var(--p-surface-900);
+}
+/* سرستونِ frozen کمی بالاتر تا روی بدنه بماند */
+thead .dt-frozen {
+  z-index: 3;
+  background-color: var(--p-surface-50);
+}
+.app-dark thead .dt-frozen {
+  background-color: var(--p-surface-800);
+}
+/* سایه‌ی ظریف لبه‌ی ستون frozen برای جداسازی بصری */
+.dt-frozen::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 6px;
+  transform: translateX(100%);
+  background: linear-gradient(to left, transparent, rgb(0 0 0 / 0.06));
+  pointer-events: none;
+}
+[dir='rtl'] .dt-frozen::after {
+  transform: translateX(-100%);
+  background: linear-gradient(to right, transparent, rgb(0 0 0 / 0.06));
+}
+
+/* data-table: آیتم خطرناک (حذف) در منوی راست‌کلیک ردیف */
+.dt-menu-danger .p-menuitem-link,
+.dt-menu-danger .p-contextmenu-item-link {
+  color: var(--p-red-500);
+}
+.dt-menu-danger .p-menuitem-icon,
+.dt-menu-danger .p-contextmenu-item-icon {
+  color: var(--p-red-500);
+}

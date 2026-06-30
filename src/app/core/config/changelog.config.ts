@@ -27,6 +27,134 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.7.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'حذف قطعی resize/reorder ستون: دایرکتیوهای pReorderableColumn و pResizableColumn در PrimeNG 21 با این روش شناسایی نمی‌شوند (سه بار خطای NG8002). برای حفظ API صادق، این دو قابلیت و config مربوطه حذف شدند. سایر قابلیت‌های جدول کامل و فعال‌اند', en: 'Definitively removed column resize/reorder: pReorderableColumn and pResizableColumn are not recognized this way in PrimeNG 21 (NG8002 three times). To keep the API honest, these two features and their config were removed. All other table features remain complete and active' },
+      { type: 'fix', fa: 'رفع هشدار NG8113: حذف import بلااستفاده‌ی RouterLinkActive از site-layout (پس از تبدیل منوی موبایل به آکاردئون دیگر استفاده نمی‌شد)', en: 'Fixed NG8113 warning: removed the unused RouterLinkActive import from site-layout (no longer used after the mobile menu became an accordion)' },
+    ],
+  },
+  {
+    version: '2.7.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای TS2339 (cm): منوی راست‌کلیک همیشه رندر می‌شود تا ارجاع template در دسترس باشد', en: 'Fixed TS2339 (cm): the context menu is always rendered so its template reference is available' },
+      { type: 'feature', fa: 'افزودن گروه‌بندی ردیف با هدر گروه (rowGroupMode: subheader) که قبل از هر گروه یک ردیف عنوان با تعداد اعضا نشان می‌دهد، در کنار حالت rowspan؛ و تلاش مجدد برای فعال‌سازی resize/reorder ستون از طریق فلگ‌های p-table و دایرکتیوهای سرستون', en: 'Added row grouping with a group header (rowGroupMode: subheader) showing a title row with member count before each group, alongside rowspan mode; and re-attempted column resize/reorder via p-table flags and header directives' },
+    ],
+  },
+  {
+    version: '2.7.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'دو قابلیت نهایی به رپر جدول اضافه شد: (۱) منوی راست‌کلیک روی ردیف (context menu) از طریق input [rowMenu] با آیتم‌های دارای آیکون و حالت danger؛ (۲) ادغام سلول‌ها با rowspan از طریق config.rowGroupField که ردیف‌های متوالی با مقدار یکسانِ آن فیلد را به‌صورت یک سلولِ ادغام‌شده نمایش می‌دهد. نمونه‌ها در گالری اضافه شدند. حالا data-table کامل است', en: 'Two final features added to the table wrapper: (1) row right-click context menu via [rowMenu] input with icon and danger-styled items; (2) cell merging with rowspan via config.rowGroupField, which renders consecutive rows sharing that field value as one merged cell. Examples added to the gallery. The data-table is now complete' },
+    ],
+  },
+  {
+    version: '2.6.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای TS2322: ورودی stateStorage جدول PrimeNG مقدار undefined نمی‌پذیرد (فقط local یا session). حالا همیشه local است و فعال/غیرفعال بودن ذخیره‌سازی از طریق ptableStateKey کنترل می‌شود (کلید معتبر وقتی stateKey داده شده، رشته‌ی خالی در غیر این صورت)', en: 'Fixed TS2322: the PrimeNG table stateStorage input does not accept undefined (only local or session). It is now always local, and whether persistence is active is controlled via ptableStateKey (a valid key when stateKey is provided, empty string otherwise)' },
+    ],
+  },
+  {
+    version: '2.6.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'نوار انتخاب پیشرفته در رپر جدول: وقتی ردیفی انتخاب می‌شود نواری با شمارنده، دکمه‌ی «انتخاب همه‌ی رکوردها» (کل داده، نه فقط صفحه‌ی فعلی) و دکمه‌ی «پاک‌کردن انتخاب» نمایش داده می‌شود. با گزینه‌های config: selectionToolbar و selectAllAcrossPages. باکس دستی انتخاب در گالری حذف و با این نوار جایگزین شد', en: 'Advanced selection toolbar in the table wrapper: when rows are selected, a bar appears with a counter, a “select all records” button (entire dataset, not just the current page) and a “clear selection” button. Controlled via config: selectionToolbar and selectAllAcrossPages. The manual selection box in the gallery was removed in favor of this toolbar' },
+    ],
+  },
+  {
+    version: '2.6.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'ذخیره‌ی وضعیت جدول (state save) به رپر اضافه شد: با دادن input [stateKey]، وضعیت جدول در localStorage ذخیره و پس از بارگذاری مجدد بازیابی می‌شود — شامل جستجوی سراسری و ستون‌های مخفی (مدیریت‌شده توسط رپر) و نیز sort/filter/page (از طریق stateStorage داخلی p-table). متد clearState برای پاک‌کردن و بازنشانی هم اضافه شد', en: 'Added table state persistence to the wrapper: provide [stateKey] and the table state is saved to localStorage and restored after reload — covering global search and hidden columns (managed by the wrapper) plus sort/filter/page (via p-table built-in stateStorage). A clearState method to reset is also included' },
+    ],
+  },
+  {
+    version: '2.5.5',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای NG2011: کلاس‌های ReorderableColumn/ResizableColumn در PrimeNG 21 standalone نیستند و قابل import مستقیم نبودند. تصمیم تمیز: قابلیت resize/reorder ستون به‌کلی از config حذف شد تا API صادق بماند (هر گزینه‌ای که در config هست واقعاً کار کند). سایر ۱۵+ قابلیت رپر کامل و فعال‌اند', en: 'Fixed NG2011: ReorderableColumn/ResizableColumn are not standalone in PrimeNG 21 and could not be imported directly. Clean decision: removed column resize/reorder from the config entirely so the API stays honest (every config option actually works). The other 15+ wrapper features remain complete and active' },
+    ],
+  },
+  {
+    version: '2.5.4',
+    date: '2026-06-27',
+    entries: [
+      { type: 'improvement', fa: 'تلاش برای فعال‌سازی resize/reorder ستون در رپر جدول: کلاس‌های ReorderableColumn و ResizableColumn از primeng/table import و دایرکتیوهای متناظر به سرستون‌ها بازگردانده شدند. اگر نام کلاس‌ها در این نسخه‌ی PrimeNG متفاوت باشد و خطای build بدهد، باید حذف شوند', en: 'Attempt to enable column resize/reorder in the table wrapper: imported ReorderableColumn and ResizableColumn from primeng/table and restored the directives on headers. If the class names differ in this PrimeNG version and cause a build error, they should be removed' },
+    ],
+  },
+  {
+    version: '2.5.3',
+    date: '2026-06-27',
+    entries: [
+      { type: 'improvement', fa: 'پاک‌سازی معماری (clean architecture): رپر گلوبال data-table از shared/data-table به shared/components/data-table منتقل شد تا با سایر رپرهای گلوبال یکدست باشد؛ مسیرهای import به‌روز شدند؛ یک barrel (index.ts) برای shared/components اضافه شد تا importها تمیزتر شوند. کد بدون console.log و TODO باقی‌مانده است', en: 'Clean-architecture pass: moved the global data-table wrapper from shared/data-table to shared/components/data-table for consistency with the other global wrappers; updated import paths; added a barrel (index.ts) for shared/components for cleaner imports. Codebase has no leftover console.log or TODO' },
+    ],
+  },
+  {
+    version: '2.5.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع سه خطای رپر جدول: (۱) expandedRowKeys از two-way به one-way تغییر کرد؛ (۲و۳) دایرکتیوهای سطح ستونِ pReorderableColumn و pResizableColumn که در TableModule نیستند و خطا می‌دادند حذف شدند (resize/reorder ستون موقتاً غیرفعال تا import دایرکتیو جداگانه اضافه شود). سایر امکانات (row expansion، row reorder، sort، filter، toggle، export، edit) فعال‌اند', en: 'Fixed three table-wrapper errors: (1) expandedRowKeys changed from two-way to one-way; (2,3) removed the column-level pReorderableColumn and pResizableColumn directives that are not in TableModule and were erroring (column resize/reorder temporarily disabled until the separate directive import is added). Other features (row expansion, row reorder, sort, filter, toggle, export, edit) remain enabled' },
+    ],
+  },
+  {
+    version: '2.5.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع هشدار NG8113: حذف import بلااستفاده‌ی FaBooleanPipe از رپر جدول (نوع boolean با آیکون رندر می‌شود نه پایپ). خود پایپ برای استفاده‌ی آینده باقی است', en: 'Fixed NG8113 warning: removed the unused FaBooleanPipe import from the table wrapper (boolean type renders via icon, not the pipe). The pipe itself remains exported for future use' },
+    ],
+  },
+  {
+    version: '2.5.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'رپر جدول به نسخه‌ی کامل ارتقا یافت و تقریباً همه‌ی امکانات جدول PrimeNG را پوشش می‌دهد: مرتب‌سازی تک/چندستونه، فیلتر ستونی (text/numeric/date/boolean/select)، انتخاب تکی (radio) و چندتایی، نمایش/مخفی ستون‌ها (column toggle)، تغییر اندازه و جابه‌جایی ستون (resize/reorder)، باز شدن ردیف (row expansion)، جابه‌جایی ردیف (row reorder)، ویرایش درون‌خطی (cell edit)، اسکرول مجازی (virtual scroll)، خروجی CSV با پشتیبانی فارسی، caption، و حالت موبایل کارت + infinite scroll. همه از طریق config سراسری یا موضعی قابل کنترل‌اند. تمپلیت به فایل HTML جدا منتقل شد', en: 'Upgraded the table wrapper to a complete version covering almost all PrimeNG table features: single/multi-column sort, column filters (text/numeric/date/boolean/select), single (radio) and multiple selection, column toggle, column resize/reorder, row expansion, row reorder, inline cell edit, virtual scroll, CSV export with Persian support, caption, and mobile card mode + infinite scroll. All controllable via global or local config. Template moved to a separate HTML file' },
+    ],
+  },
+  {
+    version: '2.4.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'قابلیت ستون ثابت (frozen) رپر جدول راه‌اندازی شد — با CSS sticky خالص (بدون وابستگی به دایرکتیو PrimeNG): ستون‌هایی که frozen: true دارند هنگام اسکرول افقی در لبه می‌چسبند، با پس‌زمینه و سایه‌ی جداکننده و پشتیبانی کامل RTL/دارک. ستون شناسه در جدول نمونه frozen شد', en: 'Enabled the table wrapper frozen-column feature using pure CSS sticky (no PrimeNG directive dependency): columns with frozen: true stick to the edge during horizontal scroll, with a background and divider shadow and full RTL/dark support. The ID column in the sample table is now frozen' },
+    ],
+  },
+  {
+    version: '2.4.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع خطای NG8002 رپر جدول: دایرکتیو pFrozenColumn حذف شد (در TableModule نیست و نیاز به import جدا دارد). فیلد frozen در مدل برای استفاده‌ی آینده رزرو ماند', en: 'Fixed the table wrapper NG8002 error: removed pFrozenColumn (not part of TableModule, needs a separate import). The frozen field remains reserved in the model for future use' },
+    ],
+  },
+  {
+    version: '2.4.0',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'کامپوننت رپر قابل‌استفاده‌ی مجدد <app-data-table> برای جدول‌های PrimeNG اضافه شد: پیکربندی سراسری از طریق سرویس (provideTableDefaults) و موضعی از طریق input [config]؛ ستون‌ها با typeهای آماده (currency/tag/date/number/boolean/badge) و پایپ‌های فارسی، یا ng-template سفارشی #cell؛ دو حالت داده (آرایه‌ی محلی یا lazy سرور با رویداد onLazyLoad)؛ جستجوی سراسری، مرتب‌سازی، انتخاب، صفحه‌بندی؛ و در موبایل به‌جای جدول، هر ردیف یک کارت با infinite scroll. جدول گالری با همین رپر بازنویسی شد', en: 'Added a reusable <app-data-table> wrapper for PrimeNG tables: global config via a service (provideTableDefaults) and local via [config] input; columns with built-in types (currency/tag/date/number/boolean/badge) and Persian pipes, or a custom #cell ng-template; two data modes (local array or server lazy via onLazyLoad); global search, sorting, selection, pagination; and on mobile each row becomes a card with infinite scroll. The gallery table was rewritten to use this wrapper' },
+    ],
+  },
+  {
+    version: '2.3.2',
+    date: '2026-06-27',
+    entries: [
+      { type: 'feature', fa: 'منوی موبایل سایت به آکاردئون چندسطحی تبدیل شد: حالا تمام عمق منو (دسته‌ها و زیرمنوها) با باز/بسته شدن گروه‌ها و تورفتگی بر اساس سطح در دسترس است. کامپوننت بازگشتی SiteMobileAccordion ساخته شد', en: 'The site mobile menu is now a multi-level accordion: the full menu depth (categories and submenus) is reachable via collapsible groups with depth-based indentation. Added a recursive SiteMobileAccordion component' },
+    ],
+  },
+  {
+    version: '2.3.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع مشکل انتخاب‌نشدن تب‌های گالری در موبایل: به‌جای select بومی (که در حالت zoneless درست کار نمی‌کرد) از یک گرید دو‌ستونه‌ی دکمه استفاده شد که قطعاً قابل لمس و انتخاب است', en: 'Fixed gallery tabs not being selectable on mobile: replaced the native select (which misbehaved under zoneless) with a reliable two-column grid of buttons' },
+    ],
+  },
+  {
+    version: '2.3.1',
+    date: '2026-06-27',
+    entries: [
+      { type: 'fix', fa: 'رفع مشکل انتخاب تب‌های گالری در موبایل: در موبایل به‌جای نوار اسکرول افقی (که انتخاب را سخت می‌کرد) یک منوی کشویی نمایش داده می‌شود؛ در دسکتاپ تب‌ها در چند ردیف wrap می‌شوند تا همه در دسترس باشند', en: 'Fixed gallery tab selection on mobile: a dropdown is shown on mobile instead of a horizontally-scrolling bar (which made tabs hard to reach); on desktop the tabs wrap to multiple rows so all are reachable' },
+    ],
+  },
+  {
     version: '2.3.0',
     date: '2026-06-27',
     entries: [

@@ -30,8 +30,32 @@ type SectionId = 'form' | 'input' | 'button' | 'panel' | 'table' | 'data' | 'nav
       <p class="mt-1 text-sm text-muted-color">{{ 'gallery.subtitle' | transloco }}</p>
     </div>
 
-    <!-- section tabs -->
-    <div class="thin-scroll mb-5 flex gap-1 overflow-x-auto rounded-xl bg-surface-100 p-1 dark:bg-surface-800/60">
+    <!-- section selector -->
+    <!-- mobile: 2-column grid of buttons (reliable tap targets, no native select) -->
+    <div class="mb-5 grid grid-cols-2 gap-1.5 sm:hidden">
+      @for (s of sections; track s.id) {
+        <button
+          type="button"
+          (click)="active.set(s.id)"
+          class="flex items-center gap-2 rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors"
+          [class.border-primary]="active() === s.id"
+          [class.bg-primary]="active() === s.id"
+          [class.text-primary-contrast]="active() === s.id"
+          [class.border-surface-200]="active() !== s.id"
+          [class.bg-surface-0]="active() !== s.id"
+          [class.text-surface-700]="active() !== s.id"
+          [class.dark:border-surface-700]="active() !== s.id"
+          [class.dark:bg-surface-900]="active() !== s.id"
+          [class.dark:text-surface-200]="active() !== s.id"
+        >
+          <i [class]="s.icon" class="shrink-0 text-sm"></i>
+          <span class="truncate">{{ s.labelKey | transloco }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- desktop: horizontal tabs (wraps to multiple rows so all are reachable) -->
+    <div class="mb-5 hidden flex-wrap gap-1 rounded-xl bg-surface-100 p-1 dark:bg-surface-800/60 sm:flex">
       @for (s of sections; track s.id) {
         <button
           type="button"
