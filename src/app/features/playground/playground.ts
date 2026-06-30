@@ -12,6 +12,7 @@ import { JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DatePicker, PickerValue } from '../../shared/components/date-picker/date-picker';
 import { SkeletonTable } from '../../shared/components/skeleton/skeleton-table';
+import { Breadcrumb, Crumb } from '../../layout/components/breadcrumb/breadcrumb';
 
 /**
  * Phase-2 playground: every button triggers one piece of the technical core
@@ -20,7 +21,7 @@ import { SkeletonTable } from '../../shared/components/skeleton/skeleton-table';
  */
 @Component({
   selector: 'app-playground',
-  imports: [JsonPipe, FormsModule, TranslocoModule, ButtonModule, SkeletonTable, DatePicker],
+  imports: [JsonPipe, FormsModule, TranslocoModule, ButtonModule, SkeletonTable, DatePicker, Breadcrumb],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
@@ -144,6 +145,28 @@ import { SkeletonTable } from '../../shared/components/skeleton/skeleton-table';
       </div>
     </div>
 
+    <!-- Breadcrumb overflow showcase (50 levels) -->
+    <h2 class="mt-10 text-lg font-bold text-surface-900 dark:text-surface-0">
+      {{ 'playground.breadcrumb.title' | transloco }}
+    </h2>
+    <p class="mt-1 text-sm text-muted-color">{{ 'playground.breadcrumb.hint' | transloco }}</p>
+    <div class="mt-4 flex flex-col gap-4">
+      <!-- Mimics the topbar width budget: breadcrumb on the start, fixed actions on the end -->
+      <div class="flex items-center gap-2 rounded-2xl border border-surface-200 bg-surface-0 p-3 dark:border-surface-800 dark:bg-surface-900">
+        <div class="min-w-0 flex-1">
+          <app-breadcrumb [items]="demoCrumbs" />
+        </div>
+        <div class="flex shrink-0 items-center gap-1 text-muted-color">
+          <span class="grid size-9 place-items-center rounded-lg border border-surface-200 dark:border-surface-700"><i class="pi pi-search text-sm"></i></span>
+          <span class="grid size-9 place-items-center rounded-lg border border-surface-200 dark:border-surface-700"><i class="pi pi-bell text-sm"></i></span>
+        </div>
+      </div>
+      <!-- A single very long crumb to show per-item truncation -->
+      <div class="rounded-2xl border border-surface-200 bg-surface-0 p-3 dark:border-surface-800 dark:bg-surface-900">
+        <app-breadcrumb [items]="demoLongCrumbs" />
+      </div>
+    </div>
+
     <!-- result area: skeleton while loading, then the data -->
     <div class="mt-6">
       @if (busy()) {
@@ -194,6 +217,19 @@ export class Playground {
 
   protected readonly busy = signal(false);
   protected readonly projects = signal<Project[]>([]);
+
+  // breadcrumb overflow showcase: a 50-level trail (last item is the current page)
+  protected readonly demoCrumbs: Crumb[] = Array.from({ length: 50 }, (_, i) => ({
+    label: `سطح ${i + 1}`,
+    route: i < 49 ? '/playground' : undefined,
+  }));
+
+  // a trail whose labels are individually very long, to show per-crumb truncation
+  protected readonly demoLongCrumbs: Crumb[] = [
+    { label: 'پروژه‌ها', route: '/playground' },
+    { label: 'گزارش جامع بین‌بخشی فصلی واحدهای تابعه و ستادی سازمان', route: '/playground' },
+    { label: 'پیوست شماره دوازده با عنوان بسیار طولانی برای آزمایش بریدن تک‌خطی' },
+  ];
 
   // date-picker showcase models
   protected pDate: PickerValue = null;

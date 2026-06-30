@@ -46,10 +46,10 @@ import { SettingsStore } from '../../core/services/settings.store';
 
       <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
 
-        <!-- Email -->
+        <!-- Username -->
         <div class="space-y-1.5">
-          <label for="email" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
-            {{ 'auth.email' | transloco }}
+          <label for="username" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+            {{ 'auth.username' | transloco }}
           </label>
           <div class="relative group">
             <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-sky-500/0 to-purple-500/0
@@ -59,14 +59,14 @@ import { SettingsStore } from '../../core/services/settings.store';
               <svg class="w-5 h-5 text-slate-400 group-focus-within:text-sky-500 transition-colors duration-300"
                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
               </svg>
             </div>
             <input
-              id="email"
-              type="email"
-              formControlName="email"
-              autocomplete="email"
+              id="username"
+              type="text"
+              formControlName="username"
+              autocomplete="username"
               [dir]="settings.isRtl() ? 'rtl' : 'ltr'"
               class="relative w-full rounded-2xl border border-slate-200 dark:border-slate-700
                      bg-white/80 dark:bg-slate-800/80 ps-12 pe-4 py-3.5
@@ -74,17 +74,17 @@ import { SettingsStore } from '../../core/services/settings.store';
                      placeholder:text-slate-400 dark:placeholder:text-slate-500
                      focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-transparent
                      transition-all duration-300 backdrop-blur-sm"
-              [placeholder]="'auth.email' | transloco"
+              [placeholder]="'auth.username' | transloco"
             />
           </div>
-          @if (form.controls.email.touched && form.controls.email.invalid) {
+          @if (form.controls.username.touched && form.controls.username.invalid) {
             <p class="text-xs text-red-500 dark:text-red-400 flex items-center gap-1.5">
               <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
                   d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                   clip-rule="evenodd"/>
               </svg>
-              {{ 'validation.email' | transloco }}
+              {{ 'validation.required' | transloco }}
             </p>
           }
         </div>
@@ -263,8 +263,8 @@ export class Login {
   protected otp = '';
 
   protected readonly form = this.fb.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
+    username: ['1', [Validators.required]],
+    password: ['1', Validators.required],
   });
 
   protected submit(): void {
@@ -274,8 +274,8 @@ export class Login {
     }
     this.busy.set(true);
     this.errorKey.set(null);
-    const { email, password } = this.form.getRawValue();
-    this.auth.login(email, password).subscribe({
+    const { username, password } = this.form.getRawValue();
+    this.auth.login(username, password).subscribe({
       next: (res) => {
         this.busy.set(false);
         if (isTwoFactor(res)) {

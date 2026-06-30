@@ -177,6 +177,13 @@
     ora "9.3.0"
     rxjs "7.8.2"
 
+"@angular/animations@^21.0.0":
+  version "21.2.17"
+  resolved "https://registry.npmjs.org/@angular/animations/-/animations-21.2.17.tgz"
+  integrity sha512-zOW8FFa9qfbVkZ5TulxDkl1C3+gEjWfAAD5Z2MycA6pjVJQlLYPiTAGq+flOQ3yZfTT0z6kd5rejQMXWI81Dvg==
+  dependencies:
+    tslib "^2.3.0"
+
 "@angular/build@^21.0.0":
   version "21.2.15"
   resolved "https://registry.npmjs.org/@angular/build/-/build-21.2.15.tgz"
@@ -285,6 +292,13 @@
   integrity sha512-WKu8XeRSNZo+a+aDDZ3M5OtReF7KYqR/PmZ2l1lSf6N5EEAmc+Ky4aqbRhTL/mTSfHrO4+TDJ4C5A2tFmuwIeA==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
+    tslib "^2.3.0"
+
+"@angular/platform-browser-dynamic@^21.0.0":
+  version "21.2.17"
+  resolved "https://registry.npmjs.org/@angular/platform-browser-dynamic/-/platform-browser-dynamic-21.2.17.tgz"
+  integrity sha512-r/BU/T8bOTghP3fIXhzYf5wcMcAmhWnAFv3p4asCCPXomaktoas70wYcMaDH+pK1LAFBxLwzBWHm36MpFlTMFg==
+  dependencies:
     tslib "^2.3.0"
 
 "@angular/platform-browser@^21.0.0":
@@ -1168,6 +1182,13 @@
   version "1.0.9"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.9.tgz"
   integrity sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==
+
+"@types/node@^20.0.0":
+  version "20.19.43"
+  resolved "https://registry.npmjs.org/@types/node/-/node-20.19.43.tgz"
+  integrity sha512-6oYBAi5ikg4Pl+kGsoYtawUMBT2zZMCvPNF7pVLnHZfd1zf38DRiWn/gT01RYCdUqkv7Fhr+C9ot4/tb+2sVvA==
+  dependencies:
+    undici-types "~6.21.0"
 
 "@types/raf@^3.4.0":
   version "3.4.3"
@@ -4204,6 +4225,11 @@ typescript@~5.9.0:
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz"
   integrity sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==
 
+undici-types@~6.21.0:
+  version "6.21.0"
+  resolved "https://registry.npmjs.org/undici-types/-/undici-types-6.21.0.tgz"
+  integrity sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==
+
 undici@^6.25.0:
   version "6.26.0"
   resolved "https://registry.npmjs.org/undici/-/undici-6.26.0.tgz"
@@ -4526,3 +4552,8 @@ zod@4.3.6:
   version "4.3.6"
   resolved "https://registry.npmjs.org/zod/-/zod-4.3.6.tgz"
   integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
+
+zone.js@^0.16.2:
+  version "0.16.2"
+  resolved "https://registry.npmjs.org/zone.js/-/zone.js-0.16.2.tgz"
+  integrity sha512-Eky7p2Z1Ig3NnbfodSPoARCjKBSTFMnE/ACsP1L/XJEfY4SdOFce19BsUCWVwL6K5ABZFy5J3bjcMWffX+YM3Q==

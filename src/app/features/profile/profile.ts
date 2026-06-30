@@ -10,8 +10,10 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { TagModule } from 'primeng/tag';
+import { MenuCustomizer } from '../../layout/components/sidebar/menu-customizer/menu-customizer';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionStore } from '../../core/services/session.store';
+import { SettingsStore } from '../../core/services/settings.store';
 import { ToastService } from '../../core/services/toast.service';
 
 function matchValidator(group: AbstractControl): ValidationErrors | null {
@@ -22,7 +24,7 @@ function matchValidator(group: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, TranslocoModule, ButtonModule, InputTextModule, Password, TagModule, FormsModule, ToggleSwitch],
+  imports: [ReactiveFormsModule, TranslocoModule, ButtonModule, InputTextModule, Password, TagModule, FormsModule, ToggleSwitch, MenuCustomizer],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
@@ -114,7 +116,38 @@ function matchValidator(group: AbstractControl): ValidationErrors | null {
           {{ (twoFactor() ? 'profile.2fa.on' : 'profile.2fa.off') | transloco }}
         </div>
       </div>
+
+      <!-- Sidebar menu behaviour -->
+      <div class="rounded-2xl border border-surface-200 bg-surface-0 p-6 dark:border-surface-800 dark:bg-surface-900">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="font-semibold">{{ 'profile.menu.title' | transloco }}</h2>
+            <p class="mt-1 text-sm text-muted-color">{{ 'profile.menu.desc' | transloco }}</p>
+          </div>
+          <p-toggleswitch [ngModel]="menuCollapsible()" (ngModelChange)="settings.setMenuCollapsible($event)" />
+        </div>
+        <div class="mt-3 flex items-center gap-2 text-sm text-muted-color">
+          <i [class]="menuCollapsible() ? 'pi pi-chevron-down' : 'pi pi-bars'"></i>
+          {{ (menuCollapsible() ? 'profile.menu.collapsible' : 'profile.menu.flat') | transloco }}
+        </div>
+      </div>
+
+      <!-- Menu customization (pin / hide items) -->
+      <div class="rounded-2xl border border-surface-200 bg-surface-0 p-6 dark:border-surface-800 dark:bg-surface-900">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 class="font-semibold">{{ 'menu.customize.title' | transloco }}</h2>
+            <p class="mt-1 text-sm text-muted-color">{{ 'menu.customize.hint' | transloco }}</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <p-button [label]="'menu.customize' | transloco" icon="pi pi-sliders-v"
+            size="small" severity="secondary" (onClick)="customizerOpen.set(true)" />
+        </div>
+      </div>
     </div>
+
+    <app-menu-customizer [(visible)]="customizerOpen" />
   `,
 })
 export class Profile {
@@ -122,9 +155,12 @@ export class Profile {
   private readonly auth = inject(AuthService);
   private readonly toast = inject(ToastService);
   private readonly session = inject(SessionStore);
+  protected readonly settings = inject(SettingsStore);
+  protected readonly menuCollapsible = this.settings.menuCollapsible;
 
   protected readonly twoFactor = signal(false);
   protected readonly savingTwoFactor = signal(false);
+  protected readonly customizerOpen = signal(false);
 
   constructor() {
     this.auth.getTwoFactor().subscribe({ next: (r) => this.twoFactor.set(r.enabled) });

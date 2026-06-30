@@ -27,6 +27,25 @@ export interface Release {
 
 export const CHANGELOG: Release[] = [
   {
+    version: '2.9.0',
+    date: '2026-06-30',
+    entries: [
+      { type: 'improvement', fa: 'انتقال «شخصی‌سازی منو» از پایین ساید‌بار به صفحه پروفایل (دکمه‌ای که همان دیالوگ سنجاق/مخفی‌کردن را باز می‌کند)', en: 'Moved “Customize menu” from the sidebar footer to the profile page (a button that opens the same pin/hide dialog)' },
+      { type: 'improvement', fa: 'مدیریت سرریز بِرِدکرامب: مسیرهای طولانی به‌صورت پیش‌فرض جمع می‌شوند (اولین + … + دو مورد آخر) و با کلیک باز شده و افقی اسکرول می‌خورند؛ دیگر با جستجوی نوار بالا تداخل ندارند', en: 'Breadcrumb overflow handling: long trails collapse by default (first + … + last two) and expand with horizontal scroll on click, so they never collide with the topbar search' },
+      { type: 'feature', fa: 'نمونه‌ی نمایشی بِرِدکرامب ۵۰سطحی در صفحه Playground برای مشاهده‌ی رفتار سرریز', en: 'Added a 50-level breadcrumb showcase on the Playground page to demonstrate overflow behaviour' },
+    ],
+  },
+  {
+    version: '2.8.0',
+    date: '2026-06-30',
+    entries: [
+      { type: 'feature', fa: 'ورود با نام کاربری به‌جای ایمیل؛ حساب پیش‌فرض نمایشی «۱» با رمز «۱» و فرم لاگین از پیش پر می‌شود', en: 'Login by username instead of email; the default demo account is “1” / “1” and the login form is pre-filled with it' },
+      { type: 'feature', fa: 'بازیابی رمز عبور با شماره همراه: ابتدا شماره موبایل وارد می‌شود، سپس کد تأیید (OTP) دریافت و بررسی می‌شود (کد نمایشی همیشه ۱۱۱۱۱۱)', en: 'Password recovery by mobile number: enter your phone, then receive and verify an OTP code (demo code is always 111111)' },
+      { type: 'feature', fa: 'تاگل «نمایش منوی کناری» در پروفایل: روشن = گروه‌های منو جمع‌شونده (باز/بسته با کلیک)؛ خاموش = نمایش کامل کل منو بدون جمع‌شدن', en: 'New “Sidebar menu display” toggle in the profile: on = collapsible menu groups (expand/collapse on click); off = the entire menu shown fully expanded' },
+      { type: 'improvement', fa: 'شماره همراه در بازیابی رمز: محدودیت طول و پذیرش پیش‌شماره‌ی +۹۸ علاوه بر فرمت ۰۹', en: 'Recovery phone field: length-limited and now accepts the +98 prefix in addition to the 09 format' },
+    ],
+  },
+  {
     version: '2.7.2',
     date: '2026-06-27',
     entries: [

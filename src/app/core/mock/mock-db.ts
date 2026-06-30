@@ -31,14 +31,17 @@ export const PROJECTS: Project[] = NAMES.map((name, i) => {
 });
 
 export interface MockUser extends User {
+  username: string;
   password: string;
+  phone?: string;
   twoFactor?: boolean;
 }
 
-/** Demo accounts (shown on the login page): both use password 123456. */
+/** Demo accounts. Login is by username; the default account is `1` / `1`. */
 export const USERS: MockUser[] = [
-  { id: 1, name: 'مدیر سیستم', email: 'admin@demo.com', password: '123456', roles: ['admin', 'user'], twoFactor: true },
-  { id: 2, name: 'کاربر آزمایشی', email: 'user@demo.com', password: '123456', roles: ['user'] },
+  { id: 1, name: 'کاربر پیش‌فرض', username: '1', email: 'one@demo.com', phone: '09120000001', password: '1', roles: ['admin', 'user'] },
+  { id: 2, name: 'مدیر سیستم', username: 'admin', email: 'admin@demo.com', phone: '09120000002', password: '123456', roles: ['admin', 'user'], twoFactor: true },
+  { id: 3, name: 'کاربر آزمایشی', username: 'user', email: 'user@demo.com', phone: '09120000003', password: '123456', roles: ['user'] },
 ];
 
 export function toPublicUser(u: MockUser): User {

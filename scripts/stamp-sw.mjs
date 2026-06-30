@@ -3,7 +3,7 @@
  * name changes on every release (→ old caches auto-purged on activate).
  *
  * Reads the version from src/app/core/config/changelog.config.ts (single
- * source of truth) and writes it into dist/**/sw.js after `ng build`.
+ * source of truth) and writes it into the built sw.js under dist after `ng build`.
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';

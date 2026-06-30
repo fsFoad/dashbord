@@ -26,21 +26,8 @@
     </ul>
   </nav>
 
-  <!-- Footer: customize menu -->
+  <!-- Footer: app version (menu customization now lives in the profile page) -->
   <div class="shrink-0 border-t border-surface-200 p-2 dark:border-surface-800">
-    <button
-      type="button"
-      (click)="customizerOpen.set(true)"
-      [pTooltip]="slim() ? ('menu.customize' | transloco) : ''"
-      tooltipPosition="top"
-      class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
-    >
-      <i class="pi pi-sliders-v shrink-0 text-base"></i>
-      @if (!slim()) {
-        <span class="truncate-1">{{ 'menu.customize' | transloco }}</span>
-      }
-    </button>
-
     <!-- App version + release date -->
     <button
       type="button"
@@ -59,5 +46,3 @@
     </button>
   </div>
 </div>
-
-<app-menu-customizer [(visible)]="customizerOpen" />
