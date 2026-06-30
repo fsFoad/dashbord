@@ -30,8 +30,8 @@ export const CHANGELOG: Release[] = [
     version: '2.10.0',
     date: '2026-06-30',
     entries: [
-      { type: 'feature', fa: 'انتقال اکشن‌های سراسری (جستجو، زبان، دارک/لایت، اعلان‌ها، تنظیمات ظاهری، خروج) از نوار بالا به بالای منو در ساید‌بار؛ نوار بالا فقط دکمه منو و بردکرامب را نگه می‌دارد', en: 'Moved the global actions (search, language, dark/light, notifications, appearance settings, logout) from the topbar to the top of the sidebar; the topbar now keeps only the menu toggle and breadcrumb' },
-      { type: 'feature', fa: 'بلوک پروفایل ساید‌بار: آواتار دایره‌ای وسط‌چین که با کلیک به صفحه پروفایل می‌رود، نام کاربری زیر آن، و تاریخ شمسیِ تاریخ جاری سیستم با نام روز هفته (مثل «سه‌شنبه ۹ تیر»، بدون سال) به‌همراه آیکون فصل', en: 'Sidebar profile block: a centered circular avatar that links to the profile page, the username beneath it, and the current system date in Jalali with the weekday name (e.g. «سه‌شنبه ۹ تیر», no year) alongside a season icon' },
+      { type: 'feature', fa: 'بلوک پروفایل در بالای ساید‌بار: آواتار دایره‌ای وسط‌چین که با کلیک به صفحه پروفایل می‌رود، نام کاربری زیر آن، و تاریخ شمسیِ تاریخ جاری سیستم با نام روز هفته و آیکون فصل (مثل «سه‌شنبه ۹ تیر»، بدون سال)', en: 'Profile block at the top of the sidebar: a centered circular avatar that links to the profile page, the username beneath it, and the current system date in Jalali with the weekday name and a season icon (e.g. «سه‌شنبه ۹ تیر», no year)' },
+      { type: 'feature', fa: 'نوار بالا شامل اکشن‌های سراسری: جستجو، زبان، دارک/لایت، اعلان‌ها، تنظیمات ظاهری و خروج', en: 'Topbar holds the global actions: search, language, dark/light, notifications, appearance settings and logout' },
       { type: 'improvement', fa: 'افزودن «نام کاربری» به مدل کاربر؛ در بلوک پروفایل ساید‌بار نمایش داده می‌شود', en: 'Added username to the user model; shown in the sidebar profile block' },
     ],
   },

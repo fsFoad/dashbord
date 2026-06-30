@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { Tooltip } from 'primeng/tooltip';
 import { MenuItemComponent } from './menu-item/menu-item';
-import { SidebarActions } from './sidebar-actions/sidebar-actions';
+import { SidebarProfile } from './sidebar-profile/sidebar-profile';
 import { BRANDING } from '../../../core/config/branding.config';
 import { LayoutService } from '../../../core/services/layout.service';
 import { MenuService } from '../../../core/services/menu.service';
@@ -13,7 +13,7 @@ import { LocalizedDatePipe } from '../../../shared/pipes/localized-date.pipe';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, TranslocoModule, Tooltip, MenuItemComponent, SidebarActions, LocalizedDatePipe],
+  imports: [RouterLink, TranslocoModule, Tooltip, MenuItemComponent, SidebarProfile, LocalizedDatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sidebar.html',
 })
