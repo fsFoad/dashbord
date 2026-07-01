@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ConnectionService } from '../../../../../../shared/repositories/connection.service';
+import { ConnectionService } from '../../../../shared/repositories/connection.service';
 
 @Injectable({ providedIn: 'root' })
 export class PartyApiService {

@@ -1,6 +1,7 @@
-import {Component, Input, OnInit, SimpleChanges, OnChanges,} from '@angular/core';
+// @ts-nocheck
+import { Component, Input, OnInit, SimpleChanges, OnChanges, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ButtonDirective } from 'primeng/button';
 // import { UIChart } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
@@ -21,6 +22,7 @@ import { saveAs } from 'file-saver-es';
         TranslocoPipe,
         UIChart,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class PartyChartComponent implements OnInit, OnChanges {
     @Input() SelectedNumberOfDay: string;

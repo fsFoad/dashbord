@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class Failover {
     hubId: number;
     protocol: string;

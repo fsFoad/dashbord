@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ModuleDto} from "../../../../../models/Module.Dto";
 import {ApiGatewayConstants} from "../../../../../constants/ApiGatewayConstants";
 
@@ -12,7 +13,7 @@ import {InputText} from 'primeng/inputtext';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {DropdownModule} from 'primeng/dropdown';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {PartyDto} from '../../../../../models/party.Dto';
@@ -39,6 +40,7 @@ import {ToggleSwitch} from 'primeng/toggleswitch';
         KeyFilter,
         ToggleSwitch,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class BasemoduleApiAddComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

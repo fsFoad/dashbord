@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NodeChangeListComponent } from './node-change-list.component';

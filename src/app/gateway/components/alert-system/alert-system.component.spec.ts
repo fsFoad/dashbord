@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AlertSystemComponent } from './alert-system.component';

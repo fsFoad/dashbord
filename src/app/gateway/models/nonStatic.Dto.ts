@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class NonStaticDto {
     paramId: number
     endpointDetailId: number

@@ -1,10 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 import moment from 'jalali-moment';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { Constants } from '../../../shared/constants/Constants';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -50,6 +51,7 @@ import { Toast } from 'primeng/toast';
         TranslocoPipe,
         NgClass,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class FactorComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

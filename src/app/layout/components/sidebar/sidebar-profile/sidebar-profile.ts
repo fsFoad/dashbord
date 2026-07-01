@@ -31,8 +31,13 @@ import { JALALI_MONTHS, JALALI_WEEKDAYS_FULL, dateToJalali, faDigits } from '../
         class="relative block rounded-full ring-2 ring-white/15 transition duration-200 hover:scale-105 hover:ring-white/35"
         aria-label="Profile"
       >
-        <p-avatar [label]="initials()" [size]="slim() ? 'normal' : 'large'" shape="circle"
-          styleClass="bg-white/15! text-white! font-semibold!" />
+        @if (session.user()?.avatarUrl) {
+          <p-avatar [image]="session.user()!.avatarUrl" [size]="slim() ? 'normal' : 'large'" shape="circle"
+            styleClass="bg-white/15!" />
+        } @else {
+          <p-avatar [label]="initials()" [size]="slim() ? 'normal' : 'large'" shape="circle"
+            styleClass="bg-white/15! text-white! font-semibold!" />
+        }
         <span
           class="absolute bottom-0 end-0 size-3 rounded-full bg-emerald-400 ring-2"
           style="--tw-ring-color: var(--pack-sidebar-color)"
@@ -40,9 +45,9 @@ import { JALALI_MONTHS, JALALI_WEEKDAYS_FULL, dateToJalali, faDigits } from '../
       </a>
 
       @if (!slim()) {
-        <!-- Username only -->
-        <span class="truncate-1 max-w-full text-center text-sm font-semibold" dir="ltr">
-          {{ session.user()?.username }}
+        <!-- Full name -->
+        <span class="truncate-1 max-w-full text-center text-sm font-semibold">
+          {{ session.user()?.name }}
         </span>
 
         <!-- Current Jalali date: weekday + day + month (from the system date, no year) -->

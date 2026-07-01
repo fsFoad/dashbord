@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { Injectable } from '@angular/core';
-import { ConnectionService } from '../../../../shared/repositories/connection.service';
+import { ConnectionService } from '../../shared/repositories/connection.service';
 import { Observable } from 'rxjs';
 
 

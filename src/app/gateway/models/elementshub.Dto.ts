@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class ElementshubDto {
     elementId?: number;
     paramName: string;

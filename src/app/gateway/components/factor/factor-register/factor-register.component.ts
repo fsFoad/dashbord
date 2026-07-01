@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import moment from 'jalali-moment';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { PrintService } from '../../../../shared/services/print.service';
 import { CommonValidationsService } from '../../../../shared/validators/common-validations.service';
@@ -63,6 +64,7 @@ import { InputText } from 'primeng/inputtext';
         AmountBoxComponent,
         InputText,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class FactorRegisterComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

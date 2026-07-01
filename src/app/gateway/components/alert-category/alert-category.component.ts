@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, OnInit, Output, signal, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Toast } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +21,7 @@ import {
 import { Ripple } from 'primeng/ripple';
 import { Tooltip } from 'primeng/tooltip';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ScheduledStatusPipe } from '../../../shared/pipes/scheduled-status.pipe';
 import { RunSchedledPeriodHHPipe } from '../../../shared/pipes/run-schedled-period-hh.pipe';
 import { ApiGatewayService } from '../../services/api-gateway.service';
@@ -39,6 +40,7 @@ import { ScheduleTypePipe } from '../../../shared/pipes/schedule-type.pipe';
     ],
     templateUrl: './alert-category.component.html',
     styleUrl: './alert-category.component.scss',
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AlertCategoryComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

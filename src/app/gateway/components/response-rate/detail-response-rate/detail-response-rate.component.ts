@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+﻿// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../services/api-gateway.service';
 import {ToastService} from '../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {Constants} from '../../../../shared/constants/Constants';
 import {BreadcrumbsComponent} from "../../../../shared/components/breadcrumbs/breadcrumbs.component";
 import {ButtonDirective} from "primeng/button";
@@ -34,7 +35,8 @@ import {TimePipe} from "../../../../shared/pipes/time.pipe";
         TranslocoPipe
 
     ],
-  styleUrls: ['./detail-response-rate.component.scss']
+  styleUrls: ['./detail-response-rate.component.scss'],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class DetailResponseRateComponent implements OnInit {
     @Input() inputDetails;

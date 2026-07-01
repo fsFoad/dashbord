@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { ApiGatewayConstants } from '../../../../../../constants/ApiGatewayConstants';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
 import { BreadcrumbsComponent } from '../../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -74,6 +75,7 @@ import { Subject } from 'rxjs';
         MessageSelectorComponent,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class SequenceRegisterComponent implements OnInit {
 

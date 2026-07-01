@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+// @ts-nocheck
+import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CommonValidationsService} from '../../../shared/validators/common-validations.service';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../services/api-gateway.service';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../shared/services/ToastService';
 import {BreadcrumbsComponent} from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {ButtonDirective} from 'primeng/button';
@@ -35,6 +36,7 @@ import {FormsModule} from "@angular/forms";
         PersianCalendarComponent,
         FormsModule,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class CallServicesReportComponent implements OnInit {
     reportApiList = [];

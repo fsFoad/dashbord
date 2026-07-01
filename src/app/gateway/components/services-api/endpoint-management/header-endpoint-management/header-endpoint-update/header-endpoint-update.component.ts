@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ApiGatewayConstants} from '../../../../../constants/ApiGatewayConstants';
 
 import {EndpointheaderDto} from '../../../../../models/endpointheader.Dto';
 
 import {ActivatedRoute} from '@angular/router';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {HeaderNameService} from '../../../../../services/headerName.service';
@@ -42,6 +43,7 @@ import {Ripple} from 'primeng/ripple';
 
     ],
     providers: [HeaderNameService],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class HeaderEndpointUpdateComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

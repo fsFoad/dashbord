@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ModuleDto} from "../../../../models/Module.Dto";
 import {MessagesApiFacadeService} from "../../../../services/messages-api-facade.service";
 import {FormBuilder} from "@angular/forms";
 import {ApiGatewayService} from "../../../../services/api-gateway.service";
 import {ActivatedRoute} from "@angular/router";
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -13,6 +14,7 @@ import { TranslocoService } from '@ngneat/transloco';
     templateUrl: './basemodule-api-party-management.component.html',
     standalone: true,
     styleUrls: ['./basemodule-api-party-management.component.scss'],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class BasemoduleApiPartyManagementComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

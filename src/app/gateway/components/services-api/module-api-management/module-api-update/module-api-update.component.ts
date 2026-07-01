@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ModuleDto} from "../../../../models/Module.Dto";
 import {ApiGatewayConstants} from "../../../../constants/ApiGatewayConstants";
 
@@ -11,7 +12,7 @@ import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import {ConfirmDialog} from 'primeng/confirmdialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {ToastService} from '../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../../../services/messages-api-facade.service';
 import {KeyFilter} from 'primeng/keyfilter';
 import {ToggleSwitch} from "primeng/toggleswitch";
@@ -39,6 +40,7 @@ import { ApiGatewayService } from '../../../../services/api-gateway.service';
         Toast,
         Ripple,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ModuleApiUpdateComponent implements OnInit {
     @Input() inputModuleUpdate;

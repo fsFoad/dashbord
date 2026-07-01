@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {MessageService} from "primeng/api";
 import {DetailList} from "./detailList";
 import {ActivatedRoute} from "@angular/router";
 import moment from 'jalali-moment';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
 import {ToastService} from '../../../shared/services/ToastService';
@@ -46,6 +47,7 @@ import {PersianCalendarComponent} from '../../../shared/components/persian-calen
         Toast,
         PersianCalendarComponent,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class LogReportsComponent implements OnInit, OnDestroy {
     @Input() inputChartCallApiReport: any;

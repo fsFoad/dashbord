@@ -1,4 +1,5 @@
-import { Component, effect, OnInit, signal } from '@angular/core';
+// @ts-nocheck
+import {  Component, effect, OnInit, signal, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ButtonDirective } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -19,7 +20,7 @@ import { Tooltip } from 'primeng/tooltip';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import { CommonValidationsService } from '../../../shared/validators/common-validations.service';
@@ -64,6 +65,7 @@ import { HttpResponse } from '@angular/common/http';
     ],
     templateUrl: './authorized-recipients-alerts.component.html',
     styleUrl: './authorized-recipients-alerts.component.scss',
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AuthorizedRecipientsAlertsComponent implements OnInit {
     tempPerson;

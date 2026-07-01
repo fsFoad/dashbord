@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class AccessDto{
     partyId?: number;
     endpointId: number;

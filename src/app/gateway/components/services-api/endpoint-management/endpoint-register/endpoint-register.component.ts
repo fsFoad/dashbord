@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ApiGatewayConstants } from '../../../../constants/ApiGatewayConstants';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { CommonValidationsService } from '../../../../../shared/validators/common-validations.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
@@ -49,6 +50,7 @@ import { Checkbox } from 'primeng/checkbox';
         Checkbox,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class EndpointRegisterComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

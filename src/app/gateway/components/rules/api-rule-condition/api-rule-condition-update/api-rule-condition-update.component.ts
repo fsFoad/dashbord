@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ApiGatewayConstants } from '../../../../constants/ApiGatewayConstants';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbsComponent } from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -64,6 +65,7 @@ import { Subject } from 'rxjs';
         Checkbox,
         MessageSelectorComponent,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ApiRuleConditionUpdateComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

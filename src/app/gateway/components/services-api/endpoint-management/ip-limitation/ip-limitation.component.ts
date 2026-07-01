@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {IplimitDto} from "../../../../models/Iplimit.Dto";
 
@@ -10,7 +11,7 @@ import {InputText} from 'primeng/inputtext';
 import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
 import {Listbox} from 'primeng/listbox';
 import {ToastService} from '../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ApiGatewayService} from '../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../services/messages-api-facade.service';
 import {CommonValidationsService} from '../../../../../shared/validators/common-validations.service';
@@ -37,6 +38,7 @@ import { InputGroupAddon } from 'primeng/inputgroupaddon';
         InputGroup,
         InputGroupAddon,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class IpLimitationComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

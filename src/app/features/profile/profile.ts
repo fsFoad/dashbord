@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import {
@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Password } from 'primeng/password';
 import { TagModule } from 'primeng/tag';
+import { Avatar } from 'primeng/avatar';
 import { MenuCustomizer } from '../../layout/components/sidebar/menu-customizer/menu-customizer';
 import { AuthService } from '../../core/services/auth.service';
 import { SessionStore } from '../../core/services/session.store';
@@ -24,7 +25,7 @@ function matchValidator(group: AbstractControl): ValidationErrors | null {
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, TranslocoModule, ButtonModule, InputTextModule, Password, TagModule, FormsModule, ToggleSwitch, MenuCustomizer],
+  imports: [ReactiveFormsModule, TranslocoModule, ButtonModule, InputTextModule, Password, TagModule, FormsModule, ToggleSwitch, MenuCustomizer, Avatar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
@@ -32,13 +33,37 @@ function matchValidator(group: AbstractControl): ValidationErrors | null {
     </h1>
 
     <div class="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <!-- Account info -->
+      <!-- Account info + avatar upload -->
       <div class="rounded-2xl border border-surface-200 bg-surface-0 p-6 dark:border-surface-800 dark:bg-surface-900">
-        <div class="flex items-center gap-4">
-          <span class="grid size-16 place-items-center rounded-2xl bg-primary text-2xl font-bold text-primary-contrast">
-            {{ initials() }}
-          </span>
-          <div class="min-w-0">
+
+        <!-- Avatar section -->
+        <div class="flex flex-col items-center gap-3 mb-6">
+          <div class="relative group cursor-pointer" (click)="openAvatarPicker()">
+            @if (user()?.avatarUrl) {
+              <p-avatar [image]="user()!.avatarUrl" size="xlarge" shape="circle"
+                styleClass="size-24! ring-4 ring-primary/20" />
+            } @else {
+              <p-avatar [label]="initials()" size="xlarge" shape="circle"
+                styleClass="size-24! text-2xl! font-bold! bg-primary! text-primary-contrast!" />
+            }
+            <!-- Hover overlay -->
+            <div class="absolute inset-0 flex flex-col items-center justify-center rounded-full
+                        bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <i class="pi pi-camera text-white text-xl"></i>
+              <span class="text-white text-[10px] mt-1">{{ 'profile.avatar.change' | transloco }}</span>
+            </div>
+          </div>
+          <input #avatarInput type="file" accept="image/*" class="hidden"
+            (change)="onAvatarSelected($event)" />
+          @if (user()?.avatarUrl) {
+            <p-button [label]="'profile.avatar.remove' | transloco" icon="pi pi-trash"
+              severity="danger" size="small" [text]="true" (onClick)="removeAvatar()" />
+          }
+        </div>
+
+        <!-- Name + roles -->
+        <div class="flex items-center gap-4 mb-6">
+          <div class="min-w-0 flex-1">
             <div class="truncate-1 text-lg font-semibold">{{ user()?.name }}</div>
             <div class="truncate-1 text-sm text-muted-color" dir="ltr">{{ user()?.email }}</div>
             <div class="mt-2 flex flex-wrap gap-1.5">
@@ -49,7 +74,7 @@ function matchValidator(group: AbstractControl): ValidationErrors | null {
           </div>
         </div>
 
-        <form [formGroup]="nameForm" (ngSubmit)="saveName()" class="mt-6 flex flex-col gap-3">
+        <form [formGroup]="nameForm" (ngSubmit)="saveName()" class="flex flex-col gap-3">
           <label for="pname" class="text-sm font-medium">{{ 'profile.name' | transloco }}</label>
           <input pInputText id="pname" formControlName="name" />
           @if (nameForm.controls.name.touched && nameForm.controls.name.invalid) {
@@ -158,6 +183,8 @@ export class Profile {
   protected readonly settings = inject(SettingsStore);
   protected readonly menuCollapsible = this.settings.menuCollapsible;
 
+  protected readonly avatarInput = viewChild.required<ElementRef<HTMLInputElement>>('avatarInput');
+
   protected readonly twoFactor = signal(false);
   protected readonly savingTwoFactor = signal(false);
   protected readonly customizerOpen = signal(false);
@@ -179,6 +206,36 @@ export class Profile {
       .map((p) => p.charAt(0))
       .join('');
   });
+
+  protected openAvatarPicker(): void {
+    this.avatarInput().nativeElement.click();
+  }
+
+  protected onAvatarSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      this.toast.warn('profile.avatar.tooBig');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = reader.result as string;
+      const u = this.session.user();
+      if (u) this.session.updateUser({ ...u, avatarUrl: url });
+      this.toast.success('profile.avatar.saved');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  protected removeAvatar(): void {
+    const u = this.session.user();
+    if (u) {
+      const { avatarUrl: _, ...rest } = u;
+      this.session.updateUser(rest);
+    }
+    this.avatarInput().nativeElement.value = '';
+  }
 
   protected readonly nameForm = this.fb.nonNullable.group({
     name: [this.user()?.name ?? '', Validators.required],

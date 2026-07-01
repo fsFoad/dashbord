@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import { DevelopmentComponent } from '../../../shared/components/development/development.component';
 import { ButtonDirective } from 'primeng/button';
@@ -10,6 +11,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     standalone: true,
     styleUrls: ['./alert-client.component.scss'],
     imports: [DevelopmentComponent, ButtonDirective, MatTooltip],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AlertClientComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

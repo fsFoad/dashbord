@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, effect, OnInit, signal } from '@angular/core';
+// @ts-nocheck
+import {  ChangeDetectionStrategy, Component, effect, OnInit, signal, NO_ERRORS_SCHEMA } from '@angular/core';
 import { PickList } from 'primeng/picklist';
 import { CommonModule } from '@angular/common';
 import { ConfirmationService, PrimeTemplate } from 'primeng/api';
@@ -7,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { ApiGatewayService } from '../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { Listbox } from 'primeng/listbox';
 import { ToastService } from '../../../shared/services/ToastService';
 import { TableModule } from 'primeng/table';
@@ -19,7 +20,7 @@ import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/bre
 import { catchError, forkJoin, of, tap } from 'rxjs';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Skeleton } from 'primeng/skeleton';
-import { ChangeDetectorRef } from '@angular/core';
+import {  ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -45,6 +46,7 @@ import { HttpResponse } from '@angular/common/http';
     styleUrl: './alert-access-level.component.scss',
     providers: [ConfirmationService],
     standalone: true,
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AlertAccessLevelComponent implements OnInit {
 

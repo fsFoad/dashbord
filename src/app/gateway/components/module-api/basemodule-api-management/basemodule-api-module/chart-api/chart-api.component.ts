@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ApiGatewayConstants} from "../../../../../constants/ApiGatewayConstants";
 
 import {ActivatedRoute} from "@angular/router";
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
@@ -30,6 +31,7 @@ import {Toast} from 'primeng/toast';
         UIChart,
         Toast,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ChartApiComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

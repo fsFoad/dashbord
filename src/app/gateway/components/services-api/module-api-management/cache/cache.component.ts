@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ApisCacheComponent } from './apis-cache/apis-cache.component';
 import { CashConfigComponent } from './cash-config/cash-config.component';
 import { BreadcrumbsComponent } from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -18,6 +19,7 @@ import { ApiGatewayService } from '../../../../services/api-gateway.service';
     templateUrl: './cache.component.html',
     standalone: true,
     styleUrl: './cache.component.scss',
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class CacheComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

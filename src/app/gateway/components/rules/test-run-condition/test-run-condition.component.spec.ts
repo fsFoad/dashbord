@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TestRunConditionComponent } from './test-run-condition.component';

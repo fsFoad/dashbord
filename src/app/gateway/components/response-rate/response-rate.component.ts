@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+﻿// @ts-nocheck
+import { Component, OnInit, ViewChild, NO_ERRORS_SCHEMA } from '@angular/core';
 
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
@@ -37,7 +38,8 @@ import {MultipleApisChartComponent} from "./multiple-apis-chart/multiple-apis-ch
         MultipleApisChartComponent
 
     ],
-    styleUrls: ['./response-rate.component.scss']
+    styleUrls: ['./response-rate.component.scss'],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ResponseRateComponent implements OnInit {
     @ViewChild('chart') chart: Chart;

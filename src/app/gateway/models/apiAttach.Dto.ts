@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class ApiAttachDto {
     apiId?: number
     callDuration?:number

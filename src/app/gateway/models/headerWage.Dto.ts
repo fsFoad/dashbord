@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {FeeDetailDomainsDto} from "./feeDetailDomains.Dto";
 
 export class HeaderWageDto

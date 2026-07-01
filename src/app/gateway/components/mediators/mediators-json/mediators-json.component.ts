@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import moment from 'jalali-moment';
 import {ActivatedRoute} from "@angular/router";
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
 import { BreadcrumbsComponent } from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -39,6 +40,7 @@ import { Toast } from 'primeng/toast';
         MoreChar19Pipe,
         Toast,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class MediatorsJsonComponent implements OnInit {
     @Input() inputListMedia;

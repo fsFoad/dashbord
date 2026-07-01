@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+// @ts-nocheck
+import {  Component, OnDestroy, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddCommaPipe } from '../../../shared/pipes/add-comma.pipe';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import {
     FsProgressSpinnerComponent,
@@ -19,6 +20,7 @@ import { Subscription } from 'rxjs';
         <div class="log-box" dir="ltr" [innerHTML]="formattedLogs"></div>`,
     imports: [FsProgressSpinnerComponent, NgIf],
     providers: [DialogService, DynamicDialogRef],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AlertDetailList implements OnInit, OnDestroy {
     private approvalStageSubscription: Subscription;

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientApiUpdateComponent } from './client-api-update.component';

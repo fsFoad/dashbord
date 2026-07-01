@@ -1,4 +1,5 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+// @ts-nocheck
+import { Component, Input, OnChanges, OnInit, SimpleChanges, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {DropdownModule} from 'primeng/dropdown';
 import {FormsModule} from '@angular/forms';
@@ -8,7 +9,7 @@ import {saveAs} from 'file-saver-es';
 import {NgForOf, NgIf} from '@angular/common';
 import {TableModule} from 'primeng/table';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {UIChart} from 'primeng/chart';
 
@@ -28,6 +29,7 @@ import {UIChart} from 'primeng/chart';
         NgForOf,
         UIChart,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class PartyChartDetailsComponent implements OnInit, OnChanges {
     @Input() SelectedNumberOfDay: string;

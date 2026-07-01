@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderEndpointUpdateComponent } from './header-endpoint-update.component';

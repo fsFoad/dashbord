@@ -1,0 +1,26 @@
+export class ApiDto {
+    moduleId;
+    //moduleId
+    title;
+    name;
+    protocol;
+    type;
+    url;
+    timeout;
+    runningType;
+    status;
+    maxCall;
+    callDuration;
+    cashing_status;
+    cashing_expire;
+    description;
+    retryCount;
+    delayRetryCount;
+    limitForPeriod;
+    limitRefreshPeriod;
+    logRequestStatus;
+    logResponseStatus;
+    reverseStatus;
+    reverseCondition;
+    cookeSendStatus;
+}

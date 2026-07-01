@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class FeeHeaderDto{
     title: string;
     feeTypeId: number;

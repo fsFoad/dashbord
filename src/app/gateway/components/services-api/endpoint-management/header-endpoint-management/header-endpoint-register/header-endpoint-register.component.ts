@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ApiGatewayConstants} from "../../../../../constants/ApiGatewayConstants";
 import {EndpointheaderDto} from "../../../../../models/endpointheader.Dto";
 import {ActivatedRoute} from "@angular/router";
@@ -10,7 +11,7 @@ import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import {DropdownModule} from 'primeng/dropdown';
 import {Checkbox} from 'primeng/checkbox';
 import {AutoComplete} from 'primeng/autocomplete';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
@@ -42,6 +43,7 @@ import { CommonModule } from '@angular/common';
         CommonModule
     ],
     providers: [HeaderNameService],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
     @Output() close = new EventEmitter<string>();

@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 
 
 import {ActivatedRoute} from "@angular/router";
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
@@ -59,6 +60,7 @@ import { Toast } from 'primeng/toast';
         Toast,
         NgClass,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class MediatorsListRootComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

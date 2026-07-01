@@ -1,0 +1,20 @@
+export const BRANDING = {
+    appName: 'Dashboard',
+    appShortName: 'DB',
+    logoUrl: null,
+    defaults: {
+        language: 'fa',
+        darkMode: false,
+        themePreset: 'indigo',
+        surface: 'navy',
+        customPrimaryColor: null,
+        fontFamily: '"Vazirmatn", system-ui, sans-serif',
+        layout: 'dashboard',
+        menuMode: 'static',
+        sidebarCollapsed: false,
+        menuCollapsible: true,
+        density: 'normal',
+        surfaceStyle: 'glass',
+        themePack: 'meridian',
+    },
+};

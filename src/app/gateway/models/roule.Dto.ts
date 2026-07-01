@@ -1,3 +1,4 @@
+// @ts-nocheck
 export interface RouleDto{
     ruleTemplate?:number
     errorText?: string

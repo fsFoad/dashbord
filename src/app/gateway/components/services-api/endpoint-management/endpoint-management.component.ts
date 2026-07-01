@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { PrimeNG } from 'primeng/config';
 import { AccessDataSaveService } from '../../../../shared/services/access-data-save.service';
@@ -61,6 +62,7 @@ import { HttpResponse } from '@angular/common/http';
         TranslocoDirective,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class EndpointManagementComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

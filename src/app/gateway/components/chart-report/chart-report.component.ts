@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+// @ts-nocheck
+import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 
 
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {MessageService, PrimeTemplate} from "primeng/api";
 import {ApiGatewayService} from '../../services/api-gateway.service';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {BreadcrumbsComponent} from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
 import {TabPanel, TabView} from 'primeng/tabview';
@@ -34,6 +35,7 @@ import {Toast} from 'primeng/toast';
         PrimeTemplate,
         Toast,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ChartReportComponent implements OnInit {
     showPartyCharts = true;

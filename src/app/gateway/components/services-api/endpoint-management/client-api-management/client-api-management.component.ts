@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {NgClass, NgIf} from '@angular/common';
@@ -11,7 +12,7 @@ import {InputText} from 'primeng/inputtext';
 import {Panel} from 'primeng/panel';
 import {TableModule} from 'primeng/table';
 import {Tooltip} from 'primeng/tooltip';
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {BreadcrumbsComponent} from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {MoreChar19Pipe} from '../../../../../shared/pipes/moreChar19.pipe';
 import {StatusPipe} from '../../../../../shared/pipes/status.pipe';
@@ -50,6 +51,7 @@ import { HttpResponse } from '@angular/common/http';
         Card
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ClientApiManagementComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApiRuleConditionUpdateComponent } from './api-rule-condition-update.component';

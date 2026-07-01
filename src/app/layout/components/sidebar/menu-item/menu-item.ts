@@ -65,7 +65,7 @@ import { SettingsStore } from '../../../../core/services/settings.store';
         </button>
 
         @if (open() && !slim()) {
-          <ul class="space-y-0.5">
+          <ul class="relative ms-4 mt-0.5 space-y-0.5 border-s-2 border-white/15 ps-2">
             @for (child of it.children; track child.id) {
               <app-menu-item [item]="child" [level]="level() + 1" />
             }

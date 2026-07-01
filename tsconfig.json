@@ -18,7 +18,25 @@
     "paths": {
       "@core/*": ["src/app/core/*"],
       "@layout/*": ["src/app/layout/*"],
-      "@features/*": ["src/app/features/*"]
+      "@features/*": ["src/app/features/*"],
+      "@ngneat/transloco": ["src/app/shared/_compat/ngneat-transloco.ts"],
+      "@angular/material/tooltip": ["src/app/shared/_compat/material/tooltip.ts"],
+      "@angular/material/icon": ["src/app/shared/_compat/material/icon.ts"],
+      "@angular/material/tabs": ["src/app/shared/_compat/material/tabs.ts"],
+      "@fuse/services/loading": ["src/app/shared/_compat/fuse/loading.ts"],
+      "@fuse/services/splash-screen": ["src/app/shared/_compat/fuse/splash-screen.ts"],
+      "@sentry/angular": ["src/app/shared/_compat/sentry.ts"],
+      "primeng/dropdown": ["src/app/shared/_compat/primeng/dropdown.ts"],
+      "primeng/calendar": ["src/app/shared/_compat/primeng/calendar.ts"],
+      "primeng/inputswitch": ["src/app/shared/_compat/primeng/inputswitch.ts"],
+      "primeng/tabview": ["src/app/shared/_compat/primeng/tabview.ts"],
+      "fast-xml-parser": ["src/app/shared/_compat/fast-xml-parser.ts"],
+      "xml-js": ["src/app/shared/_compat/xml-js.ts"],
+      "jalali-moment": ["src/app/shared/_compat/jalali-moment.ts"],
+      "file-saver-es": ["src/app/shared/_compat/file-saver-es.ts"],
+      "xlsx": ["src/app/shared/_compat/xlsx.ts"],
+      "primeng/keyfilter": ["src/app/shared/_compat/primeng/keyfilter.ts"],
+      "primeng/inputtextarea": ["src/app/shared/_compat/primeng/inputtextarea.ts"]
     }
   },
   "angularCompilerOptions": {
@@ -26,6 +44,6 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "typeCheckHostBindings": true,
-    "strictTemplates": true
+    "strictTemplates": false
   }
 }

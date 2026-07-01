@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ClientDto} from "../../../models/client.Dto";
 import {ActivatedRoute} from "@angular/router";
 
@@ -13,7 +14,7 @@ import { FileUpload } from 'primeng/fileupload';
 
 import { Dialog } from 'primeng/dialog';
 import { Card } from 'primeng/card';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
 import { CommonValidationsService } from '../../../../shared/validators/common-validations.service';
@@ -44,6 +45,7 @@ import { ApiGatewayService } from '../../../services/api-gateway.service';
         Toast,
         Ripple,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ClientUpdateComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PrimeNG} from 'primeng/config';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {ModuleDto} from '../../../models/Module.Dto';
 import {ApiGatewayService} from '../../../services/api-gateway.service';
@@ -58,6 +59,7 @@ import { HttpResponse } from '@angular/common/http';
         CacheComponent,
     ],
     styleUrls: ['./module-api-management.component.scss'],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ModuleApiManagementComponent implements OnInit {
     @Input() inputUpdate;

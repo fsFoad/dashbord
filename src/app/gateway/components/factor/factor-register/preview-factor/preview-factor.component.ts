@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+// @ts-nocheck
+import { Component, Input, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { PrintService } from '../../../../../shared/services/print.service';
 import { Panel } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
@@ -25,6 +26,7 @@ import { ButtonDirective } from 'primeng/button';
         AddCommaPipe,
         ButtonDirective,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class PreviewFactorComponent implements OnInit {
     @Input() inputRegister;

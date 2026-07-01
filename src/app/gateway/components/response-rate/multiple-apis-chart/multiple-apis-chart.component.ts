@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+﻿// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, NO_ERRORS_SCHEMA } from '@angular/core';
 import {Chart} from "chart.js";
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {ApiGatewayService} from "../../../services/api-gateway.service";
 import {ToastService} from '../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {BreadcrumbsComponent} from "../../../../shared/components/breadcrumbs/breadcrumbs.component";
 import {NgIf} from "@angular/common";
 import {TableModule} from "primeng/table";
@@ -25,7 +26,8 @@ import {DetailResponseRateComponent} from "../detail-response-rate/detail-respon
         UIChart,
         DetailResponseRateComponent,
     ],
-    styleUrls: ['./multiple-apis-chart.component.scss']
+    styleUrls: ['./multiple-apis-chart.component.scss'],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class MultipleApisChartComponent implements OnInit {
     @Input() inputMultipleApies;

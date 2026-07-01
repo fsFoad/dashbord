@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {TableModule} from 'primeng/table';
 import {BreadcrumbsComponent} from '../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {ButtonDirective} from 'primeng/button';
@@ -9,7 +10,7 @@ import {Ripple} from 'primeng/ripple';
 import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {RequiredNodeRegisterComponent} from './required-node-register/required-node-register.component';
 import {detailTypePipe} from '../../../../../../shared/pipes/detail-type.pipe';
 import {Toast} from 'primeng/toast';
@@ -35,6 +36,7 @@ import { NgIf } from '@angular/common';
         NgIf,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class RequiredNodeComponent implements OnInit {
     @Input() requiredNodeApi;

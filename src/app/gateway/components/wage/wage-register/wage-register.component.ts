@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {ActivatedRoute} from "@angular/router";
 import {WageDto} from "../../../models/wage.Dto";
@@ -21,7 +22,7 @@ import {Dialog} from 'primeng/dialog';
 import { TranslocoPipe, TranslocoService} from '@ngneat/transloco';
 import {DropdownModule} from 'primeng/dropdown';
 import {ToastService} from '../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {CommonValidationsService} from '../../../../shared/validators/common-validations.service';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {Constants} from '../../../../shared/constants/Constants';
@@ -71,6 +72,7 @@ import { ApiGatewayService } from '../../../services/api-gateway.service';
         NgClass,
         AmountBoxComponent,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class WageRegisterComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

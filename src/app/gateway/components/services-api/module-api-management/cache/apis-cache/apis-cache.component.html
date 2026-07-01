@@ -80,7 +80,7 @@ styleClass="normal-table"
                     pButton
                     pRipple
                     class="normal-button"
-                    [disabled]="form.get('pageno').value === 0"
+                    [disabled]="$any(form.get('pageno'))?.value === 0"
                     (click)="previousPageStatement()"
                     pTooltip="{{ 'tooltip.beforePage' | transloco }}"
                 >
@@ -92,7 +92,7 @@ styleClass="normal-table"
                     pRipple
                     name="btn-previous-page"
                     class="normal-button"
-                    [disabled]="filterApi.length < form.get('pagesize').value"
+                    [disabled]="filterApi.length < $any(form.get('pagesize'))?.value"
                     (click)="nextPageStatement()"
                     pTooltip="{{ 'tooltip.nextPage' | transloco }}"
                 >

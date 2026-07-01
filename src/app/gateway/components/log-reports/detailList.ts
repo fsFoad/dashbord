@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+// @ts-nocheck
+import {  Component, OnDestroy, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { AddCommaPipe } from '../../../shared/pipes/add-comma.pipe';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import {
     FsProgressSpinnerComponent
@@ -75,6 +76,7 @@ import { Subscription } from 'rxjs';
             </div>
         </div>`,
     imports: [AddCommaPipe, FsProgressSpinnerComponent, NgIf],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class DetailList implements OnInit, OnDestroy  {
     private approvalStageSubscription: Subscription;

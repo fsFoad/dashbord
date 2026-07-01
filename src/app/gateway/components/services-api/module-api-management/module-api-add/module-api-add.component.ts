@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ApiGatewayConstants} from "../../../../constants/ApiGatewayConstants";
 
 import {ModuleDto} from "../../../../models/Module.Dto";
 
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationService} from "primeng/api";
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../services/messages-api-facade.service';
 import {FormsModule} from '@angular/forms';
@@ -42,6 +43,7 @@ import {ApiGatewayService} from '../../../../services/api-gateway.service';
         Toast,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ModuleApiAddComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

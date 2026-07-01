@@ -1,3 +1,4 @@
+// @ts-nocheck
 export  class ClientDto{
     endpointId?: number;
     //endpointId

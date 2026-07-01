@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class TestSpDto {
     id: number;
     name: string

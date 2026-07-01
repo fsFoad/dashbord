@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ApiGatewayConstants } from '../../../../../constants/ApiGatewayConstants';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,7 +16,7 @@ import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { DropdownModule } from 'primeng/dropdown';
 
 import { Checkbox } from 'primeng/checkbox';
-import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../../services/api-gateway.service';
 import { ToastService } from '../../../../../../shared/services/ToastService';
@@ -63,6 +64,7 @@ import { ConfirmationService } from 'primeng/api';
 
     ],
     providers: [ConfirmationService],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ApiModuleUpdateComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

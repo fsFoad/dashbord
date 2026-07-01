@@ -6,9 +6,146 @@ import { MenuItem } from '../models/menu-item.model';
  * sidebar. In later phases the per-user menu service filters/reorders this
  * by role and pinned items.
  */
-// ===== REAL MENU (active) =====
+// ===== GATEWAY MENU =====
 export const APP_MENU: MenuItem[] = [
-  { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
+
+  // صفحه اصلی
+  {
+    id: 'home',
+    labelKey: 'gw.home',
+    icon: 'pi pi-home',
+    route: '/main/home',
+  },
+
+  // اطلاعات پایه
+  {
+    id: 'base-info',
+    labelKey: 'gw.baseInfo',
+    icon: 'pi pi-file',
+    children: [
+      { id: 'messages', labelKey: 'gw.messages', icon: 'pi pi-envelope', route: '/main/messages-management' },
+      { id: 'rules', labelKey: 'gw.rules', icon: 'pi pi-list', route: '/main/rules' },
+    ],
+  },
+
+  // پیکربندی
+  {
+    id: 'config',
+    labelKey: 'gw.config',
+    icon: 'pi pi-cog',
+    children: [
+      { id: 'data-hub', labelKey: 'gw.dataHub', icon: 'pi pi-sitemap', route: '/main/data-hub' },
+      { id: 'recipients-alert', labelKey: 'gw.recipientsAlert', icon: 'pi pi-bell', route: '/main/recipients-alert' },
+      { id: 'alert-category', labelKey: 'gw.alertCategory', icon: 'pi pi-tag', route: '/main/alert-category' },
+      { id: 'alert-access-level', labelKey: 'gw.alertAccessLevel', icon: 'pi pi-users', route: '/main/alert-access-level' },
+    ],
+  },
+
+  // سرویس گیرندگان
+  {
+    id: 'clients-group',
+    labelKey: 'gw.clients',
+    icon: 'pi pi-users',
+    children: [
+      { id: 'party', labelKey: 'gw.party', icon: 'pi pi-user', route: '/main/party' },
+      { id: 'module-base', labelKey: 'gw.moduleBase', icon: 'pi pi-sitemap', route: '/main/moduleBase' },
+    ],
+  },
+
+  // آلارم ها
+  {
+    id: 'alert-management',
+    labelKey: 'gw.alertManagement',
+    icon: 'pi pi-exclamation-triangle',
+    route: '/main/alert-management',
+  },
+
+  // کلاینت
+  {
+    id: 'client',
+    labelKey: 'gw.client',
+    icon: 'pi pi-building',
+    route: '/main/client',
+  },
+
+  // کارمزد سرویس
+  {
+    id: 'wage-services',
+    labelKey: 'gw.wageServices',
+    icon: 'pi pi-credit-card',
+    route: '/main/wage-services',
+  },
+
+  // لیست دسترسی
+  {
+    id: 'access-list',
+    labelKey: 'gw.accessList',
+    icon: 'pi pi-lock',
+    route: '/main/access-list',
+  },
+
+  // مدیاتور
+  {
+    id: 'mediator',
+    labelKey: 'gw.mediator',
+    icon: 'pi pi-share-alt',
+    children: [
+      { id: 'mediators-out', labelKey: 'gw.mediatorsOut', icon: 'pi pi-share-alt', route: '/main/mediators' },
+      { id: 'mediators-xml', labelKey: 'gw.mediatorsXml', icon: 'pi pi-code', route: '/main/mediatorsXml' },
+      { id: 'mediators-json', labelKey: 'gw.mediatorsJson', icon: 'pi pi-brackets', route: '/main/mediatorsJson' },
+    ],
+  },
+
+  // گزارشات
+  {
+    id: 'reports',
+    labelKey: 'gw.reports',
+    icon: 'pi pi-chart-bar',
+    children: [
+      { id: 'log-reports', labelKey: 'gw.logReports', icon: 'pi pi-list', route: '/main/log-reports' },
+      { id: 'call-services-report', labelKey: 'gw.callServicesReport', icon: 'pi pi-chart-line', route: '/main/call-services-report' },
+      { id: 'chart-report', labelKey: 'gw.chartReport', icon: 'pi pi-chart-pie', route: '/main/chart-report' },
+      { id: 'response-rate', labelKey: 'gw.responseRate', icon: 'pi pi-gauge', route: '/main/response-rate' },
+    ],
+  },
+
+  // صورت حساب
+  {
+    id: 'invoice',
+    labelKey: 'gw.invoice',
+    icon: 'pi pi-dollar',
+    children: [
+      { id: 'factor', labelKey: 'gw.factor', icon: 'pi pi-file-text', route: '/main/factor' },
+    ],
+  },
+
+  // api-store
+  {
+    id: 'api-store',
+    labelKey: 'gw.apiStore',
+    icon: 'pi pi-globe',
+    children: [
+      { id: 'bill-store', labelKey: 'gw.billStore', icon: 'pi pi-clipboard', route: '/main/bill-store' },
+    ],
+  },
+
+  // درباره
+  {
+    id: 'about',
+    labelKey: 'gw.about',
+    icon: 'pi pi-info-circle',
+    route: '/main/about',
+  },
+
+  // خروج
+  {
+    id: 'sign-out',
+    labelKey: 'gw.signOut',
+    icon: 'pi pi-sign-out',
+    route: '/auth/login',
+  },
+];
+/*  { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
   {
     id: 'dashboard',
     labelKey: 'menu.dashboard',
@@ -64,7 +201,7 @@ export const APP_MENU: MenuItem[] = [
   { id: 'playground', labelKey: 'menu.playground', icon: 'pi pi-bolt', route: '/playground' },
   { id: 'settings', labelKey: 'menu.settings', icon: 'pi pi-cog', action: 'openSettings' },
   { id: 'docs', labelKey: 'menu.docs', icon: 'pi pi-book', href: 'https://primeng.org' },
-];
+];*/
 
 /* ===== DEMO MENU (banking sample — commented, restore if needed for mega-menu testing) =====
 const APP_MENU_DEMO: MenuItem[] = [

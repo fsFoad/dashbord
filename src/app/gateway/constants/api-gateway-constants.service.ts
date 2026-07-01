@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {Injectable} from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 

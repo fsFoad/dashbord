@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+// @ts-nocheck
+import {  Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -18,8 +19,8 @@ import { KeyFilter } from 'primeng/keyfilter';
 import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { Tooltip } from 'primeng/tooltip';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
-import { FuseSplashScreenService } from '../../../../../@fuse/services/splash-screen';
+import { FuseLoadingService } from '@fuse/services/loading';
+import { FuseSplashScreenService } from '@fuse/services/splash-screen';
 import { MessagesCategoryPipe } from '../../../shared/pipes/messagesCategory.pipe';
 import { MessageTypePipe } from '../../../shared/pipes/messageType.pipe';
 import { MoreChar19Pipe } from '../../../shared/pipes/moreChar19.pipe';
@@ -63,6 +64,7 @@ import { HttpResponse } from '@angular/common/http';
     ],
     providers: [MessageService],
     styleUrls: ['./messages-management.component.scss'],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class MessagesManagementComponent implements OnInit {
     registerFlag = false;

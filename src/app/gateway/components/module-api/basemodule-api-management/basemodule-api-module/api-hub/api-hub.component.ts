@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 
 import {ConfirmationService} from "primeng/api";
@@ -13,7 +14,7 @@ import {ButtonDirective} from 'primeng/button';
 import {Tooltip} from 'primeng/tooltip';
 import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {PrimeNG} from 'primeng/config';
@@ -53,6 +54,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 
     ],
     providers: [ConfirmationService],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class apiHubComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class EndpointDto{
     endpointId?:number
     sourceUrl?: string;

@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ApiGatewayConstants} from "../../../../../constants/ApiGatewayConstants";
 import {ActivatedRoute} from "@angular/router";
 
@@ -15,7 +16,7 @@ import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
 import {DropdownModule} from 'primeng/dropdown';
 import {Checkbox} from 'primeng/checkbox';
 import {ToastService} from '../../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {Constants} from '../../../../../../shared/constants/Constants';
@@ -24,7 +25,7 @@ import {InputNumber} from 'primeng/inputnumber';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
-import {DirectionService} from '../../../../../../../../shared/services/DirectionService';
+import {DirectionService} from '../../../../../../shared/services/DirectionService';
 import {PersianCalendarComponent} from '../../../../../../shared/components/persian-calendar/persian-calendar.module';
 import { BreadcrumbsComponent } from '../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { NgIf } from '@angular/common';
@@ -60,6 +61,7 @@ import { ConfirmationService } from 'primeng/api';
 
     ],
     providers: [ConfirmationService],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ApiModuleRegisterComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

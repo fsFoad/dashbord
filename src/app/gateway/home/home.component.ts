@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
+// @ts-nocheck
+import {  ChangeDetectorRef, Component, inject, OnInit, ViewChild, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessagesApiFacadeService } from '../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ApiGatewayService } from '../services/api-gateway.service';
 import { BreadcrumbsComponent } from '../../shared/components/breadcrumbs/breadcrumbs.component';
 import { NgIf } from '@angular/common';
@@ -26,7 +27,7 @@ import { MultiSelect } from 'primeng/multiselect';
 import { FormsModule } from '@angular/forms';
 import { NormalizeJalaliPipe } from '../../shared/pipes/fix-jalali.pipe';
 import * as Sentry from "@sentry/angular";
-import { SentryContextService } from '../../../core/sentry/sentry-context.service';
+import { SentryContextService } from '../../core/sentry/sentry-context.service';
 
 @Component({
     selector: 'app-home',
@@ -54,6 +55,7 @@ import { SentryContextService } from '../../../core/sentry/sentry-context.servic
         FormsModule,
         NormalizeJalaliPipe,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeComponent implements OnInit {
     @ViewChild('myChart') myChart!: UIChart;

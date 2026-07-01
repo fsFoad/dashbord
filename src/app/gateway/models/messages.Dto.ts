@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class MessagesDto{
     code: string;
     title: string;

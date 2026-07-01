@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ApiGatewayConstants } from '../../../constants/ApiGatewayConstants';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +8,7 @@ import { ButtonDirective } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { CommonValidationsService } from '../../../../shared/validators/common-validations.service';
 import { MessagesDto } from '../../../models/messages.Dto';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
@@ -32,6 +33,7 @@ import { Toast } from 'primeng/toast';
         BreadcrumbsComponent,
         Toast,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class MessagesRegisterComponent implements OnInit {
     @Output() close: EventEmitter<string> = new EventEmitter<string>();

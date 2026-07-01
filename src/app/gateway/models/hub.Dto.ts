@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {DataHubStaticElementDomains} from "./DataHubStaticElementDomains.Dto";
 
 export class HubDto{

@@ -1,0 +1,18 @@
+import { TestBed } from '@angular/core/testing';
+import { WageComponent } from './wage.component';
+describe('WageComponent', () => {
+    let component;
+    let fixture;
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [WageComponent]
+        })
+            .compileComponents();
+        fixture = TestBed.createComponent(WageComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+});

@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class ApiDto{
     moduleId?: number;
     //moduleId

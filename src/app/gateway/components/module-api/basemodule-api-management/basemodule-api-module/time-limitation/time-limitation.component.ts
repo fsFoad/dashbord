@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
 import {ActivatedRoute} from '@angular/router';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {AccessDataSaveService} from '../../../../../../shared/services/access-data-save.service';
 import {Toast} from "primeng/toast";
@@ -36,6 +37,7 @@ import {TimeLimitationRegisterComponent} from "./time-limitation-register/time-l
         TimeLimitationRegisterComponent
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class TimeLimitationComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

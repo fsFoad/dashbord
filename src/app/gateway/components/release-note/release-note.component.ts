@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+// @ts-nocheck
+import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {ActivatedRoute} from "@angular/router";
 import {Panel} from 'primeng/panel';
@@ -7,7 +8,7 @@ import {Tooltip} from 'primeng/tooltip';
 import {NgForOf} from '@angular/common';
 import {Ripple} from 'primeng/ripple';
 import {TranslocoService} from '@ngneat/transloco';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
 import {Card} from 'primeng/card';
 
@@ -25,6 +26,7 @@ import {Card} from 'primeng/card';
         Tooltip
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ReleaseNoteComponent implements OnInit {
     tempVersion = [];

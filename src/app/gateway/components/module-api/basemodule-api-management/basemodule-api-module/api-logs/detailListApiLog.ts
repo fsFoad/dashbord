@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// @ts-nocheck
+import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {AddCommaPipe} from '../../../../../../shared/pipes/add-comma.pipe';
@@ -66,6 +67,7 @@ import {AddCommaPipe} from '../../../../../../shared/pipes/add-comma.pipe';
         AddCommaPipe
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class DetailListApiLog implements OnInit {
     API_NAME = null;

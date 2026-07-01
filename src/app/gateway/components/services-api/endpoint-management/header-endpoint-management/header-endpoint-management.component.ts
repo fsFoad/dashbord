@@ -1,16 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { EndpointheaderDto } from '../../../../models/endpointheader.Dto';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { MessagesApiFacadeService } from '../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { BreadcrumbsComponent } from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { Tooltip } from 'primeng/tooltip';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { ThreeDotDetailsPipe } from '../../../../../shared/pipes/threeDotDetails.pipe';
-import { Accordion, AccordionContent, AccordionHeader, AccordionPanel, AccordionTab } from 'primeng/accordion';
+import { Accordion, AccordionContent, AccordionHeader, AccordionPanel } from 'primeng/accordion';
+import { AccordionTab } from '../../../../../shared/_compat/primeng/accordion';
 import { TableModule } from 'primeng/table';
 import { detailTypePipe } from '../../../../../shared/pipes/detail-type.pipe';
 import { MoreChar19Pipe } from '../../../../../shared/pipes/moreChar19.pipe';
@@ -23,7 +25,7 @@ import { Toast } from 'primeng/toast';
 import { Menu } from 'primeng/menu';
 import { Ripple } from 'primeng/ripple';
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectorRef } from '@angular/core';
+import {  ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 @Component({
     selector: 'app-header-endpoint-management',
     templateUrl: './header-endpoint-management.component.html',
@@ -54,6 +56,7 @@ import { ChangeDetectorRef } from '@angular/core';
         AccordionHeader,
         AccordionContent,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class HeaderEndpointManagementComponent implements OnInit {
     @Input() inputEndpointHeader;

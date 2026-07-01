@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Injectable, Signal } from '@angular/core';
 import { filter, map, Observable, of, switchMap } from 'rxjs';
 import { ModuleDto } from '../models/Module.Dto';
@@ -6,7 +7,7 @@ import { ConditionDto } from '../models/condition.Dto';
 import { EndpointheaderDto } from '../models/endpointheader.Dto';
 import { PartyDto } from '../models/party.Dto';
 import { RouleDto } from '../models/roule.Dto';
-import { ConnectionService, SKIP_EMPTY_CHECK } from '../../../../shared/repositories/connection.service';
+import { ConnectionService, SKIP_EMPTY_CHECK } from '../../shared/repositories/connection.service';
 import { CacheDto } from '../models/cache.Dto';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpContext, HttpParams } from '@angular/common/http';

@@ -13,7 +13,34 @@ export const routes: Routes = [
       import('./layout/dashboard-layout/dashboard-layout').then((m) => m.DashboardLayout),
     canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: '', pathMatch: 'full', redirectTo: 'main/home' },
+
+      // ── Gateway ─────────────────────────────────────────────────────────────
+      { path: 'main/home', loadComponent: () => import('./gateway/home/home.component').then(m => m.HomeComponent), data: { titleKey: 'gw.home' } },
+      { path: 'main/messages-management', loadComponent: () => import('./gateway/components/messages-management/messages-management.component').then(m => m.MessagesManagementComponent), data: { titleKey: 'gw.messages' } },
+      { path: 'main/rules', loadComponent: () => import('./gateway/components/rules/rules.component').then(m => m.RulesComponent), data: { titleKey: 'gw.rules' } },
+      { path: 'main/data-hub', loadComponent: () => import('./gateway/components/hub-management/hub-management.component').then(m => m.HubManagementComponent), data: { titleKey: 'gw.dataHub' } },
+      { path: 'main/recipients-alert', loadComponent: () => import('./gateway/components/authorized-recipients-alerts/authorized-recipients-alerts.component').then(m => m.AuthorizedRecipientsAlertsComponent), data: { titleKey: 'gw.recipientsAlert' } },
+      { path: 'main/alert-category', loadComponent: () => import('./gateway/components/alert-category/alert-category.component').then(m => m.AlertCategoryComponent), data: { titleKey: 'gw.alertCategory' } },
+      { path: 'main/alert-access-level', loadComponent: () => import('./gateway/components/alert-access-level/alert-access-level.component').then(m => m.AlertAccessLevelComponent), data: { titleKey: 'gw.alertAccessLevel' } },
+      { path: 'main/party', loadComponent: () => import('./gateway/components/party/components/party-management/party-management.component').then(m => m.PartyManagementComponent), data: { titleKey: 'gw.party' } },
+      { path: 'main/moduleBase', loadComponent: () => import('./gateway/components/module-base/module-base.component').then(m => m.ModuleBaseComponent), data: { titleKey: 'gw.moduleBase' } },
+      { path: 'main/alert-management', loadComponent: () => import('./gateway/components/alert-management/alert-detail-list').then(m => m.AlertDetailList), data: { titleKey: 'gw.alertManagement' } },
+      { path: 'main/client', loadComponent: () => import('./gateway/components/client/client.component').then(m => m.ClientComponent), data: { titleKey: 'gw.client' } },
+      { path: 'main/wage-services', loadComponent: () => import('./gateway/components/wage/wage.component').then(m => m.WageComponent), data: { titleKey: 'gw.wageServices' } },
+      { path: 'main/access-list', loadComponent: () => import('./gateway/components/access-list/access-list.component').then(m => m.AccessListComponent), data: { titleKey: 'gw.accessList' } },
+      { path: 'main/mediators', loadComponent: () => import('./gateway/components/mediators-list-root/mediators-list-root.component').then(m => m.MediatorsListRootComponent), data: { titleKey: 'gw.mediatorsOut' } },
+      { path: 'main/mediatorsXml', loadComponent: () => import('./gateway/components/mediators/mediators.component').then(m => m.MediatorsComponent), data: { titleKey: 'gw.mediatorsXml' } },
+      { path: 'main/mediatorsJson', loadComponent: () => import('./gateway/components/mediators/mediators-json/mediators-json.component').then(m => m.MediatorsJsonComponent), data: { titleKey: 'gw.mediatorsJson' } },
+      { path: 'main/log-reports', loadComponent: () => import('./gateway/components/log-reports/detailList').then(m => m.DetailList), data: { titleKey: 'gw.logReports' } },
+      { path: 'main/call-services-report', loadComponent: () => import('./gateway/components/call-services-report/call-services-report.component').then(m => m.CallServicesReportComponent), data: { titleKey: 'gw.callServicesReport' } },
+      { path: 'main/chart-report', loadComponent: () => import('./gateway/components/chart-report/chart-report.component').then(m => m.ChartReportComponent), data: { titleKey: 'gw.chartReport' } },
+      { path: 'main/response-rate', loadComponent: () => import('./gateway/components/response-rate/response-rate.component').then(m => m.ResponseRateComponent), data: { titleKey: 'gw.responseRate' } },
+      { path: 'main/factor', loadComponent: () => import('./gateway/components/factor/factor.component').then(m => m.FactorComponent), data: { titleKey: 'gw.factor' } },
+      { path: 'main/bill-store', loadComponent: () => import('./gateway/components/bill-store-cartable/bill-store-cartable.component').then(m => m.BillStoreCartableComponent), data: { titleKey: 'gw.billStore' } },
+      { path: 'main/about', loadComponent: () => import('./gateway/components/about/about.component').then(m => m.AboutComponent), data: { titleKey: 'gw.about' } },
+      // ────────────────────────────────────────────────────────────────────────
+
       {
         path: 'dashboard',
         loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),

@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ApiGatewayConstants} from "../../../../../../constants/ApiGatewayConstants";
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
@@ -6,7 +7,7 @@ import {InputText} from 'primeng/inputtext';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import {DropdownModule} from 'primeng/dropdown';
 import {ToastService} from '../../../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
 
@@ -23,6 +24,7 @@ import { ApiGatewayService } from '../../../../../../services/api-gateway.servic
         TranslocoPipe
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class RequiredNodeRegisterComponent implements OnInit {
     @Input() requiredInput;

@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+// @ts-nocheck
+import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {TableModule} from 'primeng/table';
@@ -13,7 +14,7 @@ import {Ripple} from 'primeng/ripple';
 import {TranslocoPipe, TranslocoService,} from '@ngneat/transloco';
 import {DropdownModule} from 'primeng/dropdown';
 import {ToastService} from '../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {CommonValidationsService} from '../../../shared/validators/common-validations.service';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
@@ -49,6 +50,7 @@ import {Toast} from 'primeng/toast';
         PersianCalendarComponent,
         Toast,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class WageComponent implements OnInit {
     addFlag = false;

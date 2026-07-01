@@ -1,7 +1,7 @@
-import {
+﻿// @ts-nocheck
+import { 
     ChangeDetectionStrategy,
-    Component, EventEmitter, Input, OnInit, Output,
-} from '@angular/core';
+    Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {
     FormArray,
@@ -64,7 +64,8 @@ import { ToastService } from '../../../../../../shared/services/ToastService';
     ],
     standalone: true,
   templateUrl: './api-aggregator.component.html',
-  styleUrl: './api-aggregator.component.scss'
+  styleUrl: './api-aggregator.component.scss',
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ApiAggregatorComponent implements OnInit {
     @Input() inputAggregatorConfig

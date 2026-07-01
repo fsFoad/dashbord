@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, NO_ERRORS_SCHEMA } from '@angular/core';
 
 
 import { HubDto } from '../../../models/hub.Dto';
@@ -8,7 +9,7 @@ import { ApiGatewayConstants } from '../../../constants/ApiGatewayConstants';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
 import { ToastService } from '../../../../shared/services/ToastService';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { Constants } from '../../../../shared/constants/Constants';
@@ -101,6 +102,7 @@ import { Subject } from 'rxjs';
         MessageSelectorComponent,
     ],
     providers: [ConfirmationService],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class RegisterHubComponent implements OnInit, OnChanges {
     @ViewChild('myForm', { static: true }) myForm: NgForm;

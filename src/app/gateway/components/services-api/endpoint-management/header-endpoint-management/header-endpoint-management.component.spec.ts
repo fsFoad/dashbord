@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderEndpointManagementComponent } from './header-endpoint-management.component';

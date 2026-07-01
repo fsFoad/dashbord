@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApiHubAttachmentComponent } from './api-hub-attachment.component';

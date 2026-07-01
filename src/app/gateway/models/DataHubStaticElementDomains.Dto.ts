@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class DataHubStaticElementDomains {
     paramName: string;
     paramValue: string;

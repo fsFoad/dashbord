@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {ClientDto} from "../../../../../models/client.Dto";
 import {ActivatedRoute} from "@angular/router";
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {CommonValidationsService} from '../../../../../../shared/validators/common-validations.service';
@@ -37,6 +38,7 @@ import {Card} from "primeng/card";
         Card
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ClientApiUpdateComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

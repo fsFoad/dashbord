@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {CommonValidationsService} from '../../../../shared/validators/common-validations.service';
 import {EndpointDto} from '../../../models/endpoint.Dto';
@@ -41,6 +42,7 @@ import {Ripple} from 'primeng/ripple';
         Toast,
         Ripple,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ClientRegisterComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

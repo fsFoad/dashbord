@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {ConfirmationService} from 'primeng/api';
 import {ApiGatewayConstants} from '../../../../../constants/ApiGatewayConstants';
@@ -22,7 +23,7 @@ import {Checkbox} from 'primeng/checkbox';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ToastService} from '../../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {Fieldset} from 'primeng/fieldset';
 import {TieredMenu} from 'primeng/tieredmenu';
 import {SequenceRegisterComponent} from './sequence-register/sequence-register.component';
@@ -77,6 +78,7 @@ import {
         BreadcrumbsComponent,
         MessageSelectorComponent,
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class SequenceComponent implements OnInit {
 

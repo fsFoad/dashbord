@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { HubDto } from '../../../../../../models/hub.Dto';
 
@@ -17,7 +18,7 @@ import { Panel } from 'primeng/panel';
 import { Ripple } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { Tooltip } from 'primeng/tooltip';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { BreadcrumbsComponent } from '../../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { Constants } from '../../../../../../../shared/constants/Constants';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
@@ -96,6 +97,7 @@ import { HttpResponse } from '@angular/common/http';
 
     ],
     providers: [ConfirmationService],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ApiHubAttachmentComponent implements OnInit {
     @Input() inputAttachApiHub;

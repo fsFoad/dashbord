@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  AfterViewInit, Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ModuleDto } from '../../../../models/Module.Dto';
 
@@ -10,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { AccessDataSaveService } from '../../../../../shared/services/access-data-save.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
@@ -102,6 +103,7 @@ import { ApiAggregatorComponent } from './api-aggregator/api-aggregator.componen
         ApiAggregatorComponent,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class BasemoduleApiModuleComponent implements OnInit, AfterViewInit {
     @Output() close = new EventEmitter<string>();

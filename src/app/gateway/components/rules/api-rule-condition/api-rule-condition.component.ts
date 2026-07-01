@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbsComponent } from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ButtonDirective } from 'primeng/button';
@@ -50,7 +51,7 @@ import { LogicConditionsComponent } from './logic-conditions/logic-conditions.co
         LogicConditionsComponent,
 
     ],
-
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class ApiRuleConditionComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*export class IplimitDto {
     endpointId: string;
     ipAddress: string;

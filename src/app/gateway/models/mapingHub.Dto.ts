@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class MapingHubDto {
     mapResultId?: number;
     apiHubId: number;

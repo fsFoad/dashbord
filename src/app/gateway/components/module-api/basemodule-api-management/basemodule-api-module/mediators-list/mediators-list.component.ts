@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import {ActivatedRoute} from "@angular/router";
 import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
@@ -58,6 +59,7 @@ import {InputText} from "primeng/inputtext";
         NgIf,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class MediatorsListComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

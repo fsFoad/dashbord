@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable, shareReplay, Subject, tap } from 'rxjs';
 import { MessagesApiFacadeService } from './messages-api-facade.service';

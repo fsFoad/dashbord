@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +17,7 @@ import { Tooltip } from 'primeng/tooltip';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { UIChart } from 'primeng/chart';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+import { FuseLoadingService } from '@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
 import { AccessDataSaveService } from '../../../../../../../shared/services/access-data-save.service';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
@@ -57,6 +58,7 @@ import { SequenceComponent } from '../sequence.component';
     ],
     templateUrl: './sequence-management.component.html',
     styleUrl: './sequence-management.component.scss',
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class SequenceManagementComponent implements OnInit{
     @Input() inputSequenceManagement

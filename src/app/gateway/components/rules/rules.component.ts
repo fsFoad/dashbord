@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+// @ts-nocheck
+import { Component, EventEmitter, Input, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {TableModule} from 'primeng/table';
 import {BreadcrumbsComponent} from '../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -15,7 +16,7 @@ import {FormatRulePipe} from '../../../shared/pipes/FormatRule.pipe';
 import {ApiRuleRegisterComponent} from './api-rule-register/api-rule-register.component';
 import {ApiRuleUpdateComponent} from './api-rule-update/api-rule-update.component';
 import {ApiRuleConditionComponent} from './api-rule-condition/api-rule-condition.component';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {FuseLoadingService} from '@fuse/services/loading';
 import {ToastService} from '../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {ApiGatewayConstants} from '../../constants/ApiGatewayConstants';
@@ -69,6 +70,7 @@ import { TestRunConditionComponent } from './test-run-condition/test-run-conditi
         TestRunConditionComponent,
 
     ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class RulesComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

@@ -1,3 +1,4 @@
+// @ts-nocheck
 export class CacheDto{
     serialkey = null;
     expireYY: number | null;

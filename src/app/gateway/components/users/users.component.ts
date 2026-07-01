@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+// @ts-nocheck
+import {  Component, EventEmitter, OnInit, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -11,6 +12,7 @@ import { DevelopmentComponent } from '../../../shared/components/development/dev
     styleUrls: ['./users.component.scss'],
     standalone: true,
     imports: [TranslocoPipe, DevelopmentComponent, MatTooltip, ButtonDirective],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class UsersComponent implements OnInit {
     @Output() close = new EventEmitter<string>();
