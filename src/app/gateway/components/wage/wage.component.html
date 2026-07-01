@@ -44,7 +44,7 @@
                 <label class="text-gray-700 block font-medium text-sm mb-1">
                     *<span >{{ 'wageService.lbl.partyName' | transloco }} :</span>
                 </label>
-                <p-dropdown
+                <p-select
 
                     [options]="partyListOptions"
                     [(ngModel)]="partyId"
@@ -54,7 +54,7 @@
                     filterBy="title"
                     (onChange)="OnchangeParty($event)"
                     class="normal-dropdown">
-                </p-dropdown>
+                </p-select>
             </div>
 
             <!-- نام سرویس -->
@@ -62,7 +62,7 @@
                 <label class="text-gray-700 block font-medium text-sm mb-1">
                     <span >{{ 'wageService.lbl.apiName' | transloco }} :</span>
                 </label>
-                <p-dropdown
+                <p-select
 
                     [options]="apiListOptions"
                     [(ngModel)]="apiId"
@@ -72,7 +72,7 @@
                     filterBy="title"
                     (onChange)="OnchangeApi($event)"
                     class="normal-dropdown">
-                </p-dropdown>
+                </p-select>
             </div>
 
             <!-- نام کلاینت -->
@@ -80,7 +80,7 @@
                 <label class="text-gray-700 block font-medium text-sm mb-1">
                     <span >{{ 'wageService.lbl.clientName' | transloco }} :</span>
                 </label>
-                <p-dropdown
+                <p-select
 
                     [options]="clientListOptions"
                     [(ngModel)]="clientId"
@@ -90,7 +90,7 @@
                     filterBy="name"
                     (onChange)="OnchangeClient($event)"
                     class="normal-dropdown">
-                </p-dropdown>
+                </p-select>
             </div>
 
             <!-- دکمه صدور کارمزد -->

@@ -30,7 +30,7 @@ export class UserManagementComponent implements OnInit {
     }
 
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 }

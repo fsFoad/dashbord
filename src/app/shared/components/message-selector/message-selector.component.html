@@ -1,0 +1,115 @@
+<div style="width: 100%;margin: 1rem 1rem 0 1rem">
+    <p-panel header="{{'انتخاب پیام 200' | transloco}}">
+        <div class="grid grid-cols-12">
+            <div class="col-4">
+                <label class="normal-label">
+<span class="red-color-text">* </span>
+<span >کد پیام :</span></label><br>
+                <p-dropdown
+                    [options]="statusCodeOptions"
+                    [(ngModel)]="codeMessage"
+                    optionValue="code"
+                    optionLabel="name"
+                    (onChange)="messageSearch()">
+                </p-dropdown>
+            </div>
+            <div class="col-4">
+                <label class="normal-label">
+<span class="red-color-text">* </span>
+<span >عنوان پیام :</span></label><br>
+                <input [(ngModel)]="titleMessage"
+                       pInputText>
+            </div>
+            <div class="col-4">
+                <label class="normal-label">
+<span class="red-color-text">* </span>
+<span >پیام(فارسی) :</span></label><br>
+                <input [(ngModel)]="textMessage"
+                       pInputText>
+            </div>
+            <div class="col-4">
+                <label class="normal-label"> <span >پیام(انگلیسی) :</span></label><br>
+                <input [(ngModel)]="textENMessage"
+                       pInputText>
+            </div>
+            <div class="col-4">
+                <label class="normal-label">
+<span class="red-color-text">* </span>
+<span >بخش پیام ها :</span></label><br>
+                <p-dropdown
+                    [options]="categoryMessages"
+                    optionValue="code"
+                    optionLabel="name"
+                    [(ngModel)]="tableIdMessage"
+                    (onChange)="messageSearch()">
+                </p-dropdown>
+            </div>
+            <div class="col-4">
+                <label class="normal-label">
+<span class="red-color-text">* </span>
+<span >نوع پیام ها :</span></label><br>
+                <p-dropdown
+                    [options]="typeMessages"
+                    optionValue="code"
+                    optionLabel="name"
+                    [(ngModel)]="typeMessage"
+                    (onChange)="messageSearch()">
+                </p-dropdown>
+            </div>
+            <div class="col-12" dir="ltr">
+                <button pButton label="{{'button.search' | transloco}}" style="width: 110px;margin: 6px"
+                        class="normal-button" icon="pi pi-search"
+                        (click)="messageSearch()"></button>&nbsp;&nbsp;
+                <button pButton label="{{'button.clear'|transloco}}" [outlined]="true"
+                        icon="pi pi-filter-slash"
+                        style="margin: 6px" (click)="messageClear()"></button>
+            </div>
+            <div class="col-12">
+                <p-table [value]="messagesList" selectionMode="single"
+                         [(selection)]="selectedMessageId" [paginator]="true"
+                         [rows]="rows" [(first)]="first" [showCurrentPageReport]="true"
+                         dataKey="messageId" (onRowSelect)="selectedMessage($event)"
+                         (onRowUnselect)="onRowUnselect($event)"
+                         [currentPageReportTemplate]=paginationLabel
+                         [rowsPerPageOptions]="[5,10,25,50,100]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 4rem">
+                                انتخاب
+                            </th>
+                            <th class="row" >شناسه واحد پیام</th>
+                            <th >کد پیام</th>
+                            <th >عنوان پیام</th>
+                            <th >بخش پیام ها</th>
+                            <th >پیام سیستمی</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template let-i="rowIndex" pTemplate="body" let-messages>
+                        <tr [pSelectableRow]="messages">
+                            <td>
+                                <p-tableRadioButton [value]="messages"></p-tableRadioButton>
+                            </td>
+                            <td class="row">{{ messages.messageId }}</td>
+                            <td>{{ messages.code }}</td>
+                            <td>
+                                {{ messages.title|moreChar19 }}
+                            </td>
+                            <td>{{ messages.tableId|messagesCategory }}</td>
+                            <td>
+                                <img *ngIf="messages.isSystemMessage==1"  class="w-6 h-6 object-contain block"
+                                     src="assets/icons/correct.jpeg">
+                                <img *ngIf="messages.isSystemMessage==0"  class="w-6 h-6 object-contain block"
+                                     src="assets/icons/cross.jpeg">
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="col-12" dir="ltr" style="margin-top: 15px">
+                <button type="button" pButton  severity="danger"  label="بستن" class="normal-button" icon="pi pi-times"
+                        (click)="messageFlag=false"></button>
+            </div>
+        </div>
+
+    </p-panel>
+</div>

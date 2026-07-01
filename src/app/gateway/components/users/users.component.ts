@@ -1,16 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
-import { TranslocoPipe } from '@ngneat/transloco';
-import { MatTooltip } from '@angular/material/tooltip';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { DevelopmentComponent } from '../../../shared/components/development/development.component';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
     standalone: true,
-    imports: [TranslocoPipe, DevelopmentComponent, MatTooltip, ButtonDirective],
+    imports: [TranslocoPipe, DevelopmentComponent, Tooltip, ButtonDirective],
 })
 export class UsersComponent implements OnInit {
     @Output() close = new EventEmitter<string>();
@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
         this.scrollTop();
     }
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 }

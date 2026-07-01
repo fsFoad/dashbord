@@ -29,11 +29,10 @@
       (click)="openPalette()"
       [pTooltip]="'palette.tooltip' | transloco"
       tooltipPosition="bottom"
-      class="hidden h-10 items-center gap-2 rounded-lg border border-surface-200 px-3 text-sm text-muted-color hover:bg-surface-100 dark:border-surface-700 dark:hover:bg-surface-800 md:flex"
+      [attr.aria-label]="'palette.tooltip' | transloco"
+      class="grid size-10 place-items-center rounded-lg text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
     >
-      <i class="pi pi-search text-sm"></i>
-      <span class="text-xs">{{ 'palette.hint' | transloco }}</span>
-      <span class="flex gap-0.5" dir="ltr"><kbd class="kbd">Ctrl</kbd><kbd class="kbd">K</kbd></span>
+      <i class="pi pi-search text-lg"></i>
     </button>
 
     <!-- Language -->

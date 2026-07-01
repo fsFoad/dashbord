@@ -18,10 +18,11 @@ import { NgClass, NgIf, NgStyle } from '@angular/common';
 import {StatusPipe} from '../../../../shared/pipes/status.pipe';
 import {Ripple} from 'primeng/ripple';
 import {Dialog} from 'primeng/dialog';
-import { TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import { TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {ToastService} from '../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {CommonValidationsService} from '../../../../shared/validators/common-validations.service';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {Constants} from '../../../../shared/constants/Constants';
@@ -56,7 +57,7 @@ import { ApiGatewayService } from '../../../services/api-gateway.service';
         Ripple,
         Dialog,
         TranslocoPipe,
-        DropdownModule,
+        SelectModule,
         NgIf,
         KeyFilter,
         WageTypePipe,
@@ -146,7 +147,8 @@ export class WageRegisterComponent implements OnInit {
         private notifierService: ToastService,
         private transloco: TranslocoService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService
     ) {
     }
@@ -264,9 +266,13 @@ export class WageRegisterComponent implements OnInit {
             );
             this.disableUpdateFlag = true;
             this.feeTitle = this.wageObj.feeTitle;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.findbyfeeheaderid(this.wageObj.feeId).subscribe((u) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.feeTypeId = u.feeTypeId.toString();
                         this.wageDetailList = u.feeDetailDomains;
                         this.fromDate = u.fromDate;
@@ -280,7 +286,9 @@ export class WageRegisterComponent implements OnInit {
                         this.functionalityWageType();
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         } else {
@@ -437,10 +445,14 @@ export class WageRegisterComponent implements OnInit {
     addWageDetail() {
         if (this.validationRegister(false)) {
             if (this.feeTypeId == '4' || this.feeTypeId == '3') {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.apibyid(this.apiId).subscribe(
                     (c) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (
                             c.feeFieldPath == null ||
                             c.feeFieldPath == undefined ||
@@ -503,7 +515,9 @@ export class WageRegisterComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
             } else {
@@ -559,10 +573,14 @@ export class WageRegisterComponent implements OnInit {
     updateWage() {
         if (this.validationRegister(true)) {
             if (this.feeTypeId == '3') {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.apibyid(this.apiId).subscribe(
                     (c) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (
                             c.feeFieldPath == null ||
                             c.feeFieldPath == undefined ||
@@ -612,7 +630,9 @@ export class WageRegisterComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
             } else {
@@ -766,14 +786,20 @@ export class WageRegisterComponent implements OnInit {
             ) {
                 this.partyId = this.wageObj.partyId;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.feeheaderRegister(headerWageDto).subscribe(
                     (p) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.feeHeaderId = p.feeHeaderId;
 
                         // if (this.wageObj.apiId == null) {
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         this.messagesApiFacadeService
                             .apifeeRegister2(
                                 this.partyId,
@@ -783,7 +809,9 @@ export class WageRegisterComponent implements OnInit {
                             )
                             .subscribe(
                                 (y) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                     // this.notifierService.showSuccess({
                                     //     detail: 'کارمزد جدید ثبت گردید!',
                                     //     life: 3000
@@ -819,12 +847,16 @@ export class WageRegisterComponent implements OnInit {
                                     this.apiFeeId = null;
                                 },
                                 (error) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 }
                             );
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

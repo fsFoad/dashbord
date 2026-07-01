@@ -1,14 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { CheckTabValidService } from '../../services/check-tab-valid.service';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-about',
     templateUrl: './about.component.html',
     styleUrls: ['./about.component.scss'],
-    imports: [MatTooltip, ButtonDirective],
+    imports: [Tooltip, ButtonDirective],
     standalone: true,
 })
 export class AboutComponent implements OnInit {
@@ -35,7 +35,7 @@ export class AboutComponent implements OnInit {
     }
 
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 }

@@ -76,7 +76,7 @@
                 <span class="red-color-text">* </span>
                 <span>{{ 'wageServiceRegister.lbl.wageType' | transloco }} :</span></label>
             <div class="flex flex-row gap-3 items-center">
-                <p-dropdown optionValue="id"
+                <p-select optionValue="id"
                             class="normal-dropdown"
                             appendTo='body'
                             optionLabel="name"
@@ -84,7 +84,7 @@
                             [options]="wageConstants.wageTypeList"
                             [disabled]="disableUpdateFlag"
                             (onChange)="onChangeWageType()">
-                </p-dropdown>
+                </p-select>
                 <button pButton icon="pi pi-question-circle" class="button-help rounded-2xl" severity="warn"
                         (click)="helpFlag=true"></button>
             </div>
@@ -103,14 +103,14 @@
                     <label class="normal-label">
                         <span class="red-color-text">* </span>
                         <span>نوع محاسبه :</span></label>
-                    <p-dropdown optionValue="id" appendTo='body'
+                    <p-select optionValue="id" appendTo='body'
                                 class="normal-dropdown"
                                 optionLabel="name"
                                 [(ngModel)]="calculationTypeId"
                                 [options]="calculationTypeOptions"
                                 [disabled]="disableUpdateFlag"
                                 (onChange)="onPercentageOrFixedAmount($event)">
-                    </p-dropdown>
+                    </p-select>
                 </div>
                 <div class="col-span-4" *ngIf="isPercentage&&!disableUpdateFlag">
                     <label class="normal-label">

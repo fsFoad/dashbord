@@ -10,10 +10,11 @@ import {MoreChar19Pipe} from '../../../shared/pipes/moreChar19.pipe';
 import {NgIf} from '@angular/common';
 import {Menu} from 'primeng/menu';
 import {Ripple} from 'primeng/ripple';
-import {TranslocoPipe, TranslocoService,} from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import {TranslocoPipe, TranslocoService,} from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {ToastService} from '../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {CommonValidationsService} from '../../../shared/validators/common-validations.service';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
@@ -40,7 +41,7 @@ import {Toast} from 'primeng/toast';
         MoreChar19Pipe,
         Menu,
         Ripple,
-        DropdownModule,
+        SelectModule,
         NgIf,
         TranslocoPipe,
         CastToDatePipe,
@@ -60,7 +61,8 @@ export class WageComponent implements OnInit {
         private route: ActivatedRoute,
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private commonValidationsService: CommonValidationsService,
         private translateService: TranslocoService,
@@ -186,15 +188,18 @@ export class WageComponent implements OnInit {
     ngOnInit() {
         //  let a:number=1.224521
         //console.log(a)
-        this._primengProgressBarService.show();
+        // FUSEFS
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallparty().subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+                // this._primengProgressBarService.hide();
                 this.partyListOptions.push(...a);
                 this.partyListOptions = this.partyListOptions.sort();
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+                // this._primengProgressBarService.hide();
             }
         );
         this.scrollTop();
@@ -272,7 +277,7 @@ export class WageComponent implements OnInit {
     }
 
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 
@@ -381,7 +386,8 @@ export class WageComponent implements OnInit {
     search() {
         if (this.partyId) {
             //  if (this.validationSearch()) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .apifeesearch(
                     this.partyId,
@@ -392,7 +398,8 @@ export class WageComponent implements OnInit {
                 )
                 .subscribe(
                     (v) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+                        // this._primengProgressBarService.hide();
                         this.wageList = [];
                         if (Array.isArray(v)) {
                             this.wageList = v;
@@ -410,7 +417,8 @@ export class WageComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+                        // this._primengProgressBarService.hide();
                     }
                 );
             // }
@@ -432,10 +440,12 @@ export class WageComponent implements OnInit {
                 }
             });
             this.search();
-            this._primengProgressBarService.show();
+            // FUSEFS
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apibypartyid(event.value).subscribe(
                 (l) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+                    // this._primengProgressBarService.hide();
                     this.registerObj.apiListOptions = [];
                     this.hideApiListOptions = [];
                     this.apiListOptions = [{ title: '-', apiId: null }];
@@ -454,7 +464,8 @@ export class WageComponent implements OnInit {
                     this.registerObj.apiListOptions = this.hideApiListOptions;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+                    // this._primengProgressBarService.hide();
                 }
             );
         } else {
@@ -490,10 +501,12 @@ export class WageComponent implements OnInit {
             });
             this.clientListOptions = [{ name: '-', clientId: null }];
             this.search();
-            this._primengProgressBarService.show();
+            // FUSEFS
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.clientbyapiid(event.value).subscribe(
                 (i) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(i)) {
                         this.clientListOptions = i;
                     } else {
@@ -505,7 +518,8 @@ export class WageComponent implements OnInit {
                     });
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+                    // this._primengProgressBarService.hide();
                 }
             );
         } else {
@@ -532,15 +546,15 @@ export class WageComponent implements OnInit {
 
             this.search();
 
-            this._primengProgressBarService.show();
-
+            // FUSEFS
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .clientbyapiid(event.value, 10000, 0)
                 .subscribe(
                     (response: any) => {
 
-                        this._primengProgressBarService.hide();
-
+                        // FUSEFS
+                        // this._primengProgressBarService.hide();
                         let data = [];
 
                         if (Array.isArray(response.body)) {
@@ -565,7 +579,8 @@ export class WageComponent implements OnInit {
                     },
                     (error) => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+                        // this._primengProgressBarService.hide();
                     }
                 );
 
@@ -665,7 +680,8 @@ export class WageComponent implements OnInit {
             });
             if (this.apiId) {
                 const mySelf = this;
-                this._primengProgressBarService.show();
+                // FUSEFS
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .getapicountwithoutfeebypartyandclientandapi(
                         this.partyId,
@@ -674,7 +690,8 @@ export class WageComponent implements OnInit {
                     )
                     .subscribe(
                         (t) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+                            // this._primengProgressBarService.hide();
                             if (t == 0) {
                                 if (this.wageList.length != 0) {
                                     this.notifierService.showError({
@@ -691,17 +708,20 @@ export class WageComponent implements OnInit {
                                 });
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+                            // this._primengProgressBarService.hide();
                         }
                     );
             } else if (!this.apiId && this.partyId) {
                 this.registerObj.apiListOptions = [];
-                this._primengProgressBarService.show();
+                // FUSEFS
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .getapicountwithoutfeebyparty(this.partyId)
                     .subscribe(
                         (g) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+                            // this._primengProgressBarService.hide();
                             if (g == 0) {
                                 if (this.wageList.length == 0) {
                                     this.notifierService.showError({
@@ -719,7 +739,8 @@ export class WageComponent implements OnInit {
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+                            // this._primengProgressBarService.hide();
                         }
                     );
             }

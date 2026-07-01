@@ -1,0 +1,55 @@
+<!--
+
+<div class="breadcrumb flex items-center">
+    <ng-container *ngFor="let breadcrumb of detailsBreadObject; let i = index">
+        <span dir="rtl" class="flex items-center" [ngStyle]="{ 'color': breadcrumb['isActive' + i] ?  '#4627a6' : 'rgba(31,18,236,0.65)' }">
+
+            <img *ngIf="breadcrumb['img_index' + i]" [src]="breadcrumb['img_index' + i]" class="max-w-4 max-h-8 w-8" alt=""/>&nbsp;
+            {{ breadcrumb['label_index' + i] }}
+        </span>
+        <span *ngIf="i < detailsBreadObject.length - 1 && detailsBreadObject[i + 1]['label_index' + (i + 1)]">
+            <img src="assets/icons/less-than-symbol.png" class="max-w-4 max-h-8 w-8 mx-2" alt="">
+        </span>
+        <span *ngIf="breadcrumb['label_Detail_index' + i]"
+              class="text-purple-600"
+              [pTooltip]="breadcrumb['label_Detail_index' + i]"
+              [tooltipDisabled]="breadcrumb['label_Detail_index' + i] ? breadcrumb['label_Detail_index' + i].length < 20 : false">
+                  {{ breadcrumb['label_Detail_index' + i] | threeDotBreadcrumbPipe }}
+        </span>
+    </ng-container>
+</div>
+-->
+<div class="breadcrumb flex flex-row-reverse items-center justify-between w-full" dir="rtl">
+    <div>
+    <button
+        pButton
+        *ngIf="showBackButton"
+        icon="pi pi-arrow-right"
+        class="w-8 h-8 text-white p-2 rounded-lg "
+        (click)="onBackClick()"
+        matTooltip="{{ 'button.back' | transloco }}"
+    >
+    </button>
+
+    <div *ngIf="!showBackButton" class="w-[6rem]"></div>
+    </div>
+    <div class="flex items-center gap-2">
+        <ng-container *ngFor="let breadcrumb of detailsBreadObject; let i = index">
+            <span class="flex items-center"
+                  [ngStyle]="{ 'color': breadcrumb['isActive' + i] ? '#ffffff' : 'rgba(216,216,227,0.84)' }">
+                <img *ngIf="breadcrumb['img_index' + i]" [src]="breadcrumb['img_index' + i]" class="max-w-4 max-h-8 w-8" alt=""/>&nbsp;
+                {{ breadcrumb['label_index' + i] }}
+            </span>
+
+            <span *ngIf="breadcrumb['label_Detail_index' + i]"
+                  class="text-orange-100"
+                  [pTooltip]="breadcrumb['label_Detail_index' + i]"
+                  [tooltipDisabled]="breadcrumb['label_Detail_index' + i] ? breadcrumb['label_Detail_index' + i].length < 20 : false">
+                  {{ breadcrumb['label_Detail_index' + i] | threeDotBreadcrumbPipe }}
+            </span>
+            <span *ngIf="i < detailsBreadObject.length - 1 && detailsBreadObject[i + 1]['label_index' + (i + 1)]">
+                <img src="assets/icons/less-than-symbol.png" class="max-w-4 max-h-8 w-8 mx-2" alt="">
+            </span>
+        </ng-container>
+    </div>
+</div>
