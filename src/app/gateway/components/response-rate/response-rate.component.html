@@ -7,14 +7,14 @@
                     <span class="red-color-text">* </span>
                     <span>نوع گزارش:</span>
                 </label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     optionValue="code"
                     [options]="typeChartOption"
                     [(ngModel)]="typeChart"
                     filterBy="name"
                     optionLabel="name"
-                ></p-dropdown>
+                ></p-select>
 
             </div>
             <div class=" col-span-3">
@@ -39,7 +39,7 @@
             </div>
             <div class=" col-span-3">
                 <label class="normal-label">*<span >نام کلاینت</span>:</label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     optionValue="clientId"
                     [options]="clientListOptions"
@@ -47,7 +47,7 @@
                     [filter]="true"
                     filterBy="name"
                     optionLabel="name"
-                ></p-dropdown>
+                ></p-select>
             </div>
             <div class=" col-span-3 " dir="rtl">
                 <label class="normal-label">*<span  dir="rtl">میزان پاسخ‌دهی</span>:</label>
@@ -64,7 +64,7 @@
             <div class=" col-span-3">
                 <label class="normal-label">
                     <span >{{'dropdown.moduleTitle'|transloco}}</span>:</label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="moduleListOptions"
                     [(ngModel)]="moduleid"
@@ -74,7 +74,7 @@
                     optionLabel="moduleTitle">
                     &lt;!&ndash; [options]="protocolOptions"
                       &ndash;&gt;
-                </p-dropdown>
+                </p-select>
             </div>
             <div class=" col-span-3"></div>
 
@@ -131,14 +131,14 @@
                 <span class="red-color-text">* </span>
                 نوع گزارش:
             </label>
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 optionValue="code"
                 [options]="typeChartOption"
                 [(ngModel)]="typeChart"
                 filterBy="name"
                 optionLabel="name"
-            ></p-dropdown>
+            ></p-select>
         </div>
 
         <!-- تاریخ شروع -->
@@ -192,7 +192,7 @@
             <label class="normal-label">
                 <span class="red-color-text">* </span>نام کلاینت:</label>
 
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 optionValue="clientId"
                 [options]="clientListOptions"
@@ -200,7 +200,7 @@
                 [filter]="true"
                 filterBy="name"
                 optionLabel="name">
-            </p-dropdown>
+            </p-select>
         </div>
 
         <!-- میزان پاسخ‌دهی -->
@@ -224,7 +224,7 @@
             <label class="normal-label">
                 {{'dropdown.moduleTitle'|transloco}}:
             </label>
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 [options]="moduleListOptions"
                 [(ngModel)]="moduleid"
@@ -232,7 +232,7 @@
                 [filter]="true"
                 filterBy="moduleTitle"
                 optionLabel="moduleTitle">
-            </p-dropdown>
+            </p-select>
         </div>
 
         <!-- Spacer -->

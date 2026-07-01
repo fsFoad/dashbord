@@ -24,8 +24,8 @@ import {
 } from 'primeng/button';
 
 import {
-    DropdownModule,
-} from 'primeng/dropdown';
+    SelectModule,
+} from 'primeng/select';
 
 import {
     InputTextModule,
@@ -44,11 +44,15 @@ import {
 } from 'primeng/dialog';
 import { Toast } from 'primeng/toast';
 import { BreadcrumbsComponent } from '../../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { MultiSelect } from 'primeng/multiselect';
 import { KeyFilter } from 'primeng/keyfilter';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
 import { ConfirmationService } from 'primeng/api';
@@ -73,7 +77,7 @@ import { Checkbox } from 'primeng/checkbox';
         ReactiveFormsModule,
 
         ButtonModule,
-        DropdownModule,
+        SelectModule,
         InputTextModule,
         InputTextarea,
         TableModule,
@@ -486,7 +490,9 @@ export class AggregatorConfigComponent implements OnInit {
     curlBodyPreview = signal<any>({});
 
     constructor(
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService,
@@ -775,8 +781,10 @@ export class AggregatorConfigComponent implements OnInit {
             return;
         }
 
-        this._primengProgressBarService.show();
+        // FUSEFS
 
+
+        // this._primengProgressBarService.show();
         // قبل از پر کردن فرم، کلاینت‌ها و سازمان‌ها باید لود شده باشند
         // تا لیبل‌ها و چک‌باکس‌ها درست رزولو شوند
         forkJoin({
@@ -792,11 +800,16 @@ export class AggregatorConfigComponent implements OnInit {
 debugger
                 this.populateAggregator(dto);
 
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+
+                // this._primengProgressBarService.hide();
                 this.cdr.markForCheck();
             },
             error: () => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });
     }
@@ -2309,8 +2322,10 @@ ${bodyMessage}
                 return;
             }
 
-            this._primengProgressBarService.show();
+            // FUSEFS
 
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .apiNochart(
                     0,
@@ -2330,13 +2345,17 @@ ${bodyMessage}
                             ],
                         });
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+
+                        // this._primengProgressBarService.hide();
                     },
                     error: () => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+
+                        // this._primengProgressBarService.hide();
                     },
                 });
 
@@ -4603,7 +4622,10 @@ debugger
             ),
         );
 
-/*        this._primengProgressBarService.show();
+// FUSEFS
+
+
+// /*        this._primengProgressBarService.show();
 
         this.messagesApiFacadeService
             .registerAggregate(dto)
@@ -4611,8 +4633,10 @@ debugger
 
                 next: () => {
 
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+
+                    // this._primengProgressBarService.hide();
                     this.notifierService.showSuccess({
                         detail:
                             'ثبت اطلاعات با موفقیت انجام شد',
@@ -4626,8 +4650,10 @@ debugger
 
                 error: error => {
 
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+
+                    // this._primengProgressBarService.hide();
                     console.error(
                         'REGISTER ERROR =>',
                         error,
@@ -4635,7 +4661,9 @@ debugger
                 },
 
             });*/
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         const aggregateId =
             this.inputAggregatorConfig?.aggregateId;
         const request$ =
@@ -4651,8 +4679,10 @@ debugger
 
             next: () => {
 
-                this._primengProgressBarService.hide();
+                // FUSEFS
 
+
+                // this._primengProgressBarService.hide();
                 this.notifierService.showSuccess({
                     detail:
                         this.modeFlag === 'U'
@@ -4668,8 +4698,10 @@ debugger
 
             error: error => {
 
-                this._primengProgressBarService.hide();
+                // FUSEFS
 
+
+                // this._primengProgressBarService.hide();
                 console.error(
                     this.modeFlag === 'U'
                         ? 'UPDATE ERROR =>'

@@ -18,10 +18,14 @@ import { StatusPipe } from '../../../../../../shared/pipes/status.pipe';
 import { TableModule } from 'primeng/table';
 import { ThreeDotDetailsPipe } from '../../../../../../shared/pipes/threeDotDetails.pipe';
 import { Toast } from 'primeng/toast';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Tooltip } from 'primeng/tooltip';
 import { ActivatedRoute } from '@angular/router';
-import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../../../services/messages-api-facade.service';
 import { ToastService } from '../../../../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../../../../services/api-gateway.service';
@@ -33,6 +37,7 @@ import { Menu } from 'primeng/menu';
 
 @Component({
     selector: 'app-input-mediator-list',
+    standalone: true,
     imports: [
         BreadcrumbsComponent,
         ButtonDirective,
@@ -146,7 +151,9 @@ export class InputMediatorListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private transloco: TranslocoService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService,
@@ -777,7 +784,9 @@ debugger
             this.totalRecords = 0;
             this.firstIndex = 0;
             this.pagesize = 10;
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             const body = res?.body as any;
             const list = Array.isArray(body) ? body : (body ? [body] : []);
             this.inputMediatorsList = list;
@@ -792,12 +801,16 @@ debugger
 
     createMediator() {
         debugger
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.validateInputMediatorElement(this.apiId).subscribe({
             next: (res) => {
                 debugger
                 this.inputMediatorFlag = true;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 console.log(res.status);
                 if (res.status == 200) {
                     debugger
@@ -865,7 +878,9 @@ debugger
             },
             error: (err) => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });
 

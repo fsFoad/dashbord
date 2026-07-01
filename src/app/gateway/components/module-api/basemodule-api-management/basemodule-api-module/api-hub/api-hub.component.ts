@@ -11,9 +11,13 @@ import {BreadcrumbsComponent} from '../../../../../../shared/components/breadcru
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {Tooltip} from 'primeng/tooltip';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {PrimeNG} from 'primeng/config';
@@ -117,7 +121,9 @@ export class apiHubComponent implements OnInit {
         private route: ActivatedRoute,
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private primeng: PrimeNG,
         private confirmationService: ConfirmationService,
@@ -130,14 +136,20 @@ export class apiHubComponent implements OnInit {
             message: 'آیا از غیرفعالسازی هاب سرویس اطمینان دارید؟',
             icon: 'pi pi-question',
             accept: () => {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.changeapidatahubstatus(item.APIHUBID, 0).subscribe(
                     () => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.searchHub(this.apiId);
                     },
                     () => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.searchHub(this.apiId);
                     }
                 );
@@ -390,12 +402,16 @@ export class apiHubComponent implements OnInit {
         this.pageno != 0
             ? (startRow = this.pageno * this.pagesize)
             : (startRow = 0);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .getbydbanmeip(this.pageno, this.pagesize, this.dbname, this.ip)
             .subscribe(
                 (r) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(r)) {
                         this.hubList = r;
                     } else {
@@ -426,7 +442,9 @@ export class apiHubComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -456,12 +474,16 @@ export class apiHubComponent implements OnInit {
             }
         }
         if (!this.attachFlag) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .changeapidatahubstatus(item.APIHUBID, 1)
                 .subscribe(
                     (w) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.searchHub(this.apiId);
                     },
                     (error) => {
@@ -480,16 +502,22 @@ export class apiHubComponent implements OnInit {
         this.confirmationService.confirm({
             message: 'آیا از غیرفعالسازی هاب سرویس اطمینان دارید؟',
             accept: () => {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .changeapidatahubstatus(item.APIHUBID, 0)
                     .subscribe(
                         (w) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.searchHub(this.apiId);
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.searchHub(this.apiId);
                         }
                     );
@@ -564,17 +592,24 @@ export class apiHubComponent implements OnInit {
             this.HubAttachmentFlag = false;
             debugger;
             this.searchHub(this.apiId);
-            /* this._primengProgressBarService.show()
+            // FUSEFS
+
+            // /* this._primengProgressBarService.show()
             debugger
             if (this.isCalled) {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
                 return
             }
 
             this.messagesApiFacadeService.getdatahubinfo(this.apiId).subscribe(b => {
                 debugger
 
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+
+                // this._primengProgressBarService.hide()
                 if (!b) {
                     this.hubList = [];
                     this.attachFlag = false;
@@ -589,7 +624,9 @@ export class apiHubComponent implements OnInit {
                 const activeCount = this.hubList.filter(item => item.APIHUBID_STATUS === true).length;
                 this.attachFlag = activeCount > 0;
             },error => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
             })
             this.isCalled=true*/
         }
@@ -597,7 +634,9 @@ export class apiHubComponent implements OnInit {
 
     searchHub(apiId) {
         debugger;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         debugger;
 
         this.messagesApiFacadeService
@@ -606,7 +645,9 @@ export class apiHubComponent implements OnInit {
             .subscribe(
                 (b) => {
                     debugger;
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (!b) {
                         this.hubList = [];
                         this.attachFlag = false;
@@ -624,7 +665,9 @@ export class apiHubComponent implements OnInit {
                     this.attachFlag = activeCount > 0;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

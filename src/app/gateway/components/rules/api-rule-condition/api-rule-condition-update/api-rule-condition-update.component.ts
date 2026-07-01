@@ -3,7 +3,11 @@ import { ApiGatewayConstants } from '../../../../constants/ApiGatewayConstants';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbsComponent } from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -15,9 +19,8 @@ import { Tooltip } from 'primeng/tooltip';
 import { MoreChar19Pipe } from '../../../../../shared/pipes/moreChar19.pipe';
 import { NgIf } from '@angular/common';
 import { Dialog } from 'primeng/dialog';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { DropdownModule } from 'primeng/dropdown';
-import { MatTooltip } from '@angular/material/tooltip';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { SelectModule } from 'primeng/select';
 import { TableIdPipe } from '../../../../../shared/pipes/tableId.pipe';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { Toast } from 'primeng/toast';
@@ -51,9 +54,9 @@ import { Subject } from 'rxjs';
         MoreChar19Pipe,
         Dialog,
         TranslocoPipe,
-        DropdownModule,
+        SelectModule,
         NgIf,
-        MatTooltip,
+        Tooltip,
 
         TableIdPipe,
         ToggleSwitch,
@@ -153,7 +156,9 @@ export class ApiRuleConditionUpdateComponent implements OnInit {
         private transloco: TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private validatorService: CommonValidationsService,
         private notifierService: ToastService,
     ) {
@@ -1020,12 +1025,16 @@ export class ApiRuleConditionUpdateComponent implements OnInit {
 
 
     /*    if (this.inputUpdate.messageId !== null) {
-            /!*  this._primengProgressBarService.show();
+            // FUSEFS
+
+            // /!*  this._primengProgressBarService.show();
             this.messagesApiFacadeService
                  .getbymessageId(this.inputUpdate.messageId)
                  .subscribe(
                      (a) => {
-                         this._primengProgressBarService.hide();
+                         // FUSEFS
+
+                         // this._primengProgressBarService.hide();
                          this.titleMessage = a.title;
                          this.textMessage = a.text;
                          this.textMessage = a.textEN;
@@ -1072,7 +1081,9 @@ export class ApiRuleConditionUpdateComponent implements OnInit {
                          }
                      },
                      (error) => {
-                         this._primengProgressBarService.hide();
+                         // FUSEFS
+
+                         // this._primengProgressBarService.hide();
                      },
                  );*!/
         }*/
@@ -1221,18 +1232,25 @@ export class ApiRuleConditionUpdateComponent implements OnInit {
             this.status ? (this.updateRulConditionObject.status = 1) : (this.updateRulConditionObject.status = 0);
             this.messageId != null ? (this.updateRulConditionObject.messageId = this.messageId) : (this.updateRulConditionObject.messageId = null);
 
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerRuleCondition(this.updateRulConditionObject)
                 .subscribe((a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.close.emit('closeAndCreate');
                 });
         }
     }
 
   /*  search() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .messagesearch(
                 this.codeMessage,
@@ -1242,8 +1260,9 @@ export class ApiRuleConditionUpdateComponent implements OnInit {
             )
             .subscribe(
                 (response) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(response)) {
                         this.messagesList = response;
                     } else {
@@ -1251,7 +1270,9 @@ export class ApiRuleConditionUpdateComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
     }*/

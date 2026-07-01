@@ -88,7 +88,7 @@ styleClass="normal-table"
 
         ><i class="pi pi-arrow-left "></i>
         </button>
-        <p-dropdown
+        <p-select
             [options]="pagesizeOptions"
             optionValue="code"
             optionLabel="name"
@@ -96,7 +96,7 @@ styleClass="normal-table"
             (onChange)="OnchangePageno($event)"
             [disabled]="nextBtnFlag"
             class="normal-dropdown-pagination"
-        ></p-dropdown>
+        ></p-select>
     </div>
 
     <div class="col-span-4"></div>

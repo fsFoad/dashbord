@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonDirective } from 'primeng/button';
 import { ProgressBar } from 'primeng/progressbar';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { Card } from 'primeng/card';
 import { Toast } from 'primeng/toast';
 import { BreadcrumbsComponent } from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
 import { ApiGatewayConstants } from '../../../../constants/ApiGatewayConstants';
 import { MessagesApiFacadeService } from '../../../../services/messages-api-facade.service';
@@ -26,7 +26,7 @@ import { Tooltip } from 'primeng/tooltip';
         FormsModule,
         ButtonDirective,
         ProgressBar,
-        DropdownModule,
+        SelectModule,
         Card,
         InputSwitchModule,
         BreadcrumbsComponent,

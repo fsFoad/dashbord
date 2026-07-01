@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 
 import {NgClass, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ButtonDirective} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 
@@ -11,7 +11,11 @@ import {InputText} from 'primeng/inputtext';
 import {Panel} from 'primeng/panel';
 import {TableModule} from 'primeng/table';
 import {Tooltip} from 'primeng/tooltip';
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
 import {BreadcrumbsComponent} from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {MoreChar19Pipe} from '../../../../../shared/pipes/moreChar19.pipe';
 import {StatusPipe} from '../../../../../shared/pipes/status.pipe';
@@ -113,7 +117,9 @@ export class ClientApiManagementComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private accessDataSaveService: AccessDataSaveService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private transloco :TranslocoService,
         private notifierService: ToastService
     ) {}
@@ -286,10 +292,14 @@ export class ClientApiManagementComponent implements OnInit {
     }
 
     clientSearch() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.clientsearchbyclientnameandmobileno(this.clientName, this.mobile).subscribe(
             (a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(a)) {
                         this.clientAttachList = a;
                     } else {
@@ -306,16 +316,22 @@ export class ClientApiManagementComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
 
     clientApiSearch(apiId) {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
       /*  this.messagesApiFacadeService.clientbyapiid(apiId).subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 if (Array.isArray(a)) {
                     this.clientList = a;
                 } else {
@@ -331,7 +347,9 @@ export class ClientApiManagementComponent implements OnInit {
                 }
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );*/
         this.messagesApiFacadeService
@@ -342,7 +360,9 @@ export class ClientApiManagementComponent implements OnInit {
             )
             .subscribe(
                 (response: HttpResponse<any>) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     let data: any[] = [];
                     if (Array.isArray(response.body)) {
                         data = response.body;
@@ -366,7 +386,9 @@ export class ClientApiManagementComponent implements OnInit {
                         Number(response.headers.get('totalitems')) || 0;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -481,12 +503,16 @@ export class ClientApiManagementComponent implements OnInit {
             this.partyBase = this.inputclient.partyBase;
             this.clientBase = this.inputclient.clientBase;
             this.endpointId = this.inputclient.endpointid;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .clientgetbyendpointid(this.endpointId)
                 .subscribe(
                     (getAllResponse) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (Array.isArray(getAllResponse)) {
                             this.clientList = getAllResponse;
                         } else {
@@ -505,7 +531,9 @@ export class ClientApiManagementComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
             this.apiGatewayService.updateApprovalEndpointIdClient(
@@ -564,10 +592,14 @@ export class ClientApiManagementComponent implements OnInit {
     }
 
    /* showAdd() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.clientbyapiid(this.apiId).subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 if (Array.isArray(a)) {
                     this.clientList = a;
                 } else {
@@ -583,7 +615,9 @@ export class ClientApiManagementComponent implements OnInit {
                 }
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
         this.clientApiDto.clientList = this.clientList;
@@ -600,10 +634,14 @@ export class ClientApiManagementComponent implements OnInit {
         this.registerFlag = true;
     }
     showClients() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.clientgetall().subscribe(
             (c) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 if (Array.isArray(c)) {
                     this.clientAttachList = c;
                 } else {
@@ -621,7 +659,9 @@ export class ClientApiManagementComponent implements OnInit {
                 this.dialogClientFlag = true;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -663,12 +703,16 @@ export class ClientApiManagementComponent implements OnInit {
             this.clientTemp.basicAuthUsername=null;
             this.clientTemp.basicAuthPassword=null;
             // if ()
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .clientAttachApi(this.clientTemp)
                 .subscribe(
                     (res) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.clientApiSearch(this.apiId);
                         this.dialogClientFlag = false;
                         /* this.messagesApiFacadeService.clientgetbyendpointid(this.endpointId).subscribe(getAllResponse => {
@@ -685,7 +729,9 @@ export class ClientApiManagementComponent implements OnInit {
                  })*/
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

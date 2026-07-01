@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EndpointDto } from '../../../../models/endpoint.Dto';
 import { ActivatedRoute } from '@angular/router';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { CommonValidationsService } from '../../../../../shared/validators/common-validations.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
@@ -10,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
 
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ButtonDirective } from 'primeng/button';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { InputGroup } from 'primeng/inputgroup';
@@ -74,7 +78,9 @@ export class EndpointUpdateComponent implements OnInit {
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
         private validationsService: CommonValidationsService,
@@ -381,16 +387,22 @@ export class EndpointUpdateComponent implements OnInit {
                 ? (this.updateTemp.status = 1)
                 : (this.updateTemp.status = 0);
             this.updateTemp.destinationHost = this.destinationHost;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .updateEndpoint(this.updateTemp)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.close.emit('closeAndCreate');
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
         }

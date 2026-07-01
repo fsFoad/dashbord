@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiGatewayConstants } from '../../../../constants/ApiGatewayConstants';
 import { ActivatedRoute } from '@angular/router';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { CommonValidationsService } from '../../../../../shared/validators/common-validations.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
@@ -114,7 +118,9 @@ export class EndpointRegisterComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
         private transloco: TranslocoService,
@@ -342,31 +348,43 @@ export class EndpointRegisterComponent implements OnInit {
     }
 
     clientSearch() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .clientsearchbyclientnameandmobileno(this.clientName, this.mobile)
             .subscribe(
                 (a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.clientAttachList = a;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
     }
 
     //this.
     showClients() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.clientgetall().subscribe(
             (c) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.clientAttachList = c;
                 this.dialogClientFlag = true;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
     }
@@ -397,10 +415,14 @@ export class EndpointRegisterComponent implements OnInit {
         this.clientTemp.organizationCode = client.organizationCode;
         this.clientTemp.publicKey = client.publicKey;
         this.clientTemp.status = client.status;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.randomapikey().subscribe(
             (f) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.clientTemp.apikey = f;
                 for (let i = 0; i < this.clientList.length; i++) {
                     if (this.clientList[i].clientId == client.clientId) {
@@ -419,7 +441,9 @@ export class EndpointRegisterComponent implements OnInit {
                 //console.log(this.clientList, 'bad')
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
     }
@@ -427,14 +451,20 @@ export class EndpointRegisterComponent implements OnInit {
     clear() {
         this.mobile = '';
         this.clientName = '';
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.clientgetall().subscribe(
             (c) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.clientAttachList = c;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
     }
@@ -520,28 +550,38 @@ export class EndpointRegisterComponent implements OnInit {
             else {
                 this.registerTemp.status = 0;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerEndpoint(this.registerTemp)
                 .subscribe(
                     (respons) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         // this.close.emit('closeAndCreate');
 
                         if (this.clientList.length > 0) {
                             for (let k = 0; k < this.clientList.length; k++) {
                                 this.clientList[k].endpointId =
                                     respons.endpointId;
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                                 this.messagesApiFacadeService
                                     .registerClient(this.clientList[k])
                                     .subscribe(
                                         (res) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             this.close.emit('closeAndCreate');
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         },
                                     );
                             }
@@ -550,7 +590,9 @@ export class EndpointRegisterComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
         }

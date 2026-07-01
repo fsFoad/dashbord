@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { Card } from 'primeng/card';
 import { Divider } from 'primeng/divider';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { ButtonDirective } from 'primeng/button';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { forkJoin } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,8 +14,11 @@ import { MessagesApiFacadeService } from '../../../services/messages-api-facade.
 import { ToastService } from '../../../../shared/services/ToastService';
 import { ConfirmationService } from 'primeng/api';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
-import { MatTooltip } from '@angular/material/tooltip';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { BreadcrumbsComponent } from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { Toast } from 'primeng/toast';
 import { Checkbox } from 'primeng/checkbox';
@@ -24,25 +26,25 @@ import { CommonValidationsService } from '../../../../shared/validators/common-v
 import { Dialog } from 'primeng/dialog';
 import { InputTextarea } from 'primeng/inputtextarea';
 import { EncodingServiceService } from '../../../../shared/services/encoding-service.service';
+import { Tooltip } from 'primeng/tooltip';
+import { TabsModule } from 'primeng/tabs';
 
 @Component({
     selector: 'app-test-run-condition',
+    standalone: true,
     imports: [
-        FormsModule,
-        MatTabGroup,
-        MatTab,
-        NgForOf,
+
+        TabsModule,
+        FormsModule,        NgForOf,
         Card,
         Divider,
-        DropdownModule,
-        MatTabLabel,
-        InputText,
+        SelectModule,        InputText,
         ButtonDirective,
         NgClass,
         NgIf,
         TranslocoPipe,
         ConfirmDialog,
-        MatTooltip,
+        Tooltip,
         BreadcrumbsComponent,
         Toast,
         Checkbox,
@@ -121,7 +123,9 @@ export class TestRunConditionComponent implements OnInit {
                 private encod: EncodingServiceService,
                 private apiGatewayService: ApiGatewayService,
                 private cdr: ChangeDetectorRef,
-                private _primengProgressBarService: FuseLoadingService,
+                // FUSEFS
+
+                // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
     chooseBread(caseBase: string) {
@@ -736,7 +740,9 @@ export class TestRunConditionComponent implements OnInit {
         }
         this.messagesApiFacadeService.getbyruleid(this.inputUpdate.ruleId).subscribe({
             next: (res) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.ruleConditionsList = Array.isArray(res) ? res : [res];
 
                 /** ابتدا فقط داده سرویس را در لیست‌های راست بریز */
@@ -770,7 +776,9 @@ export class TestRunConditionComponent implements OnInit {
                 this.queryList  = [...this.serviceQuery];
                 this.syncLists(true);
             },
-            error: () => this._primengProgressBarService.hide()
+            // FUSEFS
+
+            // error: () => this._primengProgressBarService.hide()
         });
     }
     trackByKey(index: number, item: any) {

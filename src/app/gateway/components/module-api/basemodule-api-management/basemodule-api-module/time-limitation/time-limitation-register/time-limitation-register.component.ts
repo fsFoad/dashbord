@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ApiGatewayConstants} from "../../../../../../constants/ApiGatewayConstants";
 import {ActivatedRoute} from "@angular/router";
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {FuseLoadingService} from '../../../../../../../../../@fuse/services/loading';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+// FUSEFS
+// import {FuseLoadingService} from '../../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../../services/api-gateway.service';
-import {DropdownModule} from "primeng/dropdown";
+import {SelectModule} from "primeng/select";
 import {FormsModule} from "@angular/forms";
 import {ToggleSwitch} from "primeng/toggleswitch";
 import {
@@ -23,7 +24,7 @@ import { Toast } from 'primeng/toast';
     styleUrls: ['./time-limitation-register.component.scss'],
     standalone: true,
     imports: [
-        DropdownModule,
+        SelectModule,
         FormsModule,
         ToggleSwitch,
         PersianCalendarComponent,
@@ -75,7 +76,9 @@ export class TimeLimitationRegisterComponent implements OnInit {
         private route: ActivatedRoute,
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
         public translate: TranslocoService,
@@ -588,12 +591,18 @@ export class TimeLimitationRegisterComponent implements OnInit {
             for (let i = 0; i < testArray.length; i++) {
                 testArray[i].className += " ng-dirty";
             }
-            this._primengProgressBarService.show()
+            // FUSEFS
+
+            // this._primengProgressBarService.show()
             this.apiGatewayService.currentApprovalStageApiId.subscribe(res => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
                 this.objectTimeLimitation.apiId = res
             },error => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
             })
             if (this.toDate != "" && this.toDate != null) {
                 this.toDate = this.toDate.replace(/[/]/g, '')
@@ -641,12 +650,18 @@ export class TimeLimitationRegisterComponent implements OnInit {
             } else {
                 delete this.objectTimeLimitation.limitId
             }
-            this._primengProgressBarService.show()
+            // FUSEFS
+
+            // this._primengProgressBarService.show()
             this.messagesApiFacadeService.savelimit(this.objectTimeLimitation).subscribe(a => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
                 this.close.emit('closeAndCreate');
             },error => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
             })
         }
     }

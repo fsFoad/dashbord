@@ -7,7 +7,7 @@
                 <span class="red-color-text">* </span>
                 <span>{{ 'registerCondition.dropdown.conditionType'|transloco }} :</span>
             </label>
-            <p-dropdown
+            <p-select
                 [options]="conditionTypeOptions"
                 [(ngModel)]="conditionType"
                 (ngModelChange)="markExpressionDirty()"
@@ -15,7 +15,7 @@
                 optionLabel="name"
                 class="normal-dropdown"
             >
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-8">
         </div>
@@ -24,7 +24,7 @@
                 <span class="red-color-text">* </span>
                 <span>{{ 'registerCondition.dropdown.conditionFieldType'|transloco }} :</span>
             </label>
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 [options]="conditionFieldTypeOptions"
                 [(ngModel)]="conditionFieldType"
@@ -33,7 +33,7 @@
                 (onChange)="onChangeConditionFieldType($event)"
                 (ngModelChange)="markExpressionDirty()"
             >
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4">
             <label class="normal-label">
@@ -49,7 +49,7 @@
             <label class="normal-label">
                 <span>{{ 'registerCondition.dropdown.functionType'|transloco }} :</span>
             </label>
-            <p-dropdown
+            <p-select
                 [options]="functionTypeOptions"
                 [(ngModel)]="functionType"
                 optionValue="code"
@@ -59,14 +59,14 @@
                 (ngModelChange)="markExpressionDirty()"
                 [disabled]="nodePathFlag"
             >
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4">
             <label class="normal-label">
                 <span class="red-color-text" *ngIf="!expressionFlag">* </span>
                 <span>{{ 'registerCondition.dropdown.ruleCondition'|transloco }} :</span>
             </label>
-            <p-dropdown
+            <p-select
                 (ngModelChange)="markExpressionDirty()"
                 [options]="ruleConditionOptions"
                 [(ngModel)]="ruleCondition"
@@ -75,7 +75,7 @@
                 class="normal-dropdown"
                 [disabled]="expressionFlag"
             >
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4"></div>
         <div class="col-span-4" *ngIf="functionType&&(substringFlag||splitFlag)&&conditionFieldType=='2'">
@@ -101,7 +101,7 @@
                 <span class="red-color-text" *ngIf="!expressionFlag">* </span>
                 <span>{{ 'registerCondition.input.conditionValueType'|transloco }} :</span>
             </label>
-            <p-dropdown
+            <p-select
                 (ngModelChange)="markExpressionDirty()"
                 class="normal-dropdown"
                 [options]="conditionFieldTypeOptions"
@@ -109,7 +109,7 @@
                 optionValue="code"
                 [disabled]="conditionValueTypeDisabled||expressionFlag"
                 optionLabel="name">
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4" *ngIf="(!expressionFlag||!substringFlag)">
             <label class="normal-label">
@@ -200,9 +200,9 @@
                 <button (click)="showMessage()"
                         class="bg-green-500 border-green-500 text-white w-8 h-8 mr-2 rounded-2xl flex items-center justify-center"
                         pButton icon="pi pi-external-link"
-                        matTooltip="{{ 'registerRule.tooltip.chooseMessage' | transloco }}">
+                        pTooltip="{{ 'registerRule.tooltip.chooseMessage' | transloco }}">
                 </button>
-                <button matTooltip="{{ 'registerRule.tooltip.deleteMessage' | transloco }}"
+                <button pTooltip="{{ 'registerRule.tooltip.deleteMessage' | transloco }}"
                         (click)="deleteMessage()"
                         class="bg-red-500 border-red-500 text-white w-8 h-8 rounded-2xl flex items-center justify-center "
                         pButton icon="pi pi-trash">
@@ -276,27 +276,27 @@
 
                 <label class="normal-label">
                     <span>{{ 'rule.dialog.dropdown.tableId' | transloco }} :</span></label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="categoryMessages"
                     optionValue="code"
                     optionLabel="name"
                     [(ngModel)]="tableIdMessage"
                     (onChange)="search()">
-                </p-dropdown>
+                </p-select>
             </div>
             <div class="col-span-4">
 
                 <label class="normal-label">
                     <span>{{ 'rule.dialog.dropdown.typeMessages' | transloco }} :</span></label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="typeMessages"
                     optionValue="code"
                     optionLabel="name"
                     [(ngModel)]="typeMessage"
                     (onChange)="search()">
-                </p-dropdown>
+                </p-select>
             </div>
             <div class="col-span-4"></div>
             <div class=" sm:flex sm:col-span-8 justify-start items-center gap-2 h-12 mt-5-5 rtl:flex-row-reverse">

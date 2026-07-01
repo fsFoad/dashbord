@@ -1,13 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
 import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { Checkbox } from 'primeng/checkbox';
 import { ButtonDirective } from 'primeng/button';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { InputText } from 'primeng/inputtext';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
 
@@ -18,7 +22,7 @@ import { ApiGatewayService } from '../../../../../../services/api-gateway.servic
     standalone: true,
     imports: [
         FormsModule,
-        DropdownModule,
+        SelectModule,
         Checkbox,
         ButtonDirective,
         TranslocoPipe,
@@ -35,7 +39,9 @@ export class ProducednodeRegisterComponent implements OnInit {
         private notifierService: ToastService,
         private transloco: TranslocoService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
 
@@ -1028,9 +1034,13 @@ export class ProducednodeRegisterComponent implements OnInit {
                         ? (obj.justReturnValue = 1)
                         : (obj.justReturnValue = 0);
                 }
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.producednodeRegister(obj).subscribe((n) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             obj.nodeName = null;
                             this.nodeName = null;
                             obj.nodePath = null;
@@ -1042,7 +1052,9 @@ export class ProducednodeRegisterComponent implements OnInit {
                             debugger;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );
             }

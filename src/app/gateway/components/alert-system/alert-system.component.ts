@@ -2,9 +2,8 @@ import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import { DevelopmentComponent } from '../../../shared/components/development/development.component';
 import { ButtonDirective } from 'primeng/button';
-import { MatTooltip } from '@angular/material/tooltip';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { MorChar32Pipe } from '../../../shared/pipes/morChar32.pipe';
 import { NgIf } from '@angular/common';
@@ -17,14 +16,14 @@ import { Ripple } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { Toast } from 'primeng/toast';
 import { Tooltip } from 'primeng/tooltip';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 @Component({
     selector: 'app-alert-system',
     templateUrl: './alert-system.component.html',
     standalone: true,
     styleUrls: ['./alert-system.component.scss'],
-    imports: [ToggleSwitch, DevelopmentComponent, ButtonDirective, MatTooltip, BreadcrumbsComponent, DropdownModule, InputText, MorChar32Pipe, NgIf, PrimeTemplate, ReactiveFormsModule, RegisterRecipientsAlertsComponent, Ripple, TableModule, Toast, ToggleSwitch, Tooltip, TranslocoPipe, FormsModule],
+    imports: [ToggleSwitch, DevelopmentComponent, ButtonDirective, Tooltip, BreadcrumbsComponent, SelectModule, InputText, MorChar32Pipe, NgIf, PrimeTemplate, ReactiveFormsModule, RegisterRecipientsAlertsComponent, Ripple, TableModule, Toast, ToggleSwitch, Tooltip, TranslocoPipe, FormsModule],
 })
 export class AlertSystemComponent implements OnInit {
     @Output() close = new EventEmitter<string>();

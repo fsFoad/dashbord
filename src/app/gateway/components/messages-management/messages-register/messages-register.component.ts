@@ -2,12 +2,16 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ApiGatewayConstants } from '../../../constants/ApiGatewayConstants';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { CommonValidationsService } from '../../../../shared/validators/common-validations.service';
 import { MessagesDto } from '../../../models/messages.Dto';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
@@ -27,7 +31,7 @@ import { Toast } from 'primeng/toast';
         ReactiveFormsModule,
         KeyFilter,
         InputText,
-        DropdownModule,
+        SelectModule,
         ButtonDirective,
         BreadcrumbsComponent,
         Toast,
@@ -43,7 +47,9 @@ export class MessagesRegisterComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _fuseLoadingService: FuseLoadingService,
+        // FUSEFS
+
+        // private _fuseLoadingService: FuseLoadingService,
         private fb: FormBuilder,
         private apiGatewayService: ApiGatewayService,
         private messageService: ToastService,
@@ -142,17 +148,25 @@ export class MessagesRegisterComponent implements OnInit {
             if (this.registerForm.controls['type'].value == '') {
                 this.registerTemp.type = null;
             }
-            this._fuseLoadingService.show();
-            this._fuseLoadingService.show();
+            // FUSEFS
+
+            // this._fuseLoadingService.show();
+            // FUSEFS
+
+            // this._fuseLoadingService.show();
             this.messagesApiFacadeService
                 .registerMessage(this.registerTemp)
                 .subscribe(
                     (a) => {
-                        this._fuseLoadingService.hide();
+                        // FUSEFS
+
+                        // this._fuseLoadingService.hide();
                         this.close.emit('closeAndCreate');
                     },
                     (error) => {
-                        this._fuseLoadingService.hide();
+                        // FUSEFS
+
+                        // this._fuseLoadingService.hide();
                     }
                 );
         }

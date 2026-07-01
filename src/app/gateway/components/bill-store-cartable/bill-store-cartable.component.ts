@@ -10,10 +10,14 @@ import {StatusPipe} from '../../../shared/pipes/status.pipe';
 import {Menu} from 'primeng/menu';
 import {ButtonDirective} from 'primeng/button';
 import {Ripple} from 'primeng/ripple';
-import {TranslocoPipe} from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import {TranslocoPipe} from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {FormsModule} from '@angular/forms';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {Toast} from 'primeng/toast';
@@ -37,7 +41,7 @@ import {Toast} from 'primeng/toast';
         ButtonDirective,
         Ripple,
         TranslocoPipe,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         Toast,
         NgClass,
@@ -64,7 +68,9 @@ export class BillStoreCartableComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute, private router: Router,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
     ) {
@@ -164,7 +170,7 @@ export class BillStoreCartableComponent implements OnInit {
     }
 
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 
@@ -208,13 +214,17 @@ export class BillStoreCartableComponent implements OnInit {
 
         this.billCartableList = [];
 
-        this._primengProgressBarService.show()
+        // FUSEFS
 
+
+        // this._primengProgressBarService.show()
         this.messagesApiFacadeService.apistoreJwt().subscribe(response => {
             debugger
             console.log(response)
             this.messagesApiFacadeService.apilogrequest(response.outputData, this.pageno, this.pagesize,).subscribe(responseAll => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
                 if (Array.isArray(responseAll.outputData)) {
                     this.billCartableList = responseAll.outputData
                 } else {
@@ -228,7 +238,9 @@ export class BillStoreCartableComponent implements OnInit {
                 }
                 console.log('billCartableList', this.billCartableList)
             }, error => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
             })
         })
     }

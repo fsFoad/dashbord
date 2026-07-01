@@ -23,7 +23,7 @@
             <label class="normal-label">
                 <span class="red-color-text">* </span>
                 <span>اولویت اجرا :</span></label>
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 [options]="actionTypeOptionsFirst"
                 [(ngModel)]="actionTypeFirst"
@@ -31,7 +31,7 @@
                 optionLabel="name"
                 (onChange)="onChangeActionTypeFirst($event)"
             >
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4">
             <br>
@@ -41,8 +41,8 @@
                         pRipple icon="pi pi-chevron-down"></button>
                 <button pButton label="200" [icon]="icon200_val" severity="success"
                         class="normal-button"
-                        (click)="message200Flag = true; messageSelector200Action$.next({ type: 'open' })"[matTooltip]="tooltipCusBtn"
-                        [matTooltipDisabled]="!disableCusMessage"  ></button>
+                        (click)="message200Flag = true; messageSelector200Action$.next({ type: 'open' })"[pTooltip]="tooltipCusBtn"
+                        [tooltipDisabled]="!disableCusMessage"  ></button>
                 <button pButton label="400" severity="warn" [icon]="icon400_val"
                         class="normal-button w-15" [disabled]="disableCusMessage"
                         (click)="message400Flag = true; messageSelector400Action$.next({ type: 'open'})"></button>
@@ -64,7 +64,7 @@
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>نام سازمان :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="partyListOptionsFirst"
                             [(ngModel)]="partyIdFirst"
@@ -73,13 +73,13 @@
                             filterBy="title"
                             optionLabel="title"
                             (onChange)="OnchangePartyFirst($event)">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-4">
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>ماژول :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="moduleListOptionsFirst"
                             [(ngModel)]="moduleIdFirst"
@@ -88,14 +88,14 @@
                             filterBy="moduleTitle"
                             optionLabel="moduleTitle"
                             (onChange)="OnchangeModuleFirst($event)">
-                        </p-dropdown>
+                        </p-select>
                     </div>
 
                     <div class="col-span-4">
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>نام سرویس :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="apiListOptionsFirst"
                             [(ngModel)]="apiIdFirst"
@@ -105,7 +105,7 @@
                             optionLabel="title"
                             (onChange)="OnchangeApiFirst($event)"
                         >
-                        </p-dropdown>
+                        </p-select>
                     </div>
 
                     <div class="col-span-4 md:col-span-6 lg:col-span-4">
@@ -172,7 +172,7 @@
                     <div class="col-span-4 md:col-span-6 lg:col-span-4">
                         <label class="normal-label">
                             <span>نام کلاینت :</span></label>
-                        <p-dropdown
+                        <p-select
                             [disabled]="!hasClient"
                             class="normal-dropdown"
                             [options]="clientOptions"
@@ -181,7 +181,7 @@
                             optionLabel="name"
                             (onChange)="onChangeHasClientv($event)"
                         >
-                        </p-dropdown>
+                        </p-select>
                     </div>
                 </div>
             </p-fieldset>
@@ -486,7 +486,7 @@ styleClass="normal-table"
                     <label class="normal-label">
                         <span class="red-color-text">* </span>
                         <span>کد پیام :</span></label>
-                    <p-dropdown
+                    <p-select
                         class="normal-dropdown"
                         [options]="statusCodeOptions400"
                         [(ngModel)]="codeMessage400"
@@ -496,7 +496,7 @@ styleClass="normal-table"
                         [disabled]="true"
                     >
                         &lt;!&ndash;                        (onChange)="onchangeStatusCode()"&ndash;&gt;
-                    </p-dropdown>
+                    </p-select>
                 </div>
                 <div class="col-span-4">
                     <label class="normal-label">
@@ -518,26 +518,26 @@ styleClass="normal-table"
                 <div class="col-span-4">
                     <label class="normal-label">
                         <span>بخش پیام ها :</span></label>
-                    <p-dropdown
+                    <p-select
                         class="normal-dropdown"
                         [options]="categoryMessages400"
                         optionValue="code"
                         optionLabel="name"
                         [(ngModel)]="tableIdMessage400"
                         (onChange)="messageSearch400(this.apiNumber400)">
-                    </p-dropdown>
+                    </p-select>
                 </div>
                 <div class="col-span-4">
                     <label class="normal-label">
                         <span>نوع پیام ها :</span></label>
-                    <p-dropdown
+                    <p-select
                         class="normal-dropdown"
                         [options]="typeMessages400"
                         optionValue="code"
                         optionLabel="name"
                         [(ngModel)]="typeMessage400"
                         (onChange)="messageSearch400(this.apiNumber400)">
-                    </p-dropdown>
+                    </p-select>
                 </div>
 
 

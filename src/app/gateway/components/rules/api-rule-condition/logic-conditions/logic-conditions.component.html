@@ -95,14 +95,14 @@
                             </span>
 
                             <div>
-                                <p-dropdown
+                                <p-select
                                     class="normal-dropdown operator-dropdown"
                                     [options]="OperatorOptions"
                                     [(ngModel)]="betweenValues[i - 1]"
                                     optionLabel="name"
                                     optionValue="code"
                                     [autoDisplayFirst]="false"
-                                ></p-dropdown>
+                                ></p-select>
                             </div>
 
                             <div
@@ -174,7 +174,7 @@
                                         {{ fieldLabels[j] }}:
                                     </label>
 
-                                    <p-dropdown
+                                    <p-select
                                         *ngIf="j == 0 || j == 2"
                                         styleClass="expression-dropdown full-dropdown expression-ltr"
                                         [options]="getAvailableExpressionOptions(i, j)"
@@ -183,8 +183,8 @@
                                         optionValue="value"
                                         [autoDisplayFirst]="false"
                                         (onChange)="onchangea($event)"
-                                    ></p-dropdown>
-                                    <p-dropdown
+                                    ></p-select>
+                                    <p-select
                                         *ngIf="j == 1"
                                         styleClass="full-dropdown operator-dropdown"
                                         [options]="OperatorOptions"
@@ -192,7 +192,7 @@
                                         optionLabel="name"
                                         optionValue="code"
                                         [autoDisplayFirst]="false"
-                                    ></p-dropdown>
+                                    ></p-select>
 
                                 </div>
                             </div>

@@ -5,9 +5,12 @@ import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
 import {Dialog} from 'primeng/dialog';
-import {TranslocoPipe} from '@ngneat/transloco';
-import {MatTooltip} from '@angular/material/tooltip';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {TranslocoPipe} from '@jsverse/transloco';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {CommonValidationsService} from '../../../../../../shared/validators/common-validations.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
@@ -16,6 +19,7 @@ import {FileUpload} from 'primeng/fileupload';
 import {KeyFilter} from 'primeng/keyfilter';
 import {Card} from 'primeng/card';
 import {ToggleSwitch} from 'primeng/toggleswitch';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-client-api-register',
@@ -27,7 +31,7 @@ import {ToggleSwitch} from 'primeng/toggleswitch';
         FormsModule,
         InputText,
         ButtonDirective,
-        MatTooltip,
+        Tooltip,
         TranslocoPipe,
         FileUpload,
         KeyFilter,
@@ -73,7 +77,9 @@ export class ClientApiRegisterComponent implements OnInit {
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiFacadeService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private notifierService: ToastService,
         private validationsService: CommonValidationsService
     ) {}
@@ -97,14 +103,20 @@ export class ClientApiRegisterComponent implements OnInit {
 
     generateApikey() {
         this.apikey = '';
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.randomapikey().subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.apikey = a;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -183,12 +195,16 @@ export class ClientApiRegisterComponent implements OnInit {
                     basicAuthUsername:null,
                     basicAuthPassword:null
                 };
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .registerClient(this.clientTemp)
                     .subscribe(
                         (res) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             if (this.registerClintApi != undefined) {
                                 tempClientApi.apiId =
                                     this.registerClintApi.apiId;
@@ -203,21 +219,29 @@ export class ClientApiRegisterComponent implements OnInit {
                                 tempClientApi.basicAuthPassword= this.registerClintApi.registerClintApi.pass;
                             }
                             tempClientApi.clientId = res.clientId;
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.show();
                             this.messagesApiFacadeService
                                 .clientAttachApi(tempClientApi)
                                 .subscribe(
                                     (e) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                         this.close.emit('closeAndCreate');
                                     },
                                     (error) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     }
                                 );
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             }

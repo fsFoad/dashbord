@@ -3,10 +3,14 @@ import {ApiGatewayConstants} from "../../../../../../constants/ApiGatewayConstan
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {ToastService} from '../../../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../../@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
 
@@ -18,7 +22,7 @@ import { ApiGatewayService } from '../../../../../../services/api-gateway.servic
     imports: [
         FormsModule,
         InputText,
-        DropdownModule,
+        SelectModule,
         ButtonDirective,
         TranslocoPipe
 
@@ -33,7 +37,9 @@ export class RequiredNodeRegisterComponent implements OnInit {
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
-        private _primengProgressBarService: FuseLoadingService
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService
     ) {}
 
     headerTypeGroup = ApiGatewayConstants.headerTypeGroup;
@@ -1015,12 +1021,16 @@ export class RequiredNodeRegisterComponent implements OnInit {
                         ? (obj.staticTextBefore = null)
                         : (obj.staticTextBefore = this.staticTextBefore);
                 }
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .requirednodeRegister(obj)
                     .subscribe(
                         (n) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             obj.nodeName = null;
                             obj.nodePlace = null;
                             obj.nodePath = null;
@@ -1032,7 +1042,9 @@ export class RequiredNodeRegisterComponent implements OnInit {
                             debugger;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             }

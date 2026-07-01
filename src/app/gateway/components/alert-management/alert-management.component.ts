@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
 import { Menu } from 'primeng/menu';
@@ -17,13 +17,17 @@ import { StatusPipe } from '../../../shared/pipes/status.pipe';
 import { TableModule } from 'primeng/table';
 import { Toast } from 'primeng/toast';
 import { Tooltip } from 'primeng/tooltip';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Constants } from '../../../shared/constants/Constants';
 import { PersianCalendarComponent } from '../../../shared/components/persian-calendar/persian-calendar.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import {
     SaffronShamsiDatePipe,
 } from '../../../mat-wrapper-components/projects/components/src/lib/_01-components/_11-saffron-pipes/_07-saffron-ShamsiDate.pipe';
@@ -40,7 +44,7 @@ import { AlertDetailList } from './alert-detail-list';
     imports: [
         BreadcrumbsComponent,
         ButtonDirective,
-        DropdownModule,
+        SelectModule,
         InputText,
         KeyFilter,
         Menu,
@@ -109,7 +113,9 @@ export class AlertManagementComponent implements OnInit {
                 private apiGatewayService: ApiGatewayService,
                 private dialogService: DialogService,
                 private ref: DynamicDialogRef,
-                private _primengProgressBarService: FuseLoadingService,
+                // FUSEFS
+
+                // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
 
@@ -179,12 +185,16 @@ export class AlertManagementComponent implements OnInit {
         }
         let startRow: number;
         this.pageno != 0 ? (startRow = this.pageno * this.pagesize) : (startRow = 0);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.loading.set(true);
         this.messagesApiFacadeService.getAlarm(this.pageno, this.pagesize, this.destination_address, this.fromdate, this.todate).subscribe({
             next: (response) => {
                 debugger;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading.set(false);
                 const rawData = response?.data ?? response ?? [];
                 const processed = rawData.map((x, i) => {
@@ -203,7 +213,9 @@ export class AlertManagementComponent implements OnInit {
                 console.error('❌ خطا در درخواست API:', err);
                 this.error.set('خطا در دریافت داده‌ها');
                 this.loading.set(false);
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });
     }

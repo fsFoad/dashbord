@@ -1,16 +1,16 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import { DevelopmentComponent } from '../../../shared/components/development/development.component';
-import { MatTooltip } from '@angular/material/tooltip';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { ButtonDirective } from 'primeng/button';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-roles',
     templateUrl: './roles.component.html',
     standalone: true,
     styleUrls: ['./roles.component.scss'],
-    imports: [DevelopmentComponent, MatTooltip, TranslocoPipe, ButtonDirective],
+    imports: [DevelopmentComponent, Tooltip, TranslocoPipe, ButtonDirective],
 })
 export class RolesComponent implements OnInit {
     @Output() close = new EventEmitter<string>();
@@ -28,7 +28,7 @@ export class RolesComponent implements OnInit {
         this.scrollTop();
     }
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 }

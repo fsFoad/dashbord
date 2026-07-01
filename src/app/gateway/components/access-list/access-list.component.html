@@ -7,7 +7,7 @@
         <div class=" col-span-4">
             <label class="normal-label">
                 <span>{{ 'input.clientName'|transloco }} :</span></label>
-            <p-dropdown
+            <p-select
                 (keydown.enter)="onKeydown($event)"
                 (onChange)="search()"
                 [options]="clientListOptions"
@@ -19,7 +19,7 @@
                 class="normal-dropdown"
                 [disabled]="clientNameFlag"
             >
-            </p-dropdown>
+            </p-select>
         </div>
         <div class=" col-span-4"></div>
 
@@ -36,7 +36,7 @@
             <label class="normal-label">
                 <span>{{ 'dropdown.partyName'|transloco }} :</span>
             </label>
-            <p-dropdown
+            <p-select
                 (keydown.enter)="onKeydown($event)"
                 [options]="partyListOptions"
                 [(ngModel)]="partyId"
@@ -47,11 +47,11 @@
                 class="normal-dropdown"
                 (onChange)="OnchangeParty($event)">
 
-            </p-dropdown>
+            </p-select>
         </div>
         <div class=" col-span-4">
             <label class="normal-label"> <span>{{ 'dropdown.moduleTitle'|transloco }} :</span></label>
-            <p-dropdown
+            <p-select
                 (keydown.enter)="onKeydown($event)"
                 (onChange)="search()"
                 [options]="moduleListOptions"
@@ -62,7 +62,7 @@
                 filterBy="moduleTitle"
                 class="normal-dropdown"
             >
-            </p-dropdown>
+            </p-select>
 
         </div>
         <div class=" col-span-4"></div>
@@ -599,14 +599,14 @@
                                 <label class="normal-label">
                                     <span class="text-red-500"></span>نوع احراز درخواست سرویس:
                                 </label>
-                                <p-dropdown
+                                <p-select
                                     class="normal-dropdown"
                                     [options]="serviceRequestVerifyOptions"
                                     optionValue="code"
                                     optionLabel="name"
                                     [(ngModel)]="serviceRequestVerify"
                                     (onChange)="verifyChange($event)"
-                                ></p-dropdown>
+                                ></p-select>
                             </div>
                             <div class="col-span-3 ">
                             </div>
@@ -621,7 +621,7 @@
                                     <!--                                    <button (click)="onDisplayUploadDigital()" pButton class="btnConfirm"-->
                                     <button pButton class="btnConfirm"
                                             icon="pi pi-eye" (click)="onDisplayUploadDigital()"
-                                            matTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"
+                                            pTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"
                                             style="width: 34px; margin-left: 2px;"></button>
                                     <!--  <p-fileupload
                                           mode="basic"
@@ -647,7 +647,7 @@
                                     <!--                                    <button (click)="onDisplayUploadPublicKey()" pButton icon="pi pi-eye"-->
                                     <button pButton icon="pi pi-eye" (click)="onDisplayUploadPublicKey()"
                                             class="normal-button"
-                                            matTooltip="{{'مشاهده کلید کلاینت' | transloco}}"
+                                            pTooltip="{{'مشاهده کلید کلاینت' | transloco}}"
                                             style="width: 34px; margin-left: 2px;"></button>
                                 </div>
                             </div>
@@ -785,7 +785,7 @@
                                 >
                                     <i class="pi pi-arrow-left"></i>
                                 </button>
-                                <p-dropdown class="normal-dropdown-pagination"
+                                <p-select class="normal-dropdown-pagination"
                                             [options]="pagesizeOptions"
                                             optionValue="code"
                                             [autoDisplayFirst]="true"
@@ -793,7 +793,7 @@
                                             [(ngModel)]="pagesize"
                                             (onChange)="OnchangePageno($event)"
                                             [disabled]="nextBtnFlag">
-                                </p-dropdown>
+                                </p-select>
                             </div>
                             <div class="col-span-4"></div>
                         </div>

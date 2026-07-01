@@ -16,14 +16,14 @@
             <div class="col-span-3">
                 <label class="normal-label">
                     <span>{{ 'api.dropdown.searchType'|transloco }} :</span></label>
-                <p-dropdown class="normal-dropdown"
+                <p-select class="normal-dropdown"
                             [autoDisplayFirst]="false"
                             [options]="searchByOption"
                             optionValue="code"
                             [(ngModel)]="searchBy"
                             optionLabel="name"
                             (onChange)="onChangeSearch($event)"
-                ></p-dropdown>
+                ></p-select>
             </div>
             <div class="col-span-3" *ngIf="showTitle&&!showName">
                 <label class="normal-label"><span>{{ 'api.input.apiTitle'|transloco }} :</span></label>
@@ -181,7 +181,7 @@
                 (click)="nextPageStatement()"
 
             ><i class="pi pi-arrow-left"></i></button>
-            <p-dropdown
+            <p-select
                 [options]="pagesizeOptions"
                 optionValue="code"
                 optionLabel="name"
@@ -189,7 +189,7 @@
                 (onChange)="OnchangePageno($event)"
                 [disabled]="nextBtnFlag"
                 class="normal-dropdown-pagination"
-            ></p-dropdown>
+            ></p-select>
         </div>
         <div class="col-span-4"></div>
     </div>-->
@@ -263,13 +263,13 @@
             </div>
             <div class="col-span-6">
                 <label class="normal-label"><span>{{ 'api.dialog.dropdown.category'|transloco }} :</span></label>
-                <p-dropdown class="normal-dropdown p-fluid"
+                <p-select class="normal-dropdown p-fluid"
                             [options]="apiMainCategories"
                             optionValue="mainCategoryId"
                             optionLabel="title"
                             [(ngModel)]="mainCategorie"
                             (onChange)="OnChangeCateguryOptions($event)"
-                ></p-dropdown>
+                ></p-select>
             </div>
             <div class="col-span-6">
                 <label class="normal-label"><span>{{ 'api.dialog.label.apiTitle'|transloco }} :</span></label>
@@ -277,12 +277,12 @@
             </div>
             <div class="col-span-6">
                 <label class="normal-label"><span>{{ 'api.dialog.dropdown.pack'|transloco }} :</span></label>
-                <p-dropdown class="normal-dropdown p-fluid"
+                <p-select class="normal-dropdown p-fluid"
                             [options]="categories"
                             optionValue="categoryId"
                             optionLabel="title"
                             [(ngModel)]="categoryid"
-                ></p-dropdown>
+                ></p-select>
             </div>
             <div class="col-span-6">
                 <label class="normal-label"><span>{{ 'api.dialog.label.apiId'|transloco }} :</span></label>

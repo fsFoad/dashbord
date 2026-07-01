@@ -4,8 +4,12 @@ import {ActivatedRoute} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {DetailListApiLog} from './detailListApiLog';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
@@ -19,7 +23,7 @@ import {NgIf, NgStyle} from "@angular/common";
 import {SuccessfulPipe} from "../../../../../../shared/pipes/successful.pipe";
 import {ButtonDirective} from "primeng/button";
 import {Ripple} from "primeng/ripple";
-import {DropdownModule} from "primeng/dropdown";
+import {SelectModule} from "primeng/select";
 import {FormsModule} from "@angular/forms";
 
 @Component({
@@ -40,7 +44,7 @@ import {FormsModule} from "@angular/forms";
         NgIf,
         ButtonDirective,
         Ripple,
-        DropdownModule,
+        SelectModule,
         FormsModule
 
     ],
@@ -88,7 +92,9 @@ export class ApiLogsComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private transloco: TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
         private dialogService: DialogService,
@@ -358,12 +364,16 @@ export class ApiLogsComponent implements OnInit, OnDestroy {
         }
         debugger;
         this.loading = true;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .requestlogsgetbyapiid(this.apiId, this.pageno, this.pagesize)
             .subscribe(
                 (b) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.logList = b;
                     this.logList.map((x) =>
                         x.STATUS === 1 ? (x.STATUS = true) : (x.STATUS = false)
@@ -401,7 +411,9 @@ export class ApiLogsComponent implements OnInit, OnDestroy {
                     this.loading = false;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

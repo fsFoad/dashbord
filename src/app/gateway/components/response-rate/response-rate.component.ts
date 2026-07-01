@@ -1,6 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
@@ -10,12 +14,12 @@ import {ToastService} from '../../../shared/services/ToastService';
 import {Toast} from "primeng/toast";
 import {BreadcrumbsComponent} from "../../../shared/components/breadcrumbs/breadcrumbs.component";
 import {NgIf} from "@angular/common";
-import {DropdownModule} from "primeng/dropdown";
+import {SelectModule} from "primeng/select";
 import {FormsModule} from "@angular/forms";
 import {PersianCalendarComponent} from "../../../shared/components/persian-calendar/persian-calendar.module";
 import {ButtonDirective} from "primeng/button";
 import {InputNumber} from "primeng/inputnumber";
-import {TranslocoPipe} from "@ngneat/transloco";
+import {TranslocoPipe} from "@jsverse/transloco";
 import {UIChart} from "primeng/chart";
 import {MultipleApisChartComponent} from "./multiple-apis-chart/multiple-apis-chart.component";
 
@@ -27,7 +31,7 @@ import {MultipleApisChartComponent} from "./multiple-apis-chart/multiple-apis-ch
         Toast,
         BreadcrumbsComponent,
         NgIf,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         PersianCalendarComponent,
         ButtonDirective,
@@ -79,7 +83,9 @@ export class ResponseRateComponent implements OnInit {
     entries
 
     constructor(
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService,
         private messagesApiFacadeService: MessagesApiFacadeService,
@@ -331,10 +337,14 @@ export class ResponseRateComponent implements OnInit {
         dataLength = this.data?.labels?.length;
         this.chartWidth = `${Math.max(200, dataLength * 50)}px`;
         debugger
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallclient().subscribe(i => {
             debugger
-            this._primengProgressBarService.hide()
+            // FUSEFS
+
+            // this._primengProgressBarService.hide()
             if (Array.isArray(i)) {
                 this.clientListOptions = i
             } else {
@@ -342,7 +352,9 @@ export class ResponseRateComponent implements OnInit {
             }
             this.clientListOptions.unshift({name: '-', clientId: null,});
         }, error => {
-            this._primengProgressBarService.hide()
+            // FUSEFS
+
+            // this._primengProgressBarService.hide()
         })
     }
 
@@ -427,7 +439,9 @@ export class ResponseRateComponent implements OnInit {
 
 
             this.chartLineFlag = true
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.responsedelay(this.clientId, this.fromdate, this.todate, this.delay,this.moduleid).subscribe(e => {
                 debugger
                 if (e.length == 0) {
@@ -505,9 +519,13 @@ export class ResponseRateComponent implements OnInit {
 
                     };
                 }
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
         }*/
 

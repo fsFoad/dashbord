@@ -12,10 +12,13 @@ import { Tooltip } from 'primeng/tooltip';
 import { MoreChar19Pipe } from '../../../../shared/pipes/moreChar19.pipe';
 import { NgIf } from '@angular/common';
 import { Dialog } from 'primeng/dialog';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { DropdownModule } from 'primeng/dropdown';
-import { MatTooltip } from '@angular/material/tooltip';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { SelectModule } from 'primeng/select';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { TableIdPipe } from '../../../../shared/pipes/tableId.pipe';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
@@ -38,10 +41,10 @@ import { CommonModule } from '@angular/common';
         TranslocoPipe,
         FormsModule,
         InputText,
-        DropdownModule,
+        SelectModule,
         Textarea,
         Panel,
-        MatTooltip,
+        Tooltip,
         ButtonDirective,
         TableIdPipe,
         Dialog,
@@ -126,7 +129,9 @@ export class ApiRuleUpdateComponent implements OnInit, OnChanges {
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private transloco: TranslocoService,
         private cdr: ChangeDetectorRef,
         private notifierService: ToastService,
@@ -499,12 +504,15 @@ export class ApiRuleUpdateComponent implements OnInit, OnChanges {
     }
 
     private loadAndSelectSingleMessage(messageId: any) {
-        this._primengProgressBarService.show();
+        // FUSEFS
 
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.getbymessageId(messageId).subscribe(
             (a) => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.generalErrorCodes = a.code?.toString?.() ?? a.code;
                 this.codeMessage = a.code?.toString?.() ?? a.code;
                 this.titleMessage = a.title?.toString?.() ?? a.title;
@@ -548,11 +556,15 @@ export class ApiRuleUpdateComponent implements OnInit, OnChanges {
         debugger
         this.scrollTop();
         if (this.inputUpdate.messageId !== null) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.getbymessageId(this.inputUpdate.messageId).subscribe((a) => {
                     debugger
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     a.code != undefined
                         ? (this.generalErrorCodes = a.code.toString())
                         : (this.generalErrorCodes = a.code);
@@ -596,7 +608,9 @@ export class ApiRuleUpdateComponent implements OnInit, OnChanges {
                     this.initStaticFieldsFromInput();
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });
         }
         this.name = this.inputUpdate.name;
@@ -725,13 +739,19 @@ export class ApiRuleUpdateComponent implements OnInit, OnChanges {
             if (!this.removeMessage) {
                 this.updateRulObject.messageId = this.messageId;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.registerRule(this.updateRulObject).subscribe((a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.close.emit('closeAndCreate');
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         }

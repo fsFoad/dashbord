@@ -5,13 +5,17 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {MessagesDto} from '../../../models/messages.Dto';
 
 import {ActivatedRoute} from '@angular/router';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ButtonDirective} from 'primeng/button';
-import {DropdownModule} from 'primeng/dropdown';
+import {SelectModule} from 'primeng/select';
 import {InputText} from 'primeng/inputtext';
 import {KeyFilter} from 'primeng/keyfilter';
 import {ToastModule} from 'primeng/toast';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {BreadcrumbsComponent} from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -27,7 +31,7 @@ import {ApiGatewayService} from '../../../services/api-gateway.service';
         TranslocoPipe,
         KeyFilter,
         InputText,
-        DropdownModule,
+        SelectModule,
         ButtonDirective,
         ToastModule,
         BreadcrumbsComponent,
@@ -41,11 +45,12 @@ export class MessagesUpdateComponent implements OnInit {
     typeMessages = ApiGatewayConstants.typeMessages;
     cust_alphanumEn: RegExp = ApiGatewayConstants.cust_alphanumEn;
     cust_alphanumFa: RegExp = ApiGatewayConstants.cust_alphanumFa;
-    //
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _fuseLoadingService: FuseLoadingService,
+        // FUSEFS
+
+        // private _fuseLoadingService: FuseLoadingService,
         private fb: FormBuilder,
         private apiGatewayService: ApiGatewayService,
         private messageService: ToastService,
@@ -172,16 +177,22 @@ export class MessagesUpdateComponent implements OnInit {
             if (this.UpdateForm.controls['type'].value == '') {
                 this.updateTemp.type = null;
             }
-            this._fuseLoadingService.show();
+            // FUSEFS
+
+            // this._fuseLoadingService.show();
             this.messagesApiFacadeService
                 .registerMessage(this.updateTemp)
                 .subscribe(
                     (a) => {
-                        this._fuseLoadingService.hide();
+                        // FUSEFS
+
+                        // this._fuseLoadingService.hide();
                         this.close.emit('closeAndCreate');
                     },
                     (error) => {
-                        this._fuseLoadingService.hide();
+                        // FUSEFS
+
+                        // this._fuseLoadingService.hide();
                     }
                 );
         }

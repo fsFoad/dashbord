@@ -6,9 +6,13 @@ import {PartyDto} from "../../../../models/party.Dto";
 
 import {ActivatedRoute} from "@angular/router";
 import {MessagesApiFacadeService} from '../../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../shared/services/ToastService';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {InputText} from 'primeng/inputtext';
 
 import {ButtonDirective} from 'primeng/button';
@@ -45,7 +49,9 @@ export class PartyUpdateComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private fb: FormBuilder,
         private apiGatewayService: ApiGatewayService,
         private transloco :TranslocoService,
@@ -118,16 +124,22 @@ export class PartyUpdateComponent implements OnInit {
             this.updateTemp.title = this.title;
             this.updateTemp.status = +this.status;
             this.updateTemp.partyId = +this.partyId;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerParty(this.updateTemp)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.close.emit('closeAndCreate');
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

@@ -8,12 +8,14 @@
                 <h2>اطلاعات شرایط قاعده</h2>
             </div>
         </div>
-        <mat-tab-group color="primary" [dynamicHeight]="false" class="tabs">
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    <i class="fas fa-heading ml-2"></i>
-                    <span>Headers</span>
-                </ng-template>
+        <p-tabs value="0" class="tabs">
+            <p-tablist>
+                <p-tab value="0"><i class="fas fa-heading ml-2"></i><span>Headers</span></p-tab>
+                <p-tab value="1" [disabled]="method === 'GET'"><i class="fas fa-code ml-2"></i><span>Body</span></p-tab>
+                <p-tab value="2"><i class="fas fa-question ml-2"></i><span>Query</span></p-tab>
+            </p-tablist>
+            <p-tabpanels>
+            <p-tabpanel value="0">
                 <div class="kv-list sidebar-kv-scroll">
                     <ng-container *ngFor="let item of headerList; let i = index; trackBy: trackByKey">
                         <div class="kv w-full flex items-start gap-3" dir="ltr">
@@ -42,12 +44,8 @@
                         </div>
                     </ng-container>
                 </div>
-            </mat-tab>
-            <mat-tab [disabled]="method === 'GET'">
-                <ng-template mat-tab-label>
-                    <i class="fas fa-code ml-2"></i>
-                    <span>Body</span>
-                </ng-template>
+            </p-tabpanel>
+            <p-tabpanel value="1">
                 <div class="kv-list sidebar-kv-scroll">
                     <ng-container *ngFor="let item of bodyList; let i = index">
                         <div class="kv w-full flex flex-col" dir="ltr">
@@ -142,12 +140,8 @@
                     </ng-container>
 -->
                 </div>
-            </mat-tab>
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    <i class="fas fa-question ml-2"></i>
-                    <span>Query</span>
-                </ng-template>
+            </p-tabpanel>
+            <p-tabpanel value="2">
 
                 <div class="kv-list sidebar-kv-scroll">
                     <ng-container *ngFor="let item of queryList; let i = index">
@@ -177,8 +171,9 @@
                         </div>
                     </ng-container>
                 </div>
-            </mat-tab>
-        </mat-tab-group>
+            </p-tabpanel>
+        </p-tabpanels>
+        </p-tabs>
 
     </div>
     <div class="main">

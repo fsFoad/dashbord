@@ -7,16 +7,20 @@ import { BreadcrumbsComponent } from '../../../../../shared/components/breadcrum
 import { AsyncPipe, NgClass, NgIf, NgStyle } from '@angular/common';
 import { Panel } from 'primeng/panel';
 import { ButtonDirective } from 'primeng/button';
-import {  TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import {  TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { TableModule } from 'primeng/table';
 import { Tooltip } from 'primeng/tooltip';
 import { MoreChar19Pipe } from '../../../../../shared/pipes/moreChar19.pipe';
 import { StatusPipe } from '../../../../../shared/pipes/status.pipe';
 import { Ripple } from 'primeng/ripple';
 import { Menu } from 'primeng/menu';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { MessagesApiFacadeService } from '../../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
 import { PartyRegisterComponent } from '../party-register/party-register.component';
@@ -48,7 +52,7 @@ import { PartyFacade } from '../../facade/party.facade';
         StatusPipe,
         Ripple,
         Menu,
-        DropdownModule,
+        SelectModule,
         PartyRegisterComponent,
         PartyUpdateComponent,
         ModuleApiManagementComponent,

@@ -1,7 +1,7 @@
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { Menu } from 'primeng/menu';
 import { ModuleApiManagementComponent } from '../services-api/module-api-management/module-api-management.component';
@@ -16,10 +16,14 @@ import { StatusPipe } from '../../../shared/pipes/status.pipe';
 import { TableModule } from 'primeng/table';
 import { Toast } from 'primeng/toast';
 import { Tooltip } from 'primeng/tooltip';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import { CommonValidationsService } from '../../../shared/validators/common-validations.service';
@@ -35,10 +39,11 @@ import { HttpResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-authorized-recipients-alerts',
+    standalone: true,
     imports: [
         BreadcrumbsComponent,
         ButtonDirective,
-        DropdownModule,
+        SelectModule,
         InputText,
         Menu,
         ModuleApiManagementComponent,
@@ -105,7 +110,9 @@ export class AuthorizedRecipientsAlertsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private fb: FormBuilder,
         private transloco: TranslocoService,
         private notifierService: ToastService,
@@ -249,13 +256,17 @@ export class AuthorizedRecipientsAlertsComponent implements OnInit {
         this.personAlertList = [];
         let startRow: number;
         this.pageno != 0 ? (startRow = this.pageno * this.pagesize) : (startRow = 0);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.loading.set(true);
         this.messagesApiFacadeService
             .getReceiver(this.pageno, this.pagesize, this.name, this.mobileNo)
             .subscribe((httpResponse: HttpResponse<any>) => {
                     debugger;
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.loading.set(false);
                     let rawData: any[] = [];
                     if (Array.isArray(httpResponse.body)) {
@@ -279,7 +290,9 @@ export class AuthorizedRecipientsAlertsComponent implements OnInit {
                     console.error('❌ خطا در درخواست API:', err);
                     this.error.set('خطا در دریافت داده‌ها');
                     this.loading.set(false);
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         /*  const rawData = response?.data ?? response ?? [];
@@ -299,7 +312,9 @@ export class AuthorizedRecipientsAlertsComponent implements OnInit {
           console.error('❌ خطا در درخواست API:', err);
           this.error.set('خطا در دریافت داده‌ها');
           this.loading.set(false);
-          this._primengProgressBarService.hide();
+          // FUSEFS
+
+          // this._primengProgressBarService.hide();
       },
   );*/
     }

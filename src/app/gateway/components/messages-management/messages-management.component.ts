@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
     Accordion,
     AccordionContent,
@@ -12,14 +12,20 @@ import {
 } from 'primeng/accordion';
 import { MessageService } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
 import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { Tooltip } from 'primeng/tooltip';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
-import { FuseSplashScreenService } from '../../../../../@fuse/services/splash-screen';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// import { FuseSplashScreenService } from '../../../../../@fuse/services/splash-screen';
 import { MessagesCategoryPipe } from '../../../shared/pipes/messagesCategory.pipe';
 import { MessageTypePipe } from '../../../shared/pipes/messageType.pipe';
 import { MoreChar19Pipe } from '../../../shared/pipes/moreChar19.pipe';
@@ -42,7 +48,7 @@ import { HttpResponse } from '@angular/common/http';
         KeyFilter,
         InputText,
         ButtonDirective,
-        DropdownModule,
+        SelectModule,
         Accordion,
         TableModule,
         Tooltip,
@@ -100,7 +106,9 @@ export class MessagesManagementComponent implements OnInit {
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
-        private _fuseLoadingService: FuseLoadingService,
+        // FUSEFS
+
+        // private _fuseLoadingService: FuseLoadingService,
         private transloco :TranslocoService,
         private fb: FormBuilder
     ) {
@@ -224,7 +232,9 @@ export class MessagesManagementComponent implements OnInit {
     searchIsSystem(): void {
         debugger
         this.firstIsSystem = this.pagenoIsSystem * this.pagesizeIsSystem;
-        this._fuseLoadingService.show();
+        // FUSEFS
+
+        // this._fuseLoadingService.show();
         this.messagesApiFacadeService
             .messagesearchIsSystem(
                 this.managementForm.controls['code'].value,
@@ -239,7 +249,9 @@ export class MessagesManagementComponent implements OnInit {
             .subscribe(
                 (response: HttpResponse<any>) => {
                     debugger
-                    this._fuseLoadingService.hide();
+                    // FUSEFS
+
+                    // this._fuseLoadingService.hide();
                     this.messagesLIstIsSystemMessage = [];
                     debugger
                     let data: any[] = [];
@@ -263,7 +275,9 @@ export class MessagesManagementComponent implements OnInit {
                     console.log('messagesLNottIsSystemMessage',this.messagesLNottIsSystemMessage);
                 },
                 (error) => {
-                    this._fuseLoadingService.hide();
+                    // FUSEFS
+
+                    // this._fuseLoadingService.hide();
                 }
 
             );
@@ -273,7 +287,9 @@ export class MessagesManagementComponent implements OnInit {
         debugger
         this.firstNottIsSystem =
             this.pagenoNottIsSystem * this.pagesizeNottIsSystem;
-        this._fuseLoadingService.show();
+        // FUSEFS
+
+        // this._fuseLoadingService.show();
         this.messagesApiFacadeService
             .messagesearchNottIsSystem(
                 this.managementForm.controls['code'].value,
@@ -289,7 +305,9 @@ export class MessagesManagementComponent implements OnInit {
                 (response: HttpResponse<any>) => {
 
                     debugger
-                    this._fuseLoadingService.hide();
+                    // FUSEFS
+
+                    // this._fuseLoadingService.hide();
                     debugger;
                     this.messagesLNottIsSystemMessage = [];
                     debugger
@@ -329,7 +347,9 @@ export class MessagesManagementComponent implements OnInit {
                     console.log('messagesLNottIsSystemMessage',this.messagesLNottIsSystemMessage);
                 },
                 (error) => {
-                    this._fuseLoadingService.hide();
+                    // FUSEFS
+
+                    // this._fuseLoadingService.hide();
                 }
 
             );

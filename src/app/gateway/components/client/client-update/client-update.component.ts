@@ -7,13 +7,16 @@ import { FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
 import { ButtonDirective } from 'primeng/button';
-import { MatTooltip } from '@angular/material/tooltip';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { FileUpload } from 'primeng/fileupload';
 
 import { Dialog } from 'primeng/dialog';
 import { Card } from 'primeng/card';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
 import { CommonValidationsService } from '../../../../shared/validators/common-validations.service';
@@ -22,6 +25,7 @@ import { BreadcrumbsComponent } from '../../../../shared/components/breadcrumbs/
 import { Toast } from 'primeng/toast';
 import { Ripple } from 'primeng/ripple';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-client-update',
@@ -33,7 +37,7 @@ import { ApiGatewayService } from '../../../services/api-gateway.service';
         InputText,
         KeyFilter,
         ButtonDirective,
-        MatTooltip,
+        Tooltip,
         TranslocoPipe,
         FileUpload,
 
@@ -79,7 +83,9 @@ export class ClientUpdateComponent implements OnInit {
     detailsBreadObject:any[] = [];
     constructor(
         private route: ActivatedRoute,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService,
@@ -195,12 +201,18 @@ export class ClientUpdateComponent implements OnInit {
             } else {
                 this.updateTemp.digitalPublickey = null;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.registerClient(this.updateTemp).subscribe(a => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.close.emit('closeAndCreate');
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
 
 
@@ -246,12 +258,18 @@ export class ClientUpdateComponent implements OnInit {
 
     generateApikey() {
         this.apikey = '';
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.randomapikey().subscribe(a => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             this.apikey = a
         },error =>{
-            this._primengProgressBarService.hide()
+            // FUSEFS
+
+            // this._primengProgressBarService.hide()
         })
     }
 

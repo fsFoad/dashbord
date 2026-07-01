@@ -1,16 +1,20 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {Subject, takeUntil} from 'rxjs';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ApiGatewayConstants} from '../../../../../constants/ApiGatewayConstants';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {InputNumber} from "primeng/inputnumber";
 import {PersianCalendarComponent} from "../../../../../../shared/components/persian-calendar/persian-calendar.module";
 import {ButtonDirective} from "primeng/button";
-import {DropdownModule} from "primeng/dropdown";
+import {SelectModule} from "primeng/select";
 import {Dialog} from "primeng/dialog";
 import {Panel} from "primeng/panel";
 import {InputText} from "primeng/inputtext";
@@ -33,7 +37,7 @@ import {
         TranslocoPipe,
         PersianCalendarComponent,
         ButtonDirective,
-        DropdownModule,
+        SelectModule,
         Dialog,
         Panel,
         FormsModule,
@@ -168,7 +172,9 @@ export class CashConfigComponent implements OnInit, AfterViewInit,OnDestroy  {
      constructor(
         private apiGatewayService: ApiGatewayService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private cd: ChangeDetectorRef,
         private notifierService: ToastService,
         private transloco: TranslocoService,
@@ -470,12 +476,16 @@ export class CashConfigComponent implements OnInit, AfterViewInit,OnDestroy  {
     }
 
   /*  messageSearch400() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.messagesearch(
             this.codeMessage400, this.titleMessage400, this.tableIdMessage400,
             this.typeMessage400, null, this.pagesize, this.pageno,
         ).subscribe(response => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             this.messagesList404 = [];
             if (Array.isArray(response)) {
                 this.messagesList404 = response;
@@ -487,7 +497,9 @@ export class CashConfigComponent implements OnInit, AfterViewInit,OnDestroy  {
 
 
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
     }*/
 

@@ -1,6 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {CommonValidationsService} from '../../../../shared/validators/common-validations.service';
 import {EndpointDto} from '../../../models/endpoint.Dto';
@@ -10,8 +14,7 @@ import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
 import {KeyFilter} from 'primeng/keyfilter';
 import {ButtonDirective} from 'primeng/button';
-import {MatTooltip} from '@angular/material/tooltip';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {FileUpload} from 'primeng/fileupload';
 
 import {Dialog} from 'primeng/dialog';
@@ -20,6 +23,7 @@ import {ToggleSwitch} from "primeng/toggleswitch";
 import {BreadcrumbsComponent} from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {Toast} from 'primeng/toast';
 import {Ripple} from 'primeng/ripple';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-client-register',
@@ -31,7 +35,7 @@ import {Ripple} from 'primeng/ripple';
         InputText,
         KeyFilter,
         ButtonDirective,
-        MatTooltip,
+        Tooltip,
         TranslocoPipe,
         FileUpload,
         Dialog,
@@ -78,7 +82,9 @@ export class ClientRegisterComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiFacadeService: ApiGatewayService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService,
@@ -143,14 +149,20 @@ export class ClientRegisterComponent implements OnInit {
 
     generateApikey() {
         this.apikey = '';
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.randomapikey().subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.apikey = a;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -199,16 +211,22 @@ export class ClientRegisterComponent implements OnInit {
             } else {
                 this.clientTemp.digitalPublickey = null;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerClient(this.clientTemp)
                 .subscribe(
                     (res) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.close.emit('closeAndCreate');
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

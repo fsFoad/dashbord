@@ -7,10 +7,14 @@ import {BreadcrumbsComponent} from '../../../../../shared/components/breadcrumbs
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {Listbox} from 'primeng/listbox';
 import {ToastService} from '../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
 import {ApiGatewayService} from '../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../services/messages-api-facade.service';
 import {CommonValidationsService} from '../../../../../shared/validators/common-validations.service';
@@ -68,7 +72,9 @@ export class IpLimitationComponent implements OnInit {
         private validationsService: CommonValidationsService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private transloco :TranslocoService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService
     ) {
     }
@@ -389,14 +395,20 @@ export class IpLimitationComponent implements OnInit {
         };
         iplimitObj.endpointId = this.inputIpLimit.endpointId.toString();
         iplimitObj.ipAddress = result;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.registerIplimit(iplimitObj).subscribe(
             (resp) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.close.emit('close');
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }*/
@@ -414,16 +426,23 @@ export class IpLimitationComponent implements OnInit {
 
         console.log('📤 iplimitObj برای API:', iplimitObj);
 
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.registerIplimit(iplimitObj).subscribe({
             next: () => {
                 console.log('✅ ثبت موفق');
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.close.emit('close');
             },
             error: (err) => {
                 console.error('❌ خطا در ثبت', err);
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         });
     }*/
@@ -439,9 +458,13 @@ export class IpLimitationComponent implements OnInit {
 
         if (!this.iplimit.length) {
             this.inputIpLimit.endpointId
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.registerIpLimit(this.inputIpLimit.endpointId,[]).subscribe(s=>{
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.close.emit('close');
                 this.notifierService.showSuccess({
                     detail: 'عملیات با موفقیت انجام گردید!',
@@ -460,14 +483,18 @@ export class IpLimitationComponent implements OnInit {
                 debugger
                 console.log('📤 ارسال آیتم برای API:', iplimitDtoArray);
                 debugger
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
             this.messagesApiFacadeService.registerIpLimit(this.inputIpLimit.endpointId,iplimitDtoArray).subscribe({
                 next: () => {
                     this.notifierService.showSuccess({
                         detail: 'عملیات با موفقیت انجام گردید!',
                         life: 3000,
                     });
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.close.emit('close');
 
                 },
@@ -475,7 +502,9 @@ export class IpLimitationComponent implements OnInit {
                     console.error('❌ خطا در ثبت آی‌پی:', iplimitDtoArray, err);
                     completed++;
                     if (completed === this.iplimit.length) {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 }
             });

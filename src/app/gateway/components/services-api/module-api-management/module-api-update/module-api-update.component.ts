@@ -7,11 +7,15 @@ import {ConfirmationService} from "primeng/api";
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {ConfirmDialog} from 'primeng/confirmdialog';
-import {DropdownModule} from 'primeng/dropdown';
+import {SelectModule} from 'primeng/select';
 import {ToastService} from '../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../../../services/messages-api-facade.service';
 import {KeyFilter} from 'primeng/keyfilter';
 import {ToggleSwitch} from "primeng/toggleswitch";
@@ -29,7 +33,7 @@ import { ApiGatewayService } from '../../../../services/api-gateway.service';
     imports: [
         FormsModule,
         InputText,
-        DropdownModule,
+        SelectModule,
         KeyFilter,
         ButtonDirective,
         TranslocoPipe,
@@ -83,7 +87,9 @@ export class ModuleApiUpdateComponent implements OnInit {
         private route: ActivatedRoute,
         private confirmationService: ConfirmationService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private transloco: TranslocoService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService
@@ -276,16 +282,22 @@ export class ModuleApiUpdateComponent implements OnInit {
             ))
             : (this.moduleDto.limitRefreshPeriod = null);
         this.status == true ? (this.moduleDto.status = 1) : 0;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .registerModule(this.moduleDto)
             .subscribe(
                 (Moduleresponse) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.close.emit('closeAndCreate');
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -326,16 +338,22 @@ export class ModuleApiUpdateComponent implements OnInit {
                 this.status == true
                     ? (this.moduleDto.status = 1)
                     : (this.moduleDto.status = 0);
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .registerModule(this.moduleDto)
                     .subscribe(
                         (Moduleresponse) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.close.emit('closeAndCreate');
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             }

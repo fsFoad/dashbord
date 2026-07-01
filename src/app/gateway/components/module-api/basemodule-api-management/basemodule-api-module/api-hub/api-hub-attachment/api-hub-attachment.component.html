@@ -156,7 +156,7 @@
                                 <label class="normal-label">
                                     <span>نوع دستور :</span>
                                 </label>
-                                <p-dropdown class="normal-dropdown"
+                                <p-select class="normal-dropdown"
                                             [options]=hubConstants.commandType
                                             optionValue="code"
                                             optionLabel="name"
@@ -165,7 +165,7 @@
                                             (onChange)="changeCommand()"
                                             [disabled]="attachmentDisableBTN"
                                 >
-                                </p-dropdown>
+                                </p-select>
                                 <!--(onChange)="changDropCommandType($event)"-->
                             </div>
                             <div class="col-span-6" *ngIf="!customQueryFlag" dir="rtl">
@@ -222,7 +222,7 @@
                         <div class="grid grid-cols-12 gap-y-4" style="margin-top: 5px">
                             <div class="col-span-3" dir="ltr">
                                 <label class="normal-label"> <span>DBEngine :</span></label>
-                                <p-dropdown class="normal-dropdown englishItem"
+                                <p-select class="normal-dropdown englishItem"
 
                                             [options]=hubConstants.DBEngineOption
                                             [(ngModel)]="dbEngineId"
@@ -231,7 +231,7 @@
                                             optionValue="code"
                                             optionLabel="name"
                                             [disabled]="true"
-                                ></p-dropdown>
+                                ></p-select>
                                 <!--(onChange)="changDropEngine($event)"-->
                             </div>
                             <div class="col-span-3" dir="ltr">
@@ -371,26 +371,26 @@
                                         <label class="normal-label">
                                             <span class="red-color-text">* </span>
                                             <span>نوع داده :</span></label>
-                                        <p-dropdown class="normal-dropdown"
+                                        <p-select class="normal-dropdown"
                                                     [options]=hubConstants.dataTypeOptions
                                                     [(ngModel)]="dataType"
                                                     name="dataType"
                                                     styleClass="dropdown-w70"
                                                     optionValue="code"
                                                     optionLabel="name"
-                                        ></p-dropdown>
+                                        ></p-select>
                                     </div>
                                     <div class="col-span-3" *ngIf="addFlag">
                                         <label class="normal-label">
                                             <span class="red-color-text">* </span>
                                             <span>عملگر :</span></label>
-                                        <p-dropdown class="normal-dropdown"
+                                        <p-select class="normal-dropdown"
                                                     [options]="conditionOptions"
                                                     [(ngModel)]="operationTypeId"
                                                     optionValue="code"
                                                     optionLabel="name"
                                                     (keydown.enter)="onKeydown($event)">
-                                        </p-dropdown>
+                                        </p-select>
                                     </div>
                                     <div class="col-span-1" *ngIf="addFlag">
                                         <label class="normal-label"> <span>وضعیت :</span></label>
@@ -477,7 +477,7 @@
                                                     <td class="dataType" pEditableColumn>
                                                         <p-cellEditor>
                                                             <ng-template pTemplate="input">
-                                                                <p-dropdown class="normal-dropdown-cell-editor"
+                                                                <p-select class="normal-dropdown-cell-editor"
                                                                             [appendTo]="'body'"
                                                                             [options]=hubConstants.dataTypeOptions
                                                                             [(ngModel)]="params.dataType"
@@ -486,7 +486,7 @@
                                                                             optionLabel="name"
                                                                             [disabled]="!addFlag"
                                                                             required
-                                                                ></p-dropdown>
+                                                                ></p-select>
                                                             </ng-template>
                                                             <ng-template pTemplate="output">
                                                                 {{ params.dataType|dataTypeHub }}
@@ -496,7 +496,7 @@
                                                     <td class="operationTypeId" pEditableColumn>
                                                         <p-cellEditor>
                                                             <ng-template pTemplate="input">
-                                                                <p-dropdown class="normal-dropdown-cell-editor"
+                                                                <p-select class="normal-dropdown-cell-editor"
                                                                             [appendTo]="'body'"
                                                                             [options]=conditionOptions
                                                                             [(ngModel)]="params.operationTypeId"
@@ -505,7 +505,7 @@
                                                                             optionLabel="name"
                                                                             [disabled]="!addFlag"
                                                                             required
-                                                                ></p-dropdown>
+                                                                ></p-select>
                                                             </ng-template>
                                                             <ng-template pTemplate="output">
                                                                 {{ params.operationTypeId|condition }}
@@ -525,7 +525,7 @@
                                                         class="operation">
                                                         <div class="flex items-center gap-4">
                                                             <button
-                                                                matTooltip="{{'حذف' }}"
+                                                                pTooltip="{{'حذف' }}"
                                                                 (click)="deleteParam(params)"
                                                                 class="normal-button"
                                                                 [disabled]="!addFlag"
@@ -574,7 +574,7 @@
                                             style="margin-top: 1px;width: 100%" *ngIf="!previewFlag"
                                             (click)="testQuery()" [disabled]=""
                                     >
-                                        <mat-icon class="size">new_releases</mat-icon>
+                                        <i class="size" class="pi pi-exclamation-circle"></i>
                                     </button>
                                     <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center">
                                         <p-message severity="success" text="query successful !" dir="ltr"
@@ -599,7 +599,7 @@
                                 <label class="normal-label">
                                     <span class="red-color-text">* </span>
                                     <span>Param Type :</span></label>
-                                <p-dropdown class="normal-dropdown-pagination"
+                                <p-select class="normal-dropdown-pagination"
                                             id="123333"
                                             [options]=hubConstants.paramTypeOptions
                                             [(ngModel)]="paramType"
@@ -608,14 +608,14 @@
                                             optionValue="code"
                                             optionLabel="name"
                                             (onChange)="onChangeParamType()"
-                                ></p-dropdown>
+                                ></p-select>
 
                             </div>
                             <div class="col-span-2" *ngIf="addSpFlag" dir="ltr">
                                 <label class="normal-label">
                                     <span class="red-color-text">* </span>
                                     <span>Data Type :</span></label>
-                                <p-dropdown class="normal-dropdown"
+                                <p-select class="normal-dropdown"
 
                                             [options]=hubConstants.dataTypeSpOptions
                                             [(ngModel)]="dataType"
@@ -624,7 +624,7 @@
                                             optionValue="code"
                                             optionLabel="name"
                                             [disabled]="dataTypeFlag"
-                                ></p-dropdown>
+                                ></p-select>
 
                             </div>
                             <div class="col-span-2" *ngIf="addSpFlag">
@@ -652,7 +652,7 @@
                                         (click)="fakeParamSpRegister()"
                                 ></button>&nbsp;
                                 <button pButton label="{{'load params api'}}"
-                                        class="buttonMatIcon ltrDirection normal-button" icon="pi pi-refresh"
+                                        class="buttonIcon ltrDirection normal-button" icon="pi pi-refresh"
                                         (click)="loadSpNonStaticParams()" *ngIf="addSpFlag">
                                 </button>&nbsp;
                                 <button pButton label="{{'clear params' | transloco}}" (click)="onClearSpParams()"
@@ -671,7 +671,7 @@
                                             [tooltipDisabled]="this.spParamsList.length!=0"
                                             (click)="testSp()" *ngIf="!previewFlag"
                                     >
-                                        <mat-icon class="size">new_releases</mat-icon>
+                                        <i class="size" class="pi pi-exclamation-circle"></i>
                                     </button>
                                 </div>
                                 <div class="col-span-3" dir="ltr">
@@ -740,7 +740,7 @@
                                         <td class="dataType" pEditableColumn>
                                             <p-cellEditor>
                                                 <ng-template pTemplate="input">
-                                                    <p-dropdown
+                                                    <p-select
                                                         class="normal-dropdown-cell-editor"
                                                         [appendTo]="'body'"
                                                         [options]=hubConstants.dataTypeSpOptions
@@ -750,7 +750,7 @@
                                                         optionLabel="name"
                                                         [disabled]="params.paramType == '2' "
 
-                                                    ></p-dropdown>
+                                                    ></p-select>
                                                 </ng-template>
                                                 <ng-template pTemplate="output">
                                                     {{ params.dataType|dataTypeHub }}
@@ -786,7 +786,7 @@
                                             class="operation">
                                             <button
                                                 style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
-                                                matTooltip="{{'حذف' | transloco}}"
+                                                pTooltip="{{'حذف' | transloco}}"
                                                 (click)="deleteSpParam(params)"
                                                 [disabled]="!addSpFlag||params.disabled"
                                                 pButton severity="danger"
@@ -884,7 +884,7 @@
                                                     <td class="dataType" pEditableColumn>
                                                         <p-cellEditor>
                                                             <ng-template pTemplate="input">
-                                                                <p-dropdown
+                                                                <p-select
                                                                     class="normal-dropdown-cell-editor"
                                                                     [appendTo]="'body'"
                                                                     [options]=hubConstants.dataTypeOptions
@@ -895,7 +895,7 @@
                                                                     optionLabel="name"
                                                                     [disabled]="!addCusFlag"
                                                                     required
-                                                                ></p-dropdown>
+                                                                ></p-select>
                                                             </ng-template>
                                                             <ng-template pTemplate="output">
                                                                 {{ params.dataType| dataTypeHub }}
@@ -914,7 +914,7 @@
                                                     <td class="dataType" pEditableColumn>
                                                         <p-cellEditor>
                                                             <ng-template pTemplate="input">
-                                                                <p-dropdown
+                                                                <p-select
                                                                     class="normal-dropdown-cell-editor"
                                                                     [appendTo]="'body'"
                                                                     [options]=hubConstants.actionTypeOption
@@ -925,7 +925,7 @@
                                                                     optionLabel="name"
                                                                     [disabled]="!addCusFlag||(params.matched==1)"
                                                                     (onChange)="checkDontCareAndAddEleman($event)"
-                                                                ></p-dropdown>
+                                                                ></p-select>
                                                             </ng-template>
                                                             <ng-template pTemplate="output">
                                                                 {{ params.actionType|actionTypeHub }}
@@ -965,11 +965,11 @@
                                             (click)="helpCustomQueryFlag=true"></button>
 
                                     <button pButton label="{{'test query'}}"
-                                            class="normal-button buttonMatIcon ltrDirection"
+                                            class="normal-button buttonIcon ltrDirection"
                                             style="margin-top: 1px;width: 100%"
                                             (click)="testCusQuery()" *ngIf="!previewFlag&&!addCusFlag"
                                     >
-                                        <mat-icon class="size">new_releases</mat-icon>
+                                        <i class="size" class="pi pi-exclamation-circle"></i>
                                     </button>&nbsp;
                                     <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center"
                                          *ngIf="!previewFlag">
@@ -1015,7 +1015,7 @@
                                 <label class="normal-label">
                                     <span class="red-color-text">* </span>
                                     <span>نوع فیلد :</span></label>
-                                <p-dropdown class="normal-dropdown"
+                                <p-select class="normal-dropdown"
 
                                             [options]=hubConstants.dataTypeMediaOptions
                                             [(ngModel)]="dataType"
@@ -1024,7 +1024,7 @@
                                             optionValue="code"
                                             optionLabel="name"
 
-                                ></p-dropdown>
+                                ></p-select>
                                 <!--   (onChange)="changDropEngine($event)"-->
                             </div>
 
@@ -1100,7 +1100,7 @@
                                             <td class="dataType" pEditableColumn>
                                                 <p-cellEditor>
                                                     <ng-template pTemplate="input">
-                                                        <p-dropdown class="normal-dropdown-pagination"
+                                                        <p-select class="normal-dropdown-pagination"
                                                                     [appendTo]="'body'"
                                                                     [options]=hubConstants.dataTypeMediaOptions
                                                                     [(ngModel)]="maps.dataType"
@@ -1109,7 +1109,7 @@
                                                                     optionLabel="name"
                                                                     required
                                                                     [disabled]="!addMapFlag"
-                                                        ></p-dropdown>
+                                                        ></p-select>
                                                     </ng-template>
                                                     <ng-template pTemplate="output">
                                                         {{ maps.dataType|dataTypeHub }}
@@ -1130,7 +1130,7 @@
                                                 class="operation">
                                                 <button
                                                     style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
-                                                    matTooltip="{{'حذف' | transloco}}"
+                                                    pTooltip="{{'حذف' | transloco}}"
                                                     (click)="deleteMap(maps)"
                                                     [disabled]="!addMapFlag"
                                                     pButton severity="danger"
@@ -1173,7 +1173,7 @@
                                 <label class="normal-label">
                                     <span class="red-color-text">* </span>
                                     <span>نوع فیلد :</span></label>
-                                <p-dropdown class="normal-dropdown"
+                                <p-select class="normal-dropdown"
 
                                             [options]=hubConstants.dataTypeOptions
                                             [(ngModel)]="dataType"
@@ -1182,7 +1182,7 @@
                                             optionValue="code"
                                             optionLabel="name"
 
-                                ></p-dropdown>
+                                ></p-select>
                                 <!--   (onChange)="changDropEngine($event)"-->
                             </div>
 
@@ -1258,7 +1258,7 @@
                                             <td class="dataType" pEditableColumn>
                                                 <p-cellEditor>
                                                     <ng-template pTemplate="input">
-                                                        <p-dropdown class="normal-dropdown-pagination"
+                                                        <p-select class="normal-dropdown-pagination"
                                                                     [appendTo]="'body'"
                                                                     [options]=hubConstants.dataTypeOptions
                                                                     [(ngModel)]="maps.dataType"
@@ -1267,7 +1267,7 @@
                                                                     optionLabel="name"
                                                                     required
                                                                     [disabled]="!addMapFlag"
-                                                        ></p-dropdown>
+                                                        ></p-select>
                                                     </ng-template>
                                                     <ng-template pTemplate="output">
                                                         {{ maps.dataType|dataTypeHub }}
@@ -1288,7 +1288,7 @@
                                                 class="operation">
                                                 <button
                                                     style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
-                                                    matTooltip="{{'حذف' | transloco}}"
+                                                    pTooltip="{{'حذف' | transloco}}"
                                                     (click)="deleteMap(maps)"
                                                     [disabled]="!addMapFlag"
                                                     pButton severity="danger"

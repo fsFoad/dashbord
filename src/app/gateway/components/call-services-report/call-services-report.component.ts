@@ -3,7 +3,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CommonValidationsService} from '../../../shared/validators/common-validations.service';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../services/api-gateway.service';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {ToastService} from '../../../shared/services/ToastService';
 import {BreadcrumbsComponent} from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {ButtonDirective} from 'primeng/button';
@@ -12,7 +16,7 @@ import {TableModule} from 'primeng/table';
 import {Menu} from 'primeng/menu';
 import {LogReportsComponent} from '../log-reports/log-reports.component';
 import {Ripple} from 'primeng/ripple';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {Toast} from 'primeng/toast';
 import {PersianCalendarComponent} from "../../../shared/components/persian-calendar/persian-calendar.module";
 import {FormsModule} from "@angular/forms";
@@ -57,7 +61,9 @@ export class CallServicesReportComponent implements OnInit {
         private commonValidationsService: CommonValidationsService,
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService
     ) {}
@@ -106,15 +112,21 @@ export class CallServicesReportComponent implements OnInit {
     downloadData() {
         if (this.validation()) {
             if (this.reportApiList.length != 0) {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .DownloadStatisticReport(1, this.fromdate, this.todate)
                     .subscribe(
                         (b) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             } else {
@@ -128,12 +140,16 @@ export class CallServicesReportComponent implements OnInit {
     }
     search() {
         if (this.validation()) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .getstatisticReport(0, this.fromdate, this.todate)
                 .subscribe(
                     (p) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.tblFlag = true;
                         this.reportApiList = Array.isArray(p) ? p : [p];
 
@@ -149,7 +165,9 @@ export class CallServicesReportComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }
@@ -252,7 +270,7 @@ export class CallServicesReportComponent implements OnInit {
         ];
     }
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 

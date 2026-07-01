@@ -6,14 +6,14 @@
         <div class="col-span-4">
             <label class="normal-label">
                 <span>نوع جستجو :</span></label>
-            <p-dropdown class="normal-dropdown"
+            <p-select class="normal-dropdown"
                         [autoDisplayFirst]="false"
                         [options]="searchByOption"
                         optionValue="code"
                         [(ngModel)]="searchBy"
                         optionLabel="name"
                         (onChange)="onChangeSearch($event)"
-            ></p-dropdown>
+            ></p-select>
         </div>
         <div class="col-span-4" *ngIf="hiddenApikey">
             <label class="normal-label"><span>نام کلاینت :</span></label>

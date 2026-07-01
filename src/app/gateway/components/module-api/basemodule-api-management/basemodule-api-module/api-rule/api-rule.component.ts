@@ -7,8 +7,12 @@ import {Panel} from 'primeng/panel';
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {ToastService} from '../../../../../../shared/services/ToastService';
@@ -27,7 +31,7 @@ import {StatusPipe} from "../../../../../../shared/pipes/status.pipe";
 import {Menu} from "primeng/menu";
 import {Dialog} from "primeng/dialog";
 import {Ripple} from "primeng/ripple";
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 
 
 @Component({
@@ -58,7 +62,7 @@ import { DropdownModule } from 'primeng/dropdown';
         Dialog,
         Ripple,
         NgIf,
-        DropdownModule,
+        SelectModule,
     ],
 })
 export class ApiRuleComponent implements OnInit {
@@ -112,7 +116,9 @@ export class ApiRuleComponent implements OnInit {
     paginationLabel=this.transloco.translate('label.pagination.table');
     constructor(
         private route: ActivatedRoute,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private primeng: PrimeNG,
@@ -381,17 +387,23 @@ export class ApiRuleComponent implements OnInit {
         this.pageno=0
         this.pagesize=10
         this.pageDescription = this.transloco.translate('hardCode.page') + ': ' + (this.pageno + 1);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.rulesearch(this.pageno, this.pagesize).subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.ruleAttachList = a;
                 for (let k = 0; k < this.ruleAttachList.length; k++) {
                     this.ruleAttachList[k] = Object.assign(this.ruleAttachList[k], { row: (k + 1) });
                 }
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -421,10 +433,14 @@ export class ApiRuleComponent implements OnInit {
         this.pageno != 0
             ? (startRow = this.pageno * this.pagesize)
             : (startRow = 0);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.rulesearch(this.pageno, this.pagesize, this.ruleName).subscribe(httpResponse => {
             debugger;
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             if (Array.isArray(httpResponse)) {
                 this.ruleAttachList = httpResponse;
             } else {
@@ -458,10 +474,13 @@ export class ApiRuleComponent implements OnInit {
                     );
                 }
             }
-            this._primengProgressBarService.hide();
+            // FUSEFS
 
+            // this._primengProgressBarService.hide();
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
     }
     showRules() {
@@ -469,12 +488,16 @@ export class ApiRuleComponent implements OnInit {
         this.pageno=0
         this.pagesize=10
         this.pageDescription = this.transloco.translate('hardCode.page') + ': ' + (this.pageno + 1);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.rulesearch(this.pageno, this.pagesize,this.ruleName).subscribe(
             (c) => {
                 debugger
                 this.nextBtnFlag=false
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.ruleAttachList = c;
                 for (let k = 0; k < this.ruleAttachList.length; k++) {
                     this.ruleAttachList[k] = Object.assign(this.ruleAttachList[k], { row: (k + 1) });
@@ -482,7 +505,9 @@ export class ApiRuleComponent implements OnInit {
                 this.dialogRuleFlag = true;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -502,18 +527,24 @@ export class ApiRuleComponent implements OnInit {
         console.log(this.rulList, 'this.rulList');
         console.log(this.rulList.length, 'this.rulList.length');
         if (this.rulList.length == 0) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerRuleAttach(this.ruleTemp)
                 .subscribe(
                     (l) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.dialogRuleFlag = false;
 
                         this.searchRule(this.apiId);
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         } else {
@@ -646,10 +677,14 @@ export class ApiRuleComponent implements OnInit {
     }
 
     searchRule(apiId) {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.ruleFindByApiid(apiId).subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 if (Array.isArray(a)) {
                     this.rulList = a;
                 } else {
@@ -669,7 +704,9 @@ export class ApiRuleComponent implements OnInit {
                 }
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }

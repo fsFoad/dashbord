@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { ApiGatewayConstants } from '../../../../../../constants/ApiGatewayConstants';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
 import { BreadcrumbsComponent } from '../../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -13,7 +17,7 @@ import { Message } from 'primeng/message';
 import { InputText } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Fieldset } from 'primeng/fieldset';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { Ripple } from 'primeng/ripple';
 import { Tooltip } from 'primeng/tooltip';
 import { TieredMenu } from 'primeng/tieredmenu';
@@ -29,7 +33,6 @@ import { MorChar13Pipe } from '../../../../../../../shared/pipes/morChar13.pipe'
 import { detailTypePipe } from '../../../../../../../shared/pipes/detail-type.pipe';
 import { MoreChar19Pipe } from '../../../../../../../shared/pipes/moreChar19.pipe';
 import { MorChar32Pipe } from '../../../../../../../shared/pipes/morChar32.pipe';
-import { MatTooltip } from '@angular/material/tooltip';
 import { MessagesCategoryPipe } from '../../../../../../../shared/pipes/messagesCategory.pipe';
 import { MorChar55Pipe } from '../../../../../../../shared/pipes/morChar55.pipe';
 import {
@@ -51,7 +54,7 @@ import { Subject } from 'rxjs';
         InputText,
         FormsModule,
         Fieldset,
-        DropdownModule,
+        SelectModule,
         Ripple,
         Tooltip,
         TieredMenu,
@@ -68,7 +71,7 @@ import { Subject } from 'rxjs';
         detailTypePipe,
         MoreChar19Pipe,
         MorChar32Pipe,
-        MatTooltip,
+        Tooltip,
         MessagesCategoryPipe,
         MorChar55Pipe,
         MessageSelectorComponent,
@@ -83,7 +86,9 @@ export class SequenceRegisterComponent implements OnInit {
         private apiGatewayService: ApiGatewayService,
         private confirmationService: ConfirmationService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
 
@@ -268,15 +273,21 @@ export class SequenceRegisterComponent implements OnInit {
                     this.partyIdFirst = s.partyId;
                 }
             });
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.moduleSearchByPartyId(event.value).subscribe(m => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.moduleListOptionsFirst = [];
                 this.moduleListOptionsFirst.push(...m);
                 this.moduleListOptionsFirst.unshift({ moduleTitle: '-', moduleId: null });
                 this.moduleListOptionsFirst = this.moduleListOptionsFirst.sort();
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         } else {
             this.partyIdFirst = null;
@@ -296,15 +307,21 @@ export class SequenceRegisterComponent implements OnInit {
                     this.moduleIdFirst = s.moduleId;
                 }
             });
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apiNochart(0, 10000, this.moduleIdFirst).subscribe(a => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.apiListOptionsFirst = [];
                 this.apiListOptionsFirst.push(...a);
                 this.apiListOptionsFirst.unshift({ title: '-', apiId: null });
                 this.apiListOptionsFirst = this.apiListOptionsFirst.sort();
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         } else {
             this.apiIdFirst = null;
@@ -515,10 +532,14 @@ export class SequenceRegisterComponent implements OnInit {
             this.apiDto.apiId = this.apiIdFirst;
             if (this.matchListFirst.length > 0) {
                 if (this.actionTypeFirst == 1) {
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.getapiproducednodebyapiid(this.apiIdFirst).subscribe(l => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         let countProduced = 0;
                         this.producedListFirst = [];
                         if (Array.isArray(l)) {
@@ -558,7 +579,9 @@ export class SequenceRegisterComponent implements OnInit {
                             countProduced++;
                         }
                         this.countProduced = countProduced;
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         debugger
                         debugger
                         debugger
@@ -567,7 +590,10 @@ export class SequenceRegisterComponent implements OnInit {
                             debugger
                             debugger
 
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+
+                            // this._primengProgressBarService.hide();
                             let countRequired = 0;
                             this.requiredListFirst = [];
                             if (Array.isArray(e)) {
@@ -606,17 +632,25 @@ export class SequenceRegisterComponent implements OnInit {
                             this.countRequired = countRequired;
                             this.dialogFirstMatchFlag = true;
                         }, error => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });
 
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 } else if (this.actionTypeFirst == 2) {
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.getapiproducednodebyapiid(this.apiIdOrg).subscribe(s => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         let countProduced = 0;
                         this.producedListFirst = [];
                         if (Array.isArray(s)) {
@@ -656,7 +690,9 @@ export class SequenceRegisterComponent implements OnInit {
                             countProduced++;
                         }
                         this.countProduced = countProduced;
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         debugger
                         debugger
                         debugger
@@ -664,7 +700,9 @@ export class SequenceRegisterComponent implements OnInit {
                             debugger
                             debugger
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             let countRequired = 0;
                             this.requiredListFirst = [];
                             if (Array.isArray(e)) {
@@ -702,10 +740,14 @@ export class SequenceRegisterComponent implements OnInit {
                             this.countRequired = countRequired;
                             this.dialogFirstMatchFlag = true;
                         }, error => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 } else {
                     this.notifierService.showError({ detail: 'لطفا اولویت اجرا را انتخاب کنید' });
@@ -713,9 +755,13 @@ export class SequenceRegisterComponent implements OnInit {
 
             } else {
                 if (this.actionTypeFirst == 1) {
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.getapiproducednodebyapiid(this.apiIdFirst).subscribe(l => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         debugger
                         let countProduced = 0;
                         this.producedListFirst = [];
@@ -749,7 +795,9 @@ export class SequenceRegisterComponent implements OnInit {
                             countProduced++;
                         }
                         this.countProduced = countProduced;
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         debugger
                         debugger
                         debugger
@@ -757,7 +805,9 @@ export class SequenceRegisterComponent implements OnInit {
                             debugger
                             debugger
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             let countRequired = 0;
                             this.requiredListFirst = [];
                             if (Array.isArray(e)) {
@@ -788,18 +838,26 @@ export class SequenceRegisterComponent implements OnInit {
                             this.countRequired = countRequired;
                             this.dialogFirstMatchFlag = true;
                         }, error => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });
 
 
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 } else if (this.actionTypeFirst == 2) {
                     debugger
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.getapiproducednodebyapiid(this.apiIdDe).subscribe(s => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         let countProduced = 0;
                         this.producedListFirst = [];
                         if (Array.isArray(s)) {
@@ -833,7 +891,9 @@ export class SequenceRegisterComponent implements OnInit {
                             countProduced++;
                         }
                         this.countProduced = countProduced;
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         debugger
                         debugger
                         debugger
@@ -841,7 +901,9 @@ export class SequenceRegisterComponent implements OnInit {
                             debugger
                             debugger
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             let countRequired = 0;
                             this.requiredListFirst = [];
                             if (Array.isArray(e)) {
@@ -873,10 +935,14 @@ export class SequenceRegisterComponent implements OnInit {
                             this.countRequired = countRequired;
                             this.dialogFirstMatchFlag = true;
                         }, error => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 } else {
                     this.notifierService.showError({ detail: 'لطفا اولویت اجرا را انتخاب کنید' });
@@ -1209,36 +1275,53 @@ export class SequenceRegisterComponent implements OnInit {
                 }]*/
             },
         ];
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallparty().subscribe(a => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             this.partyListOptionsFirst.push(...a);
             this.partyListOptionsFirst = this.partyListOptionsFirst.sort();
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallclient().subscribe(b => {
             this.clientOptions=b
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
 
 
         this.apiDto = this.inputSequenceRegister;
         this.apiDto.sequenceBase = true;
-        this._primengProgressBarService.show();
-        this.apiGatewayService.currentApprovalStageApiIdSeq.subscribe(u => {
-                this._primengProgressBarService.hide();
+        // FUSEFS
 
+        // this._primengProgressBarService.show();
+        this.apiGatewayService.currentApprovalStageApiIdSeq.subscribe(u => {
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 debugger
                 this.apiIdOrg = u;
                 console.log('تغییر1', this.apiIdOrg);
             }
             ,
             error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
         if (this.inputSequenceRegister != undefined) {
@@ -1421,13 +1504,18 @@ export class SequenceRegisterComponent implements OnInit {
             this.objSequence.messageId5XX = this.messageId5XX;
             this.objSequence.messageId2XX = this.messageId2XX;
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             console.log('سرویس ثبت اصلی فراخوانی شد!');
             this.messagesApiFacadeService.sequenceFlowRegister(this.objSequence).subscribe(p => {
                 debugger
                 console.log('پاسخ سرویس ثبت اصلی  فرعی برگشت!');
 
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+
+                // this._primengProgressBarService.hide();
                 this.objSequence = {
                     parentId: null,
                     apiId: null,
@@ -1501,7 +1589,9 @@ export class SequenceRegisterComponent implements OnInit {
                 }
 
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         }
 
@@ -1510,11 +1600,15 @@ export class SequenceRegisterComponent implements OnInit {
         debugger
         //سرویس اول
         console.log('سرویس فرعی فراخوانی شد!');
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.sequenceFlowRegister(this.objSequence).subscribe(i => {
             debugger
             console.log('پاسخ سرویس فرعی برگشت!');
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             this.objMatch = {
                 producerId: null,
                 sequenceId: null,
@@ -1544,13 +1638,18 @@ export class SequenceRegisterComponent implements OnInit {
                     debugger
 
                     //مچینگ سرویس اصلی و اول
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     console.log('سرویس اتصال نود ها فراخوانی شد!');
                     this.messagesApiFacadeService.matchdependnode(this.objMatch).subscribe(b => {
                         debugger
                         console.log('پاسخ سرویس اتصال نود ها برگشت!');
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+
+                        // this._primengProgressBarService.hide();
                         this.objSequence = {
                             parentId: null,
                             apiId: null,
@@ -1568,7 +1667,9 @@ export class SequenceRegisterComponent implements OnInit {
                         this.close.emit(this.responseObjSequence);
 
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 });
             } else {
@@ -1577,7 +1678,9 @@ export class SequenceRegisterComponent implements OnInit {
             }
 
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
     }
 

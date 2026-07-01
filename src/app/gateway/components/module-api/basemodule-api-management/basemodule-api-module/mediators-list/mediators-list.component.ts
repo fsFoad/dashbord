@@ -1,8 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {ActivatedRoute} from "@angular/router";
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
@@ -104,7 +108,9 @@ export class MediatorsListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private transloco :TranslocoService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService
@@ -134,18 +140,24 @@ export class MediatorsListComponent implements OnInit {
         });
         if (this.countLicense == 0) {
             const mediatorId = tempMediator.mediatorId;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .activationMediator(mediatorId)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         console.log('resA', a);
 
                         this.fetchTable();
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
             /* setTimeout(a => {
@@ -161,18 +173,24 @@ export class MediatorsListComponent implements OnInit {
 
     deactivationMediator(tempMediator) {
         const mediatorId = tempMediator.mediatorId;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .deactivationMediator(mediatorId)
             .subscribe(
                 (b) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     console.log('resB', b);
 
                     this.fetchTable();
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -235,10 +253,14 @@ export class MediatorsListComponent implements OnInit {
     }
 
     fetchTable() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.findbyapiid(this.apiId).subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 if (Array.isArray(a)) {
                     this.MediatorsList = a;
                 } else {
@@ -263,7 +285,9 @@ export class MediatorsListComponent implements OnInit {
                 this.createMediatorFlag = this.disabelCheck();
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -820,12 +844,16 @@ export class MediatorsListComponent implements OnInit {
                 mediatorChangeObject.schemaName = this.tempPath;
                 mediatorChangeObject.changeTypeId = 1;
                 mediatorChangeObject.status = 1;
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .registerMediatorChange(mediatorChangeObject)
                     .subscribe(
                         (g) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.fetchTable();
                             this.flagAddNode = false;
                             this.keyNode = '';
@@ -833,7 +861,9 @@ export class MediatorsListComponent implements OnInit {
                             this.tempPath = '';
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             } else if (flagAddDelete == 2) {
@@ -850,12 +880,16 @@ export class MediatorsListComponent implements OnInit {
                 mediatorChangeObject.schemaName = this.tempPath;
                 mediatorChangeObject.status = 1;
                 mediatorChangeObject.changeTypeId = 2;
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .registerMediatorChange(mediatorChangeObject)
                     .subscribe(
                         (g) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.fetchTable();
                             this.flagDeletedNode = false;
                             this.keyNode = '';
@@ -863,7 +897,9 @@ export class MediatorsListComponent implements OnInit {
                             this.tempPath = '';
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             }

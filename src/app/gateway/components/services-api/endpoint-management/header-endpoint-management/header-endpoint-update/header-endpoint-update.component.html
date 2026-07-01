@@ -5,7 +5,7 @@
             <label class="normal-label">
 <span class="red-color-text">* </span>
 <span >گروه بندی :</span></label><br>
-            <p-dropdown
+            <p-select
                 appendTo='body'
                 [autoDisplayFirst]="false"
                 [options]="headerTypeGroup"
@@ -14,13 +14,13 @@
                 optionLabel="name"
                 (keydown.enter)="onKeydown($event)"
                 (onChange)="bodyState($event)"
-            ></p-dropdown>
+            ></p-select>
         </div>
         <div class="col-4">
             <label class="normal-label">
 <span class="red-color-text">* </span>
 <span >نوع عملیات :</span></label><br>
-            <p-dropdown
+            <p-select
                 appendTo='body'
                 (onChange)="onChangeHeaderType($event)"
                 [autoDisplayFirst]="false"
@@ -30,7 +30,7 @@
                 optionLabel="name"
                 (keydown.enter)="onKeydown($event)"
                 [disabled]="apiBaseFlag"
-            ></p-dropdown>
+            ></p-select>
         </div>
         <div class="col-4"></div>
         <div class="col-4">
@@ -148,7 +148,7 @@
                 <span> {{ 'registerEndpointElements.dropdown.category'|transloco }}:</span>
             </label>
             <br />
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 [autoDisplayFirst]="false"
                 [options]="headerTypeGroup"
@@ -157,7 +157,7 @@
                 optionLabel="name"
                 (keydown.enter)="onKeydown($event)"
                 (onChange)="bodyState($event)"
-            ></p-dropdown>
+            ></p-select>
         </div>
 
         <div class="col-span-4">
@@ -166,7 +166,7 @@
                 <span>{{ 'registerEndpointElements.dropdown.operationType'|transloco }} :</span>
             </label>
             <br />
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 (onChange)="onChangeHeaderType($event)"
                 [autoDisplayFirst]="false"
@@ -176,7 +176,7 @@
                 optionLabel="name"
                 (keydown.enter)="onKeydown($event)"
                 [disabled]="apiBaseFlag"
-            ></p-dropdown>
+            ></p-select>
         </div>
 
         <div class="col-span-4"></div>

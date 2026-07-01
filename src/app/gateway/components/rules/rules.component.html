@@ -32,14 +32,14 @@
             </div>
             <div class="col-span-3">
                 <label class="normal-label">{{ 'rule.dropdown.statusCode' | transloco }}:</label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="statusCodeOptions"
                     [(ngModel)]="statusCode"
                     optionValue="code"
                     optionLabel="name"
                     (onChange)="search(true)"
-                ></p-dropdown>
+                ></p-select>
 
             </div>
 
@@ -165,7 +165,7 @@
                         >
                             <i class="pi pi-arrow-left"></i>
                         </button>
-                        <p-dropdown class="normal-dropdown-pagination"
+                        <p-select class="normal-dropdown-pagination"
                                     [options]="pagesizeOptionsInbound"
                                     optionValue="code"
                                     [autoDisplayFirst]="true"
@@ -173,7 +173,7 @@
                                     [(ngModel)]="pagesizeInbound"
                                     (onChange)="OnchangePagenoInbound($event)"
                                     [disabled]="nextBtnFlag">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-4"></div>
                 </div>-->
@@ -269,7 +269,7 @@
                         >
                             <i class="pi pi-arrow-left"></i>
                         </button>
-                        <p-dropdown class="normal-dropdown-pagination"
+                        <p-select class="normal-dropdown-pagination"
                                     [options]="pagesizeOptionsOutbound"
                                     optionValue="code"
                                     [autoDisplayFirst]="true"
@@ -277,7 +277,7 @@
                                     [(ngModel)]="pagesizeOutbound"
                                     (onChange)="OnchangePagenoOutbound($event)"
                                     [disabled]="nextBtnFlag">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-4"></div>
                 </div>

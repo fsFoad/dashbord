@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ApiGatewayConstants } from '../../../../constants/ApiGatewayConstants';
 import { ActivatedRoute } from '@angular/router';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
 import { MessagesApiFacadeService } from '../../../../services/messages-api-facade.service';
@@ -24,15 +28,13 @@ import { MediatorsJsonComponent } from '../../../mediators/mediators-json/mediat
 import { MediatorsComponent } from '../../../mediators/mediators.component';
 import { NodeChangeListComponent } from '../../../node-change-list/node-change-list.component';
 import { Dialog } from 'primeng/dialog';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ConfirmDialog } from 'primeng/confirmdialog';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import {
     HeaderEndpointRegisterComponent,
 } from '../../../services-api/endpoint-management/header-endpoint-management/header-endpoint-register/header-endpoint-register.component';
-import { MatTooltip } from '@angular/material/tooltip';
 
-import { MatIcon } from '@angular/material/icon';
 import { Message } from 'primeng/message';
 import { InputTextarea } from 'primeng/inputtextarea';
 import { Checkbox } from 'primeng/checkbox';
@@ -66,7 +68,7 @@ import { MessageSelectorComponent } from '../../../../../shared/components/messa
         MoreChar19Pipe,
         Dialog,
         TranslocoPipe,
-        DropdownModule,
+        SelectModule,
         NgIf,
 
         TableIdPipe,
@@ -75,7 +77,7 @@ import { MessageSelectorComponent } from '../../../../../shared/components/messa
         ToggleSwitch,
         Toast,
         KeyFilter,
-        MatTooltip,
+        Tooltip,
         InputGroup,
         InputGroupAddon,
         Checkbox,
@@ -182,7 +184,9 @@ export class ApiRuleConditionRegisterComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private transloco: TranslocoService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private validatorService: CommonValidationsService,
         private notifierService: ToastService,
     ) {
@@ -990,13 +994,19 @@ export class ApiRuleConditionRegisterComponent implements OnInit {
             this.registerRulConditionObject.comparableFieldTypeForFinalValue = this.comparableFieldTypeForFinalValue;
 
             this.registerRulConditionObject.status = 1;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.registerRuleCondition(this.registerRulConditionObject).subscribe((a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.close.emit('closeAndCreate');
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         }

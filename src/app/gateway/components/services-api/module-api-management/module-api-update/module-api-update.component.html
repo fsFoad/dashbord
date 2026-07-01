@@ -25,27 +25,27 @@
                 <label class="normal-label">
                     <span class="red-color-text">* </span>
                     <span >{{'editModule.dropdown.moduleType'|transloco}} :</span></label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="moduleTypeOptions"
                     [(ngModel)]="moduleTypeValue"
                     optionValue="code"
                     optionLabel="name"
                     (keydown.enter)="onKeydown($event)">
-                </p-dropdown>
+                </p-select>
             </div>
             <div class="col-span-4">
                 <label class="normal-label">
                     <span class="red-color-text">* </span>
                     <span >{{'editModule.dropdown.authenticationMethod'|transloco}} :</span></label>
-                <p-dropdown
+                <p-select
                     (keydown.enter)="onKeydown($event)"
                     class="normal-dropdown"
                     [options]="authenticationMethodOptions"
                     [(ngModel)]="moduleAuthMode"
                     optionValue="code"
                     optionLabel="name">
-                </p-dropdown>
+                </p-select>
             </div>
 
             <div class="col-span-4">

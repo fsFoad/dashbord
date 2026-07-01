@@ -6,11 +6,15 @@ import {Panel} from 'primeng/panel';
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {Checkbox} from 'primeng/checkbox';
 import {AutoComplete} from 'primeng/autocomplete';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
@@ -28,7 +32,7 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [
         Panel,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         AutoComplete,
         InputText,
@@ -109,7 +113,9 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
         private transloco: TranslocoService,
@@ -616,10 +622,14 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
         this.input != undefined ? this.input.apiBaseFlag == false ? (this.headerRegister = 'ثبت المان های اندپوینت') : (this.headerRegister = 'ثبت المان های سرویس') : null;
         this.input != undefined ? this.input.apiBaseFlag == true ? ((this.detailType = '1'), (this.apiBaseFlag = true), (this.actionType = '1')) : ((this.apiBaseFlag = false), (this.detailType = null), (this.actionType = null)) : null;
         this.status = true;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.getinputheadernamesUrl().subscribe((h) => {
                 debugger;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 debugger;
                 this.headerName = h?.data;
                 debugger;
@@ -637,7 +647,9 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                     console.error('خطا در parsing JSON', e);
                     this.headerName = [];
                 } finally {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             }
         );
@@ -802,7 +814,9 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                         }
                     );
                 }
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .registerEndpointdetail(
                         levelId,
@@ -811,11 +825,15 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                     )
                     .subscribe(
                         (a) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.close.emit('closeAndCreate');
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             console.log(error);
                             this.close.emit('close');
@@ -829,7 +847,9 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                 if (this.hubInput.apiEndpointHeaderFlag) {
                     levelId = 1;
                     recordId = this.hubInput.apiId;
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService
                         .registerEndpointdetail(
                             levelId,
@@ -838,12 +858,16 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                         )
                         .subscribe(
                             (a) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.close.emit('closeAndCreate');
                             },
                             (error) => {
                                 debugger;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 console.log(error);
                                 this.close.emit('close');
                             }
@@ -857,14 +881,18 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
 
                     levelId = 1;
                     recordId = this.cacheInput?.cacheObj?.apiId;
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.registerEndpointdetail(
                             levelId,
                             recordId,
                             this.registerTemp
                         ).subscribe((a) => {
                             debugger
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.closeCache.emit({
                                     type: 'closeAndCreate',
                                     apiId: this.cacheInput?.cacheObj?.apiId,
@@ -873,7 +901,9 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                             },
                             (error) => {
                                 debugger;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 console.log(error);
                                 this.close.emit('close');
                             }
@@ -886,7 +916,9 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                 debugger;
                     levelId = 1;
                     recordId = this.aggregatorInput.apiId;
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService
                         .registerEndpointdetail(
                             levelId,
@@ -895,12 +927,16 @@ export class HeaderEndpointRegisterComponent implements OnInit, AfterViewInit {
                         )
                         .subscribe(
                             (a) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.close.emit('closeAndCreate');
                             },
                             (error) => {
                                 debugger;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 console.log(error);
                                 this.close.emit('close');
                             }

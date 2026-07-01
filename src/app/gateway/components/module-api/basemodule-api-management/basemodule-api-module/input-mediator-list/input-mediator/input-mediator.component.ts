@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Toast } from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { MultiSelect } from 'primeng/multiselect';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
@@ -11,26 +11,31 @@ import { RadioButton } from 'primeng/radiobutton';
 import { InputText } from 'primeng/inputtext';
 import { Tooltip } from 'primeng/tooltip';
 import { BreadcrumbsComponent } from '../../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
 import { InputTextarea } from 'primeng/inputtextarea';
 import { Checkbox } from 'primeng/checkbox';
 import { ApiGatewayConstants } from '../../../../../../constants/ApiGatewayConstants';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { KeyFilter } from 'primeng/keyfilter';
 import { forkJoin, of, switchMap, tap } from 'rxjs';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
 
 @Component({
     selector: 'app-input-mediator',
+    standalone: true,
     imports: [
         Toast,
         ConfirmDialogModule,
         ReactiveFormsModule,
         NgIf,
-        DropdownModule,
+        SelectModule,
         MultiSelect,
         NgForOf,
         ButtonDirective,
@@ -126,7 +131,10 @@ export class InputMediatorComponent implements OnInit {
         '6': 6,
     };
 
-    constructor(private _primengProgressBarService: FuseLoadingService,
+    // FUSEFS
+
+
+    // constructor(private _primengProgressBarService: FuseLoadingService,
                 private messagesApiFacadeService: MessagesApiFacadeService,
                 private notifierService: ToastService,
                 private apiGatewayService: ApiGatewayService,
@@ -1214,11 +1222,15 @@ debugger
             .subscribe({
                 next: () => {
                     console.log('SUBSCRIBE HIT ✅');
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
                 error: (er) => {
                     console.log('SUBSCRIBE ERROR ❌', er);
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             });
        if (this.isEditMode) {
@@ -2090,11 +2102,15 @@ return result;`,
         if (selectedPartyId != null) {
             rule.partyId = selectedPartyId;
 
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.moduleSearchByPartyId(selectedPartyId).subscribe(
                 (m) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     rule.moduleId = null;
                     rule.moduleOptions = [{ moduleTitle: '-', moduleId: null }, ...m].sort();
                 },
@@ -2210,12 +2226,15 @@ return result;`,
         if (selectedModuleId != null) {
             rule.moduleId = selectedModuleId;
 
-            this._primengProgressBarService.show();
+            // FUSEFS
 
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apiNochart(0, 10000, selectedModuleId).subscribe(
                 (apis) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     rule.apiOptions = [{ title: '-', apiId: null }, ...apis];
 
                     rule.apiOptions = rule.apiOptions.sort((a, b) => (a.title || '').localeCompare(b.title || ''));

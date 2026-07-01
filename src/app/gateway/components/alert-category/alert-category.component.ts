@@ -2,13 +2,12 @@ import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { Toast } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { DevelopmentComponent } from '../../../shared/components/development/development.component';
 import { ButtonDirective } from 'primeng/button';
-import { MatTooltip } from '@angular/material/tooltip';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { MorChar32Pipe } from '../../../shared/pipes/morChar32.pipe';
 import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
@@ -20,7 +19,11 @@ import {
 import { Ripple } from 'primeng/ripple';
 import { Tooltip } from 'primeng/tooltip';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { ScheduledStatusPipe } from '../../../shared/pipes/scheduled-status.pipe';
 import { RunSchedledPeriodHHPipe } from '../../../shared/pipes/run-schedled-period-hh.pipe';
 import { ApiGatewayService } from '../../services/api-gateway.service';
@@ -29,13 +32,14 @@ import { ScheduleTypePipe } from '../../../shared/pipes/schedule-type.pipe';
 
 @Component({
     selector: 'app-alert-category',
+    standalone: true,
     imports: [
         Toast,
         TableModule,
         ToggleSwitch,
         ButtonDirective,
         BreadcrumbsComponent,
-        DropdownModule, InputText, MorChar32Pipe, NgIf, PrimeTemplate, ReactiveFormsModule, RegisterRecipientsAlertsComponent, Ripple, TableModule, Toast, ToggleSwitch, Tooltip, TranslocoPipe, FormsModule, ScheduledStatusPipe, RunSchedledPeriodHHPipe, PriorityTypePipe, ScheduleTypePipe, NgSwitch, NgSwitchCase, NgSwitchDefault,
+        SelectModule, InputText, MorChar32Pipe, NgIf, PrimeTemplate, ReactiveFormsModule, RegisterRecipientsAlertsComponent, Ripple, TableModule, Toast, ToggleSwitch, Tooltip, TranslocoPipe, FormsModule, ScheduledStatusPipe, RunSchedledPeriodHHPipe, PriorityTypePipe, ScheduleTypePipe, NgSwitch, NgSwitchCase, NgSwitchDefault,
     ],
     templateUrl: './alert-category.component.html',
     styleUrl: './alert-category.component.scss',
@@ -69,7 +73,9 @@ export class AlertCategoryComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private transloco: TranslocoService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
 
@@ -149,7 +155,9 @@ export class AlertCategoryComponent implements OnInit {
         this.messagesApiFacadeService.getSection(this.pageno, this.pagesize, this.title).subscribe({
             next: (response) => {
                 debugger;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading.set(false);
 
                 const rawData = response?.data ?? response ?? [];
@@ -169,7 +177,9 @@ export class AlertCategoryComponent implements OnInit {
                 console.error('❌ خطا در درخواست API:', err);
                 this.error.set('خطا در دریافت داده‌ها');
                 this.loading.set(false);
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });
     }

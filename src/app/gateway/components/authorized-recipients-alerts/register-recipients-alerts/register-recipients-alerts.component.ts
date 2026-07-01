@@ -1,15 +1,19 @@
 import { Component, effect, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { BreadcrumbsComponent } from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Toast } from 'primeng/toast';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { CommonValidationsService } from '../../../../shared/validators/common-validations.service';
@@ -20,10 +24,11 @@ import { HubDto } from '../../../models/hub.Dto';
 
 @Component({
   selector: 'app-register-recipients-alerts',
+    standalone: true,
     imports: [
         BreadcrumbsComponent,
         ButtonDirective,
-        DropdownModule,
+        SelectModule,
         InputText,
         KeyFilter,
         ReactiveFormsModule,
@@ -41,7 +46,9 @@ export class RegisterRecipientsAlertsComponent implements OnInit{
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _fuseLoadingService: FuseLoadingService,
+        // FUSEFS
+
+        // private _fuseLoadingService: FuseLoadingService,
         private fb: FormBuilder,
         private apiGatewayService: ApiGatewayService,
         private messageService: ToastService,

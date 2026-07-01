@@ -1569,8 +1569,6 @@ export class MessagesApiFacadeService {
         return this.connectionService.getConnection('rulecondition/element/group/info/' +ruleid ,
             '');
     }
- //
-    //
     // Parameters
 }
 

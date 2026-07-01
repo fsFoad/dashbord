@@ -4,9 +4,13 @@ import {MessagesApiFacadeService} from "../../../../services/messages-api-facade
 import {FormBuilder} from "@angular/forms";
 import {ApiGatewayService} from "../../../../services/api-gateway.service";
 import {ActivatedRoute} from "@angular/router";
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../../shared/services/ToastService';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-basemodule-api-party-management',
@@ -34,7 +38,9 @@ export class BasemoduleApiPartyManagementComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private fb: FormBuilder,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private notifierService:ToastService ,
         private transloco:TranslocoService
     ) {}
@@ -53,12 +59,16 @@ export class BasemoduleApiPartyManagementComponent implements OnInit {
         this.pageno != 0
             ? (startRow = this.pageno * this.pagesize)
             : (startRow = 0);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .getpartyinfo(this.pageno, this.pagesize)
             .subscribe(
                 (b) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.partyList = b;
                     if (Array.isArray(b)) {
                         this.partyList = b;
@@ -95,7 +105,9 @@ export class BasemoduleApiPartyManagementComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

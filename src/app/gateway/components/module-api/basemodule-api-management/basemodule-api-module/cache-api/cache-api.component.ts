@@ -4,10 +4,14 @@ import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { ConfirmationService, PrimeTemplate } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Toast } from 'primeng/toast';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
 import { ApiGatewayService } from '../../../../../services/api-gateway.service';
 import { PrimeNG } from 'primeng/config';
 import { ToastService } from '../../../../../../shared/services/ToastService';
@@ -104,7 +108,9 @@ export class CacheApiComponent implements OnInit{
         private transloco :TranslocoService,
         private cd: ChangeDetectorRef,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private primeng: PrimeNG,
         private confirmationService: ConfirmationService,

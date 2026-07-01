@@ -7,7 +7,7 @@ import { PrimeTemplate } from 'primeng/api';
 import { Ripple } from 'primeng/ripple';
 import { StatusPipe } from '../../../../../../shared/pipes/status.pipe';
 import { TableModule } from 'primeng/table';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Tooltip } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiGatewayService } from '../../../../../services/api-gateway.service';
@@ -16,8 +16,12 @@ import { CacheTypePipe } from '../../../../../../shared/pipes/cache-type.pipe';
 import { ToastService } from '../../../../../../shared/services/ToastService';
 import { EndpointheaderDto } from '../../../../../models/endpointheader.Dto';
 import { MessagesApiFacadeService } from '../../../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
-import { DropdownModule } from 'primeng/dropdown';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
+import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
@@ -43,7 +47,7 @@ import { CastToDateTimePipe } from '../../../../../../shared/pipes/cast-to-date-
         NgClass,
         HttpMethodsPipe,
         CacheTypePipe,
-        DropdownModule,
+        SelectModule,
         InputText,
         FormsModule,
         Dialog,
@@ -64,7 +68,9 @@ export class CacheListComponent implements OnInit, AfterViewInit {
     constructor(
         private transloco: TranslocoService,
         private notifierService: ToastService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private cd: ChangeDetectorRef,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService) {
@@ -154,7 +160,9 @@ export class CacheListComponent implements OnInit, AfterViewInit {
           if (this.endpointOptionsMap[apiId]&&state!='closeAndCreate') return; // فقط اگر لود نشده
 
           this.messagesApiFacadeService.endpointdetailByApi(this.apiIdForAddElement?Number(this.apiIdForAddElement):null).subscribe((res) => {
-              this._primengProgressBarService.hide();
+              // FUSEFS
+
+              // this._primengProgressBarService.hide();
               let tempDetailList;
               if (Array.isArray(res)) {
                   this.endpointOptionsMap[apiId] = res;
@@ -163,7 +171,9 @@ export class CacheListComponent implements OnInit, AfterViewInit {
               }
           }, (error) => {
               console.error('خطا در دریافت endpoint:', error);
-              this._primengProgressBarService.hide();
+              // FUSEFS
+
+              // this._primengProgressBarService.hide();
           } , () => {
               this.loadingApiIds.delete(apiId);
           });
@@ -173,7 +183,9 @@ export class CacheListComponent implements OnInit, AfterViewInit {
         if (this.endpointOptionsMap[apiId] && !forceReload) return; // فقط اگر لود نشده یا نیاز به رفرش نیست
 
         this.messagesApiFacadeService.endpointdetailByApi(Number(apiId),0,1000).subscribe((res) => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             const filtered = (Array.isArray(res) ? res : [res]).filter(item =>
                 item?.detailType === 3 && item?.actionType === 3,
             );
@@ -187,7 +199,9 @@ export class CacheListComponent implements OnInit, AfterViewInit {
             }
         }, (error) => {
             console.error('خطا در دریافت endpoint:', error);
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
     }
 

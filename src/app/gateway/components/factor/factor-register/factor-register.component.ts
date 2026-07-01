@@ -2,7 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import moment from 'jalali-moment';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { PrintService } from '../../../../shared/services/print.service';
 import { CommonValidationsService } from '../../../../shared/validators/common-validations.service';
@@ -12,7 +16,7 @@ import { TableModule } from 'primeng/table';
 import { Checkbox } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { NgIf, NgStyle } from '@angular/common';
 import { ThreeDotBreadcrumbPipe } from '../../../../shared/pipes/threeDotBreadcrumb.pipe';
 import { Tooltip } from 'primeng/tooltip';
@@ -157,7 +161,9 @@ export class FactorRegisterComponent implements OnInit {
         private route: ActivatedRoute,
         private print: PrintService,
         private commonValidationsService: CommonValidationsService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private transloco :TranslocoService,
         private notifierService: ToastService
     ) {}
@@ -450,12 +456,16 @@ export class FactorRegisterComponent implements OnInit {
             date = m.format('YYYYMMDD');
             this.registerObg.billDate = date;
             this.registerObg.paymentDate = null;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .billRegister(this.registerObg)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         console.log('billList', this.billList);
                         if (this.selectedItem.length != 0) {
                             this.selectedItem.forEach((item) => {
@@ -466,16 +476,22 @@ export class FactorRegisterComponent implements OnInit {
                                 };
                                 obj.summaryId = item.summaryId;
                                 obj.billId = a.billId;
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                                 this.messagesApiFacadeService
                                     .summarybillRegister(obj)
                                     .subscribe(
                                         (g) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             console.log('g', g);
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         }
                                     );
 
@@ -507,7 +523,9 @@ export class FactorRegisterComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }
@@ -603,14 +621,20 @@ export class FactorRegisterComponent implements OnInit {
         else {
             this.countApi = 0;
         }
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallclient().subscribe(
             (b) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.clientListOptions.push(...b);
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
         if (
@@ -627,10 +651,14 @@ export class FactorRegisterComponent implements OnInit {
             this.billDiscount = this.factorObj.billDiscount;
             this.billTotall = this.factorObj.billTotall;
             this.billAmount = this.factorObj.billAmount;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.getbillsummary(this.billId).subscribe(
                 (o) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.summaryList = o;
                     for (let k = 0; k < this.summaryList.length; k++) {
                         this.summaryList[k] = Object.assign(
@@ -646,7 +674,9 @@ export class FactorRegisterComponent implements OnInit {
                     this.selectedItem = this.summaryList;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
             this.detailsBreadObject = this.chooseBread('displayFactor')
@@ -685,7 +715,9 @@ export class FactorRegisterComponent implements OnInit {
 
     search() {
         if (this.validation()) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .getcalcsummarybypartyid(
                     this.partyId,
@@ -694,7 +726,9 @@ export class FactorRegisterComponent implements OnInit {
                 )
                 .subscribe(
                     (r) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.billTotall = 0;
                         this.summaryList = [];
                         this.billAmount = this.billTotall = 0;
@@ -726,7 +760,9 @@ export class FactorRegisterComponent implements OnInit {
                         this.changeFlag = false;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

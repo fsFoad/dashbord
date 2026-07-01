@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { HttpMethodsPipe } from '../../../../../../../shared/pipes/http-methods.pipe';
 import { InputText } from 'primeng/inputtext';
@@ -13,10 +13,14 @@ import { StatusPipe } from '../../../../../../../shared/pipes/status.pipe';
 import { TableModule } from 'primeng/table';
 import { TieredMenu } from 'primeng/tieredmenu';
 import { Tooltip } from 'primeng/tooltip';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { UIChart } from 'primeng/chart';
 import { ApiGatewayService } from '../../../../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
 import { AccessDataSaveService } from '../../../../../../../shared/services/access-data-save.service';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
@@ -30,9 +34,10 @@ import { SequenceComponent } from '../sequence.component';
 
 @Component({
     selector: 'app-sequence-management',
+    standalone: true,
     imports: [
         ButtonDirective,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         HttpMethodsPipe,
         InputText,
@@ -92,7 +97,9 @@ export class SequenceManagementComponent implements OnInit{
     constructor(
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private accessDataSaveService: AccessDataSaveService,
         private viewportScroller: ViewportScroller,
@@ -142,9 +149,13 @@ export class SequenceManagementComponent implements OnInit{
         pageno != 0 ? (startRow = pageno * pagesize) : (startRow = 0);
         debugger;
         this.loading = true;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.getapisequencebyapiidv2(this.pageno, this.pagesize, this.apiId).subscribe((a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading = false;
                 if (Array.isArray(a)) {
                     this.sequenceList = a;
@@ -186,7 +197,9 @@ export class SequenceManagementComponent implements OnInit{
                 this.loading = false;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
 
@@ -319,16 +332,22 @@ export class SequenceManagementComponent implements OnInit{
             this.moduleBase = this.inputSequenceManagement.moduleBase
             this.accessBase = this.inputSequenceManagement.accessBase
             this.clientBase = this.inputSequenceManagement.clientBase
-            this._primengProgressBarService.show()
+            // FUSEFS
+
+            // this._primengProgressBarService.show()
             this.apiGatewayService.currentApprovalStageApiIdSeq.subscribe(u => {
                 console.log(u)
-                this._primengProgressBarService.hide()
+                // FUSEFS
 
+                // this._primengProgressBarService.hide()
                 debugger
-                this._primengProgressBarService.show()
+                // FUSEFS
 
+                // this._primengProgressBarService.show()
             },error => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
             })
             this.fetchList(this.pageno,this.pagesize)
             debugger
@@ -401,14 +420,20 @@ export class SequenceManagementComponent implements OnInit{
                     debugger
                     console.log(u,'currentApprovalStageApiIdSeq')
                     debugger
-                    this._primengProgressBarService.show()
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show()
                     debugger
                     this.messagesApiFacadeService.getsequenceflowlistbyapiid(u).subscribe(v => {
                         debugger
-                        this._primengProgressBarService.hide()
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide()
                     }, error => {
                         debugger
-                        this._primengProgressBarService.hide()
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide()
                         console.log(error, 'error')
                     })
                 })
@@ -430,9 +455,9 @@ export class SequenceManagementComponent implements OnInit{
                     debugger
                     console.log(u,'currentApprovalStageApiIdSeq')
                     debugger
-                    this._primengProgressBarService.show()
+                    // FUSEFS
 
-
+                    // this._primengProgressBarService.show()
                 })
 
             }
@@ -462,7 +487,9 @@ export class SequenceManagementComponent implements OnInit{
             this.apiGatewayService.updateApprovalDetailsBreadObject(this.detailsBreadObject);
         }
         this.messagesApiFacadeService.getapisequencebyapiidv2(this.pageno, this.pagesize, this.apiId).subscribe((a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading = false;
                 if (Array.isArray(a)) {
                     this.sequenceList = a;
@@ -486,7 +513,9 @@ export class SequenceManagementComponent implements OnInit{
                 this.loading = false;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
 

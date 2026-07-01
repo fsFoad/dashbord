@@ -4,11 +4,15 @@ import {ActivatedRoute, Router} from "@angular/router";
 import moment from 'jalali-moment';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { Constants } from '../../../shared/constants/Constants';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { FormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -21,7 +25,7 @@ import { BillStatusPipe } from '../../../shared/pipes/billStatus.pipe';
 import { Ripple } from 'primeng/ripple';
 import { Menu } from 'primeng/menu';
 import { FactorRegisterComponent } from './factor-register/factor-register.component';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Toast } from 'primeng/toast';
 
 
@@ -32,7 +36,7 @@ import { Toast } from 'primeng/toast';
     styleUrls: ['./factor.component.scss'],
     imports: [
         BreadcrumbsComponent,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         ButtonDirective,
         TableModule,
@@ -169,7 +173,9 @@ export class FactorComponent implements OnInit {
         private router: Router,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private transloco :TranslocoService,
         private notifierService: ToastService
     ) {}
@@ -232,16 +238,22 @@ export class FactorComponent implements OnInit {
             let date;
             date = m.format('YYYYMMDD');
             registerBillObg.paymentDate = date;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .billRegister(registerBillObg)
                 .subscribe(
                     (w) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.search();
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }
@@ -278,16 +290,22 @@ export class FactorComponent implements OnInit {
             },
         ];
         this.scrollTop();
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallparty().subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partyListOptions.push(...a);
                 this.partyListOptions = this.partyListOptions.sort();
                 this.search()
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
         this.detailsBreadObject = this.chooseBread('factorBase');
@@ -297,12 +315,16 @@ export class FactorComponent implements OnInit {
     }
 
     search() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .billsearch(this.partyId, this.clientId, this.apiId)
             .subscribe(
                 (i) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.factorList = [];
                     if (Array.isArray(i)) {
                         this.factorList = i;
@@ -320,7 +342,9 @@ export class FactorComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -334,10 +358,14 @@ export class FactorComponent implements OnInit {
                 }
             });
             this.search();
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apibypartyid(event.value).subscribe(
                 (l) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.factorObj.apiListOptions = [];
                     this.hideApiListOptions = [];
                     this.apiListOptions = [{ title: '-', apiId: null }];
@@ -356,7 +384,9 @@ export class FactorComponent implements OnInit {
                     this.factorObj.apiListOptions = this.hideApiListOptions;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
         } else {
@@ -482,7 +512,7 @@ export class FactorComponent implements OnInit {
     }
 
     BeforeButton() {
-        this.router.navigate(['/main/home']);
+        this.router.navigate(['/home']);
         // this.close.emit('close');
     }
 

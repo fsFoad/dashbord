@@ -4,7 +4,7 @@ import { finalize, map } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { PartyApiService } from '../services/party-api.service';
 import { Party } from '../models/party.model';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
 
 @Injectable({ providedIn: 'root' })

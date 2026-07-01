@@ -6,8 +6,12 @@ import {ButtonDirective} from 'primeng/button';
 import {Tooltip} from 'primeng/tooltip';
 import {NgForOf} from '@angular/common';
 import {Ripple} from 'primeng/ripple';
-import {TranslocoService} from '@ngneat/transloco';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+import {TranslocoService} from '@jsverse/transloco';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
 import {Card} from 'primeng/card';
 
@@ -33,7 +37,9 @@ export class ReleaseNoteComponent implements OnInit {
     pageDescription =this.transloco.translate('hardCode.page') + ': ' + (this.pageno + 1);
     constructor(
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private route: ActivatedRoute,
         private transloco:TranslocoService,
     ) {}

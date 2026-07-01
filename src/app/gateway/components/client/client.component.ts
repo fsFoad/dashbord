@@ -3,8 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
-import { MatTooltip } from '@angular/material/tooltip';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ButtonDirective } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { PrimeNG } from 'primeng/config';
@@ -14,12 +13,16 @@ import { FileUpload } from 'primeng/fileupload';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
 import { Panel } from 'primeng/panel';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { Tooltip } from 'primeng/tooltip';
 import { MoreChar19Pipe } from '../../../shared/pipes/moreChar19.pipe';
@@ -44,7 +47,7 @@ import { Constants } from '../../../shared/constants/Constants';
         ButtonDirective,
         TranslocoPipe,
         BreadcrumbsComponent,
-        DropdownModule,
+        SelectModule,
         TableModule,
         Tooltip,
         MoreChar19Pipe,
@@ -101,7 +104,9 @@ export class ClientComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private transloco :TranslocoService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
@@ -205,10 +210,14 @@ export class ClientComponent implements OnInit {
         this.apiGatewayService.updateApprovalDetailsBreadObject(
             this.detailsBreadObject
         );
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallclient().subscribe(
             (z) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 if (Array.isArray(z)) {
                     this.clientList = z;
                 } else {
@@ -224,7 +233,9 @@ export class ClientComponent implements OnInit {
                 }
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -236,10 +247,14 @@ export class ClientComponent implements OnInit {
         this.clientList = [];
         this.searchBy = '1';
         this.hiddenApikey = true;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.clientgetall().subscribe(
             (z) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 if (Array.isArray(z)) {
                     this.clientList = z;
                 } else {
@@ -256,7 +271,9 @@ export class ClientComponent implements OnInit {
                 console.log(this.clientList);
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -277,12 +294,16 @@ export class ClientComponent implements OnInit {
                 this.clientName == null
                     ? (this.clientName = '')
                     : this.clientName;
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .clientsearchbyclientnameandmobileno(this.clientName, '')
                     .subscribe(
                         (w) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.clientList = [];
                             if (Array.isArray(w)) {
                                 this.clientList = w;
@@ -302,17 +323,23 @@ export class ClientComponent implements OnInit {
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             } else if (this.searchBy == '2') {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.apiKey == null ? (this.apiKey = '') : this.apiKey;
                 this.messagesApiFacadeService
                     .getclinetidbyapikey(this.apiKey)
                     .subscribe(
                         (w) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.clientList = [];
                             if (Array.isArray(w)) {
                                 this.clientList = w;
@@ -332,8 +359,9 @@ export class ClientComponent implements OnInit {
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
 
+                            // this._primengProgressBarService.hide();
                             console.log(error);
                             this.clientList = [];
                             this.notifierService.showWarning({

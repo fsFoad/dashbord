@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { ToastService } from '../../../../shared/services/ToastService';
 import { PrimeNG } from 'primeng/config';
 import { AccessDataSaveService } from '../../../../shared/services/access-data-save.service';
@@ -144,7 +148,9 @@ export class EndpointManagementComponent implements OnInit {
         private transloco: TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private accessDataSaveService: AccessDataSaveService,
         private notifierService: ToastService,
         private primeng: PrimeNG,
@@ -366,14 +372,18 @@ export class EndpointManagementComponent implements OnInit {
             }
 
             this.endpointList = [];
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             /*this.messagesApiFacadeService.endpointbymoduleid(this.moduleId).subscribe(
                 (res: HttpResponse<any[]>) => {
                     debugger
                     debugger
                     debugger
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.totalRecords = Number(res.headers.get('totalitems')) || 0;
                     const data = res.body ?? [];
                     this.endpointList = Array.isArray(data) ? data : [data];
@@ -387,14 +397,18 @@ export class EndpointManagementComponent implements OnInit {
                             this.endpointList[k],
                             { expanded: false },
                         );
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         debugger
                         this.messagesApiFacadeService.findbyendpointid(this.endpointList[k].endpointId).subscribe(
                                 (ress) => {
                                     debugger
                                     this.ipLimitList = ress;
                                     //console.log('ress', ress)
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                     let result = '';
                                     for (let i = 0; i < ress.length; i++) {
                                         result +=
@@ -436,20 +450,26 @@ export class EndpointManagementComponent implements OnInit {
                                         });
                                 },
                                 (error) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 },
                             );
                     }
 
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });*/
             this.messagesApiFacadeService.endpointbymoduleid(this.moduleId, this.pagesize, this.pageno).subscribe(
                     (res: HttpResponse<any>) => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+
+                        // this._primengProgressBarService.hide();
                         this.totalRecords =
                             Number(res.headers.get('totalitems')) || 0;
 
@@ -529,37 +549,53 @@ export class EndpointManagementComponent implements OnInit {
                                             [...this.newEndpointList];
                                     },
                                     () => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     }
                                 );
                         });
                     },
                     () => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.SearchModuleById(this.moduleId).subscribe(
                 (resModul) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.moduleTitle = resModul.moduleTitle;
                     this.moduleGroup = resModul.moduleGroup;
                     this.moduleType = resModul.moduleType;
                     this.partyTitle = resModul.title;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.checkactiveendpointbymoduleid(this.moduleId).subscribe((o) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     debugger;
                     this.addButtonFlag = o;
                     debugger;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         }
@@ -681,9 +717,13 @@ export class EndpointManagementComponent implements OnInit {
             this.apiGatewayService.updateApprovalDetailsBreadObject(
                 this.detailsBreadObject,
             );
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.endpointbyclientid(tempClientId).subscribe((res) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(res)) {
                         this.endpointList = res;
 
@@ -692,18 +732,24 @@ export class EndpointManagementComponent implements OnInit {
                         this.endpointList.push(res);
                         this.moduleId = res[0].moduleId;
                     }
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService
                         .checkactiveendpointbymoduleid(this.moduleId)
                         .subscribe(
                             (o) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 debugger;
                                 this.addButtonFlag = o;
                                 debugger;
                             },
                             (error) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             },
                         );
                     this.endpointList.map((x) =>
@@ -717,7 +763,9 @@ export class EndpointManagementComponent implements OnInit {
                             this.endpointList[k],
                             { expanded: false },
                         );
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         debugger
                         this.messagesApiFacadeService
                             .findbyendpointid(
@@ -728,7 +776,9 @@ export class EndpointManagementComponent implements OnInit {
                                     debugger
                                     this.ipLimitList = ress;
                                     //console.log('ress', ress)
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                     let result = '';
                                     for (let i = 0; i < ress.length; i++) {
                                         result +=
@@ -772,16 +822,22 @@ export class EndpointManagementComponent implements OnInit {
                                         });
                                 },
                                 (error) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 },
                             );
                     }
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService
                         .SearchModuleById(Number(this.moduleId))
                         .subscribe(
                             (h) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.moduleTitle = h.moduleTitle;
                                 this.moduleType = h.moduleType;
                                 this.moduleGroup = h.moduleGroup;
@@ -796,12 +852,16 @@ export class EndpointManagementComponent implements OnInit {
                                     : (this.widthModuleType = 50);
                             },
                             (error) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             },
                         );
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         }
@@ -829,11 +889,14 @@ export class EndpointManagementComponent implements OnInit {
                     this.detailsBreadObject,
                 );
                 this.endpointList = [];
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                /* this.messagesApiFacadeService.endpointbymoduleid(temp).subscribe(
                         (getAllResponse: HttpResponse<any[]>) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
 
+                            // this._primengProgressBarService.hide();
                             this.totalRecords = Number(getAllResponse.headers.get('totalitems')) || 0;
                             const data = getAllResponse.body ?? [];
                             this.endpointList = Array.isArray(data) ? data : [data];
@@ -851,13 +914,17 @@ export class EndpointManagementComponent implements OnInit {
                                     this.endpointList[k],
                                     { expanded: false },
                                 );
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                                 debugger
                                 this.messagesApiFacadeService.findbyendpointid(this.endpointList[k].endpointId,).subscribe(
                                         (ress) => {
                                             debugger
                                             this.ipLimitList = ress;
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             //console.log('ress', ress)
                                             let result = '';
                                             for (
@@ -917,20 +984,26 @@ export class EndpointManagementComponent implements OnInit {
                                                 );
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         },
                                     );
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );*/
                 this.messagesApiFacadeService.endpointbymoduleid(temp, this.pagesize, this.pageno).subscribe(
                     (res: HttpResponse<any>) => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+
+                        // this._primengProgressBarService.hide();
                         this.totalRecords =
                             Number(res.headers.get('totalitems')) || 0;
 
@@ -1010,13 +1083,17 @@ export class EndpointManagementComponent implements OnInit {
                                             [...this.newEndpointList];
                                     },
                                     () => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     }
                                 );
                         });
                     },
                     () => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
             } else if (this.inputEndpoint.partyBase != undefined) {
@@ -1026,13 +1103,17 @@ export class EndpointManagementComponent implements OnInit {
                     this.detailsBreadObject,
                 );
                 this.endpointList = [];
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
               /*  this.messagesApiFacadeService
                     .endpointbymoduleid(temp)
                     .subscribe(
                         (res: HttpResponse<any[]>) => {
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             const body = res?.body as any;
                             const list = Array.isArray(body) ? body : (body ? [body] : []);
                             this.endpointList = list;
@@ -1048,7 +1129,9 @@ export class EndpointManagementComponent implements OnInit {
                                     this.endpointList[k],
                                     { expanded: false },
                                 );
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                                 debugger
                                 this.messagesApiFacadeService
                                     .findbyendpointid(
@@ -1058,7 +1141,9 @@ export class EndpointManagementComponent implements OnInit {
                                         (ress) => {
                                             debugger
                                             this.ipLimitList = ress;
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             let result = '';
                                             for (
                                                 let i = 0;
@@ -1117,21 +1202,27 @@ export class EndpointManagementComponent implements OnInit {
                                                 );
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         },
                                     );
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );
 */
                 this.messagesApiFacadeService.endpointbymoduleid(temp, this.pagesize, this.pageno).subscribe(
                     (res: HttpResponse<any>) => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+
+                        // this._primengProgressBarService.hide();
                         this.totalRecords =
                             Number(res.headers.get('totalitems')) || 0;
 
@@ -1211,13 +1302,17 @@ export class EndpointManagementComponent implements OnInit {
                                             [...this.newEndpointList];
                                     },
                                     () => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     }
                                 );
                         });
                     },
                     () => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
                 this.moduleTitle.length > 22
@@ -1230,18 +1325,24 @@ export class EndpointManagementComponent implements OnInit {
                     ? (this.widthModuleType = 100)
                     : (this.widthModuleType = 50);
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .checkactiveendpointbymoduleid(this.moduleId)
                 .subscribe(
                     (o) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         debugger;
                         this.addButtonFlag = o;
                         debugger;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
         }
@@ -1312,12 +1413,16 @@ export class EndpointManagementComponent implements OnInit {
             this.endpointList[k] = Object.assign(this.endpointList[k], {
                 expanded: false,
             });
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
          /*   this.messagesApiFacadeService.findbyendpointid(this.endpointList[k].endpointId).subscribe((ress) => {
                     debugger
                     this.ipLimitList = ress;
                     //console.log('ress', ress)
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     let result = '';
                     for (let i = 0; i < ress.length; i++) {
                         result += ress[i].ipAddress.toString();
@@ -1354,7 +1459,9 @@ export class EndpointManagementComponent implements OnInit {
                     });
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });*/
         }
 
@@ -1372,13 +1479,17 @@ export class EndpointManagementComponent implements OnInit {
                 );
                 this.endpointDto.accessBase = true;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
            /* this.messagesApiFacadeService.endpointbymoduleid(this.moduleId).subscribe((res: HttpResponse<any[]>) => {
                         debugger
                         this.totalRecords=0
                         this.firstIndex=0
                         this.pagesize=10
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         const body = res?.body as any;
                         const list = Array.isArray(body) ? body : (body ? [body] : []);
                         this.endpointList = list;
@@ -1394,14 +1505,18 @@ export class EndpointManagementComponent implements OnInit {
                                 this.endpointList[k],
                                 { expanded: false },
                             );
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.show();
                             debugger
                             this.messagesApiFacadeService.findbyendpointid(this.endpointList[k].endpointId).subscribe(
                                     (ress) => {
                                         debugger
                                         this.ipLimitList = ress;
                                         //console.log('ress', ress)
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                         let result = '';
                                         for (let i = 0; i < ress.length; i++) {
                                             result +=
@@ -1444,20 +1559,26 @@ export class EndpointManagementComponent implements OnInit {
                                             });
                                     },
                                     (error) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     },
                                 );
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );*/
             this.messagesApiFacadeService.endpointbymoduleid(this.moduleId, this.pagesize, this.pageno).subscribe(
                 (res: HttpResponse<any>) => {
 
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+
+                    // this._primengProgressBarService.hide();
                     this.totalRecords =
                         Number(res.headers.get('totalitems')) || 0;
 
@@ -1537,40 +1658,54 @@ export class EndpointManagementComponent implements OnInit {
                                         [...this.newEndpointList];
                                 },
                                 () => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 }
                             );
                     });
                 },
                 () => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
         } else if (this.inputClients != undefined) {
             this.clientBase = this.inputClients.clientBase;
             this.clientName = this.inputClients.clientName;
             let tempClientId: number;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.apiGatewayService.currentApprovalStageClientObject.subscribe(
                 (a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     tempClientId = Number(a.clientId);
                     this.clientName = a.name;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
             this.detailsBreadObject = this.chooseBread('clientBase');
             this.apiGatewayService.updateApprovalDetailsBreadObject(
                 this.detailsBreadObject,
             );
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .endpointbyclientid(tempClientId)
                 .subscribe(
                     (res) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (Array.isArray(res)) {
                             this.endpointList = res;
                             this.moduleId = res[0].moduleId;
@@ -1589,7 +1724,9 @@ export class EndpointManagementComponent implements OnInit {
                                 this.endpointList[k],
                                 { expanded: false },
                             );
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.show();
                             debugger
                             this.messagesApiFacadeService
                                 .findbyendpointid(
@@ -1599,7 +1736,9 @@ export class EndpointManagementComponent implements OnInit {
                                     (ress) => {
                                         debugger
                                         this.ipLimitList = ress;
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                         //console.log('ress', ress)
                                         let result = '';
                                         for (let i = 0; i < ress.length; i++) {
@@ -1644,16 +1783,22 @@ export class EndpointManagementComponent implements OnInit {
                                             });
                                     },
                                     (error) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     },
                                 );
                         }
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         this.messagesApiFacadeService
                             .SearchModuleById(Number(this.moduleId))
                             .subscribe(
                                 (h) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                     this.moduleTitle = h.moduleTitle;
                                     this.moduleType = h.moduleType;
                                     this.moduleGroup = h.moduleGroup;
@@ -1668,12 +1813,16 @@ export class EndpointManagementComponent implements OnInit {
                                         : (this.widthModuleType = 50);
                                 },
                                 (error) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 },
                             );
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
         } else if (this.inputEndpoint != undefined) {
@@ -1689,11 +1838,15 @@ export class EndpointManagementComponent implements OnInit {
                     this.detailsBreadObject,
                 );
                 this.endpointList = [];
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
             /*    this.messagesApiFacadeService.endpointbymoduleid(temp).subscribe(
                         (res: HttpResponse<any[]>) => {
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             const body = res?.body as any;
                             const list = Array.isArray(body) ? body : (body ? [body] : []);
                             this.endpointList = list;
@@ -1709,7 +1862,9 @@ export class EndpointManagementComponent implements OnInit {
                                     this.endpointList[k],
                                     { expanded: false },
                                 );
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                                 debugger
                                 this.messagesApiFacadeService
                                     .findbyendpointid(
@@ -1719,7 +1874,9 @@ export class EndpointManagementComponent implements OnInit {
                                         (ress) => {
                                             debugger
                                             this.ipLimitList = ress;
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             //console.log('ress', ress)
                                             let result = '';
                                             for (
@@ -1779,20 +1936,26 @@ export class EndpointManagementComponent implements OnInit {
                                                 );
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         },
                                     );
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );*/
                 this.messagesApiFacadeService.endpointbymoduleid(temp, this.pagesize, this.pageno).subscribe(
                     (res: HttpResponse<any>) => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+
+                        // this._primengProgressBarService.hide();
                         this.totalRecords =
                             Number(res.headers.get('totalitems')) || 0;
 
@@ -1872,13 +2035,17 @@ export class EndpointManagementComponent implements OnInit {
                                             [...this.newEndpointList];
                                     },
                                     () => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     }
                                 );
                         });
                     },
                     () => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
                 this.moduleTitle.length > 22
@@ -1897,11 +2064,15 @@ export class EndpointManagementComponent implements OnInit {
                     this.detailsBreadObject,
                 );
                 this.endpointList = [];
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                /* this.messagesApiFacadeService.endpointbymoduleid(temp).subscribe(
                         (res: HttpResponse<any[]>) => {
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             const body = res?.body as any;
                             const list = Array.isArray(body) ? body : (body ? [body] : []);
                             this.endpointList = list;
@@ -1917,7 +2088,9 @@ export class EndpointManagementComponent implements OnInit {
                                     this.endpointList[k],
                                     { expanded: false },
                                 );
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                                 debugger
                                 this.messagesApiFacadeService
                                     .findbyendpointid(
@@ -1927,7 +2100,9 @@ export class EndpointManagementComponent implements OnInit {
                                         (ress) => {
                                             debugger
                                             this.ipLimitList = ress;
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             //console.log('ress', ress)
                                             let result = '';
                                             for (
@@ -1987,20 +2162,26 @@ export class EndpointManagementComponent implements OnInit {
                                                 );
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         },
                                     );
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );*/
                 this.messagesApiFacadeService.endpointbymoduleid(temp, this.pagesize, this.pageno).subscribe(
                     (res: HttpResponse<any>) => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+
+                        // this._primengProgressBarService.hide();
                         this.totalRecords =
                             Number(res.headers.get('totalitems')) || 0;
 
@@ -2080,13 +2261,17 @@ export class EndpointManagementComponent implements OnInit {
                                             [...this.newEndpointList];
                                     },
                                     () => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     }
                                 );
                         });
                     },
                     () => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
                 this.moduleTitle.length > 22
@@ -2100,19 +2285,24 @@ export class EndpointManagementComponent implements OnInit {
                     : (this.widthModuleType = 50);
             }
         }
-        this._primengProgressBarService.show();
+        // FUSEFS
 
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .checkactiveendpointbymoduleid(this.moduleId)
             .subscribe(
                 (o) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     debugger;
                     this.addButtonFlag = o;
                     debugger;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         this.registerFlag = false;
@@ -2191,11 +2381,15 @@ export class EndpointManagementComponent implements OnInit {
     }
 
     showAllEndpointModule(endpoint) {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
       /*  this.messagesApiFacadeService.endpointbymoduleid(endpoint.moduleId).subscribe(
                 (res: HttpResponse<any[]>) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     const body = res?.body as any;
                     const list = Array.isArray(body) ? body : (body ? [body] : []);
                     this.endpointList = list;
@@ -2211,14 +2405,18 @@ export class EndpointManagementComponent implements OnInit {
                             this.endpointList[k],
                             { expanded: false },
                         );
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         debugger
                         this.messagesApiFacadeService
                             .findbyendpointid(this.endpointList[k].endpointId)
                             .subscribe(
                                 (ress) => {
                                     this.ipLimitList = ress;
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                     //console.log('ress', ress)
                                     let result = '';
                                     for (let i = 0; i < ress.length; i++) {
@@ -2259,20 +2457,26 @@ export class EndpointManagementComponent implements OnInit {
                                     this.dialogAllEndpointModuleFlag = true;
                                 },
                                 (error) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 },
                             );
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );*/
         this.messagesApiFacadeService.endpointbymoduleid(endpoint.moduleId, this.pagesize, this.pageno).subscribe(
             (res: HttpResponse<any>) => {
 
-                this._primengProgressBarService.hide();
+                // FUSEFS
 
+
+                // this._primengProgressBarService.hide();
                 this.totalRecords =
                     Number(res.headers.get('totalitems')) || 0;
 
@@ -2352,13 +2556,17 @@ export class EndpointManagementComponent implements OnInit {
                                     [...this.newEndpointList];
                             },
                             () => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             }
                         );
                 });
             },
             () => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -2443,7 +2651,9 @@ export class EndpointManagementComponent implements OnInit {
                 debugger
                 debugger
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.totalRecords = Number(res.headers.get('totalitems')) || 0;
                 const data = res.body ?? [];
                 this.endpointList = Array.isArray(data) ? data : [data];
@@ -2457,14 +2667,18 @@ export class EndpointManagementComponent implements OnInit {
                         this.endpointList[k],
                         { expanded: false },
                     );
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     debugger
                     this.messagesApiFacadeService.findbyendpointid(this.endpointList[k].endpointId).subscribe(
                         (ress) => {
                             debugger
                             this.ipLimitList = ress;
                             //console.log('ress', ress)
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             let result = '';
                             for (let i = 0; i < ress.length; i++) {
                                 result +=
@@ -2506,19 +2720,24 @@ export class EndpointManagementComponent implements OnInit {
                                 });
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );
                 }
 
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });*/
         this.messagesApiFacadeService.endpointbymoduleid(this.moduleId, this.pagesize, this.pageno).subscribe(
             (res: HttpResponse<any>) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
 
+                // this._primengProgressBarService.hide();
                 this.totalRecords =
                     Number(res.headers.get('totalitems')) || 0;
 
@@ -2598,13 +2817,17 @@ export class EndpointManagementComponent implements OnInit {
                                     [...this.newEndpointList];
                             },
                             () => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             }
                         );
                 });
             },
             () => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
 

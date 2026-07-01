@@ -5,14 +5,14 @@
         <div class="col-span-3">
             <label class="normal-label">
                 <span>{{ 'recipientsAlerts.dropdown.searchType'|transloco }} :</span></label>
-            <p-dropdown class="normal-dropdown"
+            <p-select class="normal-dropdown"
                         [autoDisplayFirst]="false"
                         [options]="searchByOption"
                         optionValue="code"
                         [(ngModel)]="searchBy"
                         optionLabel="name"
                         (onChange)="onChangeSearch($event)"
-            ></p-dropdown>
+            ></p-select>
         </div>
         <div class="col-span-3" *ngIf="!showName&&showMobile">
             <label class="normal-label"><span>{{ 'recipientsAlerts.input.mobileNo'|transloco }} :</span></label>
@@ -190,7 +190,7 @@
                 pTooltip="{{ 'tooltip.nextPage' | transloco }}">
                 <i class="pi pi-arrow-left"></i>
             </button>
-            <p-dropdown class="normal-dropdown-pagination"
+            <p-select class="normal-dropdown-pagination"
                         [options]="pagesizeOptions"
                         optionValue="code"
                         [autoDisplayFirst]="true"
@@ -198,7 +198,7 @@
                         [(ngModel)]="pagesize"
                         (onChange)="OnchangePageno($event)"
                         [disabled]="nextBtnFlag">
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4"></div>
     </div>-->

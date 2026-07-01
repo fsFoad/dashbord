@@ -11,7 +11,7 @@
                     <span class="text-red-500">*</span>
                     نوع سرویس:
                 </label>
-                <p-dropdown
+                <p-select
                     appendTo="body"
                     [options]="httpMethodeOptions"
                     formControlName="httpMethode"
@@ -19,7 +19,7 @@
                     optionValue="code"
                     class="normal-dropdown"
                     (onChange)="changeHttpMethode($event)"
-                ></p-dropdown>
+                ></p-select>
             </div>
             <div class="col-span-7"></div>
             <div class="col-span-12 mt-1" *ngIf="tableVisible">
@@ -98,7 +98,7 @@ styleClass="normal-table"
                 >
                     <i class="pi pi-arrow-left"></i>
                 </button>
-                <p-dropdown
+                <p-select
                     class="cache-normal-dropdown-pagination"
                     [options]="pagesizeOptions"
                     formControlName="pagesize"
@@ -106,7 +106,7 @@ styleClass="normal-table"
                     [autoDisplayFirst]="true"
                     optionLabel="name"
                     [disabled]="true"
-                ></p-dropdown>
+                ></p-select>
             </div>
             <div class="col-span-3"></div>
         </div>

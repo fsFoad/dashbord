@@ -2,7 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { AddCommaPipe } from '../../../shared/pipes/add-comma.pipe';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import {
     FsProgressSpinnerComponent
@@ -95,27 +99,39 @@ export class DetailList implements OnInit, OnDestroy  {
     constructor(
         public config: DynamicDialogConfig,
         public messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         public apiGatewayService: ApiGatewayService
     ) {}
 
   /*  ngOnInit() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.apiGatewayService.currentApprovalStageRequestlogid.subscribe(
             (res) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.requestlogid = res;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .detailReportLog(this.requestlogid)
             .subscribe(
                 (a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.API_NAME = a.API_NAME;
                     this.API_TITLE = a.API_TITLE;
                     this.ENDPOINT_URL = a.ENDPOINT_URL;
@@ -127,7 +143,9 @@ export class DetailList implements OnInit, OnDestroy  {
                     this.FEEAMOUNT = a.FEEAMOUNT;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }*/

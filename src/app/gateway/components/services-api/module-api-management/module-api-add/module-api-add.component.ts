@@ -5,15 +5,19 @@ import {ModuleDto} from "../../../../models/Module.Dto";
 
 import {ActivatedRoute} from "@angular/router";
 import {ConfirmationService} from "primeng/api";
-import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../services/messages-api-facade.service';
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ConfirmDialog} from 'primeng/confirmdialog';
-import {DropdownModule} from 'primeng/dropdown';
+import {SelectModule} from 'primeng/select';
 import {KeyFilter} from 'primeng/keyfilter';
 import {ToggleSwitch} from "primeng/toggleswitch";
 import {Ripple} from 'primeng/ripple';
@@ -31,7 +35,7 @@ import {ApiGatewayService} from '../../../../services/api-gateway.service';
     imports: [
         FormsModule,
         InputText,
-        DropdownModule,
+        SelectModule,
         KeyFilter,
         ToggleSwitch,
         ButtonDirective,
@@ -80,7 +84,9 @@ export class ModuleApiAddComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private notifierService: ToastService,
         private transloco: TranslocoService,
         private apiGatewayService: ApiGatewayService,
@@ -210,16 +216,22 @@ export class ModuleApiAddComponent implements OnInit {
                 this.status == true
                     ? (this.moduleDto.status = 1)
                     : (this.moduleDto.status = 0);
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .registerModule(this.moduleDto)
                     .subscribe(
                         (Moduleresponse) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.close.emit('closeAndCreate');
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
             }
@@ -277,16 +289,22 @@ export class ModuleApiAddComponent implements OnInit {
         this.status == true
             ? (this.moduleDto.status = 1)
             : (this.moduleDto.status = 0);
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .registerModule(this.moduleDto)
             .subscribe(
                 (Moduleresponse) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.close.emit('closeAndCreate');
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

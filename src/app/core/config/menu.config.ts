@@ -6,65 +6,140 @@ import { MenuItem } from '../models/menu-item.model';
  * sidebar. In later phases the per-user menu service filters/reorders this
  * by role and pinned items.
  */
-// ===== REAL MENU (active) =====
+// ===== GATEWAY MENU (active) =====
 export const APP_MENU: MenuItem[] = [
-  { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
+  { id: 'sec-gateway', labelKey: 'درگاه', separator: true },
+  { id: "gateway-main-home", labelKey: "صفحه اصلی", icon: "pi pi-home", route: "/home" },
   {
-    id: 'dashboard',
-    labelKey: 'menu.dashboard',
-    icon: 'pi pi-home',
+    id: "gateway-issuewalletgroup",
+    labelKey: "اطلاعات پایه",
+    icon: "pi pi-file",
     children: [
-      { id: 'dashboard-overview', labelKey: 'menu.dashboard.overview', icon: 'pi pi-th-large', route: '/dashboard' },
-      { id: 'dashboard-analytics', labelKey: 'menu.dashboard.analytics', icon: 'pi pi-chart-line', route: '/dashboard/analytics' },
+    { id: "gateway-main-messages-management", labelKey: "پیام ها", icon: "pi pi-envelope", route: "/messages-management" },
+    { id: "gateway-main-rules", labelKey: "قواعد", icon: "pi pi-list", route: "/rules" },
     ],
   },
   {
-    id: 'projects',
-    labelKey: 'menu.projects',
-    icon: 'pi pi-folder',
+    id: "gateway-issuewalletgroup-2",
+    labelKey: "پیکربندی",
+    icon: "pi pi-cog",
     children: [
-      { id: 'projects-all', labelKey: 'menu.projects.all', icon: 'pi pi-list', route: '/projects' },
-      { id: 'projects-new', labelKey: 'menu.projects.new', icon: 'pi pi-plus', route: '/projects/new' },
-      { id: 'projects-board', labelKey: 'menu.projects.board', icon: 'pi pi-th-large', route: '/projects/board' },
-      { id: 'projects-gantt', labelKey: 'menu.projects.gantt', icon: 'pi pi-chart-bar', route: '/projects/gantt' },
-      {
-        id: 'projects-reports',
-        labelKey: 'menu.projects.reports',
-        icon: 'pi pi-chart-bar',
-        children: [
-          { id: 'rep-weekly', labelKey: 'menu.projects.reports.weekly', route: '/projects/reports/weekly' },
-          {
-            id: 'rep-long',
-            // Deliberately long to test single-line truncation + hover tooltip:
-            labelKey: 'menu.projects.reports.long',
-            route: '/projects/reports/quarterly-cross-department-summary',
-          },
-        ],
-      },
+    { id: "gateway-main-data-hub", labelKey: "هاب داده", icon: "pi pi-sitemap", route: "/data-hub" },
     ],
   },
   {
-    id: 'people',
-    labelKey: 'menu.people',
-    icon: 'pi pi-users',
+    id: "gateway-issuewalletgroup-3",
+    labelKey: "سرویس گیرندگان",
+    icon: "pi pi-users",
     children: [
-      { id: 'team', labelKey: 'menu.people.team', icon: 'pi pi-user', route: '/people/team' },
-      { id: 'roles', labelKey: 'menu.people.roles', icon: 'pi pi-shield', route: '/people/roles', roles: ['admin'] },
+    { id: "gateway-main-party", labelKey: "سازمان", icon: "pi pi-user", route: "/party" },
+    { id: "gateway-main-modulebase", labelKey: "ماژول", icon: "pi pi-sitemap", route: "/moduleBase" },
     ],
   },
-  { id: 'calendar', labelKey: 'menu.calendar', icon: 'pi pi-calendar', route: '/calendar' },
-  { id: 'files', labelKey: 'menu.files', icon: 'pi pi-folder-open', route: '/files' },
-
-  { id: 'sec-components', labelKey: 'menu.section.components', separator: true },
-  { id: 'gallery', labelKey: 'menu.gallery', icon: 'pi pi-th-large', route: '/components/gallery' },
-  { id: 'date-picker', labelKey: 'menu.datePicker', icon: 'pi pi-calendar-plus', route: '/components/date-picker' },
-  { id: 'form-builder', labelKey: 'menu.formBuilder', icon: 'pi pi-file-edit', route: '/components/form-builder' },
-
-  { id: 'sec-system', labelKey: 'menu.section.system', separator: true },
-  { id: 'playground', labelKey: 'menu.playground', icon: 'pi pi-bolt', route: '/playground' },
-  { id: 'settings', labelKey: 'menu.settings', icon: 'pi pi-cog', action: 'openSettings' },
-  { id: 'docs', labelKey: 'menu.docs', icon: 'pi pi-book', href: 'https://primeng.org' },
+  { id: "gateway-main-client", labelKey: "کلاینت", icon: "pi pi-building", route: "/client" },
+  { id: "gateway-main-wage-services", labelKey: "کارمزد سرویس", icon: "pi pi-wallet", route: "/wage-services" },
+  { id: "gateway-main-access-list", labelKey: "لیست دسترسی", icon: "pi pi-list", route: "/access-list" },
+  {
+    id: "gateway-messages",
+    labelKey: "مدیاتور",
+    icon: "pi pi-sitemap",
+    children: [
+    { id: "gateway-main-mediators", labelKey: "لیست مدیاتور ها", icon: "pi pi-sitemap", route: "/mediators" },
+    { id: "gateway-main-mediatorsxml", labelKey: "مدیاتور xml", icon: "pi pi-sitemap", route: "/mediatorsXml" },
+    { id: "gateway-main-mediatorsjson", labelKey: "مدیاتور json", icon: "pi pi-sitemap", route: "/mediatorsJson" },
+    ],
+  },
+  {
+    id: "gateway-messages-2",
+    labelKey: "گزارشات",
+    icon: "pi pi-chart-bar",
+    children: [
+    { id: "gateway-main-log-reports", labelKey: "ریز کارکرد سرویس", icon: "pi pi-chart-bar", route: "/log-reports" },
+    { id: "gateway-main-call-services-report", labelKey: "فراخوانی تجمیعی سرویس‌ها", icon: "pi pi-chart-bar", route: "/call-services-report" },
+    { id: "gateway-main-chart-report", labelKey: "نموداری", icon: "pi pi-chart-bar", route: "/chart-report" },
+    { id: "gateway-main-response-rate", labelKey: "میزان پاسخ‌دهی", icon: "pi pi-chart-bar", route: "/response-rate" },
+    ],
+  },
+  {
+    id: "gateway-messages-3",
+    labelKey: "صورت حساب",
+    icon: "pi pi-dollar",
+    children: [
+    { id: "gateway-main-factor", labelKey: "فاکتور", icon: "pi pi-dollar", route: "/factor" },
+    ],
+  },
+  {
+    id: "gateway-messages-4",
+    labelKey: "api-store",
+    icon: "pi pi-window-maximize",
+    children: [
+    { id: "gateway-main-bill-store", labelKey: "کارتابل صورتحساب", icon: "pi pi-clipboard", route: "/bill-store" },
+    ],
+  },
+  { id: "gateway-main-about", labelKey: "درباره...", icon: "pi pi-info-circle", route: "/about" },
+  { id: "gateway-sign-out", labelKey: "خروج", icon: "pi pi-sign-out", action: "logout" },
 ];
+
+// ===== PREVIOUS REAL MENU (commented) =====
+// // ===== REAL MENU (active) =====
+// export const APP_MENU: MenuItem[] = [
+//   { id: 'sec-main', labelKey: 'menu.section.main', separator: true },
+//   {
+//     id: 'dashboard',
+//     labelKey: 'menu.dashboard',
+//     icon: 'pi pi-home',
+//     children: [
+//       { id: 'dashboard-overview', labelKey: 'menu.dashboard.overview', icon: 'pi pi-th-large', route: '/dashboard' },
+//       { id: 'dashboard-analytics', labelKey: 'menu.dashboard.analytics', icon: 'pi pi-chart-line', route: '/dashboard/analytics' },
+//     ],
+//   },
+//   {
+//     id: 'projects',
+//     labelKey: 'menu.projects',
+//     icon: 'pi pi-folder',
+//     children: [
+//       { id: 'projects-all', labelKey: 'menu.projects.all', icon: 'pi pi-list', route: '/projects' },
+//       { id: 'projects-new', labelKey: 'menu.projects.new', icon: 'pi pi-plus', route: '/projects/new' },
+//       { id: 'projects-board', labelKey: 'menu.projects.board', icon: 'pi pi-th-large', route: '/projects/board' },
+//       { id: 'projects-gantt', labelKey: 'menu.projects.gantt', icon: 'pi pi-chart-bar', route: '/projects/gantt' },
+//       {
+//         id: 'projects-reports',
+//         labelKey: 'menu.projects.reports',
+//         icon: 'pi pi-chart-bar',
+//         children: [
+//           { id: 'rep-weekly', labelKey: 'menu.projects.reports.weekly', route: '/projects/reports/weekly' },
+//           {
+//             id: 'rep-long',
+//             // Deliberately long to test single-line truncation + hover tooltip:
+//             labelKey: 'menu.projects.reports.long',
+//             route: '/projects/reports/quarterly-cross-department-summary',
+//           },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     id: 'people',
+//     labelKey: 'menu.people',
+//     icon: 'pi pi-users',
+//     children: [
+//       { id: 'team', labelKey: 'menu.people.team', icon: 'pi pi-user', route: '/people/team' },
+//       { id: 'roles', labelKey: 'menu.people.roles', icon: 'pi pi-shield', route: '/people/roles', roles: ['admin'] },
+//     ],
+//   },
+//   { id: 'calendar', labelKey: 'menu.calendar', icon: 'pi pi-calendar', route: '/calendar' },
+//   { id: 'files', labelKey: 'menu.files', icon: 'pi pi-folder-open', route: '/files' },
+// 
+//   { id: 'sec-components', labelKey: 'menu.section.components', separator: true },
+//   { id: 'gallery', labelKey: 'menu.gallery', icon: 'pi pi-th-large', route: '/components/gallery' },
+//   { id: 'date-picker', labelKey: 'menu.datePicker', icon: 'pi pi-calendar-plus', route: '/components/date-picker' },
+//   { id: 'form-builder', labelKey: 'menu.formBuilder', icon: 'pi pi-file-edit', route: '/components/form-builder' },
+// 
+//   { id: 'sec-system', labelKey: 'menu.section.system', separator: true },
+//   { id: 'playground', labelKey: 'menu.playground', icon: 'pi pi-bolt', route: '/playground' },
+//   { id: 'settings', labelKey: 'menu.settings', icon: 'pi pi-cog', action: 'openSettings' },
+//   { id: 'docs', labelKey: 'menu.docs', icon: 'pi pi-book', href: 'https://primeng.org' },
+// ];
 
 /* ===== DEMO MENU (banking sample — commented, restore if needed for mega-menu testing) =====
 const APP_MENU_DEMO: MenuItem[] = [

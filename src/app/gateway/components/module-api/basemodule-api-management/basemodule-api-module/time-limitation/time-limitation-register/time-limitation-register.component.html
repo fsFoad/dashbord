@@ -7,14 +7,14 @@
             <span class="text-red-600">*</span>
             <span>نوع محدودیت :</span>
         </label>
-        <p-dropdown
+        <p-select
             class="normal-dropdown"
             [options]="limitTypeOptions"
             [(ngModel)]="limitType"
             optionValue="code"
             optionLabel="name"
             (keydown.enter)="onKeydown($event)">
-        </p-dropdown>
+        </p-select>
     </div>
 
     <div class="col-span-4">

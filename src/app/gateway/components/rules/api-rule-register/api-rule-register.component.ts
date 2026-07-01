@@ -2,16 +2,19 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } fro
 import {ApiGatewayConstants} from '../../../constants/ApiGatewayConstants';
 
 import {ActivatedRoute} from '@angular/router';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {Panel} from 'primeng/panel';
 import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
-import {DropdownModule} from 'primeng/dropdown';
-import {MatTooltip} from '@angular/material/tooltip';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {SelectModule} from 'primeng/select';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ButtonDirective} from 'primeng/button';
 import {TableIdPipe} from '../../../../shared/pipes/tableId.pipe';
 import {Dialog} from 'primeng/dialog';
@@ -26,6 +29,7 @@ import {Textarea} from 'primeng/textarea';
 import {KeyFilter} from 'primeng/keyfilter';
 import { MessageSelectorComponent } from '../../../../shared/components/message-selector/message-selector.component';
 import { Subject, Observable } from 'rxjs';
+import { Tooltip } from 'primeng/tooltip';
 @Component({
     selector: 'app-api-rule-register',
     templateUrl: './api-rule-register.component.html',
@@ -35,8 +39,8 @@ import { Subject, Observable } from 'rxjs';
         Panel,
         FormsModule,
         InputText,
-        DropdownModule,
-        MatTooltip,
+        SelectModule,
+        Tooltip,
         TranslocoPipe,
         ButtonDirective,
         TableIdPipe,
@@ -128,7 +132,9 @@ export class ApiRuleRegisterComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private cdr: ChangeDetectorRef,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private notifierService: ToastService
     ) {}
     private tryParse(value: string): { ok: boolean; error?: any; parsed?: any } {
@@ -569,16 +575,22 @@ export class ApiRuleRegisterComponent implements OnInit {
                 this.rigesterRulObject.messageId = this.messageId;
             }
             this.rigesterRulObject.errorText = this.toBase64Unicode(this.errorText);
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerRule(this.rigesterRulObject)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.close.emit('closeAndCreate');
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

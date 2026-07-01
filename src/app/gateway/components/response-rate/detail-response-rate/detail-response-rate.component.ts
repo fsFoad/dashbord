@@ -2,16 +2,20 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../services/api-gateway.service';
 import {ToastService} from '../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {Constants} from '../../../../shared/constants/Constants';
 import {BreadcrumbsComponent} from "../../../../shared/components/breadcrumbs/breadcrumbs.component";
 import {ButtonDirective} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {Ripple} from "primeng/ripple";
 import {Toast} from "primeng/toast";
-import {TranslocoPipe} from "@ngneat/transloco";
+import {TranslocoPipe} from "@jsverse/transloco";
 import {FormsModule} from "@angular/forms";
-import {DropdownModule} from "primeng/dropdown";
+import {SelectModule} from "primeng/select";
 import {Tooltip} from "primeng/tooltip";
 import {MorChar32Pipe} from "../../../../shared/pipes/morChar32.pipe";
 import {TimePipe} from "../../../../shared/pipes/time.pipe";
@@ -23,7 +27,7 @@ import {TimePipe} from "../../../../shared/pipes/time.pipe";
     imports: [
         BreadcrumbsComponent,
         Toast,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         TableModule,
         Tooltip,
@@ -58,7 +62,9 @@ export class DetailResponseRateComponent implements OnInit {
       private messagesApiFacadeService: MessagesApiFacadeService,
       private apiGatewayService: ApiGatewayService,
       private notifierService: ToastService,
-      private progressBarService: FuseLoadingService,
+      // FUSEFS
+
+      // private progressBarService: FuseLoadingService,
   ) { }
     nextPageStatement(): void {
         this.pageno += 1;
@@ -178,7 +184,9 @@ export class DetailResponseRateComponent implements OnInit {
     }
     fetch(){
         if (this.sorttype){
-            this.progressBarService.show();
+            // FUSEFS
+
+            // this.progressBarService.show();
             this.messagesApiFacadeService.responsedelayDetail(this.inputDetails.logDate,this.inputDetails.apiId,this.sorttype, this.pageno, this.pagesize).subscribe(w => {
                 debugger
                 this.detailList=w
@@ -199,9 +207,13 @@ export class DetailResponseRateComponent implements OnInit {
                         debugger
                     }
                 }
-                this.progressBarService.hide();
+                // FUSEFS
+
+                // this.progressBarService.hide();
             },error => {
-                this.progressBarService.hide();
+                // FUSEFS
+
+                // this.progressBarService.hide();
             })
         }else {
 

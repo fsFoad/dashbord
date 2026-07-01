@@ -42,7 +42,7 @@
             <label class="normal-label">
                 <span class="red-color-text">* </span>
                 <span>اولویت اجرا :</span></label>
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 [options]="actionTypeOptions"
                 [(ngModel)]="actionTypeFirst"
@@ -50,7 +50,7 @@
                 optionLabel="name"
                 [disabled]=true
             >
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4">
             <br>
@@ -83,7 +83,7 @@
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>نام سازمان :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="partyListOptionsFirst"
                             [(ngModel)]="partyIdFirst"
@@ -92,13 +92,13 @@
                             filterBy="title"
                             optionLabel="title"
                             [disabled]="true">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-4">
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>ماژول :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="moduleListOptionsFirst"
                             [(ngModel)]="moduleIdFirst"
@@ -107,14 +107,14 @@
                             filterBy="moduleTitle"
                             optionLabel="moduleTitle"
                             [disabled]="true">
-                        </p-dropdown>
+                        </p-select>
                     </div>
 
                     <div class="col-span-4">
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>نام سرویس :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="apiListOptionsFirst"
                             [(ngModel)]="apiIdFirst"
@@ -124,7 +124,7 @@
                             optionLabel="title"
                             [disabled]="true"
                         >
-                        </p-dropdown>
+                        </p-select>
                     </div>
 
                     <div class="col-span-4 md:col-span-6 lg:col-span-4">
@@ -194,7 +194,7 @@
                         <div class="col-span-4 md:col-span-6 lg:col-span-4">
                             <label class="normal-label">
                                 <span>نام کلاینت :</span></label>
-                            <p-dropdown
+                            <p-select
                                 [disabled]="true"
                                 class="normal-dropdown"
                                 [options]="clientOptions"
@@ -203,7 +203,7 @@
                                 optionLabel="name"
                                 (onChange)="onChangeHasClient($event)"
                             >
-                            </p-dropdown>
+                            </p-select>
                         </div>
                     </div>
                 </p-fieldset>

@@ -3,14 +3,18 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgClass, NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {TranslocoService} from '@ngneat/transloco';
+import {TranslocoService} from '@jsverse/transloco';
 import {ButtonDirective} from 'primeng/button';
-import {DropdownModule} from 'primeng/dropdown';
+import {SelectModule} from 'primeng/select';
 import {Menu} from 'primeng/menu';
 import {Ripple} from 'primeng/ripple';
 import {TableModule} from 'primeng/table';
 import {Tooltip} from 'primeng/tooltip';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {BreadcrumbsComponent} from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {ChangeTypeIdPipe} from '../../../shared/pipes/changeTypeId.pipe';
 import {MoreChar19Pipe} from '../../../shared/pipes/moreChar19.pipe';
@@ -36,7 +40,7 @@ import {Toast} from 'primeng/toast';
         StatusPipe,
         Menu,
         Ripple,
-        DropdownModule,
+        SelectModule,
 
         NgClass,
         ChangeTypeIdPipe,
@@ -75,7 +79,9 @@ export class NodeChangeListComponent implements OnInit {
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService
     ) {}
 
@@ -302,12 +308,16 @@ export class NodeChangeListComponent implements OnInit {
         if (this.inputListMedia != undefined) {
             this.mediatorId = this.inputListMedia.mediatorId;
             this.nodeName = this.inputListMedia.title;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .findbymediatorid(this.mediatorId)
                 .subscribe(
                     (b) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (Array.isArray(b)) {
                             this.nodesList = b;
                         } else {
@@ -326,7 +336,9 @@ export class NodeChangeListComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
             this.detailsBreadObject = this.chooseBread('mediatorBase');
@@ -402,18 +414,24 @@ export class NodeChangeListComponent implements OnInit {
 
     deactivationNode(tempMediatorchang) {
         this.changeId = tempMediatorchang.changeId;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .deactiveMediatorchange(this.changeId)
             .subscribe(
                 (b) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     console.log('resB', b);
 
                     this.search();
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.search();
                 }
             );
@@ -431,15 +449,21 @@ export class NodeChangeListComponent implements OnInit {
         });
 
         const changeId = tempMediatorchang.changeId;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.activeMediatorchange(changeId).subscribe(
             (a) => {
                 console.log('resA', a);
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.search();
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.search();
             }
         );
@@ -456,12 +480,16 @@ export class NodeChangeListComponent implements OnInit {
     }
 
     search() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .findbymediatorid(this.mediatorId)
             .subscribe(
                 (b) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(b)) {
                         this.nodesList = b;
                     } else {
@@ -478,7 +506,9 @@ export class NodeChangeListComponent implements OnInit {
                     this.createMediatorFlag = this.disabelCheck();
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

@@ -4,7 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessagesApiFacadeService } from '../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../@fuse/services/loading';
 import { ApiGatewayService } from '../services/api-gateway.service';
 import { BreadcrumbsComponent } from '../../shared/components/breadcrumbs/breadcrumbs.component';
 import { NgIf } from '@angular/common';
@@ -14,7 +18,7 @@ import { TableModule } from 'primeng/table';
 import { Menu } from 'primeng/menu';
 import { Ripple } from 'primeng/ripple';
 import { LogReportsComponent } from '../components/log-reports/log-reports.component';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { FsProgressSpinnerComponent } from '../../shared/components/fs-progress-spinner/fs-progress-spinner.component';
@@ -117,7 +121,9 @@ export class HomeComponent implements OnInit {
         inject(SentryContextService);
     constructor(private route: ActivatedRoute,
                 private messagesApiFacadeService: MessagesApiFacadeService,
-                private _primengProgressBarService: FuseLoadingService,
+                // FUSEFS
+
+                // private _primengProgressBarService: FuseLoadingService,
                 private transloco: TranslocoService,
                 private apiGatewayService: ApiGatewayService,
                 private dialogService: DialogService,
@@ -322,12 +328,18 @@ export class HomeComponent implements OnInit {
         /* this.messagesApiFacadeService.lastFail().subscribe(response => {
              this.valueOfLastFailTable = response
          })*/
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.getstatistictoday().subscribe(response => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             this.valueOfDailyTable = response;
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
     }
 

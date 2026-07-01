@@ -14,7 +14,7 @@
                 <span class="red-color-text">* </span>
                 <span>{{ 'editRule.dropdown.choosePublicErrorCode'|transloco }} :</span>
             </label>
-            <p-dropdown
+            <p-select
                 [options]="generalErrorCodesOptions"
                 [(ngModel)]="generalErrorCodes"
                 optionValue="code"
@@ -22,21 +22,21 @@
                 optionLabel="name"
                 class="normal-dropdown"
                 (keydown.enter)="onKeydown($event)">
-            </p-dropdown>
+            </p-select>
         </div>
 
         <div class="col-span-3 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
             <label class="normal-label">
 
                 <span>{{ 'editRule.dropdown.ruleTemplate'|transloco }} :</span></label>
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 [options]="ruleTemplateOptions"
                 [(ngModel)]="ruleTemplate"
                 optionValue="code"
                 optionLabel="name"
                 (keydown.enter)="onKeydown($event)">
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-12">
             <label class="normal-label">
@@ -86,9 +86,9 @@
                         pButton
                         class="bg-green-500 border-green-500 text-white w-8 h-8 mr-2   flex items-center justify-center rounded-2xl"
                         icon="pi pi-external-link"
-                        matTooltip="{{'editRule.tooltip.chooseMessage' | transloco}}"></button>&nbsp;
+                        pTooltip="{{'editRule.tooltip.chooseMessage' | transloco}}"></button>&nbsp;
                 <button style="width: 30px!important;margin-bottom: 5px"
-                        matTooltip="{{'editRule.tooltip.deleteMessage' | transloco}}" (click)="clearMessage()"
+                        pTooltip="{{'editRule.tooltip.deleteMessage' | transloco}}" (click)="clearMessage()"
                         pButton
                         class="bg-red-500 border-red-500 text-white w-8 h-8 rounded-2xl flex items-center justify-center "
                         icon="pi pi-trash"></button>

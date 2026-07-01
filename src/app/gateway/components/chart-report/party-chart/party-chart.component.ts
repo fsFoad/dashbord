@@ -1,11 +1,15 @@
 import {Component, Input, OnInit, SimpleChanges, OnChanges,} from '@angular/core';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { ButtonDirective } from 'primeng/button';
 // import { UIChart } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { NgForOf, NgIf } from '@angular/common';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import { UIChart } from 'primeng/chart';
 import { saveAs } from 'file-saver-es';
 @Component({
@@ -41,15 +45,21 @@ export class PartyChartComponent implements OnInit, OnChanges {
     constructor(
         private chartsService: MessagesApiFacadeService,
         private translateService: TranslocoService,
-        private _primengProgressBarService: FuseLoadingService
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService
     ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.SelectedNumberOfDay && this.callTheService) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.chartsService.getPiChart(this.SelectedNumberOfDay).subscribe(
                 (response) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.piChartData = response;
                     this.data = {
                         labels: [],
@@ -103,7 +113,9 @@ export class PartyChartComponent implements OnInit, OnChanges {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
         }
@@ -123,7 +135,9 @@ export class PartyChartComponent implements OnInit, OnChanges {
                 }
             }
         }
-        this._primengProgressBarService.show()
+        // FUSEFS
+
+        // this._primengProgressBarService.show()
         this.translateService.get([
             'pie.charts',
             'bar.charts',
@@ -132,7 +146,9 @@ export class PartyChartComponent implements OnInit, OnChanges {
             'name.table',
             'percent.table'
         ]).subscribe((translations) => {
-            this._primengProgressBarService.hide()
+            // FUSEFS
+
+            // this._primengProgressBarService.hide()
             this.contextMenuItems = [
                 {
                     label: translations['pie.charts'],
@@ -168,12 +184,18 @@ export class PartyChartComponent implements OnInit, OnChanges {
                 {field: 'PERCENTAGE', header: translations['percent.table']}
             ]
         }, error => {
-            this._primengProgressBarService.hide()
+            // FUSEFS
+
+            // this._primengProgressBarService.hide()
         })
-        this._primengProgressBarService.show()
+        // FUSEFS
+
+        // this._primengProgressBarService.show()
         this.chartsService.getPiChart(this.SelectedNumberOfDay).subscribe(
             (response) => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
                 this.piChartData = response
                 this.data = {
                     labels: [],
@@ -221,7 +243,9 @@ export class PartyChartComponent implements OnInit, OnChanges {
                     )
                 }
             }, error => {
-                this._primengProgressBarService.hide()
+                // FUSEFS
+
+                // this._primengProgressBarService.hide()
             })
     }*/
     ngOnInit(): void {
@@ -240,7 +264,9 @@ export class PartyChartComponent implements OnInit, OnChanges {
                 }
             }
         }
-        this._primengProgressBarService.show()
+        // FUSEFS
+
+        // this._primengProgressBarService.show()
         this.callTheService = true;
 
         this.responsiveChartOptions = {
@@ -258,8 +284,10 @@ export class PartyChartComponent implements OnInit, OnChanges {
             }
         };
 
-        this._primengProgressBarService.show();
+        // FUSEFS
 
+
+        // this._primengProgressBarService.show();
         // مقداردهی مستقیم گزینه‌های منو
         this.contextMenuItems = [
             {
@@ -285,11 +313,15 @@ export class PartyChartComponent implements OnInit, OnChanges {
             { field: 'PERCENTAGE', header: 'درصد' }
         ];
 
-        this._primengProgressBarService.show();
+        // FUSEFS
 
+
+        // this._primengProgressBarService.show();
         this.chartsService.getPiChart(this.SelectedNumberOfDay).subscribe(
             (response) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.piChartData = response;
 
                 this.data = {
@@ -325,13 +357,17 @@ export class PartyChartComponent implements OnInit, OnChanges {
                 }
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
         this.chartsService.getPiChart(this.SelectedNumberOfDay).subscribe(
             (response) => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.piChartData = response;
                 if (this.piChartData.length > 0) {
                     this.buttonChartShow=true
@@ -393,7 +429,9 @@ export class PartyChartComponent implements OnInit, OnChanges {
 
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }

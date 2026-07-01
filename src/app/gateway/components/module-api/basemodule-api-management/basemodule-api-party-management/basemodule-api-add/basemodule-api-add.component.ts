@@ -9,10 +9,14 @@ import {BreadcrumbsComponent} from '../../../../../../shared/components/breadcru
 import {FormsModule} from '@angular/forms';
 import {ButtonDirective} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {ConfirmDialog} from 'primeng/confirmdialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+import {SelectModule} from 'primeng/select';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {PartyDto} from '../../../../../models/party.Dto';
@@ -34,7 +38,7 @@ import {ToggleSwitch} from 'primeng/toggleswitch';
         InputText,
         TranslocoPipe,
         ConfirmDialog,
-        DropdownModule,
+        SelectModule,
 
         KeyFilter,
         ToggleSwitch,
@@ -79,7 +83,9 @@ export class BasemoduleApiAddComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiFacadeService: ApiGatewayService,
         private notifierService: ToastService,
         private apiGatewayService: ApiGatewayService,
@@ -160,13 +166,20 @@ export class BasemoduleApiAddComponent implements OnInit {
                     ? (this.moduleDto.status = 1)
                     : (this.moduleDto.status = 0);
 
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.registerModule(this.moduleDto).subscribe((Moduleresponse) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.close.emit('closeAndCreate');
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         }
                     );
                 //Actual logic to perform a confirmation
@@ -265,11 +278,15 @@ export class BasemoduleApiAddComponent implements OnInit {
                 this.status == true
                     ? (this.moduleDto.status = 1)
                     : (this.moduleDto.status = 0);
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .registerModule(this.moduleDto)
                     .subscribe((Moduleresponse) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.close.emit('closeAndCreate');
                     });
             }

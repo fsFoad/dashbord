@@ -14,7 +14,7 @@ import { CommonModule, JsonPipe } from '@angular/common';
 
 import { ButtonDirective, ButtonModule } from 'primeng/button';
 import { Card, CardModule } from 'primeng/card';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { Tag, TagModule } from 'primeng/tag';
 import { InputText, InputTextModule } from 'primeng/inputtext';
@@ -27,7 +27,7 @@ import { Menu } from 'primeng/menu';
 import { AggregatorConfigComponent } from './aggregator-config/aggregator-config.component';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 import { ApiGatewayService } from '../../../../../services/api-gateway.service';
 import { finalize } from 'rxjs';
 import {
@@ -42,7 +42,7 @@ import { ToastService } from '../../../../../../shared/services/ToastService';
         CommonModule,
         JsonPipe,
         InputText,
-        DropdownModule,
+        SelectModule,
         ReactiveFormsModule,
         TableModule,
         ButtonDirective,

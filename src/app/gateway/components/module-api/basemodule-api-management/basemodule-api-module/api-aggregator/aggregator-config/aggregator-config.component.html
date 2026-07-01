@@ -134,7 +134,7 @@
                                         <span class="text-red-500 mr-1">*</span>
                                         سازمان مقصد:
                                     </label>
-                                    <p-dropdown
+                                    <p-select
                                         appendTo="body"
                                         placeholder="انتخاب سازمان"
                                         formControlName="org"
@@ -154,7 +154,7 @@
                                         styleClass="normal-control w-full"
                                         (onFocus)="storePreviousValue(service, 'org')"
                                         (onChange)="onChangeParty(service, $event)">
-                                    </p-dropdown>
+                                    </p-select>
                                 </div>
 
                                 <!-- MODULE -->
@@ -164,7 +164,7 @@
                                         <span class="text-red-500 mr-1">*</span>
                                         ماژول مقصد:
                                     </label>
-                                    <p-dropdown
+                                    <p-select
                                         appendTo="body"
 
                                         formControlName="module"
@@ -181,7 +181,7 @@
                                         placeholder="انتخاب ماژول"
                                         (onFocus)="storePreviousValue(service, 'module')"
                                         (onChange)="onChangeModule(service, $event)">
-                                    </p-dropdown>
+                                    </p-select>
                                 </div>
 
                                 <!-- SERVICE -->
@@ -193,7 +193,7 @@
                                     </label>
 
 
-                                    <p-dropdown
+                                    <p-select
                                         appendTo="body"
                                         formControlName="service"
                                         [options]="service.controls.apiOptions.value"
@@ -206,7 +206,7 @@
                                         placeholder="انتخاب سرویس"
                                         (onFocus)="storePreviousValue(service, 'service')"
                                         (onChange)="onChangeApi(service, $event)">
-                                    </p-dropdown>
+                                    </p-select>
                                 </div>
 
                             </div>
@@ -259,7 +259,7 @@
                                         <label class="field-label">
                                             سرویس:
                                         </label>
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="genServiceId"
                                             [options]="[
       {
@@ -270,30 +270,30 @@
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
 
                                         <label class="field-label">
                                             گروه بندی:
                                         </label>
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="genType"
                                             [options]="mappingTypes"
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
                                         <label class="field-label">
                                             المان:
                                         </label>
 
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="genElement"
                                             [options]="getAvailableSourceElements(service)"
                                             [disabled]="isViewMode"
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
                                     </div>
 
                                     <!-- ARROW -->
@@ -312,7 +312,7 @@
                                         <label class="field-label">
                                             سرویس:
                                         </label>
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="reqServiceId"
                                             [options]="[
     {
@@ -329,22 +329,22 @@
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
 
                                         <label class="field-label">
                                             گروه بندی:
                                         </label>
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="reqType"
                                             [options]="mappingTypes"
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
                                         <label class="field-label">
                                             المان:
                                         </label>
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="reqElement"
                                             [options]="getAvailableTargetElements(
         service,
@@ -353,7 +353,7 @@
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
                                     </div>
 
                                 </div>
@@ -539,13 +539,13 @@
                                             200 Success
                                         </div>
 
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="responseMode200"
                                             [options]="responseModeOptions"
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
 
                                         @if (service.controls.responseMode200.value === 'selected') {
 
@@ -576,13 +576,13 @@
                                             400 Validation
                                         </div>
 
-                                        <p-dropdown
+                                        <p-select
                                             formControlName="responseMode400"
                                             [options]="responseModeOptions"
                                             optionLabel="label"
                                             optionValue="value"
                                             appendTo="body">
-                                        </p-dropdown>
+                                        </p-select>
 
                                         @if (service.controls.responseMode400.value === 'selected') {
 
@@ -758,13 +758,13 @@
                                                                     سرویس:
                                                                 </label>
 
-                                                                <p-dropdown
+                                                                <p-select
                                                                     formControlName="sourceId"
                                                                     [options]="sourceServices()"
                                                                     optionLabel="label"
                                                                     optionValue="value"
                                                                     appendTo="body">
-                                                                </p-dropdown>
+                                                                </p-select>
 
                                                             </div>
 
@@ -774,7 +774,7 @@
                                                                     گروه بندی:
                                                                 </label>
 
-                                                                <p-dropdown
+                                                                <p-select
                                                                     formControlName="sourceType"
                                                                     [options]="[
                                     {
@@ -785,7 +785,7 @@
                                                                     optionLabel="label"
                                                                     optionValue="value"
                                                                     appendTo="body">
-                                                                </p-dropdown>
+                                                                </p-select>
 
                                                             </div>
 
@@ -875,13 +875,13 @@
                                                                     سرویس:
                                                                 </label>
 
-                                                                <p-dropdown
+                                                                <p-select
                                                                     formControlName="sourceId"
                                                                     [options]="sourceServices()"
                                                                     optionLabel="label"
                                                                     optionValue="value"
                                                                     appendTo="body">
-                                                                </p-dropdown>
+                                                                </p-select>
 
                                                             </div>
 
@@ -891,7 +891,7 @@
                                                                     گروه بندی:
                                                                 </label>
 
-                                                                <p-dropdown
+                                                                <p-select
                                                                     formControlName="sourceType"
                                                                     [options]="[
                                     {
@@ -902,7 +902,7 @@
                                                                     optionLabel="label"
                                                                     optionValue="value"
                                                                     appendTo="body">
-                                                                </p-dropdown>
+                                                                </p-select>
 
                                                             </div>
 

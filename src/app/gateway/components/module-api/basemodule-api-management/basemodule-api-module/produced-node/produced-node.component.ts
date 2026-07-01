@@ -1,8 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {Toast} from "primeng/toast";
 import {BreadcrumbsComponent} from "../../../../../../shared/components/breadcrumbs/breadcrumbs.component";
 import {ButtonDirective} from "primeng/button";
@@ -44,7 +48,9 @@ export class ProducedNodeComponent implements OnInit {
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
 
@@ -109,9 +115,13 @@ export class ProducedNodeComponent implements OnInit {
         this.clientName = this.producedNodeApi.clientName;
         this.sequenceBase = this.producedNodeApi.sequenceBase;
         debugger;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.getapiproducednodebyapiid(this.apiId).subscribe((l) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.producedList = [];
                     if (Array.isArray(l)) {
                         this.producedList = l;
@@ -134,7 +144,9 @@ export class ProducedNodeComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         if (!this.sequenceBase) {
@@ -596,9 +608,13 @@ export class ProducedNodeComponent implements OnInit {
     onClose(e: any): void {
         debugger
         if (e == 'closeAndCreate') {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.getapiproducednodebyapiid(this.apiId).subscribe((l) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.producedList = [];
                     if (Array.isArray(l)) {
                         this.producedList = l;
@@ -622,7 +638,9 @@ export class ProducedNodeComponent implements OnInit {
                     this.addFlag = false;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
 

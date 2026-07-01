@@ -4,18 +4,22 @@ import {ApiGatewayConstants} from '../../../../../constants/ApiGatewayConstants'
 import {EndpointheaderDto} from '../../../../../models/endpointheader.Dto';
 
 import {ActivatedRoute} from '@angular/router';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {HeaderNameService} from '../../../../../services/headerName.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
-import {DropdownModule} from "primeng/dropdown";
+import {SelectModule} from "primeng/select";
 import {FormsModule} from "@angular/forms";
 import {AutoComplete} from "primeng/autocomplete";
 import {InputText} from "primeng/inputtext";
 import {Checkbox} from "primeng/checkbox";
 
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {ButtonDirective} from "primeng/button";
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {BreadcrumbsComponent} from '../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
@@ -28,7 +32,7 @@ import {Ripple} from 'primeng/ripple';
     styleUrls: ['./header-endpoint-update.component.scss'],
     standalone: true,
     imports: [
-        DropdownModule,
+        SelectModule,
         FormsModule,
         AutoComplete,
         InputText,
@@ -99,7 +103,9 @@ export class HeaderEndpointUpdateComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
@@ -656,14 +662,20 @@ export class HeaderEndpointUpdateComponent implements OnInit {
             this.outputHeaderValueFlag = false;
             this.ouputHeaderNameFlag = false;
         }
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.getinputheadernamesUrl().subscribe(
             (h) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.headerName = h.data;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.headerName = JSON.parse(error?.error?.text);
             }
         );
@@ -786,14 +798,20 @@ export class HeaderEndpointUpdateComponent implements OnInit {
                         (error) => {}
                     );
                 }
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, this.updateTemp).subscribe((a) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.close.emit('closeAndCreate');
                         },
                         (error) => {
                             debugger;
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             console.log(error);
                             this.close.emit('close');
                         }

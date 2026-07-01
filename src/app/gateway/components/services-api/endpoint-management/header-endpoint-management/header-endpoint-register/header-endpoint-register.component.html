@@ -20,7 +20,7 @@
                     <span> {{ 'registerEndpointElements.dropdown.category'|transloco }}:</span>
                 </label>
 
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [autoDisplayFirst]="false"
                     [options]="headerTypeGroup"
@@ -30,7 +30,7 @@
                     (keydown.enter)="onKeydown($event)"
                     (onChange)="bodyState($event)"
                     [disabled]="detailTypeFlag"
-                ></p-dropdown>
+                ></p-select>
             </div>
 
             <div class="col-span-4">
@@ -39,7 +39,7 @@
                     <span>{{ 'registerEndpointElements.dropdown.operationType'|transloco }} :</span>
                 </label>
 
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     (onChange)="onChangeHeaderType($event)"
                     [autoDisplayFirst]="false"
@@ -49,7 +49,7 @@
                     optionLabel="name"
                     (keydown.enter)="onKeydown($event)"
                     [disabled]="apiBaseFlag ||cacheFlag||aggregatorFlag"
-                ></p-dropdown>
+                ></p-select>
             </div>
 
             <div class="col-span-4"></div>

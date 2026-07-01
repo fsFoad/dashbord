@@ -9,13 +9,17 @@ import {Tooltip} from 'primeng/tooltip';
 import {MoreChar19Pipe} from '../../../shared/pipes/moreChar19.pipe';
 import {NgIf} from '@angular/common';
 import {Menu} from 'primeng/menu';
-import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {FormatRulePipe} from '../../../shared/pipes/FormatRule.pipe';
 import {ApiRuleRegisterComponent} from './api-rule-register/api-rule-register.component';
 import {ApiRuleUpdateComponent} from './api-rule-update/api-rule-update.component';
 import {ApiRuleConditionComponent} from './api-rule-condition/api-rule-condition.component';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {ToastService} from '../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {ApiGatewayConstants} from '../../constants/ApiGatewayConstants';
@@ -43,7 +47,7 @@ import { TestRunConditionComponent } from './test-run-condition/test-run-conditi
         TranslocoPipe,
         FormsModule,
         InputText,
-        DropdownModule,
+        SelectModule,
         TableModule,
         Tooltip,
         MoreChar19Pipe,
@@ -161,7 +165,9 @@ export class RulesComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private primeng: PrimeNG,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private transloco :TranslocoService,
         private notifierService: ToastService
     ) {}
@@ -424,9 +430,13 @@ export class RulesComponent implements OnInit {
                 this.pageDescriptionInbound=this.transloco.translate('hardCode.page') + ': ' + 1;
             }
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.rulesearch(this.pagenoOutbound, this.pagesizeOutbound,this.name, this.statusCode, this.messageId,1).subscribe((httpResponse) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.ruleOutboundList = Array.isArray(httpResponse) ? httpResponse : [httpResponse];
                 this.ruleOutboundList = this.ruleOutboundList?.filter(x => x != null)?.map(x => ({
                     ...x,
@@ -464,16 +474,24 @@ export class RulesComponent implements OnInit {
                         );
                     }
                 }
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 for (let k = 0; k < this.ruleList.length; k++) {
                     this.ruleList[k] = Object.assign(this.ruleList[k], { row: (k + 1) });
                 }
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.rulesearch(this.pagenoInbound, this.pagesizeInbound,this.name, this.statusCode, this.messageId,0).subscribe((httpResponse) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.ruleInboundList = Array.isArray(httpResponse) ? httpResponse : [httpResponse];
                 this.ruleInboundList = this.ruleInboundList?.filter(x => x != null)?.map(x => ({
                     ...x,
@@ -511,21 +529,29 @@ export class RulesComponent implements OnInit {
                         );
                     }
                 }
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 for (let k = 0; k < this.ruleList.length; k++) {
                     this.ruleList[k] = Object.assign(this.ruleList[k], { row: (k + 1) });
                 }
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         }
         else{
             debugger
             if (template==0){
                 this.ruleInboundList=[]
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.rulesearch(this.pagenoInbound, this.pagesizeInbound,this.name, this.statusCode, this.messageId,template).subscribe((httpResponse) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.ruleInboundList = Array.isArray(httpResponse) ? httpResponse : [httpResponse];
                     this.ruleInboundList = this.ruleInboundList?.filter(x => x != null)?.map(x => ({
                         ...x,
@@ -563,19 +589,27 @@ export class RulesComponent implements OnInit {
                             );
                         }
                     }
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     for (let k = 0; k < this.ruleList.length; k++) {
                         this.ruleList[k] = Object.assign(this.ruleList[k], { row: (k + 1) });
                     }
                 }, error => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });
             }
             else if(template==1){
                 this.ruleOutboundList=[]
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.rulesearch(this.pagenoOutbound, this.pagesizeOutbound,this.name, this.statusCode, this.messageId,template).subscribe((httpResponse) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.ruleOutboundList = Array.isArray(httpResponse) ? httpResponse : [httpResponse];
                     this.ruleOutboundList = this.ruleOutboundList?.filter(x => x != null)?.map(x => ({
                         ...x,
@@ -613,12 +647,16 @@ export class RulesComponent implements OnInit {
                             );
                         }
                     }
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     for (let k = 0; k < this.ruleList.length; k++) {
                         this.ruleList[k] = Object.assign(this.ruleList[k], { row: (k + 1) });
                     }
                 }, error => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });
             }
         }
@@ -690,12 +728,16 @@ export class RulesComponent implements OnInit {
             this.registerTemp.textEN = this.textENMessage;
 
             this.registerTemp.tableId = this.tableIdMessage;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerMessage(this.registerTemp)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.messageId = a.messageId;
                         this.title = a.title;
                         this.text = a.text;
@@ -704,7 +746,9 @@ export class RulesComponent implements OnInit {
                         this.search();
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

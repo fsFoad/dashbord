@@ -35,27 +35,27 @@
                 <label class="normal-label">
                     <span class="red-color-text">* </span>
                     <span>{{ 'editMessage.dropdown.tableId'|transloco }} :</span></label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="categoryMessages"
                     optionValue="code"
                     optionLabel="name"
                     formControlName="tableId"
                     (keydown.enter)="onKeydown($event)">
-                </p-dropdown>
+                </p-select>
             </div>
             <div class="col-span-4  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
                 <label class="normal-label">
                     <span class="red-color-text">* </span>
                     <span>{{ 'editMessage.dropdown.messageType'|transloco }} :</span></label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="typeMessages"
                     optionValue="code"
                     optionLabel="name"
                     formControlName="type"
                     (keydown.enter)="onKeydown($event)">
-                </p-dropdown>
+                </p-select>
             </div>
             <div class="col-span-4" hidden>
                 <label class="normal-label"><span>ایدی :</span></label>

@@ -8,14 +8,14 @@
           <!--  <input class="normal-input" [(ngModel)]="destination_address" pKeyFilter="num" maxlength="11" pInputText
                    (keydown.enter)="onKeydown($event)">-->
 
-            <p-dropdown class="normal-dropdown"
+            <p-select class="normal-dropdown"
                         [autoDisplayFirst]="true"
                         [options]="alarmOption"
                         optionLabel="title"
                         [(ngModel)]="sectionid"
                         optionValue="id"
                         (onChange)="onChangealarm($event)"
-            ></p-dropdown>
+            ></p-select>
         </div>
         <div class="col-span-3">
             <label class="normal-label">
@@ -175,7 +175,7 @@ styleClass="normal-table"
             >
                 <i class="pi pi-arrow-left"></i>
             </button>
-            <p-dropdown class="normal-dropdown-pagination"
+            <p-select class="normal-dropdown-pagination"
                         [options]="pagesizeOptions"
                         optionValue="code"
                         [autoDisplayFirst]="true"
@@ -183,7 +183,7 @@ styleClass="normal-table"
                         [(ngModel)]="pagesize"
                         (onChange)="OnchangePageno($event)"
                         [disabled]="nextBtnFlag">
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4"></div>
     </div>

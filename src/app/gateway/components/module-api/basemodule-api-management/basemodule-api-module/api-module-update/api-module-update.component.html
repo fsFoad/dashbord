@@ -46,13 +46,13 @@
                 <label class="normal-label">
                     <span class="text-red-500">* </span> {{ 'registerApi.dropdown.typeMethode'|transloco }}:
                 </label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="typeOptions"
                     [(ngModel)]="type" optionValue="code"
                     optionLabel="name" (onChange)="onChangeMethodeHttp($event)"
                     (keydown.enter)="onKeydown($event)"
-                ></p-dropdown>
+                ></p-select>
             </div>
 
             <!-- بستر ارتباطی -->
@@ -60,10 +60,10 @@
                 <label class="normal-label">
                     <span class="text-red-500">* </span> {{ 'registerApi.dropdown.protocol'|transloco }}:
                 </label>
-                <p-dropdown [options]="protocolOptions"   class="normal-dropdown"
+                <p-select [options]="protocolOptions"   class="normal-dropdown"
                             [(ngModel)]="protocol" optionValue="code"
                             optionLabel="name" (keydown.enter)="onKeydown($event)"
-                ></p-dropdown>
+                ></p-select>
             </div>
 
             <!-- تایم اوت -->
@@ -188,11 +188,11 @@
                     class="normal-input"
                     [min]="0"
                 />-->
-                <p-dropdown [options]="retryCountOptions" class="normal-dropdown"
+                <p-select [options]="retryCountOptions" class="normal-dropdown"
                             [(ngModel)]="retryCount" optionValue="code"
                             (onChange)="onChangeRetryCount($event)"
                             optionLabel="name" (keydown.enter)="onKeydown($event)"
-                ></p-dropdown>
+                ></p-select>
             </div>
 
             <div class="col-span-12 md:col-span-6 lg:col-span-4 flex flex-col space-y-1">
@@ -210,7 +210,7 @@
 
             <div class="col-span-12 md:col-span-6 lg:col-span-4 flex flex-col space-y-1">
                 <label class="normal-label"> {{ 'registerApi.input.retrySpecificErrorCode'|transloco }}:</label>
-                <p-dropdown
+                <p-select
                     [options]="statusCodeOptions"
                     [(ngModel)]="retryForHttpStatusCode"
                     optionValue="code"
@@ -218,7 +218,7 @@
                     class="normal-dropdown"
                     [disabled]="delayRetryCountDisabledFlag"
                     (keydown.enter)="onKeydown($event)">
-                </p-dropdown>
+                </p-select>
             </div>
 
             <div class="col-span-12 md:col-span-6 lg:col-span-4 flex flex-col space-y-1" dir="rtl">
@@ -259,14 +259,14 @@
         <div class="grid grid-cols-12 gap-4 mx-5 my-10">
             <div class="col-span-12 md:col-span-6 lg:col-span-4 flex flex-col space-y-1">
                 <label class="normal-label"> {{ 'registerApi.dropdown.reverseCondition' |transloco}}:</label>
-                <p-dropdown
+                <p-select
                     [options]="reverseConditionOptions"
                     [(ngModel)]="reverseCondition"
                     optionValue="code"
                     optionLabel="name"
                     class="normal-dropdown"
                     (keydown.enter)="onKeydown($event)">
-                </p-dropdown>
+                </p-select>
             </div>
 
             <div class="col-span-12 md:col-span-6 lg:col-span-4 flex flex-col space-y-1">

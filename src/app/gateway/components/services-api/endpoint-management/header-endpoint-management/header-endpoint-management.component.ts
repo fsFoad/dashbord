@@ -2,10 +2,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { EndpointheaderDto } from '../../../../models/endpointheader.Dto';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { MessagesApiFacadeService } from '../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../@fuse/services/loading';
 import { BreadcrumbsComponent } from '../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { Tooltip } from 'primeng/tooltip';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
@@ -128,7 +132,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
         private cdr: ChangeDetectorRef,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
 
@@ -516,7 +522,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
             //المان اندپوینت
             levelId = 0;
             recordId = element.endpointDetailId;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             debugger
             debugger
             debugger
@@ -525,12 +533,16 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 delete this.updateTemp.row;
             }
             this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, this.updateTemp).subscribe((a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 /*    this.messagesApiFacadeService.getbyendpointid(this.endpointid).subscribe((getAllResponse) => {
                             this.endpointList = [];
                             this.endpointListIsSystemEndpointDetail = [];
                             this.endpointNotIsSystemEndpointDetail = [];
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             if (Array.isArray(getAllResponse)) {
                                 this.endpointList = getAllResponse;
                             } else {
@@ -587,7 +599,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     this.searchIsSystemByEndpointId();
                     this.searchNotIsSystemByEndpointId()
@@ -595,12 +609,16 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 },
                 (error) => {
                     debugger;
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                   /*  this.messagesApiFacadeService.getbyendpointid(this.endpointid).subscribe((getAllResponse) => {
                             this.endpointList = [];
                             this.endpointListIsSystemEndpointDetail = [];
                             this.endpointNotIsSystemEndpointDetail = [];
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             if (Array.isArray(getAllResponse)) {
                                 this.endpointList = getAllResponse;
                             } else {
@@ -656,7 +674,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     this.searchIsSystemByEndpointId();
                     this.searchNotIsSystemByEndpointId()
@@ -696,7 +716,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
             //المان سرویس
             levelId = 1;
             recordId = this.apiId;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             debugger
             debugger
             debugger
@@ -707,14 +729,20 @@ export class HeaderEndpointManagementComponent implements OnInit {
             //issystem
             this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, this.updateTemp).subscribe((a) => {
                 debugger
-                    this._primengProgressBarService.hide();
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.searchIsSystemByApiId();
                     this.searchNotIsSystemByApiId();
                    /* this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoIsSystem, this.pagesizeIsSystem,1).subscribe(
                         (res: HttpResponse<any>) => {
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             const body = res.body ?? [];
                             const list = Array.isArray(body) ? body : [body];
@@ -764,18 +792,24 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.systemElementsCount = this.endpointListIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                 },
                 (error) => {
                     debugger;
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.searchIsSystemByApiId();
                     this.searchNotIsSystemByApiId();
 
                   /*  this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoIsSystem, this.pagesizeIsSystem,1).subscribe(
                         (res: HttpResponse<any>) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             this.endpointList = [];
                             this.endpointListIsSystemEndpointDetail = [];
@@ -811,7 +845,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.systemElementsCount = this.endpointListIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     console.log(error);
 
@@ -821,13 +857,19 @@ export class HeaderEndpointManagementComponent implements OnInit {
             //not issystem
             this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, this.updateTemp).subscribe((a) => {
                     debugger
-                    this._primengProgressBarService.hide();
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.searchNotIsSystemByEndpointId();
                     /*this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoNotIsSystem, this.pagesizeNotIsSystem,0).subscribe(
                         (res: HttpResponse<any>) => {
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             this.endpointNotIsSystemEndpointDetail = [];
                             const body = res.body ?? [];
@@ -878,17 +920,23 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                 },
                 (error) => {
                     debugger;
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.searchNotIsSystemByEndpointId();
                   /*  this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoNotIsSystem, this.pagesizeNotIsSystem,0).subscribe(
                         (res: HttpResponse<any>) => {
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             this.endpointNotIsSystemEndpointDetail = [];
                             const body = res.body ?? [];
@@ -943,7 +991,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     console.log(error);
 
@@ -984,7 +1034,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
             //المان اندپوینت
             levelId = 0;
             recordId = element.endpointDetailId;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             debugger
             debugger
             debugger
@@ -994,13 +1046,19 @@ export class HeaderEndpointManagementComponent implements OnInit {
             }
 
             this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, this.updateTemp).subscribe((a) => {
-                    this._primengProgressBarService.hide();
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                  /*   this.messagesApiFacadeService.getbyendpointid(this.endpointid).subscribe((getAllResponse) => {
                             this.endpointList = [];
                             this.endpointListIsSystemEndpointDetail = [];
                             this.endpointNotIsSystemEndpointDetail = [];
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             if (Array.isArray(getAllResponse)) {
                                 this.endpointList = getAllResponse;
                             } else {
@@ -1056,19 +1114,25 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     this.searchIsSystemByEndpointId();
                     this.searchNotIsSystemByEndpointId()
                 },
                 (error) => {
                     debugger;
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
              /*       this.messagesApiFacadeService.getbyendpointid(this.endpointid).subscribe((getAllResponse) => {
                             this.endpointList = [];
                             this.endpointListIsSystemEndpointDetail = [];
                             this.endpointNotIsSystemEndpointDetail = [];
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             if (Array.isArray(getAllResponse)) {
                                 this.endpointList = getAllResponse;
                             } else {
@@ -1124,7 +1188,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     this.searchIsSystemByEndpointId();
                     this.searchNotIsSystemByEndpointId()
@@ -1161,7 +1227,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
             //المان سرویس
             levelId = 1;
             recordId = this.apiId;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             debugger
             debugger
             debugger
@@ -1170,10 +1238,16 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 delete this.updateTemp.row;
             }
             this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, this.updateTemp).subscribe((a) => {
-                    this._primengProgressBarService.hide();
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
    /*                 this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoIsSystem, this.pagesizeIsSystem,1).subscribe((res) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             this.endpointListIsSystemEndpointDetail=[]
                             const body = res.body ?? [];
@@ -1191,12 +1265,16 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.systemElementsCount = this.endpointListIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     this.searchNotIsSystemByApiId();
                     this.searchIsSystemByApiId();
                  /*   this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoNotIsSystem, this.pagesizeNotIsSystem,0).subscribe((res) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
 
                             this.endpointNotIsSystemEndpointDetail = [];
@@ -1213,17 +1291,23 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
 
                 },
                 (error) => {
                     debugger;
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.searchNotIsSystemByApiId();
                     this.searchIsSystemByApiId();
               /*      this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoIsSystem, this.pagesizeIsSystem,1).subscribe((res) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             this.endpointListIsSystemEndpointDetail=[]
                             const body = res.body ?? [];
@@ -1241,11 +1325,15 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.systemElementsCount = this.endpointListIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
 
                   /*  this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoNotIsSystem, this.pagesizeNotIsSystem,0).subscribe((res) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             this.endpointNotIsSystemEndpointDetail = [];
                             const body = res.body ?? [];
@@ -1261,7 +1349,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });*/
                     console.log(error);
 
@@ -1320,11 +1410,15 @@ export class HeaderEndpointManagementComponent implements OnInit {
             this.headerHeaderEndpoint = 'المان های اندپوینت';
             this.endpointDetailApiFlag = false;
             this.endpointList = [];
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.apiGatewayService.currentApprovalStageEndpoint.subscribe(
                 (msg) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.temp = msg;
                     debugger
                     if (!this.temp) {
@@ -1344,7 +1438,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                     this.searchIsSystemByEndpointId();
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
             this.partyTitle = this.inputEndpointHeader.partyTitle;
@@ -1381,10 +1477,16 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 );
             }
 
-         /*    this._primengProgressBarService.show();
+         // FUSEFS
+
+
+         // /*    this._primengProgressBarService.show();
          this.messagesApiFacadeService.getbyendpointid(this.endpointid).subscribe((getAllResponse) => {
 
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+
+                        // this._primengProgressBarService.hide();
                         if (Array.isArray(getAllResponse)) {
                             this.endpointList = getAllResponse;
                         } else {
@@ -1440,7 +1542,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
 
                 },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );*/
 
@@ -1491,13 +1595,17 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 );
             }
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
        /*     this.messagesApiFacadeService
                 .endpointdetailByApi(this.apiId, this.pagenoIsSystem, this.pagesizeIsSystem,1)
                 .subscribe(
                     (res: HttpResponse<any>) => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         debugger;
                         this.endpointListIsSystemEndpointDetail=[]
                         const body = res.body ?? [];
@@ -1547,7 +1655,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                         this.systemElementsCount = this.endpointListIsSystemEndpointDetail.length;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );*/
            /* this.messagesApiFacadeService
@@ -1555,7 +1665,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 .subscribe(
                     (res: HttpResponse<any>) => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         debugger;
                         this.endpointNotIsSystemEndpointDetail=[]
                         const body = res.body ?? [];
@@ -1572,7 +1684,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                         this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );*/
             debugger
@@ -1712,7 +1826,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 this.apiEndpointHeaderFlag = false;
              /*   this.messagesApiFacadeService.getbyendpointid(this.endpointid).subscribe(
                         (getAllResponse) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.endpointListIsSystemEndpointDetail = [];
                             this.endpointNotIsSystemEndpointDetail = [];
                             this.endpointList = [];
@@ -1762,7 +1878,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );*/
                 this.searchIsSystemByEndpointId();
@@ -1773,12 +1891,16 @@ export class HeaderEndpointManagementComponent implements OnInit {
                 this.apiEndpointHeaderFlag = true;
                 this.searchNotIsSystemByApiId();
                 this.searchIsSystemByApiId();
-          /*      this._primengProgressBarService.show();
+          // FUSEFS
+
+          // /*      this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .endpointdetailByApi(this.apiId,0,1000)
                     .subscribe(
                         (res) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger;
                             this.endpointNotIsSystemEndpointDetail = [];
                             if (Array.isArray(res)) {
@@ -1824,7 +1946,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                             this.nonSystemElements = this.endpointNotIsSystemEndpointDetail.length;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );*/
                 this.registerFlag = false;
@@ -1843,7 +1967,10 @@ export class HeaderEndpointManagementComponent implements OnInit {
         this.firstNotIsSystem =
             this.pagenoNotIsSystem * this.pagesizeNotIsSystem;
 
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+
+        // this._primengProgressBarService.show();
         debugger
         debugger
         debugger
@@ -1857,8 +1984,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
             .subscribe(
                 (response: HttpResponse<any>) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     let data: any[] = [];
 
                     if (Array.isArray(response.body)) {
@@ -1895,7 +2023,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                     this.setAccordionState();
                 },
                 () => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -1904,7 +2034,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
 
         this.firstIsSystem =
             this.pagenoIsSystem * this.pagesizeIsSystem;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .getByEndpointIdIssystem(
                 Number(this.endpointid),
@@ -1914,8 +2046,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
             .subscribe(
                 (response: HttpResponse<any>) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     let data: any[] = [];
 
                     if (Array.isArray(response.body)) {
@@ -1952,7 +2085,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                     this.setAccordionState();
                 },
                 () => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -1961,15 +2096,19 @@ export class HeaderEndpointManagementComponent implements OnInit {
         this.firstNotIsSystem =
             this.pagenoNotIsSystem * this.pagesizeNotIsSystem;
 
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+
+        // this._primengProgressBarService.show();
         debugger
         debugger
         debugger
         this.messagesApiFacadeService.endpointdetailByApi(this.apiId, this.pagenoIsSystem, this.pagesizeIsSystem, 0).subscribe(
                 (response: HttpResponse<any>) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     let data: any[] = [];
 
                     if (Array.isArray(response.body)) {
@@ -2006,7 +2145,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                     this.setAccordionState();
                 },
                 () => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }
@@ -2015,7 +2156,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
         debugger
         this.firstIsSystem =
             this.pagenoIsSystem * this.pagesizeIsSystem;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.endpointdetailByApi(
             this.apiId,
             this.pagenoIsSystem,
@@ -2026,8 +2169,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
             .subscribe(
                 (response: HttpResponse<any>) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     let data: any[] = [];
 
                     if (Array.isArray(response.body)) {
@@ -2064,7 +2208,9 @@ export class HeaderEndpointManagementComponent implements OnInit {
                     this.setAccordionState();
                 },
                 () => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

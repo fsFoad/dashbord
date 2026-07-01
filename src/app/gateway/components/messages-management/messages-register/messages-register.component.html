@@ -36,27 +36,27 @@
                 <label class="normal-label">
                     <span class="red-color-text">* </span>
                     <span>{{ 'registerMessage.input.tableId'|transloco }} :</span></label>
-                <p-dropdown
+                <p-select
                     [options]="categoryMessages"
                     optionValue="code"
                     class="normal-dropdown"
                     optionLabel="name"
                     formControlName="tableId"
                     (keydown.enter)="onKeydown($event)">
-                </p-dropdown>
+                </p-select>
             </div>
             <div class="col-span-4  sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-6 xl:grid-cols-6">
                 <label class="normal-label">
                     <span class="red-color-text">* </span>
                     <span>{{ 'registerMessage.input.messageType'|transloco }} :</span></label>
-                <p-dropdown
+                <p-select
                     class="normal-dropdown"
                     [options]="typeMessages"
                     optionValue="code"
                     optionLabel="name"
                     formControlName="type"
                     (keydown.enter)="onKeydown($event)">
-                </p-dropdown>
+                </p-select>
             </div>
         </div>
         <div class="w-full mt-4 text-left p-4">

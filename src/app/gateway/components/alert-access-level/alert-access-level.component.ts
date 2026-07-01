@@ -5,9 +5,13 @@ import { ConfirmationService, PrimeTemplate } from 'primeng/api';
 import { Button, ButtonDirective } from 'primeng/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ApiGatewayService } from '../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { Listbox } from 'primeng/listbox';
 import { ToastService } from '../../../shared/services/ToastService';
 import { TableModule } from 'primeng/table';
@@ -17,10 +21,10 @@ import { Toast } from 'primeng/toast';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { BreadcrumbsComponent } from '../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { catchError, forkJoin, of, tap } from 'rxjs';
-import { MatTooltip } from '@angular/material/tooltip';
 import { Skeleton } from 'primeng/skeleton';
 import { ChangeDetectorRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-alert-access-level',
@@ -38,7 +42,7 @@ import { HttpResponse } from '@angular/common/http';
         Button,
         ConfirmDialog,
         BreadcrumbsComponent,
-        MatTooltip,
+        Tooltip,
         Skeleton,
     ],
     templateUrl: './alert-access-level.component.html',
@@ -56,7 +60,9 @@ export class AlertAccessLevelComponent implements OnInit {
                 private confirmationService: ConfirmationService,
                 private apiGatewayService: ApiGatewayService,
                 private cdr: ChangeDetectorRef,
-                private _primengProgressBarService: FuseLoadingService,
+                // FUSEFS
+
+                // private _primengProgressBarService: FuseLoadingService,
     ) {
         effect(() => {
             const data = this.registerSignal();
@@ -70,7 +76,9 @@ export class AlertAccessLevelComponent implements OnInit {
                             next: (response) => {
                                 debugger;
                                 this.availableReceivers = [];
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.availableReceivers = response.map(item => ({
                                     status: item.status,
                                     receiverid: item.receiverId ?? item.receiverid,
@@ -83,13 +91,17 @@ export class AlertAccessLevelComponent implements OnInit {
                                 debugger;
                                 console.error('❌ خطا در درخواست API:', err);
                                 this.error.set('خطا در دریافت داده‌ها');
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             },
                         });*/
                         this.messagesApiFacadeService.getReceiver(0, 10000).subscribe({
                             next: (httpResponse: HttpResponse<any>) => {
                                 debugger;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.loading?.set?.(false);
                                 this.loadingValue = false;
 
@@ -115,7 +127,9 @@ export class AlertAccessLevelComponent implements OnInit {
                             },
                             error: (err) => {
                                 debugger;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.loading?.set?.(false);
                                 this.loadingValue = false;
                                 console.error('❌ خطا در درخواست API:', err);
@@ -126,7 +140,9 @@ export class AlertAccessLevelComponent implements OnInit {
                             next: (response) => {
                                 debugger;
                                 this.availableErrors = [];
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.availableErrors = response.map(item => ({
                                     id: item.id,
                                     title: item.title,
@@ -140,7 +156,9 @@ export class AlertAccessLevelComponent implements OnInit {
                                 this.error.set('خطا در دریافت داده‌ها');
                                 this.loading.set(false);
                                 this.loadingValue = false;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             },
                         });
 
@@ -562,7 +580,9 @@ export class AlertAccessLevelComponent implements OnInit {
             next: (response) => {
                 debugger;
                 this.availableReceivers = [];
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.availableReceivers = response.map(item => ({
                     status: item.status,
                     receiverid: item.receiverId ?? item.receiverid,
@@ -575,13 +595,17 @@ export class AlertAccessLevelComponent implements OnInit {
                 debugger;
                 console.error('❌ خطا در درخواست API:', err);
                 this.error.set('خطا در دریافت داده‌ها');
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });*/
         this.messagesApiFacadeService.getReceiver(0, 10000).subscribe({
             next: (httpResponse: HttpResponse<any>) => {
                 debugger;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading?.set?.(false);
                 this.loadingValue = false;
 
@@ -607,7 +631,9 @@ export class AlertAccessLevelComponent implements OnInit {
             },
             error: (err) => {
                 debugger;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading?.set?.(false);
                 this.loadingValue = false;
                 console.error('❌ خطا در درخواست API:', err);
@@ -618,7 +644,9 @@ export class AlertAccessLevelComponent implements OnInit {
             next: (response) => {
                 debugger;
                 this.availableErrors = [];
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.availableErrors = response.map(item => ({
                     id: item.id,
                     title: item.title,
@@ -630,7 +658,9 @@ export class AlertAccessLevelComponent implements OnInit {
                 debugger;
                 console.error('❌ خطا در درخواست API:', err);
                 this.error.set('خطا در دریافت داده‌ها');
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });
         this.loadSectionReceiver();
@@ -642,7 +672,9 @@ export class AlertAccessLevelComponent implements OnInit {
             next: (response) => {
                 debugger;
                 this.availableReceivers = [];
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading.set(false);
                 this.loadingValue = false;
                 this.availableReceivers = response.map(item => ({
@@ -659,13 +691,17 @@ export class AlertAccessLevelComponent implements OnInit {
                 this.error.set('خطا در دریافت داده‌ها');
                 this.loading.set(false);
                 this.loadingValue = false;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });*/
         this.messagesApiFacadeService.getReceiver(0, 10000).subscribe({
             next: (httpResponse: HttpResponse<any>) => {
                 debugger;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading?.set?.(false);
                 this.loadingValue = false;
 
@@ -691,7 +727,9 @@ export class AlertAccessLevelComponent implements OnInit {
             },
             error: (err) => {
                 debugger;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.loading?.set?.(false);
                 this.loadingValue = false;
                 console.error('❌ خطا در درخواست API:', err);
@@ -702,7 +740,9 @@ export class AlertAccessLevelComponent implements OnInit {
             next: (response) => {
                 debugger;
                 this.availableErrors = [];
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.availableErrors = response.map(item => ({
                     id: item.id,
                     title: item.title,
@@ -716,7 +756,9 @@ export class AlertAccessLevelComponent implements OnInit {
                 this.error.set('خطا در دریافت داده‌ها');
                 this.loading.set(false);
                 this.loadingValue = false;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         });
     }

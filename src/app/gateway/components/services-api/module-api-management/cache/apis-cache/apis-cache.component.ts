@@ -1,12 +1,16 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { SelectModule } from 'primeng/select';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonDirective } from 'primeng/button';
 import { NgClass, NgIf } from '@angular/common';
 import { ApiGatewayService } from '../../../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../../../services/messages-api-facade.service';
 import { Ripple } from 'primeng/ripple';
 import { Tooltip } from 'primeng/tooltip';
@@ -29,7 +33,7 @@ interface RowData {
 @Component({
     selector: 'app-apis-cache',
     imports: [
-        DropdownModule,
+        SelectModule,
         TranslocoPipe,
         ReactiveFormsModule,
         TableModule,
@@ -88,7 +92,9 @@ export class ApisCacheComponent implements OnInit,OnDestroy  {
         private notifierService: ToastService,
         private asynchronousApiGatewayService: AsynchronousApiGatewayService,
         private transloco: TranslocoService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private cdr: ChangeDetectorRef,
         private messagesApiFacadeService: MessagesApiFacadeService
     ) {
@@ -191,7 +197,9 @@ export class ApisCacheComponent implements OnInit,OnDestroy  {
                                 this.selectedItems = [existingItem];
                                 this.form.get('selectedItems')?.setValue([existingItem]);
                                 this.loading = false;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.onSelectionChange(this.selectedItems);
                                 console.log('this.apiList1',this.apiList);
                             } else if (pageData.length === pagesize) {
@@ -200,7 +208,9 @@ export class ApisCacheComponent implements OnInit,OnDestroy  {
                                 debugger
                             } else {
                                 this.loading = false;
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 console.warn("آیتم موردنظر پیدا نشد.");
                                 console.log('this.apiList2',this.apiList);
                                 debugger
@@ -214,7 +224,9 @@ export class ApisCacheComponent implements OnInit,OnDestroy  {
                         (error) => {
                             debugger
                             this.loading = false;
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             console.error("خطا در دریافت اطلاعات", error);
                             console.log('this.apiList3',this.apiList);
                         }
@@ -305,14 +317,18 @@ export class ApisCacheComponent implements OnInit,OnDestroy  {
     search(apiType): void {
         debugger
         debugger
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.loading = true;
         const pageno = this.form.get('pageno')?.value || 0;
         const pagesize = this.form.get('pagesize')?.value || 5;
         this.messagesApiFacadeService.apicacheApiinfo(pageno, pagesize, this.moduleId,apiType ).subscribe(
             (a) => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.apiList = Array.isArray(a) ? a : [a];
                 this.filterApi=this.apiList.filter(item =>{
                     debugger
@@ -347,7 +363,9 @@ export class ApisCacheComponent implements OnInit,OnDestroy  {
             (error) => {
                 debugger
                 this.loading = false;
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
     }
     ngOnDestroy(): void {

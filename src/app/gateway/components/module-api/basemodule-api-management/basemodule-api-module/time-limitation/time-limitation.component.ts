@@ -1,8 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ActivatedRoute} from '@angular/router';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {AccessDataSaveService} from '../../../../../../shared/services/access-data-save.service';
 import {Toast} from "primeng/toast";
@@ -78,7 +82,9 @@ export class TimeLimitationComponent implements OnInit {
         private route: ActivatedRoute,
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private accessDataSaveService: AccessDataSaveService
     ) {}
@@ -253,9 +259,14 @@ export class TimeLimitationComponent implements OnInit {
         this.title = this.inputTimeLimitation.title;
         this.url = this.inputTimeLimitation.url;
 
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.getlmitbyapiid(this.inputTimeLimitation.apiId).subscribe((a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(a)) {
                         this.timeLimitationList = a;
                     } else {
@@ -272,7 +283,9 @@ export class TimeLimitationComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
 
@@ -376,12 +389,16 @@ export class TimeLimitationComponent implements OnInit {
             this.addUpdateFlag = false;
         } else if (event == 'closeAndCreate') {
             this.addUpdateFlag = false;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .getlmitbyapiid(this.inputTimeLimitation.apiId)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (Array.isArray(a)) {
                             this.timeLimitationList = a;
                         } else {
@@ -404,7 +421,9 @@ export class TimeLimitationComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

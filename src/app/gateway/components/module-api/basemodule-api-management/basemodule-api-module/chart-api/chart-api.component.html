@@ -9,7 +9,7 @@
                 </label>
             </div>
             <div class="col-span-0">
-                <p-dropdown
+                <p-select
                     id="day"
                     class="narrow-dropdown"
                     [options]="dayOptions"
@@ -18,7 +18,7 @@
                     optionLabel="name"
                     (onChange)="onChange($event)"
                 >
-                </p-dropdown>
+                </p-select>
             </div>
             <div class="col-span-2">
                 <label class="normal-label"> <span > روز گذشته</span></label>
@@ -32,7 +32,7 @@
                         </label>
                     </div>
                     <div>
-                        <p-dropdown
+                        <p-select
                             id="day"
                             class="narrow-dropdown"
                             [options]="dayOptions"
@@ -40,7 +40,7 @@
                             optionValue="code"
                             optionLabel="name"
                             (onChange)="onChange($event)">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div>
                         <label class="normal-label">

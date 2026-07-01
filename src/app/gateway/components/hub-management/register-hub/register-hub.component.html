@@ -68,7 +68,7 @@
                 <label class="normal-label">
                     <span class="red-color-text">* </span>
                     <span>{{ 'hubManagement.Register.dropdown.DBEngine'|transloco }}:</span></label>
-                <p-dropdown
+                <p-select
                     [options]=hubConstants.DBEngineOption
                     [(ngModel)]="dbEngineId"
                     name="dbEngineId"
@@ -78,7 +78,7 @@
                     [disabled]="!regTextDBFlag"
                     (onChange)="onchangeDbEngine($event)"
                     (onShow)="savePreviousDbEngineId()"
-                ></p-dropdown>
+                ></p-select>
             </div>
         </div>
         <div class="panel-hub">
@@ -96,7 +96,7 @@
                                                     <span class="red-color-text">* </span>
                                                     <span>{{ 'hubManagement.Register.dropdown.DBEngine'|transloco }}
                                                         :</span></label>
-                                                <p-dropdown
+                                                <p-select
                                                     [options]=hubConstants.DBEngineOption
                                                     [(ngModel)]="dbEngineId"
                                                     name="dbEngineId"
@@ -106,7 +106,7 @@
                                                     [disabled]="!regTextDBFlag"
                                                     (onChange)="onchangeDbEngine($event)"
                                                     (onShow)="savePreviousDbEngineId()"
-                                                ></p-dropdown>
+                                                ></p-select>
                                             </div>
                                             <div class="col-span-3" dir="ltr">
                                                 <label class="normal-label">
@@ -284,7 +284,7 @@
                                                     <span class="red-color-text">* </span>
                                                     <span>{{ 'hubManagement.Register.dropdown.protocol'|transloco }}
                                                         :</span></label>
-                                                <p-dropdown
+                                                <p-select
                                                     [disabled]="!(allowCreateConnectionPool&&this.dbEngineId=='2')"
                                                     [options]=hubConstants.Protocol
                                                     [(ngModel)]="protocolHost"
@@ -292,7 +292,7 @@
                                                     optionValue="code"
                                                     optionLabel="name"
                                                     class="englishItem normal-dropdown"
-                                                ></p-dropdown>
+                                                ></p-select>
                                             </div>
                                             <div class="col-span-3"></div>
                                             <div class="col-span-3" dir="ltr">
@@ -621,14 +621,14 @@
                                             <label class="normal-label">
                                                 <span class="red-color-text">* </span>
                                                 <span>Data Type :</span></label>
-                                            <p-dropdown
+                                            <p-select
                                                 [options]=hubConstants.dataTypeOptions
                                                 [(ngModel)]="dataType"
                                                 name="dataType"
                                                 class="normal-dropdown"
                                                 optionValue="code"
                                                 optionLabel="name"
-                                            ></p-dropdown>
+                                            ></p-select>
                                         </div>
                                         <div class="col-span-1" *ngIf="addFlag">
                                             <label class="normal-label"><span>status :</span></label>
@@ -701,7 +701,7 @@
                                                             class="operation">
                                                             <button
                                                                 style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
-                                                                matTooltip="{{'حذف' | transloco}}"
+                                                                pTooltip="{{'حذف' | transloco}}"
                                                                 (click)="deleteParam(params)"
                                                                 [disabled]="!addFlag" severity="danger"
                                                                 pButton class=" normal-button"
@@ -734,7 +734,7 @@
                                                 style="margin-top: 1px;width: 100%" class="normal-button"
                                                 (click)="testQuery()" [disabled]=""
                                         >
-                                            <mat-icon class="size">new_releases</mat-icon>
+                                            <i class="size" class="pi pi-exclamation-circle"></i>
                                         </button>
                                         <div class="col-span-2" style="margin-top: 10px;width: 100%;text-align: center">
                                             <p-message severity="success" text="query successful !" dir="ltr"
@@ -783,7 +783,7 @@
                                             <label class="normal-label">
                                                 <span class="red-color-text">* </span>
                                                 <span>Data Type :</span></label>
-                                            <p-dropdown
+                                            <p-select
                                                 [options]=hubConstants.dataTypeOptions
                                                 [(ngModel)]="dataType"
                                                 name="dataType"
@@ -791,7 +791,7 @@
                                                 optionValue="code"
                                                 optionLabel="name"
 
-                                            ></p-dropdown>
+                                            ></p-select>
                                         </div>
                                         <div class="col-span-1" *ngIf="spTestFlag">
                                             <label class="normal-label"><span>status :</span></label>
@@ -803,7 +803,7 @@
                                             <label class="normal-label">
                                                 <span class="red-color-text">* </span>
                                                 <span>Param Type :</span></label>
-                                            <p-dropdown
+                                            <p-select
                                                 [options]=hubConstants.testParamTypeOptions
                                                 [(ngModel)]="paramType"
                                                 name="dataType"
@@ -811,7 +811,7 @@
                                                 optionValue="code"
                                                 optionLabel="name"
 
-                                            ></p-dropdown>
+                                            ></p-select>
                                         </div>
 
                                         <div class="col-span-3" *ngIf="spTestFlag">
@@ -926,7 +926,7 @@
                                                     class="operation">
                                                     <button
                                                         style="width: 30px!important;height: 30px!important;margin-top: 2px!important;"
-                                                        matTooltip="{{'delete' | transloco}}"
+                                                        pTooltip="{{'delete' | transloco}}"
                                                         (click)="deleteSpParam(params)"
                                                         [disabled]="!spTestFlag" severity="danger"
                                                         pButton class="normal-button "
@@ -1041,7 +1041,7 @@
                            <label class="normal-label">
                                <span class="red-color-text">* </span>
                                <span>{{ 'hubManagement.Register.dropdown.codeMessage'|transloco }} :</span></label>
-                           <p-dropdown
+                           <p-select
                                class="normal-dropdown"
                                [options]="statusCodeOptions200"
                                [(ngModel)]="codeMessage200"
@@ -1051,7 +1051,7 @@
                                [disabled]="true"
                            >
                                &lt;!&ndash; (onChange)="onchangeStatusCode()"&ndash;&gt;
-                           </p-dropdown>
+                           </p-select>
                        </div>
                        <div class="col-span-3">
                            <label class="normal-label"><span>{{ 'hubManagement.Register.input.titleMessage'|transloco }}
@@ -1060,14 +1060,14 @@
                        </div>
                        <div class="col-span-3">
                            <label class="normal-label"><span>{{ 'hubManagement.Register.dropdown.tableId'|transloco }} :</span></label>
-                           <p-dropdown
+                           <p-select
                                class="normal-dropdown"
                                [options]="categoryMessages200"
                                optionValue="code"
                                optionLabel="name"
                                [(ngModel)]="tableIdMessage200"
                                (onChange)="messageSearch200()">
-                           </p-dropdown>
+                           </p-select>
                        </div>
                        <div class="col-span-3  my-1 px-4 py-2 " dir="ltr">
                            <button pButton label="{{'button.clear'|transloco}}" class="normal-button"
@@ -1141,7 +1141,7 @@
                                        (click)="nextPageStatement200()"
 
                                    ></button>
-                                   <p-dropdown
+                                   <p-select
                                        (onChange)="OnchangePageno200($event)"
                                        [disabled]="nextBtn200Flag"
                                        [options]="pagesizeOptions"
@@ -1149,7 +1149,7 @@
                                        optionLabel="name"
                                        [(ngModel)]="pagesize"
                                        class="normal-dropdown-pagination"
-                                   ></p-dropdown>
+                                   ></p-select>
                                </div>
 
                                <div class="col-span-4"></div>
@@ -1194,7 +1194,7 @@
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>{{ 'hubManagement.Register.dropdown.codeMessage'|transloco }} :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="statusCodeOptions400"
                             [(ngModel)]="codeMessage400"
@@ -1203,7 +1203,7 @@
                             (onChange)="messageSearch400()"
                             [disabled]="true"
                         >
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-3">
                         <label class="normal-label">
@@ -1213,14 +1213,14 @@
                     <div class="col-span-3">
                         <label class="normal-label">
                             <span>{{ 'hubManagement.Register.dropdown.tableId'|transloco }} :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="categoryMessages400"
                             optionValue="code"
                             optionLabel="name"
                             [(ngModel)]="tableIdMessage400"
                             (onChange)=" messageSearch400()">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-3  my-1 px-4 py-2 " dir="ltr">
                         <button pButton label="{{'button.clear'|transloco}}" class="normal-button"
@@ -1294,7 +1294,7 @@
                                     (click)="nextPageStatement400()"
 
                                 ></button>
-                                <p-dropdown
+                                <p-select
                                     (onChange)="OnchangePageno400($event)"
                                     [disabled]="nextBtn400Flag"
                                     [options]="pagesizeOptions"
@@ -1302,7 +1302,7 @@
                                     optionLabel="name"
                                     [(ngModel)]="pagesize"
                                     class="normal-dropdown-pagination"
-                                ></p-dropdown>
+                                ></p-select>
                             </div>
 
                             <div class="col-span-4"></div>
@@ -1347,7 +1347,7 @@
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>{{ 'hubManagement.Register.dropdown.codeMessage' |transloco }} :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="statusCodeOptions500"
                             [(ngModel)]="codeMessage500"
@@ -1355,7 +1355,7 @@
                             optionLabel="name"
                             [disabled]="true"
                         >
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-3">
                         <label class="normal-label">
@@ -1365,14 +1365,14 @@
                     <div class="col-span-3">
                         <label class="normal-label">
                             <span>{{ 'hubManagement.Register.dropdown.tableId'|transloco }} :</span></label>
-                        <p-dropdown
+                        <p-select
                             class="normal-dropdown"
                             [options]="categoryMessages500"
                             optionValue="code"
                             optionLabel="name"
                             [(ngModel)]="tableIdMessage500"
                             (onChange)="messageSearch500()">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-3  my-1 px-4 py-2 " dir="ltr">
                         <button pButton label="{{'button.clear'|transloco}}" class="normal-button"
@@ -1447,7 +1447,7 @@
                                     (click)="nextPageStatement500()"
                                     class="normal-button"
                                 ></button>
-                                <p-dropdown
+                                <p-select
                                     (onChange)="OnchangePageno500($event)"
                                     [disabled]="nextBtn500Flag"
                                     [options]="pagesizeOptions"
@@ -1455,7 +1455,7 @@
                                     optionLabel="name"
                                     [(ngModel)]="pagesize"
                                     class="normal-dropdown-pagination"
-                                ></p-dropdown>
+                                ></p-select>
                             </div>
 
                             <div class="col-span-4"></div>

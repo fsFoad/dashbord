@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {AddCommaPipe} from '../../../../../../shared/pipes/add-comma.pipe';
@@ -85,30 +89,42 @@ export class DetailListApiLog implements OnInit {
 
     constructor(
         public messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         public apiGatewayService: ApiGatewayService
     ) {}
 
     ngOnInit() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.apiGatewayService.currentApprovalStageObjLog.subscribe(
             (res) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.requestlogid = res.REQUESTID;
                 this.clientId = res.CLIENTID;
                 this.apiId = res.APIID;
                 this.logDate = res.LOGGED_DATE;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .detailReportLog(this.requestlogid,this.clientId,this.apiId,this.logDate)
             .subscribe(
                 (a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.API_NAME = a.API_NAME;
                     this.API_TITLE = a.API_TITLE;
                     this.ENDPOINT_URL = a.ENDPOINT_URL;
@@ -120,7 +136,9 @@ export class DetailListApiLog implements OnInit {
                     this.FEEAMOUNT = a.FEEAMOUNT;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

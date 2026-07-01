@@ -4,12 +4,16 @@ import {MessageService} from "primeng/api";
 import {DetailList} from "./detailList";
 import {ActivatedRoute} from "@angular/router";
 import moment from 'jalali-moment';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {ApiGatewayService} from '../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../services/messages-api-facade.service';
 import {ToastService} from '../../../shared/services/ToastService';
 import {BreadcrumbsComponent} from '../../../shared/components/breadcrumbs/breadcrumbs.component';
-import {DropdownModule} from 'primeng/dropdown';
+import {SelectModule} from 'primeng/select';
 import {FormsModule} from '@angular/forms';
 import {NgIf, NgStyle} from '@angular/common';
 import {ButtonDirective} from 'primeng/button';
@@ -19,7 +23,7 @@ import {Tooltip} from 'primeng/tooltip';
 import {MoreChar19Pipe} from '../../../shared/pipes/moreChar19.pipe';
 import {SuccessfulPipe} from '../../../shared/pipes/successful.pipe';
 import {Ripple} from 'primeng/ripple';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {Toast} from 'primeng/toast';
 import {PersianCalendarComponent} from '../../../shared/components/persian-calendar/persian-calendar.module';
 
@@ -31,7 +35,7 @@ import {PersianCalendarComponent} from '../../../shared/components/persian-calen
     providers: [DialogService, MessageService, DynamicDialogRef],
     imports: [
         BreadcrumbsComponent,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         ButtonDirective,
         TableModule,
@@ -87,7 +91,9 @@ export class LogReportsComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
         private dialogService: DialogService,
@@ -100,10 +106,14 @@ export class LogReportsComponent implements OnInit, OnDestroy {
         this.moduleListOptions = []
         this.apiListOptionsFirst = [{ title: '-', apiId: null }]
         if (event.value != null) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.moduleSearchByPartyId(event.value).subscribe(m => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.moduleListOptions = [...this.moduleListOptions, ...m];
                 this.moduleListOptions.unshift({ moduleTitle: '-', moduleId: null })
                 this.moduleListOptions = this.moduleListOptions.sort((a, b) => a.moduleTitle.localeCompare(b.moduleTitle))
@@ -113,7 +123,9 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                 console.log('moduleId:', this.moduleId);
 
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
         } else {
             this.moduleId = null
@@ -141,18 +153,26 @@ export class LogReportsComponent implements OnInit, OnDestroy {
         if (this.inputChartCallApiReport != undefined) {
             debugger
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.fetchallparty().subscribe(a => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partyListOptions.push(...a)
                 this.partyListOptions = this.partyListOptions.sort()
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.fetchallclient().subscribe(s => {
                     debugger
                     debugger
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.clientListOptions.push(...s)
                     this.clientListOptions = this.clientListOptions.sort()
                     let partyId
@@ -179,11 +199,15 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                         this.apiGatewayService.updateApprovalDetailsBreadObject(this.detailsBreadObject);
 
                     }
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.moduleSearchByPartyId(partyId).subscribe(m => {
                         debugger
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.moduleListOptions.push(...m)
                         this.moduleListOptions = this.moduleListOptions.sort()
                         if (this.inputChartCallApiReport.chartFlag) {
@@ -191,11 +215,15 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                             debugger
                             this.apiId = this.inputChartCallApiReport.apiid
                         }
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         this.messagesApiFacadeService.apibymoduleidv2(moduleId).subscribe(
                             d => {
                                 debugger
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.apiListOptionsFirst = [{ title: '-', apiId: null }]
                                 if (Array.isArray(d)) {
                                     this.apiListOptionsFirst = d
@@ -204,7 +232,9 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                                 }
                                 this.apiListOptionsFirst = this.apiListOptionsFirst.sort()
                             }, error => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             }
                         )
                         if (this.inputChartCallApiReport.chartFlag) {
@@ -246,11 +276,15 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                         }
 
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     })},
                         error => {this._primengProgressBarService.hide();})
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
             debugger
             this.detailsBreadObject = this.chooseBread('logBase')
@@ -260,18 +294,26 @@ export class LogReportsComponent implements OnInit, OnDestroy {
             debugger
             debugger
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.fetchallparty().subscribe(a => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partyListOptions.push(...a)
                 this.partyListOptions = this.partyListOptions.sort()
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.fetchallclient().subscribe(s => {
                         debugger
                         debugger
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.clientListOptions.push(...s)
                         this.clientListOptions = this.clientListOptions.sort()
                         let partyId
@@ -285,11 +327,15 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                             partyId = this.inputHomeBase.PARTYID
                             moduleId = this.inputHomeBase.MODULEID
                         }
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         this.messagesApiFacadeService.moduleSearchByPartyId(partyId).subscribe(m => {
                             debugger
                             debugger
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.moduleListOptions.push(...m)
                             this.moduleListOptions = this.moduleListOptions.sort()
                             if (this.inputHomeBase.homeBase) {
@@ -297,12 +343,17 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                                 debugger
                                 this.apiId = this.inputHomeBase.apiid
                             }
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.show();
                             this.messagesApiFacadeService.apibymoduleidv2(moduleId).subscribe(
                                 d => {
                                     debugger
 
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+
+                                    // this._primengProgressBarService.hide();
                                     this.apiListOptionsFirst = [{ title: '-', apiId: null }]
                                     if (Array.isArray(d)) {
                                         this.apiListOptionsFirst = d
@@ -315,7 +366,9 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                                     debugger
                                     this.apiGatewayService.updateApprovalDetailsBreadObject(this.detailsBreadObject);
                                 }, error => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 }
                             )
                             if (this.inputHomeBase.homeBase) {
@@ -341,11 +394,15 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                             }
 
                         }, error => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         })},
                     error => {this._primengProgressBarService.hide();})
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
             debugger
             this.detailsBreadObject = this.chooseBread('homeBase')
@@ -355,21 +412,33 @@ export class LogReportsComponent implements OnInit, OnDestroy {
             debugger
             this.onlyFromdate = ""
             this.onlyTodate = ""
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.fetchallparty().subscribe(a => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partyListOptions.push(...a)
                 this.partyListOptions = this.partyListOptions.sort()
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.fetchallclient().subscribe(s => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.clientListOptions.push(...s)
                     this.clientListOptions = this.clientListOptions.sort()
                 }, error => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 })
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
             debugger
             this.detailsBreadObject=[]
@@ -560,13 +629,19 @@ export class LogReportsComponent implements OnInit, OnDestroy {
     downloadData() {
         if (this.validation()) {
             if (this.logList.length != 0) {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.downloadReportLog(this.pageno, this.pagesize,
                     this.fromdate, this.todate, this.clientId, this.partyId, this.moduleId, this.apiId
                 ).subscribe(b => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }, error => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 })
             } else {
                 this.notifierService.showError({ detail: this.transloco.translate('logReports.message.downloadNotFound'), life: 3000 });
@@ -578,16 +653,22 @@ export class LogReportsComponent implements OnInit, OnDestroy {
 
     onchangeModule(event) {
         if (event.value != null) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apibymoduleidv2(event.value).subscribe(a => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.apiListOptionsFirst = [{ title: '-', apiId: null }]
                 this.apiListOptionsFirst.push(...a)
                 this.apiListOptionsFirst = this.apiListOptionsFirst.sort()
 
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
         } else {
             debugger
@@ -623,11 +704,15 @@ export class LogReportsComponent implements OnInit, OnDestroy {
             let startRow: number
             this.pageno != 0 ? startRow = ((this.pageno) * this.pagesize) : startRow = 0;
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.reportLog(0, this.pageno, this.pagesize,
                 this.fromdate, this.todate, this.clientId, this.partyId,
                 this.moduleId, apiId ? apiId : this.apiId).subscribe(b => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 debugger
                 debugger
                 this.logList = [];
@@ -658,7 +743,9 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                     }
                 }
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
         }
 
@@ -708,20 +795,32 @@ export class LogReportsComponent implements OnInit, OnDestroy {
         this.pagesize = 10
         if (this.inputChartCallApiReport != undefined) {
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.fetchallparty().subscribe(a => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partyListOptions.push(...a)
                 this.partyListOptions = this.partyListOptions.sort()
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.fetchallclient().subscribe(s => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.clientListOptions.push(...s)
                     this.clientListOptions = this.clientListOptions.sort()
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.moduleSearchByPartyId(this.inputChartCallApiReport.partyId
                     ).subscribe(m => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         debugger
                         this.moduleListOptions.push(...m)
                         this.moduleListOptions = this.moduleListOptions.sort()
@@ -753,13 +852,19 @@ export class LogReportsComponent implements OnInit, OnDestroy {
                         debugger
                         this.search()
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     })
                 }, error => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 })
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             })
 
         } else {

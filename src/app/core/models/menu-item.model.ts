@@ -14,7 +14,7 @@ export interface MenuItem {
   /** Optional URL fragment (anchor) used with route, e.g. /site#features. */
   fragment?: string;
   /** Built-in action instead of navigation (e.g. open the settings drawer). */
-  action?: 'openSettings';
+  action?: 'openSettings' | 'logout';
   /** External link (opens in new tab). */
   href?: string;
   /** Small badge text (e.g. counts, "new"). */

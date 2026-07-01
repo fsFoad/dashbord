@@ -1,14 +1,18 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PrimeNG} from 'primeng/config';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {ModuleDto} from '../../../models/Module.Dto';
 import {ApiGatewayService} from '../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {BreadcrumbsComponent} from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import {NgClass, NgIf} from '@angular/common';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 import {ThreeDotDetailsPipe} from '../../../../shared/pipes/threeDotDetails.pipe';
 import {Tooltip} from 'primeng/tooltip';
 import {ButtonDirective} from 'primeng/button';
@@ -18,7 +22,7 @@ import {ModuleTypePipe} from '../../../../shared/pipes/moduleType.pipe';
 import {StatusPipe} from '../../../../shared/pipes/status.pipe';
 import {Menu} from 'primeng/menu';
 import {Ripple} from 'primeng/ripple';
-import {DropdownModule} from 'primeng/dropdown';
+import {SelectModule} from 'primeng/select';
 import {FormsModule} from '@angular/forms';
 import {ModuleApiAddComponent} from './module-api-add/module-api-add.component';
 import {ModuleApiUpdateComponent} from './module-api-update/module-api-update.component';
@@ -47,7 +51,7 @@ import { HttpResponse } from '@angular/common/http';
         StatusPipe,
         Menu,
         Ripple,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         ModuleApiAddComponent,
         ModuleApiUpdateComponent,
@@ -132,7 +136,9 @@ export class ModuleApiManagementComponent implements OnInit {
         private route: ActivatedRoute,
         private transloco :TranslocoService,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
         private primeng: PrimeNG
@@ -264,13 +270,16 @@ export class ModuleApiManagementComponent implements OnInit {
         debugger
         console.log('this.inputUpdate', this.inputUpdate);
         this.moduleList = [];
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .modulesearchbypartyid(this.pageno, this.pagesize, this.inputUpdate.partyId)
             .subscribe({
                 next: (res: HttpResponse<any[]>) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.hide();
                     const body = res.body ?? [];
                     const list = Array.isArray(body) ? body : [body];
                     this.moduleList = list
@@ -282,12 +291,16 @@ export class ModuleApiManagementComponent implements OnInit {
                     this.totalRecords = Number(res.headers.get('totalitems')) || 0;
                 },
                 error: () => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             });
 /*        this.messagesApiFacadeService.modulesearchbypartyid(this.pageno, this.pagesize, this.inputUpdate.partyId).subscribe(
                 (responseAll: HttpResponse<any>) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(responseAll)) {
                         this.moduleList = responseAll;
                     } else {
@@ -304,7 +317,9 @@ export class ModuleApiManagementComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );*/
         this.title = this.inputUpdate.title;
@@ -422,11 +437,14 @@ export class ModuleApiManagementComponent implements OnInit {
             this.endpointFlag = false;
             this.apiModuleFlag = false;
             this.cacheFlag  = false;
-            this._primengProgressBarService.show();
+            // FUSEFS
 
+            // this._primengProgressBarService.show();
             /*
             this.messagesApiFacadeService.modulesearchbypartyid(this.pageno, this.pagesize, this.inputUpdate.partyId).subscribe((responseAll) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.moduleList = [];
                         if (Array.isArray(responseAll)) {
                             this.moduleList = responseAll;
@@ -447,15 +465,18 @@ export class ModuleApiManagementComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );*/
             this.messagesApiFacadeService
                 .modulesearchbypartyid(this.pageno, this.pagesize, this.inputUpdate.partyId)
                 .subscribe(
                     (responseAll: HttpResponse<any[]>) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+                        // this._primengProgressBarService.hide();
                         this.moduleList = [];
                         const body = responseAll.body ?? [];
                         const list = Array.isArray(body) ? body : [body];
@@ -468,7 +489,9 @@ export class ModuleApiManagementComponent implements OnInit {
                         this.totalRecords = Number(responseAll.headers.get('totalitems')) || 0;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }
@@ -496,7 +519,9 @@ export class ModuleApiManagementComponent implements OnInit {
     search() {
         this.moduleList = [];
         if (!this.moduleTitle || this.moduleTitle == ' ') {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .modulesearchbypartyid(
                     this.pageno,
@@ -505,8 +530,9 @@ export class ModuleApiManagementComponent implements OnInit {
                 )
                 .subscribe(
                     (responseAll: HttpResponse<any[]>) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+                        // this._primengProgressBarService.hide();
                         this.moduleList = [];
                         const body = responseAll.body ?? [];
                         const list = Array.isArray(body) ? body : [body];
@@ -519,16 +545,22 @@ export class ModuleApiManagementComponent implements OnInit {
                         this.totalRecords = Number(responseAll.headers.get('totalitems')) || 0;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         } else {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .moduleSearchByTitle(this.moduleTitle)
                 .subscribe(
                     (response) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.moduleList = [];
                         if (Array.isArray(response)) {
                             this.moduleList = response;
@@ -542,7 +574,9 @@ export class ModuleApiManagementComponent implements OnInit {
                         );
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }

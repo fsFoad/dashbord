@@ -2,13 +2,17 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {ApiGatewayConstants} from "../../../../../constants/ApiGatewayConstants";
 
 import {ActivatedRoute} from "@angular/router";
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {BreadcrumbsComponent} from '../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
-import {TranslocoService} from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import {TranslocoService} from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -23,7 +27,7 @@ import {Toast} from 'primeng/toast';
     styleUrls: ['./chart-api.component.scss'],
     imports: [
         BreadcrumbsComponent,
-        DropdownModule,
+        SelectModule,
         RadioButtonModule,
         NgIf,
         FormsModule,
@@ -64,7 +68,9 @@ export class ChartApiComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
         private transloco :TranslocoService,
@@ -286,12 +292,16 @@ export class ChartApiComponent implements OnInit {
 
     onChange(e) {
         if (this.day != null) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .getapistatistict(this.apiId, this.day)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.chartFlag = true;
 
                         this.statusList[0] = a;
@@ -362,7 +372,9 @@ export class ChartApiComponent implements OnInit {
                         };
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
             this.barOption = {

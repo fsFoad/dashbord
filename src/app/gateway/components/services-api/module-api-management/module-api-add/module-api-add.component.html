@@ -27,20 +27,20 @@
             <label class="normal-label">
                 <span class="red-color-text">* </span>
                 <span>{{ 'registerModule.dropdown.moduleType'|transloco }} :</span></label>
-            <p-dropdown
+            <p-select
                 class="normal-dropdown"
                 [options]="moduleTypeOptions"
                 [(ngModel)]="moduleTypeValue"
                 optionValue="code"
                 optionLabel="name"
                 (keydown.enter)="onKeydown($event)">
-            </p-dropdown>
+            </p-select>
         </div>
         <!-- <div class="col-span-4">
              <label class="label-normal">
 <span class="red-color-text">* </span>
 <span >گروه ماژول :</span></label>
-             <p-dropdown
+             <p-select
                  class="input-w-80"
                  appendTo="body"
                  [options]="moduleGroupOptions"
@@ -48,20 +48,20 @@
                  optionValue="code"
                  optionLabel="name"
                  (keydown.enter)="onKeydown($event)">
-             </p-dropdown>
+             </p-select>
          </div>-->
         <div class="col-span-4">
             <label class="normal-label">
                 <span class="red-color-text">* </span>
                 <span>{{ 'registerModule.dropdown.authenticationMethod'|transloco }} :</span></label>
-            <p-dropdown
+            <p-select
                 (keydown.enter)="onKeydown($event)"
                 class="normal-dropdown"
                 [options]="authenticationMethodOptions"
                 [(ngModel)]="moduleAuthMode"
                 optionValue="code"
                 optionLabel="name">
-            </p-dropdown>
+            </p-select>
         </div>
         <!--    <div class="col-span-4">
                 <label class="label-normal">

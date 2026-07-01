@@ -13,7 +13,103 @@ export const routes: Routes = [
       import('./layout/dashboard-layout/dashboard-layout').then((m) => m.DashboardLayout),
     canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
+      // Gateway routes
+      {
+        path: 'home',
+        loadComponent: () => import('./gateway/home/home.component').then((m) => m.HomeComponent),
+        data: { titleKey: 'صفحه اصلی' },
+      },
+      {
+        path: 'messages-management',
+        loadComponent: () => import('./gateway/components/messages-management/messages-management.component').then((m) => m.MessagesManagementComponent),
+        data: { titleKey: 'پیام ها' },
+      },
+      {
+        path: 'rules',
+        loadComponent: () => import('./gateway/components/rules/rules.component').then((m) => m.RulesComponent),
+        data: { titleKey: 'قواعد' },
+      },
+      {
+        path: 'data-hub',
+        loadComponent: () => import('./gateway/components/hub-management/hub-management.component').then((m) => m.HubManagementComponent),
+        data: { titleKey: 'هاب داده' },
+      },
+      {
+        path: 'party',
+        loadComponent: () => import('./gateway/components/party/components/party-management/party-management.component').then((m) => m.PartyManagementComponent),
+        data: { titleKey: 'سازمان' },
+      },
+      {
+        path: 'moduleBase',
+        loadComponent: () => import('./gateway/components/module-base/module-base.component').then((m) => m.ModuleBaseComponent),
+        data: { titleKey: 'ماژول' },
+      },
+      {
+        path: 'client',
+        loadComponent: () => import('./gateway/components/client/client.component').then((m) => m.ClientComponent),
+        data: { titleKey: 'کلاینت' },
+      },
+      {
+        path: 'wage-services',
+        loadComponent: () => import('./gateway/components/wage/wage.component').then((m) => m.WageComponent),
+        data: { titleKey: 'کارمزد سرویس' },
+      },
+      {
+        path: 'access-list',
+        loadComponent: () => import('./gateway/components/access-list/access-list.component').then((m) => m.AccessListComponent),
+        data: { titleKey: 'لیست دسترسی' },
+      },
+      {
+        path: 'mediators',
+        loadComponent: () => import('./gateway/components/mediators-list-root/mediators-list-root.component').then((m) => m.MediatorsListRootComponent),
+        data: { titleKey: 'لیست مدیاتور ها' },
+      },
+      {
+        path: 'mediatorsXml',
+        loadComponent: () => import('./gateway/components/mediators/mediators.component').then((m) => m.MediatorsComponent),
+        data: { titleKey: 'مدیاتور xml' },
+      },
+      {
+        path: 'mediatorsJson',
+        loadComponent: () => import('./gateway/components/mediators/mediators-json/mediators-json.component').then((m) => m.MediatorsJsonComponent),
+        data: { titleKey: 'مدیاتور json' },
+      },
+      {
+        path: 'log-reports',
+        loadComponent: () => import('./gateway/components/log-reports/log-reports.component').then((m) => m.LogReportsComponent),
+        data: { titleKey: 'ریز کارکرد سرویس' },
+      },
+      {
+        path: 'call-services-report',
+        loadComponent: () => import('./gateway/components/call-services-report/call-services-report.component').then((m) => m.CallServicesReportComponent),
+        data: { titleKey: 'فراخوانی تجمیعی سرویس‌ها' },
+      },
+      {
+        path: 'chart-report',
+        loadComponent: () => import('./gateway/components/chart-report/chart-report.component').then((m) => m.ChartReportComponent),
+        data: { titleKey: 'نموداری' },
+      },
+      {
+        path: 'response-rate',
+        loadComponent: () => import('./gateway/components/response-rate/response-rate.component').then((m) => m.ResponseRateComponent),
+        data: { titleKey: 'میزان پاسخ‌دهی' },
+      },
+      {
+        path: 'factor',
+        loadComponent: () => import('./gateway/components/factor/factor.component').then((m) => m.FactorComponent),
+        data: { titleKey: 'فاکتور' },
+      },
+      {
+        path: 'bill-store',
+        loadComponent: () => import('./gateway/components/bill-store-cartable/bill-store-cartable.component').then((m) => m.BillStoreCartableComponent),
+        data: { titleKey: 'کارتابل صورتحساب' },
+      },
+      {
+        path: 'about',
+        loadComponent: () => import('./gateway/components/about/about.component').then((m) => m.AboutComponent),
+        data: { titleKey: 'درباره' },
+      },
       {
         path: 'dashboard',
         loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard),

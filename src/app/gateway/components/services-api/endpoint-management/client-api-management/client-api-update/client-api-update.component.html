@@ -16,12 +16,12 @@
                     style="width: 30px!important;"
                     pButton
                     class="btn-warning" icon="pi pi-plus"
-                    matTooltip="{{'ایجاد کلید کلاینت' | transloco}}"></button>
+                    pTooltip="{{'ایجاد کلید کلاینت' | transloco}}"></button>
             <button (click)="onDisplay()"
                     style="width: 30px!important;"
                     pButton
                     class="btn-warning" icon="pi pi-eye"
-                    matTooltip="{{'مشاهده کلید کلاینت' | transloco}}"></button>
+                    pTooltip="{{'مشاهده کلید کلاینت' | transloco}}"></button>
         </div>
         <div class="col-4">
             <label class="normal-label">
@@ -38,11 +38,11 @@
                     style="width: 30px!important;"
                     pButton
                     class="btn-warning" icon="pi pi-eye"
-                    matTooltip="{{'مشاهده کلید کلاینت' | transloco}}"></button>
+                    pTooltip="{{'مشاهده کلید کلاینت' | transloco}}"></button>
             <p-fileupload  mode="basic" #fileUploaderRef2 (uploadHandler)="myUploader2($event, fileUploaderRef2)"
                           (onSelect)="onSelectPublicKey($event)" [auto]="true" [customUpload]="true"
                           [showCancelButton]="false" [showUploadButton]="false"  multiple="false"
-                          [disabled]="stepUpload" matTooltip="{{'انتخاب فایل' | transloco}}">
+                          [disabled]="stepUpload" pTooltip="{{'انتخاب فایل' | transloco}}">
             </p-fileupload >
             <!--  <input type="file" (change)="onChange($event.target.files)">-->
 
@@ -55,11 +55,11 @@
                     style="width: 30px!important;"
                     pButton
                     class="btn-warning" icon="pi pi-eye"
-                    matTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"></button>
+                    pTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"></button>
             <p-fileupload  mode="basic" #fileUploaderRef (uploadHandler)="myUploader($event, fileUploaderRef)"
                           (onSelect)="onSelectDigital($event)" [auto]="true" [customUpload]="true"
                           [showCancelButton]="false" [showUploadButton]="false" multiple="false"
-                          [disabled]="stepUpload" matTooltip="{{'انتخاب فایل' | transloco}}">
+                          [disabled]="stepUpload" pTooltip="{{'انتخاب فایل' | transloco}}">
             </p-fileupload >
 
         </div>

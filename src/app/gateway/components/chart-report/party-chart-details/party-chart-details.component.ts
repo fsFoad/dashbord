@@ -1,14 +1,18 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
-import {DropdownModule} from 'primeng/dropdown';
+import {SelectModule} from 'primeng/select';
 import {FormsModule} from '@angular/forms';
-import {TranslocoPipe} from '@ngneat/transloco';
+import {TranslocoPipe} from '@jsverse/transloco';
 import {ButtonDirective} from 'primeng/button';
 import {saveAs} from 'file-saver-es';
 import {NgForOf, NgIf} from '@angular/common';
 import {TableModule} from 'primeng/table';
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../shared/services/ToastService';
 import {UIChart} from 'primeng/chart';
 
@@ -19,7 +23,7 @@ import {UIChart} from 'primeng/chart';
     standalone: true,
     styleUrls: ['./party-chart-details.component.scss'],
     imports: [
-        DropdownModule,
+        SelectModule,
         FormsModule,
         TranslocoPipe,
         ButtonDirective,
@@ -48,7 +52,9 @@ export class PartyChartDetailsComponent implements OnInit, OnChanges {
 
     constructor(
         private chartsService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private translateService: ToastService
     ) {}
 
@@ -106,16 +112,23 @@ export class PartyChartDetailsComponent implements OnInit, OnChanges {
                 },
             ],
         };
-        this._primengProgressBarService.show();
+        // FUSEFS
 
-        this._primengProgressBarService.show();
+        // this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.chartsService.getFetchAllParty().subscribe(
             (response) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partysData = response;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
@@ -155,15 +168,21 @@ export class PartyChartDetailsComponent implements OnInit, OnChanges {
             ]
         };
 
-        this._primengProgressBarService.show();
+        // FUSEFS
 
+
+        // this._primengProgressBarService.show();
         this.chartsService.getFetchAllParty().subscribe(
             (response) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partysData = response;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }*/
@@ -218,8 +237,10 @@ export class PartyChartDetailsComponent implements OnInit, OnChanges {
             ]
         };
 
-        this._primengProgressBarService.show();
+        // FUSEFS
 
+
+        // this._primengProgressBarService.show();
         // بدون ترنسلیت مستقیم هدرها را مشخص می‌کنیم
         this.cols = [
             { field: 'index', header: 'ردیف' },
@@ -227,19 +248,28 @@ export class PartyChartDetailsComponent implements OnInit, OnChanges {
             { field: 'PERCENTAGE', header: 'درصد' }
         ];
 
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+
+        // this._primengProgressBarService.show();
         this.chartsService.getFetchAllParty().subscribe(
             (response) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.partysData = response;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }
     selectedParty() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.chartsService
             .getModulePieChartByParty(
                 this.selectedPartyId,
@@ -247,7 +277,9 @@ export class PartyChartDetailsComponent implements OnInit, OnChanges {
             )
             .subscribe(
                 (response) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.partyDataForCharts.labels = [];
                     this.partyDataForCharts.datasets[0].data = [];
                     this.piChartData = response;
@@ -291,7 +323,9 @@ export class PartyChartDetailsComponent implements OnInit, OnChanges {
 
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 }
             );
     }

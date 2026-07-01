@@ -11,11 +11,15 @@ import { Tooltip } from 'primeng/tooltip';
 import { MoreChar19Pipe } from '../../../../../../shared/pipes/moreChar19.pipe';
 import { NgStyle } from '@angular/common';
 import { Dialog } from 'primeng/dialog';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { DropdownModule } from 'primeng/dropdown';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { SelectModule } from 'primeng/select';
 
 import { Checkbox } from 'primeng/checkbox';
-import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../../../services/api-gateway.service';
 import { ToastService } from '../../../../../../shared/services/ToastService';
@@ -43,7 +47,7 @@ import { ConfirmationService } from 'primeng/api';
         InputText,
         ButtonDirective,
         KeyFilter,
-        DropdownModule,
+        SelectModule,
         Checkbox,
         InputNumber,
 
@@ -194,7 +198,9 @@ export class ApiModuleUpdateComponent implements OnInit {
     detailsBreadObject = [];
     constructor(
         private route: ActivatedRoute,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
@@ -534,9 +540,13 @@ export class ApiModuleUpdateComponent implements OnInit {
         }
 
         this.scrollTop();
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.encodedetailbyapiid(this.inputUpdate.apiId).subscribe((l) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (l.length > 0) {
                         if (Array.isArray(l)) {
                             this.encodingUrlList = l;
@@ -546,7 +556,9 @@ export class ApiModuleUpdateComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
 
@@ -558,27 +570,30 @@ export class ApiModuleUpdateComponent implements OnInit {
         //             this.deleteEncodingUrl(this.tempItemDialog);
         //         }
         //     },
-        //
         //     {
         //         label: '___________________',
-        //
         //     },
         //     {
         //         label: this.transloco.translate('contextMenu.cancel'),
         //         /*items: [{
         //             label: this.transloco.translate('contextMenu.cancel'),
-        //
         //         }]*/
         //     }
         // ];
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.apiGatewayService.currentApprovalStageModuleId.subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.moduleId = a;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
         if (this.inputUpdate != undefined) {
@@ -839,12 +854,16 @@ export class ApiModuleUpdateComponent implements OnInit {
             debugger;
             this.moc_status == true ? this.objectUpdate.isMock = 1 : this.objectUpdate.isMock = 0
             this.moc_status==true?this.objectUpdate.mockJsonResponse=this.mockJsonResponse:this.objectUpdate.mockJsonResponse=null
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerApi(this.objectUpdate)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (
                             this.checkedEncodingUrl &&
                             this.encodingUrlList.length > 0
@@ -887,11 +906,15 @@ export class ApiModuleUpdateComponent implements OnInit {
                                         objEncodingUrl.detailId = item.detailId;
                                         debugger;
                                     }
-                                    this._primengProgressBarService.show();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.show();
                                     this.messagesApiFacadeService
                                         .encodedetailRegister(objEncodingUrl)
                                         .subscribe((s) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             this.close.emit('closeAndCreate');
                                             this.notifierService.showSuccess({
                                                 detail: 'اطلاعات ثبت گردید!',
@@ -900,7 +923,9 @@ export class ApiModuleUpdateComponent implements OnInit {
                                         });
                                 },
                                 (error) => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 },
                             );
                         } else {
@@ -912,7 +937,9 @@ export class ApiModuleUpdateComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
 

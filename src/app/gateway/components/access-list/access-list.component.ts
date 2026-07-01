@@ -5,26 +5,27 @@ import { ApiGatewayConstants } from '../../constants/ApiGatewayConstants';
 import { AccessDto } from '../../models/access.Dto';
 
 import { NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import {
     TranslocoDirective,
     TranslocoPipe,
     TranslocoService,
-} from '@ngneat/transloco';
+} from '@jsverse/transloco';
 import { ButtonDirective } from 'primeng/button';
 import { PrimeNG } from 'primeng/config';
 import { Menu } from 'primeng/menu';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { ApiGatewayService } from '../../services/api-gateway.service';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTooltip } from '@angular/material/tooltip';
 import { Checkbox } from 'primeng/checkbox';
 import { Dialog } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { Fieldset } from 'primeng/fieldset';
 import { InputText } from 'primeng/inputtext';
 import { KeyFilter } from 'primeng/keyfilter';
@@ -54,12 +55,15 @@ import { EncodingServiceService } from '../../../shared/services/encoding-servic
 import { HttpResponse } from '@angular/common/http';
 import { MessageSelectorComponent } from '../../../shared/components/message-selector/message-selector.component';
 import { MessageFilterValue } from '../../../../../shared/models/message-filter-value.model';
+import { TabsModule } from 'primeng/tabs';
 
 @Component({
     selector: 'app-access-list',
     templateUrl: './access-list.component.html',
     styleUrls: ['./access-list.component.scss'],
     imports: [
+
+        TabsModule,
         NgForOf,
         ButtonDirective,
         NgClass,
@@ -67,7 +71,7 @@ import { MessageFilterValue } from '../../../../../shared/models/message-filter-
         BreadcrumbsComponent,
         Panel,
         NgIf,
-        DropdownModule,
+        SelectModule,
         FormsModule,
         TranslocoPipe,
         TableModule,
@@ -89,7 +93,7 @@ import { MessageFilterValue } from '../../../../../shared/models/message-filter-
         ClientApiManagementComponent,
         Toast,
         ReactiveFormsModule,
-        MatTooltip,
+        Tooltip,
         Card,
         Password,
         MessageSelectorComponent,
@@ -257,7 +261,9 @@ export class AccessListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private primeng: PrimeNG,
         private encodingService: EncodingServiceService,
         private apiGatewayService: ApiGatewayService,
@@ -398,11 +404,15 @@ export class AccessListComponent implements OnInit {
             ? (startRow = this.pageno * this.pagesize)
             : (startRow = 0);
         this.pageDescription =this.transloco.translate('hardCode.page') + ': ' + 1;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         debugger
         this.messagesApiFacadeService.rulesearch(this.pageno, this.pagesize, this.ruleName,null,null,0).subscribe(httpResponse => {
             debugger;
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             if (Array.isArray(httpResponse)) {
                 this.ruleList = httpResponse;
             } else {
@@ -434,12 +444,16 @@ export class AccessListComponent implements OnInit {
                     );
                 }
             }
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             for (let k = 0; k < this.ruleList.length; k++) {
                 this.ruleList[k] = Object.assign(this.ruleList[k], { row: (k + 1) });
             }
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
 
     }
@@ -451,12 +465,18 @@ export class AccessListComponent implements OnInit {
             ? (startRow = this.pageno * this.pagesize)
             : (startRow = 0);
 
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+
+        // this._primengProgressBarService.show();
         debugger
         this.messagesApiFacadeService.rulesearch(this.pageno, this.pagesize, this.ruleName,null,null,0).subscribe(httpResponse => {
             debugger;
 
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+
+            // this._primengProgressBarService.hide();
             if (Array.isArray(httpResponse)) {
                 this.ruleList = httpResponse;
             } else {
@@ -490,12 +510,16 @@ export class AccessListComponent implements OnInit {
                     );
                 }
             }
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             for (let k = 0; k < this.ruleList.length; k++) {
                 this.ruleList[k] = Object.assign(this.ruleList[k], { row: (k + 1) });
             }
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
     }
 
@@ -504,10 +528,14 @@ export class AccessListComponent implements OnInit {
         // this.moduleListOptions = [{moduleTitle: '-', moduleId: null}]
         if (event.value != null) {
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.moduleSearchByPartyId(event.value).subscribe(m => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 // this.moduleListOptions.push(...m)
                 this.moduleListOptions = m;
                 this.moduleListOptions.unshift({ moduleTitle: '-', moduleId: null });
@@ -516,7 +544,9 @@ export class AccessListComponent implements OnInit {
                 this.search();
             }, error => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         } else {
             debugger
@@ -535,13 +565,19 @@ export class AccessListComponent implements OnInit {
 
     ngOnInit(): void {
         this.scrollTop();
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.fetchallparty().subscribe(a => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             this.partyListOptions.push(...a);
             this.partyListOptions = this.partyListOptions.sort();
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
 
         /*this.messagesApiFacadeService.fetchallmodule().subscribe(c => {
@@ -644,9 +680,13 @@ export class AccessListComponent implements OnInit {
             this.clientName = this.InputClient.name;
             this.clientBase = this.InputClient.clientBase;
             this.showListFlag = true;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.fetchallclient().subscribe(b => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.clientListOptions.push(...b);
                 this.clientListOptions = this.clientListOptions.sort();
                 if (this.InputClient.clientFlag) {
@@ -659,7 +699,9 @@ export class AccessListComponent implements OnInit {
                     }
                 }
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
             this.detailsBreadObject = this.chooseBread('clientBase');
             this.apiGatewayService.updateApprovalDetailsBreadObject(this.detailsBreadObject);
@@ -668,12 +710,18 @@ export class AccessListComponent implements OnInit {
             this.showListFlag = false;
             this.clientNameFlag = false;
             this.accessBase = true;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.fetchallclient().subscribe(b => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.clientListOptions.push(...b);
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
             this.detailsBreadObject = this.chooseBread('accessBase');
             this.apiGatewayService.updateApprovalDetailsBreadObject(this.detailsBreadObject);
@@ -729,7 +777,9 @@ debugger
             this.clientId = access.clientId;
             this.searchRules();
             this.messagesApiFacadeService.getclientapibyclientidandapiid(access.clientId, access.apiId).subscribe(r => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.selectedRuleList = [];
                 debugger
                 this.user = r.basicAuthUsername;
@@ -738,9 +788,13 @@ debugger
                 this.serviceRequestVerify = r.authType;
                 r.authType == 0 ? this.digitalSignicher = true : this.digitalSignicher = false;
                 if (r.ruleId != null) {
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.getByRuleId(r.ruleId).subscribe(a => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (Array.isArray(a)) {
                             this.selectedRuleList = a;
                         } else {
@@ -760,9 +814,13 @@ debugger
                         }
                         if (r.messageId != null) {
                             debugger
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.show();
                             this.messagesApiFacadeService.getbymessageId(r.messageId).subscribe(l => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.dialogApiFlag = true;
                                 this.selectedMessageList = [];
                                 if (Array.isArray(l)) {
@@ -778,21 +836,29 @@ debugger
                                 this.titleMessageDe = this.selectedMessageList[0].title;
                                 this.tableIdDe = this.selectedMessageList[0].tableId;
                             }, error => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             });
                         } else {
                             this.dialogApiFlag = true;
                         }
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 }
                 else if (r.messageId != null) {
                     debugger
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.getbymessageId(r.messageId).subscribe(l => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.dialogApiFlag = true;
                         this.selectedMessageList = [];
                         if (Array.isArray(l)) {
@@ -807,7 +873,9 @@ debugger
                         this.titleMessageDe = this.selectedMessageList[0].title;
                         this.tableIdDe = this.selectedMessageList[0].tableId;
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 }
                 else {
@@ -815,7 +883,9 @@ debugger
                 }
 
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.titleApiDe = this.selectedApi[0].title;
                 this.nameApiDe = this.selectedApi[0].name;
                 this.retryCountApiDe = this.selectedApi[0].retryCount;
@@ -834,9 +904,13 @@ debugger
                 this.index4 = false;
             });
            /* this.messageSearch(filterWithPagination);*/
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apibyid(access.apiId).subscribe(k => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.selectedApi = [];
                 if (Array.isArray(k)) {
                     this.selectedApi = k;
@@ -862,13 +936,17 @@ debugger
                 this.index2 = false;
                 this.index3 = false;
                 this.index4 = false;
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 debugger
                 debugger
                 debugger
                 debugger
                 this.messagesApiFacadeService.getclientapibyclientidandapiid(access.clientId, access.apiId).subscribe(r => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.selectedRuleList = [];
                     debugger
                     this.user = r.basicAuthUsername;
@@ -877,9 +955,13 @@ debugger
                     this.serviceRequestVerify = r.authType;
                     r.authType == 0 ? this.digitalSignicher = true : this.digitalSignicher = false;
                     if (r.ruleId != null) {
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         this.messagesApiFacadeService.getByRuleId(r.ruleId).subscribe(a => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             if (Array.isArray(a)) {
                                 this.selectedRuleList = a;
                             } else {
@@ -901,13 +983,19 @@ debugger
                                 debugger
                                 debugger
 
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+
+                                // this._primengProgressBarService.show();
                                 this.messagesApiFacadeService.getbymessageId(r.messageId).subscribe(l => {
                                     debugger
                                     debugger
                                     debugger
 
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+
+                                    // this._primengProgressBarService.hide();
                                     this.dialogApiFlag = true;
                                     this.selectedMessageList = [];
                                     if (Array.isArray(l)) {
@@ -922,19 +1010,27 @@ debugger
                                     this.titleMessageDe = this.selectedMessageList[0].title;
                                     this.tableIdDe = this.selectedMessageList[0].tableId;
                                 }, error => {
-                                    this._primengProgressBarService.hide();
+                                    // FUSEFS
+
+                                    // this._primengProgressBarService.hide();
                                 });
                             } else {
                                 this.dialogApiFlag = true;
                             }
                         }, error => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });
                     } else if (r.messageId != null) {
                         debugger
-                        this._primengProgressBarService.show();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.show();
                         this.messagesApiFacadeService.getbymessageId(r.messageId).subscribe(l => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.dialogApiFlag = true;
                             this.selectedMessageList = [];
                             if (Array.isArray(l)) {
@@ -950,20 +1046,26 @@ debugger
                             this.titleMessageDe = this.selectedMessageList[0].title;
                             this.tableIdDe = this.selectedMessageList[0].tableId;
                         }, error => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         });
                     } else {
                         this.dialogApiFlag = true;
                     }
 
                 }, error => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });
 
                 //  this.messageSearch()
 
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         }
         else {
@@ -1019,9 +1121,13 @@ debugger
 
     search() {
         this.loading = true;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.quickaccess(this.partyId, this.moduleId, this.clientId).subscribe(a => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
             this.accessList = a;
             this.loading = false;
             if (Array.isArray(a)) {
@@ -1033,7 +1139,9 @@ debugger
                 this.accessList[k] = Object.assign(this.accessList[k], { row: (k + 1) });
             }
         }, error => {
-            this._primengProgressBarService.hide();
+            // FUSEFS
+
+            // this._primengProgressBarService.hide();
         });
     }
 
@@ -1064,9 +1172,13 @@ debugger
         this.searchRules();
         if (this.validation()) {
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apibymoduleidhasntclient(this.moduleId, this.clientId).subscribe(c => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 debugger
                 if (Array.isArray(c)) {
                     this.apiAttachList = c;
@@ -1096,7 +1208,9 @@ debugger
                 }
 
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         }
     }
@@ -1170,10 +1284,14 @@ debugger
     selectAllApi() {
         if (this.checkedAllApi) {
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.apibymoduleidhasntclient(this.moduleId, this.clientId).subscribe(
                 c => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.apiAttachList = Array.isArray(c) ? c : [c];
 
                     this.apiAttachList.forEach((item, index) => {
@@ -1188,7 +1306,9 @@ debugger
                     console.log('apiIdList', this.apiAttachList.map(a => a.apiId));
                 },
                 error => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         } else {
@@ -1391,16 +1511,22 @@ debugger
                 tempObj.basicAuthPassword = this.pass;
                 tempObj.status =1;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             debugger
             this.messagesApiFacadeService.clientAttachApi(tempObj).subscribe(d => {
                 debugger
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.search();
                 this.clearFinalVar();
 
             }, error => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             });
         } else if (this.checkedAllApi && !this.checkedMultiApi) {
             this.dialogApiFlag = false;
@@ -1410,7 +1536,9 @@ debugger
                 debugger
                 this.messagesApiFacadeService.apibymoduleidhasntclient(this.moduleId, this.clientId).subscribe(c => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (Array.isArray(c)) {
                             this.apiAttachLimitList = c;
                         } else {
@@ -1435,22 +1563,30 @@ debugger
                             tempObj.basicAuthPassword = this.pass;
                             tempObj.basicAuthPassword = this.pass;
                             tempObj.status =1;
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.show();
                             debugger
                             debugger
                             debugger
                             this.messagesApiFacadeService.clientAttachApi(tempObj).subscribe(d => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.search();
                                 this.clearFinalVar();
 
                             }, error => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             });
                         }
                     },
                     error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
 
             }
@@ -1467,7 +1603,9 @@ debugger
                     tempObj.basicAuthUsername = this.user;
                     tempObj.basicAuthPassword = this.pass;
                     tempObj.status = this.status;
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     debugger
                     debugger
                     debugger
@@ -1475,12 +1613,16 @@ debugger
                     this.messagesApiFacadeService.clientAttachApi(tempObj).subscribe(d => {
 
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.search();
                         this.clearFinalVar();
 
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 }
             }
@@ -1501,19 +1643,25 @@ debugger
                     tempObj.basicAuthUsername = this.user;
                     tempObj.basicAuthPassword = this.pass;
                     tempObj.status = this.status;
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     debugger
                     debugger
                     debugger
 
                     this.messagesApiFacadeService.clientAttachApi(tempObj).subscribe(d => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.search();
                         this.clearFinalVar();
 
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 }
             } else {
@@ -1530,18 +1678,24 @@ debugger
                     tempObj.basicAuthUsername = this.user;
                     tempObj.basicAuthPassword = this.pass;
                     tempObj.status = this.status;
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     debugger
                     debugger
                     debugger
                     debugger
                     this.messagesApiFacadeService.clientAttachApi(tempObj).subscribe(d => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.search();
                         this.clearFinalVar();
 
                     }, error => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     });
                 }
             }

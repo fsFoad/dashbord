@@ -9,7 +9,7 @@ import { TestSpDto } from '../../../../../../models/testSp.Dto';
 
 import { NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ButtonDirective } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputText } from 'primeng/inputtext';
@@ -17,18 +17,20 @@ import { Panel } from 'primeng/panel';
 import { Ripple } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { Tooltip } from 'primeng/tooltip';
-import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../../../../@fuse/services/loading';
 import { BreadcrumbsComponent } from '../../../../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { Constants } from '../../../../../../../shared/constants/Constants';
 import { ToastService } from '../../../../../../../shared/services/ToastService';
 import { MessagesApiFacadeService } from '../../../../../../services/messages-api-facade.service';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import {
     HeaderEndpointRegisterComponent,
 } from '../../../../../services-api/endpoint-management/header-endpoint-management/header-endpoint-register/header-endpoint-register.component';
-import { MatTooltip } from '@angular/material/tooltip';
 
-import { MatIcon } from '@angular/material/icon';
 import { Message } from 'primeng/message';
 import { Checkbox } from 'primeng/checkbox';
 import { Password } from 'primeng/password';
@@ -68,7 +70,7 @@ import { HttpResponse } from '@angular/common/http';
         Stepper,
         StepList,
         Step,
-        DropdownModule,
+        SelectModule,
         Checkbox,
         Fieldset,
         NgStyle,
@@ -76,9 +78,7 @@ import { HttpResponse } from '@angular/common/http';
         NgClass,
         Message,
         ToggleSwitch,
-        MatTooltip,
-        MatIcon,
-        HeaderEndpointRegisterComponent,
+        Tooltip,        HeaderEndpointRegisterComponent,
         NgIf,
         Ripple,
         TranslocoPipe,
@@ -324,7 +324,9 @@ export class ApiHubAttachmentComponent implements OnInit {
 
     constructor(
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private confirmationService: ConfirmationService,
         private transloco: TranslocoService,
         private notifierService: ToastService,
@@ -624,12 +626,16 @@ export class ApiHubAttachmentComponent implements OnInit {
             this.downloadResultSet
                 ? (this.hubObj.downloadResultSet = 1)
                 : (this.hubObj.downloadResultSet = 0);
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerHubAttach(this.hubObj)
                 .subscribe(
                     (l) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.notifierService.showSuccess({
                             detail: 'عملیات با موفقیت انجام گردید!',
                             life: 3000,
@@ -640,7 +646,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                         this.attachmentDisableBTN = true;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
         }
@@ -3036,19 +3044,26 @@ export class ApiHubAttachmentComponent implements OnInit {
         }
         //  objArgoman = objParam.objectMapperToList(this.spParamsList);
 
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .testconnectionandproc(+this.hubId, this.apiDataHubId, testSpDto)
             .subscribe(
                 (e) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.nextFlagDisabled = false;
                     this.querySuccessFlag = true;
                     this.queryFailedFlag = false;
                     this.resultTestQueryFlag = true;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.queryFailedFlag = true;
                     this.querySuccessFlag = false;
                     this.resultTestQueryFlag = true;
@@ -3059,12 +3074,10 @@ export class ApiHubAttachmentComponent implements OnInit {
     }
 
     openEndpointDetail() {
-        //
         this.registerEndpointHeaderDto = {
             apiEndpointHeaderFlag: true,
             apiId: this.apiId,
         };
-        //
         this.endpointDetailFlag = false;
     }
 
@@ -3678,10 +3691,14 @@ export class ApiHubAttachmentComponent implements OnInit {
                         : this.tempAddParam;
                     this.paramsList = [];
                     this.paramsStaticList = [];
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService.endpointdetailByApi(this.apiId, 0, 10000).subscribe(
                         (response: HttpResponse<any>) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             debugger
                             let tempDetailList
                             this.paramsList = [];
@@ -4191,13 +4208,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                             { actionType: null },
                         );
                     }
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService
                         .endpointdetailByApi(this.apiId,0,10000)
                         .subscribe(
                             (response: HttpResponse<any>) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
 
+                                // this._primengProgressBarService.hide();
                                 let tempDetailList;
                                /* if (Array.isArray(res)) {
                                     tempDetailList = res;
@@ -4652,7 +4672,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                 }
                             },
                             (error) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             },
                         );
                 },
@@ -4681,10 +4703,13 @@ export class ApiHubAttachmentComponent implements OnInit {
                         checkElementPath: null,
                         isSystemEndpointDetail: 0,
                     };
-                    this._primengProgressBarService.show();
-                    this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, registerTemp).subscribe((a) => {
-                                this._primengProgressBarService.hide();
+                    // FUSEFS
 
+                    // this._primengProgressBarService.show();
+                    this.messagesApiFacadeService.registerEndpointdetail(levelId, recordId, registerTemp).subscribe((a) => {
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.paramsCustomList.length > 0
                                     ? (this.tempCusAddParam =
                                         this.paramsCustomList)
@@ -4694,15 +4719,19 @@ export class ApiHubAttachmentComponent implements OnInit {
 
                                 const regex = /:\s*\w+/g;
                                 // const regex = /:\w+/g;
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                               /*  this.messagesApiFacadeService
                                     .endpointdetailByApi(this.apiId,0,10000)
                                     .subscribe(
                                         (response: HttpResponse<any>) => {
                                             const res = response.body;
 
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
 
+
+                                            // this._primengProgressBarService.hide();
                                             let tempDetailList = [];
                                             if (Array.isArray(res)) {
                                                 tempDetailList = res;
@@ -5107,15 +5136,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                             }
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         },
                                     );*/
                             this.messagesApiFacadeService
                                 .endpointdetailByApi(this.apiId, 0, 10000)
                                 .subscribe(
                                     (response: HttpResponse<any>) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
 
+                                        // this._primengProgressBarService.hide();
                                         this.paramsList = [];
                                         let tempDetailList = [];
 
@@ -5428,12 +5460,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                                         );
                                     },
                                     (error) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     },
                                 );
                             },
                         (error) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             },
                         );
                 },
@@ -5460,12 +5496,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                         checkElementPath: null,
                         isSystemEndpointDetail: 0,
                     };
-                    this._primengProgressBarService.show();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.show();
                     this.messagesApiFacadeService
                         .registerEndpointdetail(levelId, recordId, registerTemp)
                         .subscribe(
                             (a) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                                 this.tempAddParam = this.paramsList;
                                 console.error(this.paramsList);
                                 this.paramsList = [];
@@ -5473,7 +5513,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                 this.loadNonStaticParams();
                             },
                             (error) => {
-                                this._primengProgressBarService.hide();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.hide();
                             },
                         );
                 },
@@ -5735,13 +5777,16 @@ export class ApiHubAttachmentComponent implements OnInit {
         }
         else {
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .endpointdetailByApi(this.apiId,0,10000)
                 .subscribe(
                  /*   (res) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+                        // this._primengProgressBarService.hide();
                         this.paramsList = [];
                         let tempDetailList;
                         if (Array.isArray(res)) {
@@ -6070,8 +6115,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                     },*/
                     (response: HttpResponse<any>) => {
                         debugger
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
 
+                        // this._primengProgressBarService.hide();
                         this.paramsList = [];
                         let tempDetailList = [];
 
@@ -6338,7 +6384,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                         );
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
         }
@@ -6352,9 +6400,13 @@ export class ApiHubAttachmentComponent implements OnInit {
             }
         }
         if (counter == 0) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             /* (res) => {
-                     this._primengProgressBarService.hide();
+                     // FUSEFS
+
+                     // this._primengProgressBarService.hide();
                      /!*  this.spParamsList = []
                this.staticAndNonStaticList = []*!/
                      let tempDetailList;
@@ -6664,8 +6716,10 @@ export class ApiHubAttachmentComponent implements OnInit {
             this.messagesApiFacadeService.endpointdetailByApi(this.apiId,0,10000).subscribe(
                 (response: HttpResponse<any>) => {
 
-                this._primengProgressBarService.hide();
+                // FUSEFS
 
+
+                // this._primengProgressBarService.hide();
                 this.spParamsList = [];
                 this.staticAndNonStaticList = [];
 
@@ -6773,7 +6827,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                 }
             },
                 (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
                 );
         } else {
@@ -7361,12 +7417,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                         actionType: null,
                     });
                 }
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .endpointdetailByApi(this.apiId,0,10000)
                     .subscribe(
                         /*(res) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             let tempDetailList;
                             if (Array.isArray(res)) {
                                 tempDetailList = res;
@@ -7718,8 +7778,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                             }
                         }*/
                         (response: HttpResponse<any>) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
 
+                            // this._primengProgressBarService.hide();
                             let tempDetailList = [];
 
                             if (Array.isArray(response.body)) {
@@ -8029,7 +8090,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                         },
                     );
             }
@@ -8061,7 +8124,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                 if (this.commandTypeId == '3') {
                     this.tempQuery = this.customQuery;
                 }
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .testconnectionandquery(
                         this.hubId,
@@ -8070,14 +8135,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                     )
                     .subscribe(
                         (b) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestQueryFlag = true;
                             this.querySuccessFlag = true;
                             this.queryFailedFlag = false;
                             this.nextFlagDisabled = false;
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestQueryFlag = true;
                             this.queryFailedFlag = true;
                             this.querySuccessFlag = false;
@@ -8169,7 +8238,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                         this.paramsCustomList,
                     );
                 }
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService
                     .testconnectionandquery(
                         this.hubId,
@@ -8178,7 +8249,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                     )
                     .subscribe(
                         (b) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestQueryFlag = true;
                             this.querySuccessFlag = true;
                             this.queryFailedFlag = false;
@@ -8209,7 +8282,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                             }
                         },
                         (error) => {
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestQueryFlag = true;
                             this.queryFailedFlag = true;
                             this.querySuccessFlag = false;
@@ -8325,14 +8400,18 @@ export class ApiHubAttachmentComponent implements OnInit {
 
         if (tempObjHub != null) {
             if (this.hubId != undefined && this.hubId != null) {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.loadingButton = true;
                 this.messagesApiFacadeService
                     .testconnection(this.hubId)
                     .subscribe(
                         (j) => {
                             this.loadingButton = false;
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestConnectionFlag = true;
                             this.connectionSuccessFlag = true;
                             this.connectionFailedFlag = false;
@@ -8340,7 +8419,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                         },
                         (error) => {
                             this.loadingButton = false;
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestConnectionFlag = true;
                             this.connectionFailedFlag = true;
                             this.connectionSuccessFlag = false;
@@ -8473,7 +8554,9 @@ export class ApiHubAttachmentComponent implements OnInit {
             : (startRow = 0);
 
         this.loading = true;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .searchhub(
                 this.pageno,
@@ -8484,7 +8567,9 @@ export class ApiHubAttachmentComponent implements OnInit {
             )
             .subscribe(
                 (httpResponse: HttpResponse<any>) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.loading = false;
                     let data: any[] = [];
                     debugger
@@ -8529,7 +8614,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                     }*/
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
     }
@@ -8555,10 +8642,14 @@ export class ApiHubAttachmentComponent implements OnInit {
     attachHub() {
         this.loadingButton = false;
         if (this.validationAttachHub()) {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.getdatahubinfo(this.apiId).subscribe(
                 (b) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(b)) {
                         this.hubList = b;
                     } else {
@@ -8609,13 +8700,17 @@ export class ApiHubAttachmentComponent implements OnInit {
                                 ? (this.hubObj.downloadResultSet = 1)
                                 : (this.hubObj.downloadResultSet = 0);
 
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+
+                            // this._primengProgressBarService.show();
                             this.messagesApiFacadeService
                                 .registerHubAttach(this.hubObj)
                                 .subscribe(
                                     (l) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
 
+                                        // this._primengProgressBarService.hide();
                                         for (
                                             let k = 0;
                                             k < this.paramsStaticList.length;
@@ -8825,13 +8920,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                                             });
 
                                             //  checkElementPath , detailType , disabled , endpintdetailId , id
-                                            this._primengProgressBarService.show();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.show();
                                             this.messagesApiFacadeService
                                                 .registerApihubparam(tempArray)
                                                 .subscribe(
                                                     (p) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
 
+                                                        // this._primengProgressBarService.hide();
                                                         const mappingListReg = [];
                                                         for (
                                                             let k = 0;
@@ -8894,15 +8992,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                         },
                                                                     );
                                                             }
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .registerApidatahubmapresult(
                                                                     mappingListReg,
                                                                 )
                                                                 .subscribe(
                                                                     (h) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
 
+                                                                        // this._primengProgressBarService.hide();
                                                                         this.HubAttachmentFlag =
                                                                             false;
 
@@ -8983,7 +9084,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                         true
                                                                             ? (hubObj.allowCreateConnectionPool = 1)
                                                                             : (hubObj.allowCreateConnectionPool = 0);
-                                                                        this._primengProgressBarService.show();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.show();
                                                                         this.messagesApiFacadeService
                                                                             .datahubRegister(
                                                                                 hubObj,
@@ -8992,7 +9095,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     ne,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                     this.hubId =
                                                                                         ne.hubId;
                                                                                     this.connectionSuccessFlag =
@@ -9001,7 +9106,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                         false;
                                                                                     this.resultTestConnectionFlag =
                                                                                         false;
-                                                                                    this._primengProgressBarService.show();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.show();
                                                                                     this.messagesApiFacadeService
                                                                                         .finalapidatahub(
                                                                                             +this
@@ -9013,7 +9120,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                             (
                                                                                                 k,
                                                                                             ) => {
-                                                                                                this._primengProgressBarService.hide();
+                                                                                                // FUSEFS
+
+                                                                                                // this._primengProgressBarService.hide();
                                                                                                 this.notifierService.showSuccess(
                                                                                                     {
                                                                                                         detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -9027,19 +9136,25 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                             (
                                                                                                 error,
                                                                                             ) => {
-                                                                                                this._primengProgressBarService.hide();
+                                                                                                // FUSEFS
+
+                                                                                                // this._primengProgressBarService.hide();
                                                                                             },
                                                                                         );
                                                                                 },
                                                                                 (
                                                                                     error,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                 },
                                                                             );
                                                                     },
                                                                     (error) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         } else {
@@ -9119,14 +9234,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             true
                                                                 ? (hubObj.allowCreateConnectionPool = 1)
                                                                 : (hubObj.allowCreateConnectionPool = 0);
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .datahubRegister(
                                                                     hubObj,
                                                                 )
                                                                 .subscribe(
                                                                     (ne) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                         /*   let counter = 0
                                                for (let r = 0; r < this.paramsStaticList.length; r++) {
                                                    this.paramsStaticList[r] = Object.assign(this.paramsStaticList[r],
@@ -9147,7 +9266,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                             false;
                                                                         this.resultTestConnectionFlag =
                                                                             false;
-                                                                        this._primengProgressBarService.show();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.show();
                                                                         this.messagesApiFacadeService
                                                                             .finalapidatahub(
                                                                                 +this
@@ -9159,7 +9280,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     k,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                     this.notifierService.showSuccess(
                                                                                         {
                                                                                             detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -9175,18 +9298,24 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     error,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                 },
                                                                             );
                                                                     },
                                                                     (error) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         }
                                                     },
                                                     (error) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
+
+                                                        // this._primengProgressBarService.hide();
                                                     },
                                                 );
                                         } else {
@@ -9231,15 +9360,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                     );
                                             }
                                             if (this.mapList.length > 0) {
-                                                this._primengProgressBarService.show();
+                                                // FUSEFS
+
+                                                // this._primengProgressBarService.show();
                                                 this.messagesApiFacadeService
                                                     .registerApidatahubmapresult(
                                                         mappingListReg,
                                                     )
                                                     .subscribe(
                                                         (h) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
 
+                                                            // this._primengProgressBarService.hide();
                                                             this.HubAttachmentFlag =
                                                                 false;
 
@@ -9316,14 +9448,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             true
                                                                 ? (hubObj.allowCreateConnectionPool = 1)
                                                                 : (hubObj.allowCreateConnectionPool = 0);
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .datahubRegister(
                                                                     hubObj,
                                                                 )
                                                                 .subscribe(
                                                                     (ne) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                         this.hubId =
                                                                             ne.hubId;
                                                                         this.connectionSuccessFlag =
@@ -9332,7 +9468,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                             false;
                                                                         this.resultTestConnectionFlag =
                                                                             false;
-                                                                        this._primengProgressBarService.show();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.show();
                                                                         this.messagesApiFacadeService
                                                                             .finalapidatahub(
                                                                                 +this
@@ -9344,7 +9482,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     k,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                     this.notifierService.showSuccess(
                                                                                         {
                                                                                             detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -9360,17 +9500,23 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     error,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                 },
                                                                             );
                                                                     },
                                                                     (error) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         },
                                                         (error) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.hide();
                                                         },
                                                     );
                                             } else {
@@ -9434,12 +9580,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                 true
                                                     ? (hubObj.allowCreateConnectionPool = 1)
                                                     : (hubObj.allowCreateConnectionPool = 0);
-                                                this._primengProgressBarService.show();
+                                                // FUSEFS
+
+                                                // this._primengProgressBarService.show();
                                                 this.messagesApiFacadeService
                                                     .datahubRegister(hubObj)
                                                     .subscribe(
                                                         (ne) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.hide();
                                                             this.hubId =
                                                                 ne.hubId;
                                                             this.connectionSuccessFlag =
@@ -9495,7 +9645,10 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                     );
                                                             }
 
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .finalapidatahub(
                                                                     +this
@@ -9504,7 +9657,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                 )
                                                                 .subscribe(
                                                                     (k) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                         this.notifierService.showSuccess(
                                                                             {
                                                                                 detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -9521,19 +9676,25 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                         );
                                                                     },
                                                                     (error) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         },
                                                         (error1) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.hide();
                                                         },
                                                     );
                                             }
                                         }
                                     },
                                     (error) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     },
                                 );
                             // })
@@ -9570,13 +9731,17 @@ export class ApiHubAttachmentComponent implements OnInit {
                                 ? (this.hubObj.downloadResultSet = 1)
                                 : (this.hubObj.downloadResultSet = 0);
 
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+
+                            // this._primengProgressBarService.show();
                             this.messagesApiFacadeService
                                 .registerHubAttach(this.hubObj)
                                 .subscribe(
                                     (l) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
 
+                                        // this._primengProgressBarService.hide();
                                         let counter = 0;
                                         if (
                                             this.staticAndNonStaticList.length >
@@ -9645,15 +9810,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                             this.staticAndNonStaticList.length >
                                             0
                                         ) {
-                                            this._primengProgressBarService.show();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.show();
                                             this.messagesApiFacadeService
                                                 .registerApihubparam(
                                                     this.staticAndNonStaticList,
                                                 )
                                                 .subscribe(
                                                     (p) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
 
+                                                        // this._primengProgressBarService.hide();
                                                         let mappingListReg = [];
                                                         for (
                                                             let k = 0;
@@ -9721,15 +9889,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             mappingListReg.length >
                                                             0
                                                         ) {
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .registerApidatahubmapresult(
                                                                     mappingListReg,
                                                                 )
                                                                 .subscribe(
                                                                     (h) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
 
+                                                                        // this._primengProgressBarService.hide();
                                                                         const hubObj: HubDto =
                                                                             new HubDto();
                                                                         hubObj.hubId =
@@ -9807,7 +9978,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                         true
                                                                             ? (hubObj.allowCreateConnectionPool = 1)
                                                                             : (hubObj.allowCreateConnectionPool = 0);
-                                                                        this._primengProgressBarService.show();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.show();
                                                                         this.messagesApiFacadeService
                                                                             .datahubRegister(
                                                                                 hubObj,
@@ -9816,7 +9989,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     ne,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                     this.hubId =
                                                                                         ne.hubId;
                                                                                     this.connectionSuccessFlag =
@@ -9826,7 +10001,10 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                     this.resultTestConnectionFlag =
                                                                                         false;
 
-                                                                                    this._primengProgressBarService.show();
+                                                                                    // FUSEFS
+
+
+                                                                                    // this._primengProgressBarService.show();
                                                                                     this.messagesApiFacadeService
                                                                                         .finalapidatahub(
                                                                                             +this
@@ -9838,7 +10016,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                             (
                                                                                                 k,
                                                                                             ) => {
-                                                                                                this._primengProgressBarService.hide();
+                                                                                                // FUSEFS
+
+                                                                                                // this._primengProgressBarService.hide();
                                                                                                 this.notifierService.showSuccess(
                                                                                                     {
                                                                                                         detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -9854,21 +10034,27 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                             (
                                                                                                 error1,
                                                                                             ) => {
-                                                                                                this._primengProgressBarService.hide();
+                                                                                                // FUSEFS
+
+                                                                                                // this._primengProgressBarService.hide();
                                                                                             },
                                                                                         );
                                                                                 },
                                                                                 (
                                                                                     error1,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                 },
                                                                             );
                                                                     },
                                                                     (
                                                                         error1,
                                                                     ) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         } else {
@@ -9945,14 +10131,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             true
                                                                 ? (hubObj.allowCreateConnectionPool = 1)
                                                                 : (hubObj.allowCreateConnectionPool = 0);
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .datahubRegister(
                                                                     hubObj,
                                                                 )
                                                                 .subscribe(
                                                                     (ne) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                         this.hubId =
                                                                             ne.hubId;
                                                                         this.connectionSuccessFlag =
@@ -9962,7 +10152,10 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                         this.resultTestConnectionFlag =
                                                                             false;
 
-                                                                        this._primengProgressBarService.show();
+                                                                        // FUSEFS
+
+
+                                                                        // this._primengProgressBarService.show();
                                                                         this.messagesApiFacadeService
                                                                             .finalapidatahub(
                                                                                 +this
@@ -9974,7 +10167,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     k,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                     this.notifierService.showSuccess(
                                                                                         {
                                                                                             detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -9990,20 +10185,26 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     error1,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                 },
                                                                             );
                                                                     },
                                                                     (
                                                                         error1,
                                                                     ) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         }
                                                     },
                                                     (error1) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
+
+                                                        // this._primengProgressBarService.hide();
                                                     },
                                                 );
                                         } else {
@@ -10060,15 +10261,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                     );
                                             }
                                             if (mappingListReg.length > 0) {
-                                                this._primengProgressBarService.show();
+                                                // FUSEFS
+
+                                                // this._primengProgressBarService.show();
                                                 this.messagesApiFacadeService
                                                     .registerApidatahubmapresult(
                                                         mappingListReg,
                                                     )
                                                     .subscribe(
                                                         (h) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
 
+                                                            // this._primengProgressBarService.hide();
                                                             const hubObj: HubDto =
                                                                 new HubDto();
                                                             hubObj.hubId =
@@ -10142,14 +10346,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             true
                                                                 ? (hubObj.allowCreateConnectionPool = 1)
                                                                 : (hubObj.allowCreateConnectionPool = 0);
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .datahubRegister(
                                                                     hubObj,
                                                                 )
                                                                 .subscribe(
                                                                     (ne) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                         this.hubId =
                                                                             ne.hubId;
                                                                         this.connectionSuccessFlag =
@@ -10235,7 +10443,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                         true
                                                                             ? (hubObj.allowCreateConnectionPool = 1)
                                                                             : (hubObj.allowCreateConnectionPool = 0);
-                                                                        this._primengProgressBarService.show();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.show();
                                                                         this.messagesApiFacadeService
                                                                             .datahubRegister(
                                                                                 hubObj,
@@ -10244,7 +10454,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                 (
                                                                                     ne,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                     this.hubId =
                                                                                         ne.hubId;
                                                                                     this.connectionSuccessFlag =
@@ -10254,7 +10466,10 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                     this.resultTestConnectionFlag =
                                                                                         false;
 
-                                                                                    this._primengProgressBarService.show();
+                                                                                    // FUSEFS
+
+
+                                                                                    // this._primengProgressBarService.show();
                                                                                     this.messagesApiFacadeService
                                                                                         .finalapidatahub(
                                                                                             +this
@@ -10266,7 +10481,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                             (
                                                                                                 k,
                                                                                             ) => {
-                                                                                                this._primengProgressBarService.hide();
+                                                                                                // FUSEFS
+
+                                                                                                // this._primengProgressBarService.hide();
                                                                                                 this.notifierService.showSuccess(
                                                                                                     {
                                                                                                         detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -10282,26 +10499,34 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                                             (
                                                                                                 error1,
                                                                                             ) => {
-                                                                                                this._primengProgressBarService.hide();
+                                                                                                // FUSEFS
+
+                                                                                                // this._primengProgressBarService.hide();
                                                                                             },
                                                                                         );
                                                                                 },
                                                                                 (
                                                                                     error1,
                                                                                 ) => {
-                                                                                    this._primengProgressBarService.hide();
+                                                                                    // FUSEFS
+
+                                                                                    // this._primengProgressBarService.hide();
                                                                                 },
                                                                             );
                                                                     },
                                                                     (
                                                                         error1,
                                                                     ) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         },
                                                         (error1) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.hide();
                                                         },
                                                     );
                                             } else {
@@ -10365,12 +10590,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                 true
                                                     ? (hubObj.allowCreateConnectionPool = 1)
                                                     : (hubObj.allowCreateConnectionPool = 0);
-                                                this._primengProgressBarService.show();
+                                                // FUSEFS
+
+                                                // this._primengProgressBarService.show();
                                                 this.messagesApiFacadeService
                                                     .datahubRegister(hubObj)
                                                     .subscribe(
                                                         (ne) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.hide();
                                                             this.hubId =
                                                                 ne.hubId;
                                                             this.connectionSuccessFlag =
@@ -10380,7 +10609,10 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             this.resultTestConnectionFlag =
                                                                 false;
 
-                                                            this._primengProgressBarService.show();
+                                                            // FUSEFS
+
+
+                                                            // this._primengProgressBarService.show();
                                                             this.messagesApiFacadeService
                                                                 .finalapidatahub(
                                                                     +this
@@ -10389,7 +10621,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                 )
                                                                 .subscribe(
                                                                     (k) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                         this.notifierService.showSuccess(
                                                                             {
                                                                                 detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -10405,19 +10639,25 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                     (
                                                                         error1,
                                                                     ) => {
-                                                                        this._primengProgressBarService.hide();
+                                                                        // FUSEFS
+
+                                                                        // this._primengProgressBarService.hide();
                                                                     },
                                                                 );
                                                         },
                                                         (error1) => {
-                                                            this._primengProgressBarService.hide();
+                                                            // FUSEFS
+
+                                                            // this._primengProgressBarService.hide();
                                                         },
                                                     );
                                             }
                                         }
                                     },
                                     (error1) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     },
                                 );
                         } else if (this.commandTypeId == '3') {
@@ -10453,12 +10693,17 @@ export class ApiHubAttachmentComponent implements OnInit {
                                 ? (this.hubObj.downloadResultSet = 1)
                                 : (this.hubObj.downloadResultSet = 0);
 
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+
+                            // this._primengProgressBarService.show();
                             this.messagesApiFacadeService
                                 .registerHubAttach(this.hubObj)
                                 .subscribe(
                                     (l) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                         for (
                                             let k = 0;
                                             k < this.nonStaticParam.length;
@@ -10482,15 +10727,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                             }
                                         }
                                         if (this.nonStaticParam.length > 0) {
-                                            this._primengProgressBarService.show();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.show();
                                             this.messagesApiFacadeService
                                                 .registerApihubparam(
                                                     this.nonStaticParam,
                                                 )
                                                 .subscribe(
                                                     (p) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
 
+                                                        // this._primengProgressBarService.hide();
                                                         const hubObj: HubDto =
                                                             new HubDto();
                                                         hubObj.hubId =
@@ -10561,14 +10809,18 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                         true
                                                             ? (hubObj.allowCreateConnectionPool = 1)
                                                             : (hubObj.allowCreateConnectionPool = 0);
-                                                        this._primengProgressBarService.show();
+                                                        // FUSEFS
+
+                                                        // this._primengProgressBarService.show();
                                                         this.messagesApiFacadeService
                                                             .datahubRegister(
                                                                 hubObj,
                                                             )
                                                             .subscribe(
                                                                 (ne) => {
-                                                                    this._primengProgressBarService.hide();
+                                                                    // FUSEFS
+
+                                                                    // this._primengProgressBarService.hide();
                                                                     this.hubId =
                                                                         ne.hubId;
                                                                     this.connectionSuccessFlag =
@@ -10578,7 +10830,10 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                     this.resultTestConnectionFlag =
                                                                         false;
 
-                                                                    this._primengProgressBarService.show();
+                                                                    // FUSEFS
+
+
+                                                                    // this._primengProgressBarService.show();
                                                                     this.messagesApiFacadeService
                                                                         .finalapidatahub(
                                                                             +this
@@ -10590,7 +10845,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                             (
                                                                                 k,
                                                                             ) => {
-                                                                                this._primengProgressBarService.hide();
+                                                                                // FUSEFS
+
+                                                                                // this._primengProgressBarService.hide();
                                                                                 this.notifierService.showSuccess(
                                                                                     {
                                                                                         detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -10606,17 +10863,23 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                             (
                                                                                 error1,
                                                                             ) => {
-                                                                                this._primengProgressBarService.hide();
+                                                                                // FUSEFS
+
+                                                                                // this._primengProgressBarService.hide();
                                                                             },
                                                                         );
                                                                 },
                                                                 (error1) => {
-                                                                    this._primengProgressBarService.hide();
+                                                                    // FUSEFS
+
+                                                                    // this._primengProgressBarService.hide();
                                                                 },
                                                             );
                                                     },
                                                     (error1) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
+
+                                                        // this._primengProgressBarService.hide();
                                                     },
                                                 );
                                         } else {
@@ -10667,12 +10930,16 @@ export class ApiHubAttachmentComponent implements OnInit {
                                             true
                                                 ? (hubObj.allowCreateConnectionPool = 1)
                                                 : (hubObj.allowCreateConnectionPool = 0);
-                                            this._primengProgressBarService.show();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.show();
                                             this.messagesApiFacadeService
                                                 .datahubRegister(hubObj)
                                                 .subscribe(
                                                     (ne) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
+
+                                                        // this._primengProgressBarService.hide();
                                                         this.hubId = ne.hubId;
                                                         this.connectionSuccessFlag =
                                                             false;
@@ -10680,7 +10947,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             false;
                                                         this.resultTestConnectionFlag =
                                                             false;
-                                                        this._primengProgressBarService.show();
+                                                        // FUSEFS
+
+                                                        // this._primengProgressBarService.show();
                                                         this.messagesApiFacadeService
                                                             .finalapidatahub(
                                                                 +this
@@ -10689,7 +10958,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                             )
                                                             .subscribe(
                                                                 (k) => {
-                                                                    this._primengProgressBarService.hide();
+                                                                    // FUSEFS
+
+                                                                    // this._primengProgressBarService.hide();
                                                                     this.notifierService.showSuccess(
                                                                         {
                                                                             detail: 'ثبت نهایی اطلاعات باموفقیت انجام شد!',
@@ -10703,18 +10974,24 @@ export class ApiHubAttachmentComponent implements OnInit {
                                                                     );
                                                                 },
                                                                 (error1) => {
-                                                                    this._primengProgressBarService.hide();
+                                                                    // FUSEFS
+
+                                                                    // this._primengProgressBarService.hide();
                                                                 },
                                                             );
                                                     },
                                                     (error1) => {
-                                                        this._primengProgressBarService.hide();
+                                                        // FUSEFS
+
+                                                        // this._primengProgressBarService.hide();
                                                     },
                                                 );
                                         }
                                     },
                                     (error1) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     },
                                 );
                         }
@@ -10725,7 +11002,9 @@ export class ApiHubAttachmentComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     this.notifierService.showError({
                         detail: '!فراخوانی سرویس با مشکل مواجه شده است!',
                     });

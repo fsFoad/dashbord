@@ -11,11 +11,15 @@ import {InputText} from 'primeng/inputtext';
 import {Tooltip} from 'primeng/tooltip';
 import {MoreChar19Pipe} from '../../../../../../shared/pipes/moreChar19.pipe';
 import {Dialog} from 'primeng/dialog';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {DropdownModule} from 'primeng/dropdown';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+import {SelectModule} from 'primeng/select';
 import {Checkbox} from 'primeng/checkbox';
 import {ToastService} from '../../../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {ApiGatewayService} from '../../../../../services/api-gateway.service';
 import {Constants} from '../../../../../../shared/constants/Constants';
@@ -44,7 +48,7 @@ import { ConfirmationService } from 'primeng/api';
         InputText,
         Tooltip,
         MoreChar19Pipe,
-        DropdownModule,
+        SelectModule,
         Checkbox,
         TranslocoPipe,
         InputGroup,
@@ -186,7 +190,9 @@ export class ApiModuleRegisterComponent implements OnInit {
     partyTitle
     constructor(
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private directionService: DirectionService,
         private transloco :TranslocoService,
@@ -706,12 +712,16 @@ debugger
                 : (this.objectRegister.hasUrlParams = 0);
             this.moc_status == true ? this.objectRegister.isMock = 1 : this.objectRegister.isMock = 0
             this.moc_status==true?this.objectRegister.mockJsonResponse=this.mockJsonResponse:this.objectRegister.mockJsonResponse=null
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerApi(this.objectRegister)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         if (
                             this.checkedEncodingUrl &&
                             this.encodingUrlList.length > 0
@@ -740,12 +750,16 @@ debugger
                                 objEncodingUrl.apiId = item.apiId;
                                 objEncodingUrl.name = item.name;
                                 objEncodingUrl.value = item.value;
-                                this._primengProgressBarService.show();
+                                // FUSEFS
+
+                                // this._primengProgressBarService.show();
                                 this.messagesApiFacadeService
                                     .encodedetailRegister(objEncodingUrl)
                                     .subscribe(
                                         (s) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                             this.close.emit('closeAndCreate');
                                             this.notifierService.showSuccess({
                                                 detail: 'اطلاعات ثبت گردید!',
@@ -753,7 +767,9 @@ debugger
                                             });
                                         },
                                         (error) => {
-                                            this._primengProgressBarService.hide();
+                                            // FUSEFS
+
+                                            // this._primengProgressBarService.hide();
                                         }
                                     );
                             });
@@ -766,7 +782,9 @@ debugger
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
 

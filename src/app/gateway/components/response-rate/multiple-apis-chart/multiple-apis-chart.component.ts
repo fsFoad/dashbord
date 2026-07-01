@@ -3,7 +3,11 @@ import {Chart} from "chart.js";
 import {MessagesApiFacadeService} from '../../../services/messages-api-facade.service';
 import {ApiGatewayService} from "../../../services/api-gateway.service";
 import {ToastService} from '../../../../shared/services/ToastService';
-import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../@fuse/services/loading';
 import {BreadcrumbsComponent} from "../../../../shared/components/breadcrumbs/breadcrumbs.component";
 import {NgIf} from "@angular/common";
 import {TableModule} from "primeng/table";
@@ -67,7 +71,9 @@ export class MultipleApisChartComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private notifierService: ToastService,
-        private progressBarService: FuseLoadingService
+        // FUSEFS
+
+        // private progressBarService: FuseLoadingService
     ) {
     }
 
@@ -255,7 +261,9 @@ export class MultipleApisChartComponent implements OnInit {
             debugger
             if (this.inputMultipleApies.typeChart == '1') {
                 debugger
-                this.progressBarService.show();
+                // FUSEFS
+
+                // this.progressBarService.show();
                 this.messagesApiFacadeService.responsedelayMultipleservice(this.dt).subscribe(e => {
                     debugger
                     debugger
@@ -293,13 +301,19 @@ export class MultipleApisChartComponent implements OnInit {
                             },
                         ],
                     };
-                    this.progressBarService.hide();
+                    // FUSEFS
+
+                    // this.progressBarService.hide();
                 }, error => {
-                    this.progressBarService.hide();
+                    // FUSEFS
+
+                    // this.progressBarService.hide();
                 })
             } else if (this.inputMultipleApies.typeChart == '2') {
                 debugger
-                this.progressBarService.show();
+                // FUSEFS
+
+                // this.progressBarService.show();
                 this.messagesApiFacadeService.responsedelaySingularservice(this.dt, this.delay, this.apiId).subscribe(e => {
                     debugger
                     debugger
@@ -477,9 +491,13 @@ export class MultipleApisChartComponent implements OnInit {
 
                     }
                     debugger
-                    this.progressBarService.hide();
+                    // FUSEFS
+
+                    // this.progressBarService.hide();
                 }, error => {
-                    this.progressBarService.hide();
+                    // FUSEFS
+
+                    // this.progressBarService.hide();
                 })
             }
 

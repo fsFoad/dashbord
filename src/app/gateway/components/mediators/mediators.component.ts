@@ -4,7 +4,11 @@ import { ApiGatewayConstants } from '../../constants/ApiGatewayConstants';
 import moment from 'jalali-moment';
 import { Tree } from 'primeng/tree';
 import { ActivatedRoute } from '@angular/router';
-import { FuseLoadingService } from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../@fuse/services/loading';
 import { ToastService } from '../../../shared/services/ToastService';
 import { MessagesApiFacadeService } from '../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../services/api-gateway.service';
@@ -21,7 +25,7 @@ import { InputText } from 'primeng/inputtext';
 import { Tooltip } from 'primeng/tooltip';
 import { ThreeDotDetailsPipe } from '../../../shared/pipes/threeDotDetails.pipe';
 import { Dialog } from 'primeng/dialog';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { TableModule } from 'primeng/table';
 import { MoreChar19Pipe } from '../../../shared/pipes/moreChar19.pipe';
 import { Textarea } from 'primeng/textarea';
@@ -167,7 +171,9 @@ export class MediatorsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
         private el: ElementRef,
@@ -1056,12 +1062,16 @@ export class MediatorsComponent implements OnInit {
             registerObj.appDate = this.appDate;
             registerObj.rdate = this.rdate;
             registerObj.status = 1;
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .mediatorRegister(registerObj)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.mediatorId = a.mediatorId;
                         this.itemsList.forEach((item) => {
                             registerChangeObj.mediatorId = this.mediatorId;
@@ -1070,12 +1080,16 @@ export class MediatorsComponent implements OnInit {
                             registerChangeObj.changeTypeId = item.changeTypeId;
                             registerChangeObj.schemaName = item.schemaName;
                             registerChangeObj.status = 1;
-                            this._primengProgressBarService.show();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.show();
                             this.messagesApiFacadeService
                                 .mediatorchangeRegister(registerChangeObj)
                                 .subscribe(
                                     (b) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                         this.itemsListShow = [];
                                         this.itemsList = [];
                                         this.keyNode = '';
@@ -1084,7 +1098,9 @@ export class MediatorsComponent implements OnInit {
                                         this.mediatorId = '';
                                     },
                                     (error) => {
-                                        this._primengProgressBarService.hide();
+                                        // FUSEFS
+
+                                        // this._primengProgressBarService.hide();
                                     },
                                 );
                         });
@@ -1115,7 +1131,9 @@ export class MediatorsComponent implements OnInit {
                         }
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
         }
@@ -1129,10 +1147,14 @@ export class MediatorsComponent implements OnInit {
     selectApi(api) {
         let listApiMediator;
         let countLicense = 0;
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.mediatorFindByApiId(api.apiId).subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 listApiMediator = a;
                 if (Array.isArray(a)) {
                     listApiMediator = a;
@@ -1168,7 +1190,9 @@ export class MediatorsComponent implements OnInit {
                 }
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
     }
@@ -1181,12 +1205,16 @@ export class MediatorsComponent implements OnInit {
     }
 
     searchApi() {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService
             .apisearch(this.apiName, this.apiTitle, this.moduleTitle, '2')
             .subscribe(
                 (a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(a)) {
                         this.apiList = a;
                     } else {
@@ -1199,7 +1227,9 @@ export class MediatorsComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
     }

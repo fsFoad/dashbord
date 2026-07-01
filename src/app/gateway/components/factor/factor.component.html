@@ -9,7 +9,7 @@
                         <label class="normal-label">
                             <span class="red-color-text">* </span>
                             <span>نام سازمان :</span></label>
-                        <p-dropdown
+                        <p-select
                             (keydown.enter)="onKeydown($event)"
                             appendTo="body"
                             [options]="partyListOptions"
@@ -20,7 +20,7 @@
                             optionLabel="title"
                             class="normal-dropdown"
                             (onChange)="OnchangeParty($event)">
-                        </p-dropdown>
+                        </p-select>
                     </div>
                     <div class="col-span-8" dir="ltr">
                         <button pButton label="{{'button.clear'|transloco}}" class="normal-button"

@@ -2,14 +2,18 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { TableModule } from 'primeng/table';
 import { BreadcrumbsComponent } from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { ButtonDirective } from 'primeng/button';
 import { Tooltip } from 'primeng/tooltip';
 import { MoreChar19Pipe } from '../../../../shared/pipes/moreChar19.pipe';
 import { NgClass, NgIf } from '@angular/common';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { ThreeDotDetailsPipe } from '../../../../shared/pipes/threeDotDetails.pipe';
 import { RuleTemplatePipe } from '../../../../shared/pipes/ruleTemplate.pipe';
 import { ConditionTypePipe } from '../../../../shared/pipes/conditionType.pipe';
@@ -94,7 +98,9 @@ export class ApiRuleConditionComponent implements OnInit {
         private messagesApiFacadeService: MessagesApiFacadeService,
         private apiGatewayService: ApiGatewayService,
         private transloco: TranslocoService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
     ) {
     }
 
@@ -472,7 +478,9 @@ export class ApiRuleConditionComponent implements OnInit {
             }
             this.messagesApiFacadeService.getbyruleid(this.inputApiRule.ruleId).subscribe((a) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(a)) {
                         this.ruleConditionsList = a;
                     } else {
@@ -490,7 +498,9 @@ export class ApiRuleConditionComponent implements OnInit {
                     }
 
             },(error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
             });
         } else if (this.inputClientCondition != undefined) {
             debugger
@@ -547,23 +557,33 @@ export class ApiRuleConditionComponent implements OnInit {
         }
 
         debugger
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.apiGatewayService.currentApprovalStageApiName.subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.apiName = a;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             },
         );
 
         if (this.inputCondition != undefined) {
             debugger
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.getbyruleid(this.inputCondition.ruleId).subscribe((a) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(a)) {
                         this.ruleConditionsList = a;
                     } else {
@@ -581,7 +601,9 @@ export class ApiRuleConditionComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });
 
         }
@@ -743,10 +765,14 @@ export class ApiRuleConditionComponent implements OnInit {
             this.updateFlag = false;
             this.logicFlag = false;
         } else if (event == 'closeAndCreate') {
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService.getbyruleid(this.ruleId).subscribe(
                 (a) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(a)) {
                         this.ruleConditionsList = a;
                     } else {
@@ -768,7 +794,9 @@ export class ApiRuleConditionComponent implements OnInit {
                     this.logicFlag = false;
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 },
             );
         }
@@ -830,7 +858,9 @@ export class ApiRuleConditionComponent implements OnInit {
             }
             this.messagesApiFacadeService.getbyruleid(this.inputApiRule.ruleId).subscribe((a) => {
                     debugger
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                     if (Array.isArray(a)) {
                         this.ruleConditionsList = a;
                     } else {
@@ -848,7 +878,9 @@ export class ApiRuleConditionComponent implements OnInit {
                     }
                 },
                 (error) => {
-                    this._primengProgressBarService.hide();
+                    // FUSEFS
+
+                    // this._primengProgressBarService.hide();
                 });
         } else if (this.inputClientCondition != undefined) {
             debugger

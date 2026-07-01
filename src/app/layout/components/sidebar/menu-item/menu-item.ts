@@ -12,6 +12,7 @@ import { Tooltip } from 'primeng/tooltip';
 import { MenuItem } from '../../../../core/models/menu-item.model';
 import { LayoutService } from '../../../../core/services/layout.service';
 import { SettingsStore } from '../../../../core/services/settings.store';
+import { AuthService } from '../../../../core/services/auth.service';
 
 /**
  * Recursive sidebar item. Supports:
@@ -163,6 +164,7 @@ import { SettingsStore } from '../../../../core/services/settings.store';
 })
 export class MenuItemComponent {
   private readonly layout = inject(LayoutService);
+  private readonly auth = inject(AuthService);
   private readonly settings = inject(SettingsStore);
 
   readonly item = input.required<MenuItem>();
@@ -202,5 +204,6 @@ export class MenuItemComponent {
   /** Run a built-in menu action (currently just opening the settings drawer). */
   protected runAction(action: MenuItem['action']): void {
     if (action === 'openSettings') this.layout.openSettings();
+    if (action === 'logout') this.auth.logout();
   }
 }

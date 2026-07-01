@@ -29,9 +29,9 @@
             <div class="input-with-buttons2">
                 <input [(ngModel)]="apikey" pInputText class="normal-input" >
                 <button (click)="onDisplay()" pButton icon="pi pi-eye"
-                        matTooltip="{{'مشاهده کلید کلاینت' | transloco}}" style="width: 34px;margin-left: 2px"></button>
+                        pTooltip="{{'مشاهده کلید کلاینت' | transloco}}" style="width: 34px;margin-left: 2px"></button>
                 <button (click)="generateApikey()" pButton icon="pi pi-plus"
-                        matTooltip="{{'ایجاد کلید کلاینت' | transloco}}" style="width: 34px;margin-right: 2px"></button>
+                        pTooltip="{{'ایجاد کلید کلاینت' | transloco}}" style="width: 34px;margin-right: 2px"></button>
 
             </div>
         </div>
@@ -45,7 +45,7 @@
 
                 <button (click)="onDisplayUploadDigital()" pButton class="btnConfirm"
                         icon="pi pi-eye"
-                        matTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"
+                        pTooltip="{{'مشاهده کلید دیجیتال' | transloco}}"
                         style="width: 34px; margin-left: 2px;"></button>
                 <p-fileupload
                     mode="basic"
@@ -70,7 +70,7 @@
             <div class="input-with-buttons">
                 <input [(ngModel)]="publicKey" id="publicKey" class="normal-input" pInputText disabled>
                 <button (click)="onDisplayUploadPublicKey()" pButton icon="pi pi-eye"
-                        matTooltip="{{'مشاهده کلید کلاینت' | transloco}}"
+                        pTooltip="{{'مشاهده کلید کلاینت' | transloco}}"
                         style="width: 34px; margin-left: 2px;"></button>
 
             </div>

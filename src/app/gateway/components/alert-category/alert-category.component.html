@@ -86,7 +86,7 @@ styleClass="normal-table"
                 pTooltip="{{ 'tooltip.nextPage' | transloco }}">
                 <i class="pi pi-arrow-left"></i>
             </button>
-            <p-dropdown class="normal-dropdown-pagination"
+            <p-select class="normal-dropdown-pagination"
                         [options]="pagesizeOptions"
                         optionValue="code"
                         [autoDisplayFirst]="true"
@@ -94,7 +94,7 @@ styleClass="normal-table"
                         [(ngModel)]="pagesize"
                         (onChange)="OnchangePageno($event)"
                         [disabled]="nextBtnFlag">
-            </p-dropdown>
+            </p-select>
         </div>
         <div class="col-span-4"></div>
     </div>

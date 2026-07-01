@@ -2,7 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {ClientDto} from "../../../../../models/client.Dto";
 import {ActivatedRoute} from "@angular/router";
-import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../../../../@fuse/services/loading';
 import {ToastService} from '../../../../../../shared/services/ToastService';
 import {MessagesApiFacadeService} from '../../../../../services/messages-api-facade.service';
 import {CommonValidationsService} from '../../../../../../shared/validators/common-validations.service';
@@ -10,13 +14,13 @@ import {Panel} from "primeng/panel";
 import {FormsModule} from "@angular/forms";
 import {InputText} from "primeng/inputtext";
 import {ButtonDirective} from "primeng/button";
-import {MatTooltip} from "@angular/material/tooltip";
-import {TranslocoPipe} from "@ngneat/transloco";
+import {TranslocoPipe} from "@jsverse/transloco";
 import {FileUpload} from "primeng/fileupload";
 import {KeyFilter} from "primeng/keyfilter";
 import {ToggleSwitch} from "primeng/toggleswitch";
 import {Dialog} from "primeng/dialog";
 import {Card} from "primeng/card";
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'app-client-api-update',
@@ -28,7 +32,7 @@ import {Card} from "primeng/card";
         FormsModule,
         InputText,
         ButtonDirective,
-        MatTooltip,
+        Tooltip,
         TranslocoPipe,
         FileUpload,
         KeyFilter,
@@ -74,7 +78,9 @@ export class ClientApiUpdateComponent implements OnInit {
         private route: ActivatedRoute,
         private messagesApiFacadeService: MessagesApiFacadeService,
         private notifierService: ToastService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private validationsService: CommonValidationsService
     ) {}
 
@@ -141,16 +147,22 @@ export class ClientApiUpdateComponent implements OnInit {
             } else {
                 this.updateTemp.digitalPublickey = null;
             }
-            this._primengProgressBarService.show();
+            // FUSEFS
+
+            // this._primengProgressBarService.show();
             this.messagesApiFacadeService
                 .registerClient(this.updateTemp)
                 .subscribe(
                     (a) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.close.emit('closeAndCreate');
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     }
                 );
         }
@@ -188,14 +200,20 @@ export class ClientApiUpdateComponent implements OnInit {
 
     generateApikey() {
         this.apikey = '';
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         this.messagesApiFacadeService.randomapikey().subscribe(
             (a) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.apikey = a;
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );
     }

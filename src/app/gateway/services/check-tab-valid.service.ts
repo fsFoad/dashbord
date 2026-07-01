@@ -57,7 +57,7 @@ export class CheckTabValidService {
 
     // بستن همه تب‌ها
     closeAllTabs() {
-        this.tabs = [{name: 'صفحه اصلی', route: '/main/home'}];
+        this.tabs = [{name: 'صفحه اصلی', route: '/home'}];
         this.currentUrl = null;
         this.present = false;
         return this.tabs

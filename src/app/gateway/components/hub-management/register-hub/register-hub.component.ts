@@ -8,16 +8,20 @@ import { ApiGatewayConstants } from '../../../constants/ApiGatewayConstants';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ApiGatewayService } from '../../../services/api-gateway.service';
 import { ToastService } from '../../../../shared/services/ToastService';
-import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import { FuseLoadingService } from '../../../../../../@fuse/services/loading';
 import { MessagesApiFacadeService } from '../../../services/messages-api-facade.service';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Constants } from '../../../../shared/constants/Constants';
 import { BreadcrumbsComponent } from '../../../../shared/components/breadcrumbs/breadcrumbs.component';
 import { Panel } from 'primeng/panel';
 import { InputText } from 'primeng/inputtext';
 import { Tooltip } from 'primeng/tooltip';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { Checkbox } from 'primeng/checkbox';
 import { NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { Password } from 'primeng/password';
@@ -26,8 +30,6 @@ import { Message } from 'primeng/message';
 import { TableModule } from 'primeng/table';
 import { DataTypeHubPipe } from '../../../../shared/pipes/dataTypeHub.pipe';
 import { EnStatusPipe } from '../../../../shared/pipes/en-status.pipe';
-import { MatTooltip } from '@angular/material/tooltip';
-import { MatIcon } from '@angular/material/icon';
 import { ParamTypePipe } from '../../../../shared/pipes/paramType.pipe';
 import { Dialog } from 'primeng/dialog';
 import { MoreChar19Pipe } from '../../../../shared/pipes/moreChar19.pipe';
@@ -65,7 +67,7 @@ import { Subject } from 'rxjs';
         InputText,
         Tooltip,
         ButtonDirective,
-        DropdownModule,
+        SelectModule,
         Checkbox,
         NgStyle,
         Password,
@@ -75,10 +77,8 @@ import { Subject } from 'rxjs';
         TableModule,
         DataTypeHubPipe,
         EnStatusPipe,
-        MatTooltip,
-        TranslocoPipe,
-        MatIcon,
-        ParamTypePipe,
+        Tooltip,
+        TranslocoPipe,        ParamTypePipe,
         Dialog,
         MoreChar19Pipe,
         MessagesCategoryPipe,
@@ -318,7 +318,9 @@ export class RegisterHubComponent implements OnInit, OnChanges {
         private transloco: TranslocoService,
         private commonValidationsService: CommonValidationsService,
         private confirmationService: ConfirmationService,
-        private _primengProgressBarService: FuseLoadingService,
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService,
         private messagesApiFacadeService: MessagesApiFacadeService,
     ) {
     }
@@ -651,14 +653,18 @@ export class RegisterHubComponent implements OnInit, OnChanges {
         if (tempObjHub != null) {
             debugger;
             if (this.hubId != undefined && this.hubId != null) {
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.loadingButton = true;
                 for (let k = 0; k < this.allDbList.length; k++) {
                     this.messagesApiFacadeService.testconnection(this.allDbList[k].hubId).subscribe((j) => {
                             debugger
                             Object.assign(this.allDbList[k], { resultTest: (j.text), resultTestTitle: j.title });
                             this.loadingButton = false;
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestConnectionFlag = true;
                             this.connectionSuccessFlag = true;
                             this.connectionFailedFlag = false;
@@ -672,7 +678,9 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                                 resultTestTitle: error.error.title,
                             });
                             this.loadingButton = false;
-                            this._primengProgressBarService.hide();
+                            // FUSEFS
+
+                            // this._primengProgressBarService.hide();
                             this.resultTestConnectionFlag = true;
                             this.connectionFailedFlag = true;
                             this.connectionSuccessFlag = false;
@@ -796,12 +804,16 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                     ? (hubObj.allowCreateConnectionPool = 1)
                     : (hubObj.allowCreateConnectionPool = 0);
                 window.localStorage.setItem('hubObj', JSON.stringify(hubObj));
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.datahubRegister(hubObj).subscribe(
                     (ne) => {
                         debugger
                         this.updateByHubId(this.hubId, hubObj);
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.notifierService.showSuccess({
                             detail: 'ثبت اطلاعات دیتابیس باموفقیت انجام شد!',
                             life: 3000,
@@ -891,7 +903,9 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                         this.testConectionFlag = false;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
             } else {
@@ -930,10 +944,14 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                 this.allowCreateConnectionPool == true
                     ? (hubObj.allowCreateConnectionPool = 1)
                     : (hubObj.allowCreateConnectionPool = 0);
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.datahubRegister(hubObj).subscribe(
                     (ne) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.notifierService.showSuccess({
                             detail: 'اطلاعات دیتابیس باموفقیت ثبت شد!',
                             life: 3000,
@@ -1022,7 +1040,9 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                         this.nextFlag = false;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
             }
@@ -1071,12 +1091,16 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                     ? (hubObj.allowCreateConnectionPool = 1)
                     : (hubObj.allowCreateConnectionPool = 0);
                 window.localStorage.setItem('hubObj', JSON.stringify(hubObj));
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.datahubRegister(hubObj).subscribe(
                     (ne) => {
                         debugger
                         this.updateByHubId(this.hubId, hubObj);
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.notifierService.showSuccess({
                             detail: 'ثبت اطلاعات دیتابیس باموفقیت انجام شد!',
                             life: 3000,
@@ -1090,7 +1114,9 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                         this.testConectionFlag = false;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
             } else {
@@ -1129,10 +1155,14 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                 this.allowCreateConnectionPool == true
                     ? (hubObj.allowCreateConnectionPool = 1)
                     : (hubObj.allowCreateConnectionPool = 0);
-                this._primengProgressBarService.show();
+                // FUSEFS
+
+                // this._primengProgressBarService.show();
                 this.messagesApiFacadeService.datahubRegister(hubObj).subscribe(
                     (ne) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                         this.notifierService.showSuccess({
                             detail: 'اطلاعات دیتابیس باموفقیت ثبت شد!',
                             life: 3000,
@@ -1146,7 +1176,9 @@ export class RegisterHubComponent implements OnInit, OnChanges {
                         this.nextFlag = false;
                     },
                     (error) => {
-                        this._primengProgressBarService.hide();
+                        // FUSEFS
+
+                        // this._primengProgressBarService.hide();
                     },
                 );
             }

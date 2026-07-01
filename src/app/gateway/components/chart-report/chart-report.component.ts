@@ -4,10 +4,14 @@ import {Component, OnInit} from '@angular/core';
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {MessageService, PrimeTemplate} from "primeng/api";
 import {ApiGatewayService} from '../../services/api-gateway.service';
-import {FuseLoadingService} from '../../../../../@fuse/services/loading';
+// FUSEFS
+
+// FUSEFS
+
+// import {FuseLoadingService} from '../../../../../@fuse/services/loading';
 import {BreadcrumbsComponent} from '../../../shared/components/breadcrumbs/breadcrumbs.component';
-import {TranslocoPipe, TranslocoService} from '@ngneat/transloco';
-import {TabPanel, TabView} from 'primeng/tabview';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+import {TabsModule} from 'primeng/tabs';
 import {PartyChartComponent} from './party-chart/party-chart.component';
 import {SelectButton} from 'primeng/selectbutton';
 import {FormsModule} from '@angular/forms';
@@ -24,8 +28,7 @@ import {Toast} from 'primeng/toast';
     imports: [
         BreadcrumbsComponent,
         TranslocoPipe,
-        TabView,
-        TabPanel,
+        TabsModule,
         PartyChartComponent,
         SelectButton,
         FormsModule,
@@ -45,14 +48,20 @@ export class ChartReportComponent implements OnInit {
     constructor(
         private translateService: TranslocoService,
         private apiGatewayService: ApiGatewayService,
-        private _primengProgressBarService: FuseLoadingService
+        // FUSEFS
+
+        // private _primengProgressBarService: FuseLoadingService
     ) {}
 
     ngOnInit(): void {
-        this._primengProgressBarService.show();
+        // FUSEFS
+
+        // this._primengProgressBarService.show();
         /*this.translateService.get(['1D', '7D', '30D', '60D', '90D']).subscribe(
             (translations) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
                 this.numberOfDay = [
                     { name: translations['90D'], value: '90' },
                     { name: translations['60D'], value: '60' },
@@ -62,7 +71,9 @@ export class ChartReportComponent implements OnInit {
                 ];
             },
             (error) => {
-                this._primengProgressBarService.hide();
+                // FUSEFS
+
+                // this._primengProgressBarService.hide();
             }
         );*/
         this.detailsBreadObject = this.chooseBread('chartReport');

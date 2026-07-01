@@ -40,7 +40,7 @@
 
     <div class="col-span-3">
         <label class="normal-label"> <span>{{ 'logReports.dropdown.party'|transloco }} :</span></label>
-        <p-dropdown
+        <p-select
             (keydown.enter)="onKeydown($event)"
             [options]="partyListOptions"
             [(ngModel)]="partyId"
@@ -51,7 +51,7 @@
             class="normal-dropdown"
             (onChange)="OnchangeParty($event)"
             [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined">
-        </p-dropdown>
+        </p-select>
     </div>
     <div class="hidden sm:flex sm:col-span-3 justify-start items-center gap-2 h-12 mt-5-5 rtl:flex-row-reverse">
         <button
@@ -74,7 +74,7 @@
 
     <div class="col-span-3">
         <label class="normal-label"> <span>{{ 'logReports.dropdown.module'|transloco }} :</span></label>
-        <p-dropdown
+        <p-select
             [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
             [options]="moduleListOptions"
             [(ngModel)]="moduleId"
@@ -85,12 +85,12 @@
             class="normal-dropdown"
             (onChange)="onchangeModule($event)"
         >
-        </p-dropdown>
+        </p-select>
     </div>
     <div class="col-span-3">
 
         <label class="normal-label"> <span>{{ 'logReports.dropdown.api'|transloco }} :</span></label>
-        <p-dropdown
+        <p-select
             [options]="apiListOptionsFirst"
             [(ngModel)]="apiId"
             optionValue="apiId"
@@ -100,11 +100,11 @@
             class="normal-dropdown"
             [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
         >
-        </p-dropdown>
+        </p-select>
     </div>
     <div class="col-span-3">
         <label class="normal-label"> <span>{{ 'logReports.dropdown.clientListOptions'|transloco }}  :</span></label>
-        <p-dropdown
+        <p-select
             optionValue="clientId"
             optionLabel="name"
             filterBy="name"
@@ -115,7 +115,7 @@
             [disabled]="inputChartCallApiReport!=undefined||inputHomeBase!=undefined"
             (keydown.enter)="onKeydown($event)"
         >
-        </p-dropdown>
+        </p-select>
     </div>
     <div class="col-span-3">
         <div *ngIf="tblFlag" dir="ltr">
@@ -294,7 +294,7 @@ styleClass="normal-table"
         [disabled]="pageno === 0">
     </button>
     <div>
-        <p-dropdown class="normal-dropdown-pagination"
+        <p-select class="normal-dropdown-pagination"
             [options]="pagesizeOptions"
             appendTo="body"
             optionValue="code"
@@ -303,7 +303,7 @@ styleClass="normal-table"
             (onChange)="OnchangePageno($event)"
             [disabled]="nextBtnFlag"
         >
-        </p-dropdown>
+        </p-select>
     </div>
 </div>
 </div>
@@ -311,7 +311,7 @@ styleClass="normal-table"
      <button (click)="BeforeButton()"
              style="width: 30px!important;" pButton
              class="btn-warning p-button-warning" icon="pi pi-arrow-right"
-             matTooltip="{{'button.back' | transloco}}"></button>
+             pTooltip="{{'button.back' | transloco}}"></button>
  </div>-->
 <p-toast position="top-center"></p-toast>
 
