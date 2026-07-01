@@ -140,18 +140,33 @@ import { SettingsStore } from '../../core/services/settings.store';
       </div>
 
       <!-- Right login panel -->
-      <div [attr.dir]="settings.isRtl() ? 'rtl' : 'ltr'" class="relative flex flex-col justify-center w-full px-4 py-12 sm:px-6 lg:px-12 lg:w-1/2">
+      <div [attr.dir]="settings.isRtl() ? 'rtl' : 'ltr'"
+           class="relative flex flex-col justify-center w-full px-4 py-12 sm:px-6 lg:px-12 lg:w-1/2
+                  bg-gradient-to-r from-[#4e5b7a3b] to-[#27245a38]
+                  dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-hidden">
 
-        <!-- Mobile: ambient background blobs -->
-        <div class="pointer-events-none absolute inset-0 overflow-hidden lg:hidden" aria-hidden="true">
-          <div class="absolute right-0 top-1/4 h-72 w-72 rounded-full bg-gradient-to-br from-sky-400/20 via-indigo-500/15 to-purple-500/10 blur-3xl"></div>
-          <div class="absolute left-0 bottom-1/3 h-80 w-80 rounded-full bg-gradient-to-tr from-sky-300/15 via-indigo-400/10 to-emerald-400/10 blur-3xl"></div>
+        <!-- Animated blobs -->
+        <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div class="absolute end-0 top-1/4 h-80 w-80 rounded-full
+                      bg-gradient-to-br from-sky-400/20 via-indigo-500/15 to-purple-500/10
+                      blur-3xl animate-pulse [animation-duration:7s]"></div>
+          <div class="absolute start-0 bottom-1/3 h-96 w-96 rounded-full
+                      bg-gradient-to-tr from-sky-300/15 via-indigo-400/10 to-emerald-400/10
+                      blur-3xl animate-pulse [animation-duration:10s] [animation-delay:1s]"></div>
+          <div class="absolute start-1/3 top-1/2 h-64 w-64 rounded-full
+                      bg-gradient-to-r from-violet-400/10 to-fuchsia-400/5
+                      blur-3xl animate-pulse [animation-duration:13s] [animation-delay:2s]"></div>
+          <!-- Thin lines -->
+          <div class="absolute inset-0">
+            <div class="absolute top-0 left-1/4 h-px w-1/2 bg-gradient-to-r from-transparent via-sky-300/20 to-transparent"></div>
+            <div class="absolute bottom-0 right-1/4 h-px w-1/2 bg-gradient-to-r from-transparent via-indigo-300/20 to-transparent"></div>
+          </div>
         </div>
 
-        <div class="mx-auto w-full max-w-md">
+        <div class="relative mx-auto w-full max-w-md space-y-8">
 
           <!-- Mobile: app name header -->
-          <div class="mb-8 flex flex-col items-center gap-2 lg:hidden">
+          <div class="flex flex-col items-center gap-2 lg:hidden">
             @if (portal()?.logoUrl) {
               <img [src]="portal()!.logoUrl" [alt]="portal()!.appName" class="h-14 w-auto" />
             } @else {
@@ -160,10 +175,17 @@ import { SettingsStore } from '../../core/services/settings.store';
           </div>
 
           <!-- Login card -->
-          <div class="relative bg-white/60 dark:bg-slate-900/95 rounded-3xl shadow-2xl shadow-slate-300/30 dark:shadow-slate-900/50 border border-slate-200/50 dark:border-slate-800/50 backdrop-blur-xl px-7 py-8 sm:px-9 sm:py-9 transition-all duration-500">
-
-            <router-outlet />
-
+          <div class="relative bg-white/50 dark:bg-slate-900/95
+                      rounded-3xl
+                      shadow-2xl shadow-slate-300/30 dark:shadow-slate-900/50
+                      border border-slate-200/50 dark:border-slate-800/50
+                      backdrop-blur-xl px-7 py-8 sm:px-9 sm:py-9
+                      transition-all duration-500
+                      hover:shadow-sky-300/20 dark:hover:shadow-sky-900/30">
+            <div class="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-purple-500/10 blur opacity-50"></div>
+            <div class="relative">
+              <router-outlet />
+            </div>
           </div>
         </div>
       </div>

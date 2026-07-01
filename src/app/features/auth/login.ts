@@ -163,12 +163,13 @@ import { SettingsStore } from '../../core/services/settings.store';
           type="submit"
           [disabled]="form.invalid || busy()"
           class="relative mt-2 w-full overflow-hidden rounded-2xl
-                 bg-[#16193A] hover:bg-[#282C66]
+                 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900
+                 hover:from-indigo-900 hover:via-slate-900 hover:to-indigo-900
                  px-5 py-3.5 text-sm sm:text-base font-semibold text-white
-                 shadow-lg shadow-[#16193A]/50
-                 focus:outline-none focus:ring-2 focus:ring-[#16193A]/50 focus:ring-offset-2
+                 shadow-lg shadow-indigo-950/60
+                 focus:outline-none focus:ring-2 focus:ring-indigo-700/50 focus:ring-offset-2
                  disabled:opacity-60 disabled:cursor-not-allowed
-                 transition-all duration-500 hover:shadow-xl hover:-translate-y-0.5 group"
+                 transition-all duration-500 hover:shadow-xl hover:shadow-indigo-900/40 hover:-translate-y-0.5 group"
         >
           <!-- Shimmer on hover -->
           <div class="pointer-events-none absolute inset-0 z-0
