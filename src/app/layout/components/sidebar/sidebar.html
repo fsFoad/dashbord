@@ -1,13 +1,13 @@
 <div
-  class="pack-sidebar flex h-full flex-col border-e border-surface-200 bg-surface-0 transition-[width] duration-200 dark:border-surface-800 dark:bg-surface-900"
+  class="pack-sidebar flex h-full flex-col border-e border-surface-200 bg-surface-0 bg-gradient-to-b from-white/[0.04] to-black/10 transition-[width] duration-200 dark:border-surface-800 dark:bg-surface-900"
   [style.width]="slim() ? 'var(--sidebar-width-collapsed)' : 'var(--sidebar-width)'"
 >
   <!-- Branding -->
   <a
     routerLink="/dashboard"
-    class="flex h-[var(--topbar-height)] shrink-0 items-center gap-3 border-b border-surface-200 px-4 dark:border-surface-800"
+    class="flex h-[var(--topbar-height)] shrink-0 items-center gap-3 px-4"
   >
-    <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-primary font-bold text-primary-contrast">
+    <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-primary font-bold text-primary-contrast shadow-lg shadow-black/20 ring-1 ring-white/10">
       {{ branding.appShortName }}
     </span>
     @if (!slim()) {
@@ -16,6 +16,12 @@
       </span>
     }
   </a>
+
+  <!-- Profile block: avatar → profile, username, current Jalali date -->
+  <app-sidebar-profile />
+
+  <!-- Soft, edge-faded divider -->
+  <div class="mx-4 h-px shrink-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
 
   <!-- Menu (per-user: role-filtered + pinned + hidden) -->
   <nav data-tour="menu" class="thin-scroll flex-1 overflow-y-auto py-2">
@@ -26,21 +32,11 @@
     </ul>
   </nav>
 
-  <!-- Footer: customize menu -->
-  <div class="shrink-0 border-t border-surface-200 p-2 dark:border-surface-800">
-    <button
-      type="button"
-      (click)="customizerOpen.set(true)"
-      [pTooltip]="slim() ? ('menu.customize' | transloco) : ''"
-      tooltipPosition="top"
-      class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-surface-600 hover:bg-surface-100 dark:text-surface-300 dark:hover:bg-surface-800"
-    >
-      <i class="pi pi-sliders-v shrink-0 text-base"></i>
-      @if (!slim()) {
-        <span class="truncate-1">{{ 'menu.customize' | transloco }}</span>
-      }
-    </button>
+  <!-- Soft, edge-faded divider -->
+  <div class="mx-4 h-px shrink-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"></div>
 
+  <!-- Footer: app version (menu customization now lives in the profile page) -->
+  <div class="shrink-0 p-2">
     <!-- App version + release date -->
     <button
       type="button"
@@ -59,5 +55,3 @@
     </button>
   </div>
 </div>
-
-<app-menu-customizer [(visible)]="customizerOpen" />

@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { Tooltip } from 'primeng/tooltip';
 import { MenuItemComponent } from './menu-item/menu-item';
-import { MenuCustomizer } from './menu-customizer/menu-customizer';
+import { SidebarProfile } from './sidebar-profile/sidebar-profile';
 import { BRANDING } from '../../../core/config/branding.config';
 import { LayoutService } from '../../../core/services/layout.service';
 import { MenuService } from '../../../core/services/menu.service';
@@ -13,7 +13,7 @@ import { LocalizedDatePipe } from '../../../shared/pipes/localized-date.pipe';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, TranslocoModule, Tooltip, MenuItemComponent, MenuCustomizer, LocalizedDatePipe],
+  imports: [RouterLink, TranslocoModule, Tooltip, MenuItemComponent, SidebarProfile, LocalizedDatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sidebar.html',
 })
@@ -27,5 +27,4 @@ export class Sidebar {
 
   protected readonly branding = BRANDING;
   protected readonly slim = computed(() => this.layout.isSlim());
-  protected readonly customizerOpen = signal(false);
 }

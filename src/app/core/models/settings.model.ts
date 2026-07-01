@@ -39,6 +39,11 @@ export interface AppSettings {
   layout: LayoutType;
   menuMode: MenuMode;
   sidebarCollapsed: boolean;
+  /**
+   * When true, sidebar groups are collapsible (accordion: click to expand/collapse).
+   * When false, the whole menu is shown fully expanded with no collapse/expand.
+   */
+  menuCollapsible: boolean;
   density: Density;
   /** Visual surface style (solid | glass | soft | neon). */
   surfaceStyle: SurfaceStyle;

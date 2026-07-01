@@ -2,6 +2,7 @@ import {
   ActivityItem, CalEvent, CommentItem, FileNode, Member, NotificationItem, Project, Task, TeamMember,
 } from '../models/api.model';
 import { User } from '../models/user.model';
+import { TellerDashboard } from '../models/teller.model';
 
 /** Deterministic-ish mock data. Replace the whole mock layer with a real API later. */
 const OWNERS = ['سارا محمدی', 'علی رضایی', 'مریم احمدی', 'حسین کریمی', 'نگار موسوی'];
@@ -31,18 +32,21 @@ export const PROJECTS: Project[] = NAMES.map((name, i) => {
 });
 
 export interface MockUser extends User {
+  username: string;
   password: string;
+  phone?: string;
   twoFactor?: boolean;
 }
 
-/** Demo accounts (shown on the login page): both use password 123456. */
+/** Demo accounts. Login is by username; the default account is `1` / `1`. */
 export const USERS: MockUser[] = [
-  { id: 1, name: 'مدیر سیستم', email: 'admin@demo.com', password: '123456', roles: ['admin', 'user'], twoFactor: true },
-  { id: 2, name: 'کاربر آزمایشی', email: 'user@demo.com', password: '123456', roles: ['user'] },
+  { id: 1, name: 'کاربر پیش‌فرض', username: '1', email: 'one@demo.com', phone: '09120000001', password: '1', roles: ['admin', 'user'] },
+  { id: 2, name: 'مدیر سیستم', username: 'admin', email: 'admin@demo.com', phone: '09120000002', password: '123456', roles: ['admin', 'user'], twoFactor: true },
+  { id: 3, name: 'کاربر آزمایشی', username: 'user', email: 'user@demo.com', phone: '09120000003', password: '123456', roles: ['user'] },
 ];
 
 export function toPublicUser(u: MockUser): User {
-  return { id: u.id, name: u.name, email: u.email, roles: u.roles };
+  return { id: u.id, name: u.name, username: u.username, email: u.email, roles: u.roles };
 }
 
 export const MEMBERS: Member[] = OWNERS.map((name, i) => ({ id: i + 1, name }));
@@ -183,3 +187,31 @@ FILES.push(
   F(fContracts.id, 'قرارداد-اصلی.pdf', 'file', 540_000),
 );
 export const nextFileId = () => fileSeq++;
+
+// ---------------- Teller till-status widget (optional dashboard widget) ----------------
+/** Replace this whole block with a real teller/branch service later. */
+export const TELLER_DASHBOARD: TellerDashboard = {
+  profile: {
+    fullName: 'فرزانه موسوی',
+    personnelNo: '۷۷۴۲۱',
+    roleKey: 'teller.role.teller',
+    branchCode: '۱۰۴۲',
+    branchName: 'شعبه مرکزی تهران',
+    accessLevelKey: 'teller.access.operator',
+  },
+  till: {
+    currency: 'IRR',
+    cash: 428_500_000,
+    transfer: 120_000_000,
+    others: [
+      { code: 'USD', amount: 2450 },
+      { code: 'EUR', amount: 1180.5 },
+    ],
+  },
+  systemStatus: [
+    { key: 'coreBanking', labelKey: 'teller.system.coreBanking', level: 'online' },
+    { key: 'swift', labelKey: 'teller.system.swift', level: 'online' },
+    { key: 'ctr', labelKey: 'teller.system.ctr', level: 'degraded' },
+  ],
+  asOf: new Date().toISOString(),
+};

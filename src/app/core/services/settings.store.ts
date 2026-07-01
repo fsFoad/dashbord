@@ -22,6 +22,7 @@ function migrate(s: AppSettings): AppSettings {
   }
   if (out.surfaceStyle === undefined) out.surfaceStyle = 'glass';
   if (out.themePack === undefined) out.themePack = 'meridian';
+  if (out.menuCollapsible === undefined) out.menuCollapsible = true;
   out._v = SETTINGS_VERSION;
   return out;
 }
@@ -51,6 +52,7 @@ export class SettingsStore {
   readonly layout = computed(() => this.state().layout);
   readonly menuMode = computed(() => this.state().menuMode);
   readonly sidebarCollapsed = computed(() => this.state().sidebarCollapsed);
+  readonly menuCollapsible = computed(() => this.state().menuCollapsible);
   readonly density = computed(() => this.state().density);
   readonly surfaceStyle = computed(() => this.state().surfaceStyle);
   readonly themePack = computed(() => this.state().themePack);
@@ -77,6 +79,7 @@ export class SettingsStore {
   setMenuMode(menuMode: MenuMode): void { this.patch({ menuMode }); }
   setSidebarCollapsed(sidebarCollapsed: boolean): void { this.patch({ sidebarCollapsed }); }
   toggleSidebar(): void { this.patch({ sidebarCollapsed: !this.state().sidebarCollapsed }); }
+  setMenuCollapsible(menuCollapsible: boolean): void { this.patch({ menuCollapsible }); }
   setDensity(density: Density): void { this.patch({ density }); }
   setSurfaceStyle(surfaceStyle: SurfaceStyle): void { this.patch({ surfaceStyle }); }
 

@@ -6,7 +6,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { delay, of, switchMap, throwError, timer } from 'rxjs';
 import {
-  ACTIVITY, COMMENTS, EVENTS, FILES, MEMBERS, NOTIFICATIONS, PROJECTS, TASKS, TEAM, USERS,
+  ACTIVITY, COMMENTS, EVENTS, FILES, MEMBERS, NOTIFICATIONS, PROJECTS, TASKS, TEAM, TELLER_DASHBOARD, USERS,
   nextEventId, nextFileId, toPublicUser,
 } from '../mock/mock-db';
 import { AuthResponse } from '../models/user.model';
@@ -14,6 +14,9 @@ import { CalEvent, CommentItem, FileNode, Paged, Project, Task, TeamMember } fro
 
 /** In-memory 2FA challenges: challengeId → userId (mock only). */
 const PENDING_2FA = new Map<string, number>();
+
+/** In-memory password-reset OTP challenges: challengeId → phone (mock only). */
+const PENDING_RESET = new Map<string, string>();
 
 const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max - min));
 
@@ -25,6 +28,7 @@ const rand = (min: number, max: number) => Math.floor(min + Math.random() * (max
  *   GET /api/projects?page&size&q     paged project list
  *   GET /api/projects/:id             single project
  *   GET /api/activity                 recent activity feed
+ *   GET /api/teller/dashboard         optional teller till-status widget data
  *   GET /api/demo/slow?ms=N           responds after N ms (loading/timeout demos)
  *   GET /api/demo/error/:status       fails with that HTTP status
  *   GET /api/demo/network             simulates a network failure (status 0)
@@ -66,13 +70,16 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
 
   // --- auth ---
   if (path === '/api/auth/login' && req.method === 'POST') {
-    const { email, password } = (req.body ?? {}) as { email?: string; password?: string };
-    const found = USERS.find((u) => u.email === email && u.password === password);
+    const { username, password } = (req.body ?? {}) as { username?: string; password?: string };
+    // Match by username (email also accepted for convenience).
+    const found = USERS.find(
+      (u) => (u.username === username || u.email === username) && u.password === password,
+    );
     if (found && found.twoFactor) {
-      // Issue a 2FA challenge instead of a session. (Demo OTP is always 123456.)
+      // Issue a 2FA challenge instead of a session. (Demo OTP is always 111111.)
       const challengeId = `chal-${found.id}-${Date.now()}`;
       PENDING_2FA.set(challengeId, found.id);
-      const masked = '***' + (found.email.split('@')[0].slice(-2));
+      const masked = '***' + found.username.slice(-2);
       return ok({ twoFactorRequired: true, challengeId, hint: masked }, 500);
     }
     if (!found) return fail(401, 600);
@@ -84,7 +91,7 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
     const { challengeId, code } = (req.body ?? {}) as { challengeId?: string; code?: string };
     const uid = challengeId ? PENDING_2FA.get(challengeId) : undefined;
     if (!uid) return fail(401);
-    if (code !== '123456') return fail(422); // wrong OTP
+    if (code !== '111111') return fail(422); // wrong OTP (demo code: all ones)
     PENDING_2FA.delete(challengeId!);
     const user = USERS.find((u) => u.id === uid)!;
     const body: AuthResponse = { token: `mock-${user.id}`, user: toPublicUser(user) };
@@ -113,14 +120,29 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
     };
     if (!name || !email || !password) return fail(400);
     if (USERS.some((u) => u.email === email)) return fail(409, 600);
-    const user = { id: USERS.length + 1, name, email, password, roles: ['user'] };
+    const user = { id: USERS.length + 1, name, username: email, email, password, roles: ['user'] };
     USERS.push(user);
     const body: AuthResponse = { token: `mock-${user.id}`, user: toPublicUser(user) };
     return ok(body, 700);
   }
 
+  // Password recovery by mobile number: issue an OTP challenge.
+  // (Demo OTP is always 111111. We never reveal whether the phone exists.)
   if (path === '/api/auth/forgot' && req.method === 'POST') {
-    return ok({ sent: true }, 700);
+    const { phone } = (req.body ?? {}) as { phone?: string };
+    const challengeId = `reset-${Date.now()}`;
+    PENDING_RESET.set(challengeId, phone ?? '');
+    const masked = phone ? phone.slice(0, 4) + '****' + phone.slice(-2) : '***';
+    return ok({ sent: true, challengeId, hint: masked }, 700);
+  }
+
+  // Verify the recovery OTP.
+  if (path === '/api/auth/verify-otp' && req.method === 'POST') {
+    const { challengeId, code } = (req.body ?? {}) as { challengeId?: string; code?: string };
+    if (!challengeId || !PENDING_RESET.has(challengeId)) return fail(401);
+    if (code !== '111111') return fail(422); // wrong OTP (demo code: all ones)
+    PENDING_RESET.delete(challengeId);
+    return ok({ ok: true }, 400);
   }
 
   if (path === '/api/me' && req.method === 'PUT') {
@@ -525,6 +547,11 @@ export const mockBackendInterceptor: HttpInterceptorFn = (req, next) => {
   // --- activity feed ---
   if (path === '/api/activity' && req.method === 'GET') {
     return ok(ACTIVITY, rand(500, 1_100));
+  }
+
+  // --- teller till-status (optional dashboard widget) ---
+  if (path === '/api/teller/dashboard' && req.method === 'GET') {
+    return ok({ ...TELLER_DASHBOARD, asOf: new Date().toISOString() }, rand(300, 700));
   }
 
   return fail(404);

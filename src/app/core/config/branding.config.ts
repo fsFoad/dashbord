@@ -29,6 +29,7 @@ export const BRANDING: BrandingConfig = {
     layout: 'dashboard',
     menuMode: 'static',
     sidebarCollapsed: false,
+    menuCollapsible: true,
     density: 'normal',
     surfaceStyle: 'glass',
     themePack: 'meridian',

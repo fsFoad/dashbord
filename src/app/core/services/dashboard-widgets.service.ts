@@ -2,16 +2,19 @@ import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { SessionStore } from './session.store';
 import { StorageService } from './storage.service';
 
-export type WidgetId = 'kpis' | 'ai' | 'revenue' | 'status' | 'tasks' | 'activity';
+export type WidgetId = 'kpis' | 'ai' | 'revenue' | 'status' | 'tasks' | 'activity' | 'tellerTill';
 
 interface WidgetPrefs {
   order: WidgetId[];
   hidden: WidgetId[];
 }
 
-export const ALL_WIDGETS: WidgetId[] = ['kpis', 'ai', 'revenue', 'status', 'tasks', 'activity'];
+export const ALL_WIDGETS: WidgetId[] = ['kpis', 'ai', 'revenue', 'status', 'tasks', 'activity', 'tellerTill'];
 
-const DEFAULTS: WidgetPrefs = { order: [...ALL_WIDGETS], hidden: [] };
+/** Widgets that only make sense for some users, so they start hidden until opted in. */
+const DEFAULT_HIDDEN: WidgetId[] = ['tellerTill'];
+
+const DEFAULTS: WidgetPrefs = { order: [...ALL_WIDGETS], hidden: [...DEFAULT_HIDDEN] };
 const keyFor = (uid: number) => `app.dashboard.${uid}`;
 
 /** Grid column span per widget (12-col grid, all full-width on mobile). */
@@ -22,6 +25,7 @@ const SPANS: Record<WidgetId, string> = {
   status: 'col-span-12 lg:col-span-4',
   tasks: 'col-span-12 lg:col-span-6',
   activity: 'col-span-12 lg:col-span-6',
+  tellerTill: 'col-span-12',
 };
 
 /**
@@ -41,11 +45,15 @@ export class DashboardWidgetsService {
       const u = this.session.user();
       const loaded = u ? this.storage.read<WidgetPrefs>(keyFor(u.id), DEFAULTS) : DEFAULTS;
       // keep unknown/new widgets working across versions:
-      const order = [
-        ...loaded.order.filter((id) => ALL_WIDGETS.includes(id)),
-        ...ALL_WIDGETS.filter((id) => !loaded.order.includes(id)),
+      const newWidgets = ALL_WIDGETS.filter((id) => !loaded.order.includes(id));
+      const order = [...loaded.order.filter((id) => ALL_WIDGETS.includes(id)), ...newWidgets];
+      // widgets newly introduced after this user's prefs were saved start hidden,
+      // same as a first-time user, unless they opt in via "hidden widgets":
+      const hidden = [
+        ...loaded.hidden.filter((id) => ALL_WIDGETS.includes(id)),
+        ...newWidgets.filter((id) => DEFAULT_HIDDEN.includes(id)),
       ];
-      this.prefs.set({ order, hidden: loaded.hidden.filter((id) => ALL_WIDGETS.includes(id)) });
+      this.prefs.set({ order, hidden });
     });
   }
 

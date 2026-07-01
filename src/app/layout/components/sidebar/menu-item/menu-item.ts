@@ -54,16 +54,18 @@ import { SettingsStore } from '../../../../core/services/settings.store';
           }
           @if (!slim()) {
             <span class="truncate-1 flex-1 text-start">{{ it.labelKey | transloco }}</span>
-            <i
-              class="pi shrink-0 text-xs transition-transform"
-              [class.pi-angle-down]="!expanded()"
-              [class.pi-angle-up]="expanded()"
-            ></i>
+            @if (collapsible()) {
+              <i
+                class="pi shrink-0 text-xs transition-transform"
+                [class.pi-angle-down]="!open()"
+                [class.pi-angle-up]="open()"
+              ></i>
+            }
           }
         </button>
 
-        @if (expanded() && !slim()) {
-          <ul class="space-y-0.5">
+        @if (open() && !slim()) {
+          <ul class="relative ms-4 mt-0.5 space-y-0.5 border-s-2 border-white/15 ps-2">
             @for (child of it.children; track child.id) {
               <app-menu-item [item]="child" [level]="level() + 1" />
             }
@@ -167,7 +169,17 @@ export class MenuItemComponent {
   readonly level = input<number>(0);
 
   readonly slim = computed(() => this.layout.isSlim());
-  protected readonly expanded = signal(false);
+
+  /** Whether groups are collapsible (accordion) vs. always fully expanded. */
+  protected readonly collapsible = computed(() => this.settings.menuCollapsible());
+
+  private readonly expanded = signal(false);
+
+  /**
+   * A group is open when expanded by the user, OR when collapsing is disabled
+   * (then the whole menu stays open with no expand/collapse interaction).
+   */
+  protected readonly open = computed(() => !this.collapsible() || this.expanded());
 
   /** Logical indent grows with nesting depth (RTL/LTR safe). */
   protected readonly indent = computed(() => 0.75 + this.level() * 0.85);
@@ -183,6 +195,7 @@ export class MenuItemComponent {
   protected readonly isLong = computed(() => this.item().labelKey.length > 24 || this.level() >= 2);
 
   protected toggle(): void {
+    if (!this.collapsible()) return; // flat mode: groups stay open, header is inert
     this.expanded.update((v) => !v);
   }
 

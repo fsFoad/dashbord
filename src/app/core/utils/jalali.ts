@@ -112,6 +112,11 @@ export const JALALI_MONTHS = [
 /** Week starts Saturday for the Jalali calendar. */
 export const JALALI_WEEKDAYS = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
 
+/** Full Persian weekday names, indexed by JS `Date.getDay()` (0 = Sunday). */
+export const JALALI_WEEKDAYS_FULL = [
+  'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه',
+];
+
 const FA_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
 export function faDigits(value: string | number): string {

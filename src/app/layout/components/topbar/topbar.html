@@ -22,7 +22,7 @@
 
   <!-- Quick actions -->
   <div class="flex shrink-0 items-center gap-1">
-    <!-- Command palette (Ctrl+K) -->
+    <!-- Search (command palette, Ctrl+K) -->
     <button
       type="button"
       data-tour="palette"
@@ -131,7 +131,7 @@
       </ul>
     </p-popover>
 
-    <!-- Settings panel -->
+    <!-- Appearance settings -->
     <button
       type="button"
       data-tour="settings"
@@ -144,19 +144,16 @@
       <i class="pi pi-sliders-h text-lg"></i>
     </button>
 
-    <!-- Profile -->
+    <!-- Logout -->
     <button
       type="button"
-      (click)="openProfile($event)"
-      class="ms-1 flex items-center gap-2 rounded-lg p-1 pe-2 hover:bg-surface-100 dark:hover:bg-surface-800"
-      aria-label="Profile"
+      (click)="logout()"
+      [pTooltip]="'auth.logout' | transloco"
+      tooltipPosition="bottom"
+      class="grid size-10 place-items-center rounded-lg text-surface-600 hover:bg-red-50 hover:text-red-600 dark:text-surface-300 dark:hover:bg-red-950/40 dark:hover:text-red-400"
+      aria-label="Logout"
     >
-      <p-avatar [label]="initials()" shape="circle" styleClass="bg-primary! text-primary-contrast!" />
-      <span class="hidden max-w-32 truncate-1 text-sm font-medium md:block">
-        {{ session.user()?.name }}
-      </span>
-      <i class="pi pi-angle-down hidden text-xs text-muted-color md:block"></i>
+      <i class="pi pi-sign-out text-lg"></i>
     </button>
-    <p-menu #profileMenu [model]="profileItems()" [popup]="true" appendTo="body" />
   </div>
 </header>

@@ -131,6 +131,13 @@
             <app-skeleton-card [rows]="5" />
           }
         }
+        @case ('tellerTill') {
+          @defer (on viewport; prefetch on idle) {
+            <app-teller-till-widget />
+          } @placeholder {
+            <app-skeleton-card [rows]="4" [header]="true" />
+          }
+        }
       }
     </div>
   }
